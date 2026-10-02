@@ -10,7 +10,7 @@
 # Usage:  R_LIBS=.rlib R --vanilla -f tests/parity/gen_pathway_golden.R
 suppressWarnings(suppressMessages(library(Matrix)))
 
-CC <- Sys.getenv("CELLCHAT_SRC", "/scratch/mdra00001/tmp/opencode/CellChat")
+CC <- Sys.getenv("CELLCHAT_SRC", "../CellChat")
 env <- new.env()
 for (f in c("modeling.R", "analysis.R", "utilities.R", "database.R")) {
   sys.source(file.path(CC, "R", f), envir = env, keep.source = FALSE)

@@ -1,11 +1,11 @@
 # Inspect the pinned visium spatial object: what computeRegionDistance would actually be given.
-CC <- Sys.getenv("CELLCHAT_SRC")
+CC <- Sys.getenv("CELLCHAT_SRC", "../CellChat")
 q <- function(x) { invisible(utils::capture.output(v <- suppressWarnings(suppressMessages(x)))); v }
 e <- new.env(parent = globalenv())
 for (p in c("methods", "Matrix", "S4")) suppressWarnings(suppressMessages(requireNamespace(p, quietly = TRUE)))
 q(sys.source(file.path(CC, "R", "CellChat_class.R"), envir = e, keep.source = FALSE))
 
-o <- readRDS("/scratch/mdra00001/tmp/opencode/data/visium.rds")
+o <- readRDS(file.path(Sys.getenv("CELLCHATRS_DATA", "data"), "visium.rds"))
 say <- function(...) cat("V ", ..., "\n", sep = "")
 say("datatype:", o@options$datatype)
 say("data:", paste(dim(o@data), collapse = "x"))

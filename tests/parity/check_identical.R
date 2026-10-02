@@ -8,7 +8,7 @@
 # Usage:  R_LIBS=.rlib R --vanilla -f tests/parity/check_identical.R
 suppressWarnings(suppressMessages({library(Matrix); library(collapse); library(dplyr)}))
 
-CC <- Sys.getenv("CELLCHAT_SRC", "/scratch/mdra00001/tmp/opencode/CellChat")
+CC <- Sys.getenv("CELLCHAT_SRC", "../CellChat")
 DBDIR <- Sys.getenv("CELLCHATRS_DB", "tests/fixtures/db_human")
 
 suppressWarnings(suppressMessages(library(cellchatrs)))

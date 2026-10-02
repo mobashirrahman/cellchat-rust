@@ -30,7 +30,7 @@ suppressWarnings(suppressMessages({
 }))
 suppressWarnings(suppressMessages(library(cellchatrs)))
 
-CC <- Sys.getenv("CELLCHAT_SRC", "/scratch/mdra00001/tmp/opencode/CellChat")
+CC <- Sys.getenv("CELLCHAT_SRC", "../CellChat")
 DBDIR <- Sys.getenv("CELLCHATRS_DB", "tests/fixtures/db_human")
 
 if (!requireNamespace("presto", quietly = TRUE)) {

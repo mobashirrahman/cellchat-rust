@@ -106,8 +106,8 @@ mem_available_mb <- function() {
   as.numeric(gsub("[^0-9]", "", hit)) / 1024
 }
 
-CC <- Sys.getenv("CELLCHAT_SRC", "/scratch/mdra00001/tmp/opencode/CellChat")
-DATADIR <- "/scratch/mdra00001/tmp/opencode/data"
+CC <- Sys.getenv("CELLCHAT_SRC", "../CellChat")
+DATADIR <- "data"
 NBOOT <- 100L
 REPEATS <- 5L
 

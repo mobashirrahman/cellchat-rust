@@ -20,8 +20,48 @@ git rev-parse HEAD   # must print 75253cd0c9e68410e6e721a6d3a0419a1d7e358f
 grep Version DESCRIPTION
 ```
 
-`tests/parity/manifest.json` records this SHA for every stored oracle, and
-`tests/parity/test_pin.py` fails if the local checkout does not match.
+## Datasets
+
+The authors' Figshare objects are **not vendored** here — they are several hundred megabytes, and
+a source tarball has to stay under CRAN's 5 MB limit. What follows is the provenance of each, and
+whether CI can obtain it unattended.
+
+| fixture | used by | source | CI fetches it |
+|---|---|---|---|
+| `data/humanSkin.rda` | `tutorial_repro.R` | Figshare 24470719, file 42997198 (13 426 240 B) | **yes**, size-asserted |
+| `data/wound.rda` | benchmarks only | Figshare 21896400, file 38838357 | no |
+| `data/visium.rds` | `measure_spatial_divergence.R` | the authors' mouse-cortex visium object | **no — see below** |
+| `cellchat_embryonic_E13/E14.rds` | benchmarks only | Figshare 13522724 / 13522808 | no |
+
+```sh
+mkdir -p data
+curl -fsSL -o data/humanSkin.rda https://ndownloader.figshare.com/files/42997198
+```
+
+**Known gap: the visium fixture has no recorded source.** The spatial divergence measurement --
+which is the evidence behind the paper's only *non*-bit-identical claim -- depends on it, and CI
+cannot fetch it, because the Figshare article id is recorded nowhere in this repository and the
+object is not part of the upstream tree. Until that is pinned, that one quantity is verified
+locally and reported as such rather than claimed as CI-backed. Pinning it means recording the
+article id and file id alongside the others above; the measurement itself is fully reproducible
+given the object, and re-running it reproduced every statistic exactly (only the wall-clock
+`seconds` block moved).
+
+## How the pin is enforced
+
+Three independent checks, because a pin that is only written down is not a pin:
+
+* **`export_db.R` stamps it.** Every database export it writes carries a `MANIFEST.tsv`
+  recording `upstream_commit`. `tests/fixtures/db_{human,mouse}/MANIFEST.tsv` and the copies in
+  `inst/db/` therefore record which upstream state produced them.
+* **The benchmark runners read it back.** `bench_real.R` refuses to start if the manifest's
+  `upstream_commit` is not this SHA, because a fixture built against a different database is not a
+  speedup but a comparison of two different computations.
+* **CI checks the clone.** The `verify-upstream` job in `.github/workflows/parity.yml` clones at
+  `UPSTREAM_SHA` and compares `git rev-parse HEAD` against it before any gate runs.
+
+The parity gates themselves take the checkout from `$CELLCHAT_SRC`, defaulting to `../CellChat` —
+clone upstream as a sibling of this repository, or set the variable to wherever it lives.
 
 ## Not in scope
 

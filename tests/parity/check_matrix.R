@@ -21,7 +21,7 @@ suppressWarnings(suppressMessages({
   library(Matrix); library(collapse); library(dplyr); library(cellchatrs)
 }))
 ROOT <- Sys.getenv("CELLCHATRS_ROOT", unset = getwd())
-CC <- Sys.getenv("CELLCHAT_SRC", "/scratch/mdra00001/tmp/opencode/CellChat")
+CC <- Sys.getenv("CELLCHAT_SRC", "../CellChat")
 DBDIR <- Sys.getenv("CELLCHATRS_DB", "tests/fixtures/db_human")
 
 `%||%` <- function(a, b) if (is.null(a)) b else a

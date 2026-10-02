@@ -33,9 +33,9 @@ suppressWarnings(suppressMessages({
 suppressPackageStartupMessages(library(Matrix))
 suppressWarnings(suppressMessages(library(cellchatrs)))
 
-CC <- Sys.getenv("CELLCHAT_SRC", "/scratch/mdra00001/tmp/opencode/CellChat")
+CC <- Sys.getenv("CELLCHAT_SRC", "../CellChat")
 DBDIR <- Sys.getenv("CELLCHATRS_DB", "tests/fixtures/db_human")
-SKIN <- Sys.getenv("TUTORIAL_DATA", "/scratch/mdra00001/tmp/opencode/data/humanSkin.rda")
+SKIN <- Sys.getenv("TUTORIAL_DATA", "data/humanSkin.rda")
 
 if (tolower(Sys.getenv("CELLCHATRS_FALLBACK", "0")) %in% c("1", "true", "yes", "on")) {
   stop("CELLCHATRS_FALLBACK is set: the shim side would answer from upstream and this gate ",

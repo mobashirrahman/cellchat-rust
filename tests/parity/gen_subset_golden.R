@@ -27,7 +27,7 @@ ROOT <- Sys.getenv("CELLCHATRS_ROOT", unset = getwd())
 if (!dir.exists(file.path(ROOT, "R"))) {
   stop("run from the repository root, or set CELLCHATRS_ROOT")
 }
-SRC <- Sys.getenv("CELLCHAT_SRC", "/scratch/mdra00001/tmp/opencode/CellChat")
+SRC <- Sys.getenv("CELLCHAT_SRC", "../CellChat")
 env <- new.env(parent = globalenv())
 for (f in c("modeling.R", "analysis.R", "utilities.R", "database.R")) {
   sys.source(file.path(SRC, "R", f), envir = env, keep.source = FALSE)

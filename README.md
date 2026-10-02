@@ -1,8 +1,9 @@
-# cellchat-rs
+# cellchat-rust
 
 A Rust re-implementation of the inference kernel of
 [CellChat](https://github.com/jinworks/CellChat) (Jin et al., *Nature Communications* 2021;
 *Nature Protocols* 2024), exposed to R as a **drop-in, output-identical accelerator**.
+The R package it installs is named `cellchatrs`.
 
 **Read [`PLAN.md`](PLAN.md) first** — it contains the source audit, the measured R
 baseline, the performance model, the parity contract, the phased work plan, the benchmark
@@ -45,7 +46,7 @@ independent work per gene per bootstrap, i.e. ideally parallel and vectorisable.
 | | |
 |---|---|
 | Phase 0 — baseline, fixtures, harness | **done** (numbers above) |
-| Phase 1 — `r-core` numerics + parity | **done** (159/159 parity quantities; see `parity.json`) |
+| Phase 1 — `r-core` numerics + parity | **done** (160/160 parity quantities; see `parity.json`) |
 | Phase 2 — R shim | **done** (drop-in overrides + 56 delegated names; tutorial identical end to end) |
 | Phase 3 — standalone CLI | **done** (`crates/cellchatrs-cli`, 14 configs identical to upstream) |
 | Phase 4 — benchmarks | **done** (kernel, Amdahl, spatial divergence, synthetic grid; see `docs/BENCHMARKS.md`) |
@@ -60,10 +61,53 @@ via `configure`, and `R CMD check` is clean.
 |---|---|
 | `crates/r-core/` | the numerics; no R, no I/O, all pure functions (parity-testable) |
 | `crates/cellchatrs/` | extendr `cdylib`; argument marshalling only |
-| `R/` | the `cellchatrs` R package: `.onLoad`, and later the `computeCommunProb` override |
-| `bench-runner/` | the Phase-0 R harness that produced the baselines |
-| `tests/` | fixtures, parity, fuzz (populated in Phase 1) |
-| `docs/` | `SEMANTICS.md` (parity contract), `BENCHMARKS.md` (results) |
+| `crates/cellchatrs-cli/` | standalone binary: the same numerics without R |
+| `R/` | the `cellchatrs` R package: `.onLoad`, the `computeCommunProb` override, and 56 generated pass-throughs to upstream names |
+| `bench-runner/` | the R harness that produced every published measurement |
+| `tests/` | fixtures and golden corpora (`fixtures/`), differential and parity gates (`parity/`), LR-structure fuzzing (`fuzz/`) |
+| `docs/` | `SEMANTICS.md` (parity contract), `BENCHMARKS.md` (results and protocol) |
+| `paper/` | the evidence-limited manuscript draft |
+| `parity.json` | machine-checkable ledger: 160 quantities, the rung each one reached |
+
+## Verify the claims yourself
+
+Nothing in this README has to be taken on trust: every number has a committed artifact and a
+command that regenerates it.
+
+**Prerequisites.** The upstream checkout and the Figshare datasets are not vendored (they are
+~500 MB). Clone upstream as a sibling directory, or point the variable somewhere else:
+
+```sh
+git clone https://github.com/jinworks/CellChat          # -> ../CellChat, at the pinned SHA
+mkdir -p data                                           # Figshare downloads; see docs/BENCHMARKS.md
+export CELLCHAT_SRC=../CellChat                         # only if you put it elsewhere
+```
+
+**The parity ledger.** `parity.json` is generated, not written by hand:
+`scripts/parity_report.py` *runs* the Rust suite and every R gate as subprocesses and records the
+rung each quantity reached, so regenerating it re-derives the whole claim.
+
+```sh
+python3 scripts/parity_report.py        # writes parity.json; exits nonzero on a regression
+```
+
+**The individual gates.**
+
+```sh
+cargo test --workspace --release        # 331 unit / property / RNG-golden / x87-oracle tests
+R CMD check --no-manual                 # packaging, docs, vignette
+Rscript tests/parity/check_identical.R  # 418 whole-S4 identical() comparisons, 9 configurations
+Rscript tests/parity/check_matrix.R     # 200 configurations, 1051 axis pairs
+Rscript tests/parity/tutorial_repro.R   # end-to-end tutorial, 16 comparisons
+Rscript tests/parity/check_cpu_gate.R   # the benchmark host-contention gate, 47 checks
+python3 bench-runner/test_analyse.py    # the benchmark analysis step, 15 checks
+```
+
+**The benchmarks.** Every figure in `bench-runner/results/` came from a runner under the protocol
+in `docs/BENCHMARKS.md` — warm-up discarded, five timed repeats, median with a bootstrap CI, CPUs
+pinned, a memory-headroom gate, and a host-contention gate that refuses to measure a busy machine
+and records the per-core load when it proceeds. Re-running any of them writes its own evidence
+beside the numbers.
 
 ## Build
 

@@ -38,7 +38,7 @@ suppressWarnings(suppressMessages({
 `%||%` <- function(a, b) if (is.null(a)) b else a
 
 ROOT <- Sys.getenv("CELLCHATRS_ROOT", unset = getwd())
-CC <- Sys.getenv("CELLCHAT_SRC", "/scratch/mdra00001/tmp/opencode/CellChat")
+CC <- Sys.getenv("CELLCHAT_SRC", "../CellChat")
 ## Upstream's `modeling.R` sourced **verbatim** from the pinned commit, and the pinned
 ## `CellChatDB.human.rda` -- not the SQLite export the shim reads. Both sides must resolve the
 ## *same* L-R database or the comparison is between different computations; `check_identical.R`

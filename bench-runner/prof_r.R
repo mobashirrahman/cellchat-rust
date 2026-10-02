@@ -1,6 +1,6 @@
-.libPaths("/scratch/mdra00001/cellchat-rust/.rlib")
+.libPaths(".rlib")
 suppressMessages({library(collapse); library(Matrix); library(dplyr)})
-CC <- "/scratch/mdra00001/tmp/opencode/CellChat"
+CC <- Sys.getenv("CELLCHAT_SRC", "../CellChat")
 methods::setClass("CellChatProbe", representation(data="ANY", data.signaling="ANY", data.smooth="ANY",
   idents="ANY", meta="ANY", images="ANY", DB="ANY", LR="ANY", net="ANY", netP="ANY", options="ANY"))
 env <- new.env(); source(file.path(CC,"R","modeling.R"), local=env)

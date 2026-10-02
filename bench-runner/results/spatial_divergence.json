@@ -12,6 +12,6 @@
     "annoy1_vs_annoy2": {"differ": 0, "total": 8576, "fraction": 0, "max_abs_diff": 0, "max_diff_over_peak": 0 }
   },
   "unfiltered_lrsig": { "total": 437, "resolvable": 134, "exact_error": "subscript out of bounds", "upstream_error": "subscript out of bounds", "errors_identical": true },
-  "seconds": { "exact_d_spatial": 0.0071287155151367188, "annoy1_d_spatial": 2.2971367835998535, "annoy2_d_spatial": 1.3415751457214355 }
+  "seconds": { "exact_d_spatial": 0.0134429931640625, "annoy1_d_spatial": 3.6144380569458008, "annoy2_d_spatial": 2.0073196887969971 }
 }
 

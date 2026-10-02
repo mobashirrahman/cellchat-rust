@@ -3,7 +3,7 @@
 # Prob/Pval for several parameter configurations.
 suppressWarnings(suppressMessages({library(Matrix); library(collapse); library(future); library(dplyr)}))
 
-CC <- Sys.getenv("CELLCHAT_SRC", "/scratch/mdra00001/tmp/opencode/CellChat")
+CC <- Sys.getenv("CELLCHAT_SRC", "../CellChat")
 env <- new.env()
 source(file.path(CC, "R", "modeling.R"), local = env)
 

@@ -2,7 +2,7 @@
 # from R/modeling.R (sourced verbatim, not reimplemented) on a set of fixtures.
 suppressWarnings(suppressMessages({library(Matrix); library(dplyr); library(collapse)}))
 
-CC <- Sys.getenv("CELLCHAT_SRC", "/scratch/mdra00001/tmp/opencode/CellChat")
+CC <- Sys.getenv("CELLCHAT_SRC", "../CellChat")
 env <- new.env()
 source(file.path(CC, "R", "modeling.R"), local = env)
 

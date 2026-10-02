@@ -67,7 +67,7 @@ parse_args <- function() {
   out
 }
 opt <- parse_args()
-FIXTURE <- opt$fixture %||% "/scratch/mdra00001/tmp/opencode/data/humanSkin.rda"
+FIXTURE <- opt$fixture %||% file.path(Sys.getenv("CELLCHATRS_DATA", "data"), "humanSkin.rda")
 NBOOT <- as.integer(opt$nboot %||% "100")
 MAXLR <- as.integer(opt$maxlr %||% "0")
 REPEATS <- as.integer(opt$repeats %||% "5")
@@ -137,10 +137,9 @@ if (!identical(mf_sha, "75253cd0c9e68410e6e721a6d3a0419a1d7e358f")) {
 ##
 ##   1. `BENCH_PINNED` was the only source of the recorded pinning, and the documented command never
 ##      set it, so runs wrote `"pinned": ""` while genuinely running on eight pinned cores.
-##   2. Nothing checked the host was idle. A runaway `python3 gen_stats_vectors.py` from an
-##      unrelated project in this same account had been at 98% CPU for 51 hours. It moved the R
-##      median on human skin from 93 s to 108 s between two runs of byte-identical code, and no
-##      artifact said why.
+##   2. Nothing checked the host was idle. A runaway job belonging to an unrelated project in the
+##      same account had been at 98% CPU for 51 hours. It moved the R median on human skin from
+##      93 s to 108 s between two runs of byte-identical code, and no artifact said why.
 source(file.path(SCRIPT_DIR, "cpu_gate.R"))
 
 host <- check_host_quiet(opt, label = "BENCH")

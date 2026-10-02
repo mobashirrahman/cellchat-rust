@@ -26,7 +26,7 @@ outdir <- args[[2]]
 dir.create(outdir, recursive = TRUE, showWarnings = FALSE)
 
 ## ---------------------------------------------------------------- locate upstream
-pin <- Sys.getenv("CELLCHAT_SRC", "/scratch/mdra00001/tmp/opencode/CellChat")
+pin <- Sys.getenv("CELLCHAT_SRC", "../CellChat")
 rda <- file.path(pin, "data", sprintf("CellChatDB.%s.rda", species))
 if (!file.exists(rda)) {
   stop(sprintf("cannot find %s\n", rda),

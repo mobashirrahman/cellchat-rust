@@ -28,7 +28,7 @@ NULL
 ## The pinned upstream body, kept verbatim for the differential test and as a fallback.
 ## Sourced from the clone named by CELLCHAT_SRC; never modified.
 cellchatrs_upstream_env <- function() {
-  src <- Sys.getenv("CELLCHAT_SRC", "/scratch/mdra00001/tmp/opencode/CellChat")
+  src <- Sys.getenv("CELLCHAT_SRC", "../CellChat")
   f <- file.path(src, "R", "modeling.R")
   if (!file.exists(f)) {
     stop("pinned upstream not found at ", f,

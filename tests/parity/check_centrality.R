@@ -29,7 +29,7 @@ suppressWarnings(suppressMessages({
 }))
 suppressWarnings(suppressMessages(library(cellchatrs)))
 
-CC <- Sys.getenv("CELLCHAT_SRC", "/scratch/mdra00001/tmp/opencode/CellChat")
+CC <- Sys.getenv("CELLCHAT_SRC", "../CellChat")
 
 if (!requireNamespace("igraph", quietly = TRUE)) {
   stop("igraph is not installed, so neither side can run. Install it rather than skipping: a gate ",

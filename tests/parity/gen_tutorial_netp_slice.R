@@ -3,9 +3,9 @@ suppressWarnings(suppressMessages({
   library(methods); library(Matrix); library(collapse); library(dplyr)
 }))
 suppressWarnings(suppressMessages(library(cellchatrs)))
-CC <- Sys.getenv("CELLCHAT_SRC", "/scratch/mdra00001/tmp/opencode/CellChat")
+CC <- Sys.getenv("CELLCHAT_SRC", "../CellChat")
 DBDIR <- Sys.getenv("CELLCHATRS_DB", "tests/fixtures/db_human")
-SKIN <- Sys.getenv("TUTORIAL_DATA", "/scratch/mdra00001/tmp/opencode/data/humanSkin.rda")
+SKIN <- Sys.getenv("TUTORIAL_DATA", "data/humanSkin.rda")
 q <- function(x) { invisible(utils::capture.output(value <- suppressWarnings(suppressMessages(x)))); value }
 UP <- new.env(parent = globalenv())
 for (p in c("Matrix", "collapse", "dplyr", "future", "rlang")) suppressWarnings(suppressMessages(requireNamespace(p, quietly = TRUE)))

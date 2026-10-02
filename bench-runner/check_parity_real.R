@@ -28,7 +28,7 @@ load_fixture_for <- function(species) {
 }
 
 NB <- as.integer(Sys.getenv("NB", "20"))
-DATA <- Sys.getenv("BENCH_DATA", "/scratch/mdra00001/tmp/opencode/data")
+DATA <- Sys.getenv("BENCH_DATA", "data")
 
 quiet <- function(e) {
   tf <- tempfile(); sink(tf)

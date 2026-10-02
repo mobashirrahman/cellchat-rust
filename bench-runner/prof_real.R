@@ -1,12 +1,12 @@
-.libPaths("/scratch/mdra00001/cellchat-rust/.rlib")
+.libPaths(".rlib")
 suppressMessages({library(collapse); library(Matrix); library(dplyr)})
-CC <- "/scratch/mdra00001/tmp/opencode/CellChat"
+CC <- Sys.getenv("CELLCHAT_SRC", "../CellChat")
 methods::setClass("CellChatProbe", representation(data="ANY", data.signaling="ANY", data.smooth="ANY",
   idents="ANY", meta="ANY", images="ANY", DB="ANY", LR="ANY", net="ANY", netP="ANY", options="ANY"))
 env <- new.env(); source(file.path(CC,"R","modeling.R"), local=env)
 e <- new.env(); load(file.path(CC, "data", paste0("CellChatDB.", Sys.getenv("SPECIES","human"), ".rda")), envir=e); DB <- get(ls(e)[1], e)
 
-f <- Sys.getenv("FIX", "/scratch/mdra00001/tmp/opencode/data/humanSkin.rda")
+f <- Sys.getenv("FIX", "data/humanSkin.rda")
 NB <- as.integer(Sys.getenv("NB","10")); MAXLR <- as.integer(Sys.getenv("MAXLR","0"))
 raw <- new.env(); load(f, envir=raw); o <- raw[[ls(raw)[1]]]
 counts <- o$data

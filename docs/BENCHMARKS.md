@@ -252,9 +252,9 @@ Three things the runner enforces rather than assumes:
   `bench_visium.R`, `bench_more_datasets.R` -- because each of their numbers is quoted somewhere,
   so "was the host quiet" is a question about all of them and not only the two headline fixtures.
   This was added after
-  finding that it had to be: an unrelated `python3 gen_stats_vectors.py`
-  in another project in the same account had been running at 98 % CPU for 51 hours, and the R
-  median on human skin moved from
+  finding that it had to be: a runaway job belonging to an unrelated project in the same
+  account had been holding a core at 98 % CPU for 51 hours, and the R median on human skin
+  moved from
   93 s to 108 s between two runs of byte-identical code. Nothing in the artifacts said why. A
   refused run writes a `<output>.refused.json` recording the per-core busy fractions, so a
   declined measurement leaves evidence rather than silence. The fractions are recorded in

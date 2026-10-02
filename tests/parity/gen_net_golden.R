@@ -3,7 +3,7 @@
 # Prob/Pval fixtures.
 suppressWarnings(suppressMessages({library(reshape2); library(dplyr)}))
 
-CC <- Sys.getenv("CELLCHAT_SRC", "/scratch/mdra00001/tmp/opencode/CellChat")
+CC <- Sys.getenv("CELLCHAT_SRC", "../CellChat")
 env <- new.env()
 source(file.path(CC, "R", "modeling.R"), local = env)
 source(file.path(CC, "R", "analysis.R"), local = env)

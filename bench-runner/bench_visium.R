@@ -144,8 +144,8 @@ if (!isTRUE(host$verdict$ok) && !isTRUE(host$allowed)) {
   writeLines(j_val(refusal_record(host)), paste0(OUT, ".refused.json"))
   quit(status = 3L)
 }
-VISIUM <- Sys.getenv("VISIUM", "/scratch/mdra00001/tmp/opencode/data/visium.rds")
-CC <- Sys.getenv("CELLCHAT_SRC", "/scratch/mdra00001/tmp/opencode/CellChat")
+VISIUM <- Sys.getenv("VISIUM", "data/visium.rds")
+CC <- Sys.getenv("CELLCHAT_SRC", "../CellChat")
 DBDIR <- Sys.getenv("CELLCHATRS_DB", "tests/fixtures/db_human")
 THREADS <- as.integer(Sys.getenv("CELLCHATRS_THREADS", "8"))
 

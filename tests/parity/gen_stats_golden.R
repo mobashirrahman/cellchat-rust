@@ -16,7 +16,7 @@
 #
 # Requires: collapse 2.1.8 (the version this project validated against).
 
-.libPaths("/scratch/mdra00001/cellchat-rust/.rlib")
+.libPaths(".rlib")
 suppressMessages(library(collapse))
 stopifnot(identical(RNGkind()[1], "Mersenne-Twister"))
 

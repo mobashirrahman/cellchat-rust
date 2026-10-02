@@ -129,7 +129,7 @@ mem_available_mb <- function() {
 }
 
 opt <- parse_args()
-FIXTURE <- opt$fixture %||% "/scratch/mdra00001/tmp/opencode/data/humanSkin.rda"
+FIXTURE <- opt$fixture %||% file.path(Sys.getenv("CELLCHATRS_DATA", "data"), "humanSkin.rda")
 NBOOT <- as.integer(opt$nboot %||% "100")
 REPEATS <- as.integer(opt$repeats %||% "5")
 WARMUP <- as.integer(opt$warmup %||% "1")
@@ -155,7 +155,7 @@ if (!isTRUE(host$verdict$ok) && !isTRUE(host$allowed)) {
   writeLines(j_val(refusal_record(host)), paste0(OUT, ".refused.json"))
   quit(status = 3L)
 }
-CC <- Sys.getenv("CELLCHAT_SRC", "/scratch/mdra00001/tmp/opencode/CellChat")
+CC <- Sys.getenv("CELLCHAT_SRC", "../CellChat")
 DBDIR <- Sys.getenv("CELLCHATRS_DB", "tests/fixtures/db_human")
 
 ## --- upstream reference env + class (same arrangement as tutorial_repro.R, q.v. for why the

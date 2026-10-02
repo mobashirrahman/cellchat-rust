@@ -40,7 +40,7 @@ ns <- asNamespace("cellchatrs")
 ## for nothing -- instead it recomputes the expectation from upstream's NAMESPACE minus the
 ## exclusion list, so a name added upstream in the pinned tree is noticed rather than silently
 ## uncovered.
-up <- readLines("/scratch/mdra00001/tmp/opencode/CellChat/NAMESPACE")
+up <- readLines(file.path(Sys.getenv("CELLCHAT_SRC", "../CellChat"), "NAMESPACE"))
 up <- sub("^export\\((.*)\\)$", "\\1", grep("^export\\(", up, value = TRUE))
 up <- unique(unlist(strsplit(up, ","))); up <- trimws(gsub("\"", "", up))
 shim <- ls(ns)
@@ -100,7 +100,7 @@ cmp("all delegated names reach the pinned upstream", length(bad) == 0L,
 ## The only delegated names whose whole contract fits in one dependency-free call. Fixed vectors
 ## with exact answers (0.5 and 4 for triMean/geometricMean are not accidental: they are values whose
 ## decimal text round-trips, so a formatting-level disagreement cannot hide behind them).
-CC <- Sys.getenv("CELLCHAT_SRC", "/scratch/mdra00001/tmp/opencode/CellChat")
+CC <- Sys.getenv("CELLCHAT_SRC", "../CellChat")
 UPE <- new.env(parent = globalenv())
 for (p in c("Matrix", "collapse", "dplyr", "future", "rlang")) {
   suppressWarnings(suppressMessages(requireNamespace(p, quietly = TRUE)))

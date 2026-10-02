@@ -3,7 +3,7 @@
 # the pinned commit.
 suppressWarnings(suppressMessages({library(Matrix); library(collapse); library(dplyr)}))
 
-CC <- Sys.getenv("CELLCHAT_SRC", "/scratch/mdra00001/tmp/opencode/CellChat")
+CC <- Sys.getenv("CELLCHAT_SRC", "../CellChat")
 env <- new.env()
 for (f in c("modeling.R", "utilities.R", "database.R")) {
   sys.source(file.path(CC, "R", f), envir = env, keep.source = FALSE)

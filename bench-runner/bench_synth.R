@@ -155,7 +155,7 @@ N_LR <- 200L
 N_GENES <- 320L
 HEADROOM_FACTOR <- 3.0
 
-CC <- Sys.getenv("CELLCHAT_SRC", "/scratch/mdra00001/tmp/opencode/CellChat")
+CC <- Sys.getenv("CELLCHAT_SRC", "../CellChat")
 
 ## Upstream reference env (function bodies only; class globally, per tutorial_repro.R).
 UP <- new.env(parent = globalenv())

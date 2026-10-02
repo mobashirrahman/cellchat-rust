@@ -46,9 +46,9 @@ suppressWarnings(suppressMessages({
 ## reporting a class-lookup failure for a package it never loaded.
 suppressWarnings(suppressMessages(library(cellchatrs)))
 
-CC <- Sys.getenv("CELLCHAT_SRC", "/scratch/mdra00001/tmp/opencode/CellChat")
+CC <- Sys.getenv("CELLCHAT_SRC", "../CellChat")
 DBDIR <- Sys.getenv("CELLCHATRS_DB", "tests/fixtures/db_human")
-VISIUM <- Sys.getenv("VISIUM", "/scratch/mdra00001/tmp/opencode/data/visium.rds")
+VISIUM <- Sys.getenv("VISIUM", "data/visium.rds")
 OUT <- "bench-runner/results/spatial_divergence.json"
 NBOOT <- as.integer(Sys.getenv("NBOOT", "10"))
 

@@ -214,6 +214,19 @@ jobs:
         env:
           CELLCHAT_SRC: ${{ github.workspace }}/${{ env.UPSTREAM_PATH }}
         run: sh scripts/gen_fixtures.sh
+      - name: fetch the tutorial fixture
+        # `tutorial_repro.R` reproduces the published vignette end to end, and that vignette begins
+        # from the authors' human-skin object. It is not vendored here (13 MB) and does not live in
+        # the upstream repo, so without this step the gate fails on a missing file instead of on a
+        # parity break -- which is a worse way to learn the truth. Pinned to the exact file id
+        # rather than the article page, because the article's file listing can change underneath us;
+        # the size assertion is the tripwire if it ever does.
+        run: |
+          set -euo pipefail
+          mkdir -p data
+          curl -fsSL -o data/humanSkin.rda https://ndownloader.figshare.com/files/42997198
+          test "$(stat -c%s data/humanSkin.rda)" = "13426240" \
+            || { echo "::error::humanSkin.rda is not the expected 13426240 bytes"; exit 1; }
       - name: build the standalone CLI
         # `check_cli.R` deliberately does not build the binary itself: the gate has to exercise the
         # artifact a user would install, not one compiled by the test it is testing.
@@ -284,6 +297,19 @@ jobs:
         env:
           CELLCHAT_SRC: ${{ github.workspace }}/${{ env.UPSTREAM_PATH }}
         run: sh scripts/gen_fixtures.sh
+      - name: fetch the tutorial fixture
+        # `tutorial_repro.R` reproduces the published vignette end to end, and that vignette begins
+        # from the authors' human-skin object. It is not vendored here (13 MB) and does not live in
+        # the upstream repo, so without this step the gate fails on a missing file instead of on a
+        # parity break -- which is a worse way to learn the truth. Pinned to the exact file id
+        # rather than the article page, because the article's file listing can change underneath us;
+        # the size assertion is the tripwire if it ever does.
+        run: |
+          set -euo pipefail
+          mkdir -p data
+          curl -fsSL -o data/humanSkin.rda https://ndownloader.figshare.com/files/42997198
+          test "$(stat -c%s data/humanSkin.rda)" = "13426240" \
+            || { echo "::error::humanSkin.rda is not the expected 13426240 bytes"; exit 1; }
       - name: emit parity.json
         env:
           CELLCHAT_SRC: ${{ github.workspace }}/${{ env.UPSTREAM_PATH }}

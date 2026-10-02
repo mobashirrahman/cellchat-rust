@@ -8,7 +8,7 @@
 # Usage:  sh scripts/gen_fixtures.sh
 set -e
 cd "$(dirname "$0")/.."
-CC="${CELLCHAT_SRC:-/scratch/mdra00001/tmp/opencode/CellChat}"
+CC="${CELLCHAT_SRC:-../CellChat}"
 if [ ! -d "$CC/R" ]; then
   echo "pinned upstream not found at $CC; set CELLCHAT_SRC" >&2
   exit 1
