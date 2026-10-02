@@ -1,0 +1,12 @@
+Package: BiocGenerics
+Type: Package
+Title: Test-Harness Shim for Bioconductor's BiocGenerics
+Version: 0.1.0
+Description: >
+  A deliberately minimal stand-in for the Bioconductor package of the same name, used only
+  by the parity generators in tests/parity. Upstream CellChat calls exactly one function
+  from it, BiocGenerics::as.data.frame, and only in a code path where its input is already
+  a data.frame -- so the call is a no-op coercion. Reproducing it requires no Bioconductor.
+  Nothing in r-core or in the cellchatrs package depends on this.
+License: GPL-3
+Encoding: UTF-8

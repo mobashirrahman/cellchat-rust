@@ -1,0 +1,17 @@
+{
+  "what": "exact k-d tree vs BiocNeighbors AnnoyParam, on the authors' mouse cortex visium data",
+  "upstream": { "repo": "jinworks/CellChat", "commit": "75253cd0c9e68410e6e721a6d3a0419a1d7e358f", "version": "2.2.0.9001" },
+  "data": { "spots": 1073, "genes": 648, "signalling_genes": 433, "lr_pairs": 437, "groups": 8, "nboot": 10, "interaction_range": 1000, "contact_range": 65, "ratio": 1, "tol": 0, "k_min": 10 },
+  "d_spatial": {
+    "exact_vs_annoy1": {"agree": 8, "total": 64, "differ": 42, "nan_versus_value": 0, "both_nan": 14, "max_rel_diff": 0.028223348595756165 },
+    "exact_vs_annoy2": {"agree": 8, "total": 64, "differ": 42, "nan_versus_value": 0, "both_nan": 14, "max_rel_diff": 0.028223348595756165 },
+    "annoy1_vs_annoy2": {"agree": 50, "total": 64, "differ": 0, "nan_versus_value": 0, "both_nan": 14, "max_rel_diff": 0 }
+  },
+  "prob": {
+    "exact_vs_annoy1": {"differ": 1682, "total": 8576, "fraction": 0.19612873134328357, "max_abs_diff": 0.001774885936636432, "max_diff_over_peak": 0.0099863180480149714 },
+    "annoy1_vs_annoy2": {"differ": 0, "total": 8576, "fraction": 0, "max_abs_diff": 0, "max_diff_over_peak": 0 }
+  },
+  "unfiltered_lrsig": { "total": 437, "resolvable": 134, "exact_error": "subscript out of bounds", "upstream_error": "subscript out of bounds", "errors_identical": true },
+  "seconds": { "exact_d_spatial": 0.0071287155151367188, "annoy1_d_spatial": 2.2971367835998535, "annoy2_d_spatial": 1.3415751457214355 }
+}
+

@@ -1,0 +1,16 @@
+# cellchatrs exported CellChatDB -- see tests/parity/export_db.R
+species	mouse
+upstream_commit	75253cd0c9e68410e6e721a6d3a0419a1d7e358f
+rda_md5	54dd665a82cc659a00a821345b0ce3ef
+n_interactions	3379
+n_complexes	337
+n_cofactors	33
+n_symbols	25519
+annotation_levels	Secreted Signaling | ECM-Receptor | Non-protein Signaling | Cell-Cell Contact
+nlr1	2717
+md5_interactions	fa5d3e84f0db7f977cfdf4c59b507b0b
+md5_complexes	fcddc7ac0a6d69665d7ca34eb4aa046b
+md5_cofactors	f8881499ca12ad9ffb4e2b28ddee1a5a
+md5_symbols	58da0482c06e478f263a358c86dfc233
+md5_extract_gene	a50da13b01bc7b53a9d472333fdb1476
+n_extract_gene	1503

@@ -1,0 +1,382 @@
+n_cases	11
+case	weight_degenerate
+meta	weight_degenerate	weight	5.0000000000000003e-02	one,zero,neg,two	4	4
+levels	weight_degenerate	g1,g2,g3,g10
+sources	weight_degenerate	-
+targets	weight_degenerate	-
+prob	weight_degenerate	2.5e-01	0e+00	0e+00	0e+00	2.5e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	-5e-01	0e+00	0e+00	0e+00	-5e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	5e-01	5e-01	0e+00	0e+00	5e-01	5e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00
+pval	weight_degenerate	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02
+original	weight_degenerate	5e-01	0e+00	-1e+00	2e+00
+scaled	weight_degenerate	1.4426950408889634e+00	0e+00	0e+00	1.5869645449778598e+00
+flagged	weight_degenerate	4
+values_assign	weight_degenerate	1.5869645449778598e+00
+position	weight_degenerate	1
+order	weight_degenerate	3,2,1,4
+case	weight_three_degenerate
+meta	weight_three_degenerate	weight	5.0000000000000003e-02	d1,d2,d3,ok1,ok2	4	5
+levels	weight_three_degenerate	g1,g2,g3,g10
+sources	weight_three_degenerate	-
+targets	weight_three_degenerate	-
+prob	weight_three_degenerate	1e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	5e-01	5e-01	5e-01	0e+00	5e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	1e+00	5e-01	5e-01	0e+00	5e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	1.0000000000000001e-01	1.0000000000000001e-01	0e+00	0e+00	1.0000000000000001e-01	1.0000000000000001e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	2e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00
+pval	weight_three_degenerate	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02
+original	weight_three_degenerate	1e+00	2e+00	2.5e+00	4.0000000000000002e-01	2e+00
+scaled	weight_three_degenerate	1.2004923347310208e+00	1.3460065571226596e+00	1.6370350019059372e+00	1.0913566679372915e+00	1.4915207795142984e+00
+flagged	weight_three_degenerate	1,2,3,5
+values_assign	weight_three_degenerate	1.2004923347310208e+00,1.3460065571226596e+00,1.4915207795142984e+00,1.6370350019059372e+00
+position	weight_three_degenerate	1,2,4,3
+order	weight_three_degenerate	4,1,2,5,3
+case	weight_all_degenerate
+meta	weight_all_degenerate	weight	5.0000000000000003e-02	a,b,c	4	3
+levels	weight_all_degenerate	g1,g2,g3,g10
+sources	weight_all_degenerate	-
+targets	weight_all_degenerate	-
+prob	weight_all_degenerate	5e-01	5e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	1e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	2.5e-01	2.5e-01	2.5e-01	0e+00	2.5e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00
+pval	weight_all_degenerate	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02
+error	weight_all_degenerate	'from' must be a finite number
+case	thresh_cuts
+meta	thresh_cuts	weight	5.0000000000000003e-02	p1,p2,p3	4	3
+levels	thresh_cuts	g1,g2,g3,g10
+sources	thresh_cuts	-
+targets	thresh_cuts	-
+prob	thresh_cuts	1e+00	2e+00	3e+00	4e+00	5e+00	6e+00	7e+00	8e+00	9e+00	1e+01	1.1e+01	1.2e+01	1.3e+01	1.4e+01	1.5e+01	1.6e+01	1.0000000000000001e-01	0e+00	0e+00	0e+00	2.0000000000000001e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	3e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00
+pval	thresh_cuts	1e-02	4.0000000000000001e-02	5.9999999999999998e-02	2.0000000000000001e-01	1e-02	1e-02	2.9999999999999999e-01	1e-02	5.9999999999999998e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02
+original	thresh_cuts	1.13e+02	3.0000000000000004e-01	3e+00
+scaled	thresh_cuts	1.2458753176238062e+00	8.305835450825374e-01	9.1364189959079123e-01
+flagged	thresh_cuts	1,3
+values_assign	thresh_cuts	9.1364189959079123e-01,1.2458753176238062e+00
+position	thresh_cuts	2,1
+order	thresh_cuts	2,3,1
+case	count_measure
+meta	count_measure	count	5.0000000000000003e-02	p1,p2,p3	4	3
+levels	count_measure	g1,g2,g3,g10
+sources	count_measure	-
+targets	count_measure	-
+prob	count_measure	1e+00	0e+00	0e+00	0e+00	2e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	2.5e-01	2.5e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	3e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00
+pval	count_measure	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02
+original	count_measure	2e+00	2e+00	1e+00
+scaled	count_measure	2e+00	2e+00	1e+00
+flagged	count_measure	
+values_assign	count_measure	-
+position	count_measure	-
+order	count_measure	3,1,2
+case	sources_filter
+meta	sources_filter	weight	5.0000000000000003e-02	p1,p2	4	2
+levels	sources_filter	g1,g2,g3,g10
+sources	sources_filter	g1,g10
+targets	sources_filter	-
+prob	sources_filter	1e+00	2e+00	3e+00	4e+00	5e+00	6e+00	7e+00	8e+00	9e+00	1e+01	1.1e+01	1.2e+01	1.3e+01	1.4e+01	1.5e+01	1.6e+01	1e+00	0e+00	0e+00	0e+00	1e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00
+pval	sources_filter	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02
+original	sources_filter	6.8e+01	2e+00
+scaled	sources_filter	-3.5549170775537081e-01	-2.6069391902060529e-01
+flagged	sources_filter	1,2
+values_assign	sources_filter	-2.6069391902060529e-01,-3.5549170775537081e-01
+position	sources_filter	2,1
+order	sources_filter	2,1
+case	targets_filter
+meta	targets_filter	weight	5.0000000000000003e-02	p1,p2	4	2
+levels	targets_filter	g1,g2,g3,g10
+sources	targets_filter	-
+targets	targets_filter	g1,g2
+prob	targets_filter	1e+00	2e+00	3e+00	4e+00	5e+00	6e+00	7e+00	8e+00	9e+00	1e+01	1.1e+01	1.2e+01	1.3e+01	1.4e+01	1.5e+01	1.6e+01	1e+00	0e+00	0e+00	0e+00	0e+00	1e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00
+pval	targets_filter	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02
+original	targets_filter	3.6e+01	2e+00
+scaled	targets_filter	-4.1858296991343541e-01	-3.0696084460318601e-01
+flagged	targets_filter	1,2
+values_assign	targets_filter	-3.0696084460318601e-01,-4.1858296991343541e-01
+position	targets_filter	2,1
+order	targets_filter	2,1
+case	both_filters
+meta	both_filters	weight	5.0000000000000003e-02	p1,p2,p3	4	3
+levels	both_filters	g1,g2,g3,g10
+sources	both_filters	g1
+targets	both_filters	g2
+prob	both_filters	1e+00	2e+00	3e+00	4e+00	5e+00	6e+00	7e+00	8e+00	9e+00	1e+01	1.1e+01	1.2e+01	1.3e+01	1.4e+01	1.5e+01	1.6e+01	1e+00	1e+00	0e+00	0e+00	1e+00	1e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	2e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00
+pval	both_filters	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02
+original	both_filters	5e+00	1e+00	0e+00
+scaled	both_filters	0e+00	0e+00	0e+00
+flagged	both_filters	1,2
+values_assign	both_filters	0e+00,0e+00
+position	both_filters	2,1
+order	both_filters	3,2,1
+case	all_zero
+meta	all_zero	weight	5.0000000000000003e-02	p1,p2	4	2
+levels	all_zero	g1,g2,g3,g10
+sources	all_zero	-
+targets	all_zero	-
+prob	all_zero	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00
+pval	all_zero	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02
+error	all_zero	No inferred communications for the input!
+case	thresh_empties
+meta	thresh_empties	weight	5.0000000000000003e-02	p1,p2	4	2
+levels	thresh_empties	g1,g2,g3,g10
+sources	thresh_empties	-
+targets	thresh_empties	-
+prob	thresh_empties	1e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	2e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00
+pval	thresh_empties	5e-01	5e-01	5e-01	5e-01	5e-01	5e-01	5e-01	5e-01	5e-01	5e-01	5e-01	5e-01	5e-01	5e-01	5e-01	5e-01	5e-01	5e-01	5e-01	5e-01	5e-01	5e-01	5e-01	5e-01	5e-01	5e-01	5e-01	5e-01	5e-01	5e-01	5e-01	5e-01
+error	thresh_empties	No inferred communications for the input!
+case	order_ties
+meta	order_ties	count	5.0000000000000003e-02	a,b,c,d,e	4	5
+levels	order_ties	g1,g2,g3,g10
+sources	order_ties	-
+targets	order_ties	-
+prob	order_ties	1e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	1e+00	1e+00	1e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	5e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	7e+00	7e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	2e+00	2e+00	2e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00
+pval	order_ties	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02
+original	order_ties	1e+00	3e+00	1e+00	2e+00	3e+00
+scaled	order_ties	1e+00	3e+00	1e+00	2e+00	3e+00
+flagged	order_ties	
+values_assign	order_ties	-
+position	order_ties	-
+order	order_ties	1,3,4,2,5
+n_cmp_cases	9
+cmp_case	two_disjoint
+cmp_meta	two_disjoint	weight	5.0000000000000003e-02	2	A,B,C,D;B,X,C
+cmp_levels	two_disjoint	g1,g2,g3,g10
+cmp_sources	two_disjoint	-
+cmp_targets	two_disjoint	-
+cmp_prob	two_disjoint#1	2.5e-01	0e+00	0e+00	0e+00	0e+00	2.5e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	2.5e-01	0e+00	0e+00	0e+00	0e+00	2.5e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	2.5e-01	0e+00	0e+00	0e+00	0e+00	2.5e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	2.5e-01	0e+00	0e+00	0e+00	0e+00	2.5e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00
+cmp_pval	two_disjoint#1	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02
+cmp_prob	two_disjoint#2	5e-01	0e+00	0e+00	0e+00	0e+00	5e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	1.0000000000000001e-01	0e+00	0e+00	0e+00	0e+00	1.0000000000000001e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	2.0000000000000001e-01	0e+00	0e+00	0e+00	0e+00	2.0000000000000001e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00
+cmp_pval	two_disjoint#2	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02
+cmp_names_all	two_disjoint	A,B,C,D,X
+cmp_values_assign	two_disjoint	1.5869645449778598e+00
+cmp_position	two_disjoint	1
+cmp_order	two_disjoint	5,2,3,1,4
+cmp_original	two_disjoint#1	5e-01	5e-01	5e-01	5e-01
+cmp_scaled	two_disjoint#1	1.4426950408889634e+00	1.4426950408889634e+00	1.4426950408889634e+00	1.4426950408889634e+00
+cmp_flagged	two_disjoint#1	-
+cmp_contrib	two_disjoint#1	5e-01	5e-01	5e-01	5e-01	0e+00
+cmp_scaled_all	two_disjoint#1	1.4426950408889634e+00	1.4426950408889634e+00	1.4426950408889634e+00	1.4426950408889634e+00	0e+00
+cmp_names_ordered	two_disjoint#1	X,B,C,A,D
+cmp_original	two_disjoint#2	1e+00	2.0000000000000001e-01	4.0000000000000002e-01
+cmp_scaled	two_disjoint#2	1.5869645449778598e+00	6.2133493455961186e-01	1.0913566679372915e+00
+cmp_flagged	two_disjoint#2	1
+cmp_contrib	two_disjoint#2	0e+00	1e+00	4.0000000000000002e-01	0e+00	2.0000000000000001e-01
+cmp_scaled_all	two_disjoint#2	0e+00	1.5869645449778598e+00	1.0913566679372915e+00	0e+00	6.2133493455961186e-01
+cmp_names_ordered	two_disjoint#2	X,B,C,A,D
+cmp_ratio	two_disjoint#1	0e+00	2e+00	8.0000000000000004e-01	0e+00	Inf
+cmp_relative	two_disjoint#1	0e+00	2e+00	8.0000000000000004e-01	0e+00	Inf
+cmp_object_names	two_disjoint	d1,d2
+cmp_case	pooled_degenerate
+cmp_meta	pooled_degenerate	weight	5.0000000000000003e-02	2	one,two,three,four;one,X,three,four
+cmp_levels	pooled_degenerate	g1,g2,g3,g10
+cmp_sources	pooled_degenerate	-
+cmp_targets	pooled_degenerate	-
+cmp_prob	pooled_degenerate#1	5e-01	0e+00	0e+00	0e+00	0e+00	5e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	1e+00	0e+00	0e+00	0e+00	0e+00	1e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	2.5e-01	0e+00	0e+00	0e+00	0e+00	2.5e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	1.25e-01	0e+00	0e+00	0e+00	0e+00	1.25e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00
+cmp_pval	pooled_degenerate#1	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02
+cmp_prob	pooled_degenerate#2	5e-01	0e+00	0e+00	0e+00	0e+00	5e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	1.5e+00	0e+00	0e+00	0e+00	0e+00	1.5e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	2.5e-01	0e+00	0e+00	0e+00	0e+00	2.5e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	1.25e-01	0e+00	0e+00	0e+00	0e+00	1.25e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00
+cmp_pval	pooled_degenerate#2	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02
+cmp_names_all	pooled_degenerate	one,two,three,four,X
+cmp_values_assign	pooled_degenerate	1.5869645449778598e+00,1.7793238837630547e+00,1.9716832225482499e+00,2.1640425613334449e+00
+cmp_position	pooled_degenerate	1,3,2,4
+cmp_order	pooled_degenerate	5,4,3,1,2
+cmp_original	pooled_degenerate#1	1e+00	2e+00	5e-01	2.5e-01
+cmp_scaled	pooled_degenerate#1	1.5869645449778598e+00	1.9716832225482499e+00	1.4426950408889634e+00	7.2134752044448169e-01
+cmp_flagged	pooled_degenerate#1	1,2
+cmp_contrib	pooled_degenerate#1	1e+00	2e+00	5e-01	2.5e-01	0e+00
+cmp_scaled_all	pooled_degenerate#1	1.5869645449778598e+00	1.9716832225482499e+00	1.4426950408889634e+00	7.2134752044448169e-01	0e+00
+cmp_names_ordered	pooled_degenerate#1	X,four,three,one,two
+cmp_original	pooled_degenerate#2	1e+00	3e+00	5e-01	2.5e-01
+cmp_scaled	pooled_degenerate#2	1.7793238837630547e+00	2.1640425613334449e+00	1.4426950408889634e+00	7.2134752044448169e-01
+cmp_flagged	pooled_degenerate#2	1,2
+cmp_contrib	pooled_degenerate#2	1e+00	0e+00	5e-01	2.5e-01	3e+00
+cmp_scaled_all	pooled_degenerate#2	1.7793238837630547e+00	0e+00	1.4426950408889634e+00	7.2134752044448169e-01	2.1640425613334449e+00
+cmp_names_ordered	pooled_degenerate#2	X,four,three,one,two
+cmp_ratio	pooled_degenerate#1	1e+00	0e+00	1e+00	1e+00	Inf
+cmp_relative	pooled_degenerate#1	1e+00	0e+00	1e+00	1e+00	Inf
+cmp_object_names	pooled_degenerate	d1,d2
+cmp_case	three_comparisons
+cmp_meta	three_comparisons	weight	5.0000000000000003e-02	3	a,b,c,d;a,b,e,f;a,g,h,i
+cmp_levels	three_comparisons	g1,g2,g3,g10
+cmp_sources	three_comparisons	-
+cmp_targets	three_comparisons	-
+cmp_prob	three_comparisons#1	1.0000000000000001e-01	0e+00	0e+00	0e+00	0e+00	1.0000000000000001e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	2.0000000000000001e-01	0e+00	0e+00	0e+00	0e+00	2.0000000000000001e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	2.9999999999999999e-01	0e+00	0e+00	0e+00	0e+00	2.9999999999999999e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	4.0000000000000002e-01	0e+00	0e+00	0e+00	0e+00	4.0000000000000002e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00
+cmp_pval	three_comparisons#1	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02
+cmp_prob	three_comparisons#2	2.0000000000000001e-01	0e+00	0e+00	0e+00	0e+00	2.0000000000000001e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	4.0000000000000002e-01	0e+00	0e+00	0e+00	0e+00	4.0000000000000002e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	5.9999999999999998e-01	0e+00	0e+00	0e+00	0e+00	5.9999999999999998e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	8.0000000000000004e-01	0e+00	0e+00	0e+00	0e+00	8.0000000000000004e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00
+cmp_pval	three_comparisons#2	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02
+cmp_prob	three_comparisons#3	2.9999999999999999e-01	0e+00	0e+00	0e+00	0e+00	2.9999999999999999e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	5.9999999999999998e-01	0e+00	0e+00	0e+00	0e+00	5.9999999999999998e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	9.0000000000000002e-01	0e+00	0e+00	0e+00	0e+00	9.0000000000000002e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	1.2e+00	0e+00	0e+00	0e+00	0e+00	1.2e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00
+cmp_pval	three_comparisons#3	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02
+cmp_names_all	three_comparisons	a,b,c,d,e,f,g,h,i
+cmp_values_assign	three_comparisons	4.9295621294970067e+00,5.3777041412694615e+00,5.8258461530419172e+00,6.273988164814372e+00,6.7221301765868269e+00
+cmp_position	three_comparisons	1,3,2,4,5
+cmp_order	three_comparisons	9,8,7,1,5,6,2,3,4
+cmp_original	three_comparisons#1	2.0000000000000001e-01	4.0000000000000002e-01	5.9999999999999998e-01	8.0000000000000004e-01
+cmp_scaled	three_comparisons#1	6.2133493455961186e-01	1.0913566679372915e+00	1.9576151889712174e+00	4.481420117724551e+00
+cmp_flagged	three_comparisons#1	-
+cmp_contrib	three_comparisons#1	2.0000000000000001e-01	4.0000000000000002e-01	5.9999999999999998e-01	8.0000000000000004e-01	0e+00	0e+00	0e+00	0e+00	0e+00
+cmp_scaled_all	three_comparisons#1	6.2133493455961186e-01	1.0913566679372915e+00	1.9576151889712174e+00	4.481420117724551e+00	0e+00	0e+00	0e+00	0e+00	0e+00
+cmp_names_ordered	three_comparisons#1	i,h,g,a,e,f,b,c,d
+cmp_original	three_comparisons#2	4.0000000000000002e-01	8.0000000000000004e-01	1.2e+00	1.6000000000000001e+00
+cmp_scaled	three_comparisons#2	1.0913566679372915e+00	4.481420117724551e+00	4.9295621294970067e+00	5.8258461530419172e+00
+cmp_flagged	three_comparisons#2	3,4
+cmp_contrib	three_comparisons#2	4.0000000000000002e-01	8.0000000000000004e-01	0e+00	0e+00	1.2e+00	1.6000000000000001e+00	0e+00	0e+00	0e+00
+cmp_scaled_all	three_comparisons#2	1.0913566679372915e+00	4.481420117724551e+00	0e+00	0e+00	4.9295621294970067e+00	5.8258461530419172e+00	0e+00	0e+00	0e+00
+cmp_names_ordered	three_comparisons#2	i,h,g,a,e,f,b,c,d
+cmp_original	three_comparisons#3	5.9999999999999998e-01	1.2e+00	1.8e+00	2.3999999999999999e+00
+cmp_scaled	three_comparisons#3	1.9576151889712174e+00	5.3777041412694615e+00	6.273988164814372e+00	6.7221301765868269e+00
+cmp_flagged	three_comparisons#3	2,3,4
+cmp_contrib	three_comparisons#3	5.9999999999999998e-01	0e+00	0e+00	0e+00	0e+00	0e+00	1.2e+00	1.8e+00	2.3999999999999999e+00
+cmp_scaled_all	three_comparisons#3	1.9576151889712174e+00	0e+00	0e+00	0e+00	0e+00	0e+00	5.3777041412694615e+00	6.273988164814372e+00	6.7221301765868269e+00
+cmp_names_ordered	three_comparisons#3	i,h,g,a,e,f,b,c,d
+cmp_ratio	three_comparisons#1	2.9999999999999996e+00	0e+00	0e+00	0e+00	0e+00	0e+00	Inf	Inf	Inf
+cmp_relative	three_comparisons#1	3e+00	0e+00	0e+00	0e+00	0e+00	0e+00	Inf	Inf	Inf
+cmp_ratio	three_comparisons#2	2e+00	2e+00	0e+00	0e+00	Inf	Inf	0e+00	0e+00	0e+00
+cmp_relative	three_comparisons#2	2e+00	2e+00	0e+00	0e+00	Inf	Inf	0e+00	0e+00	0e+00
+cmp_object_names	three_comparisons	d1,d2,d3
+cmp_case	four_comparisons
+cmp_meta	four_comparisons	weight	5.0000000000000003e-02	4	a,b;a,c;a,d;a,e
+cmp_levels	four_comparisons	g1,g2,g3,g10
+cmp_sources	four_comparisons	-
+cmp_targets	four_comparisons	-
+cmp_prob	four_comparisons#1	1.0000000000000001e-01	0e+00	0e+00	0e+00	0e+00	1.0000000000000001e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	2.0000000000000001e-01	0e+00	0e+00	0e+00	0e+00	2.0000000000000001e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00
+cmp_pval	four_comparisons#1	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02
+cmp_prob	four_comparisons#2	2.0000000000000001e-01	0e+00	0e+00	0e+00	0e+00	2.0000000000000001e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	4.0000000000000002e-01	0e+00	0e+00	0e+00	0e+00	4.0000000000000002e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00
+cmp_pval	four_comparisons#2	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02
+cmp_prob	four_comparisons#3	2.9999999999999999e-01	0e+00	0e+00	0e+00	0e+00	2.9999999999999999e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	5.9999999999999998e-01	0e+00	0e+00	0e+00	0e+00	5.9999999999999998e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00
+cmp_pval	four_comparisons#3	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02
+cmp_prob	four_comparisons#4	4.0000000000000002e-01	0e+00	0e+00	0e+00	0e+00	4.0000000000000002e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	8.0000000000000004e-01	0e+00	0e+00	0e+00	0e+00	8.0000000000000004e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00
+cmp_pval	four_comparisons#4	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02
+cmp_names_all	four_comparisons	a,b,c,d,e
+cmp_values_assign	four_comparisons	4.9295621294970067e+00,6.7221301765868269e+00
+cmp_position	four_comparisons	1,2
+cmp_order	four_comparisons	5,1,4,3,2
+cmp_original	four_comparisons#1	2.0000000000000001e-01	4.0000000000000002e-01
+cmp_scaled	four_comparisons#1	6.2133493455961186e-01	1.0913566679372915e+00
+cmp_flagged	four_comparisons#1	-
+cmp_contrib	four_comparisons#1	2.0000000000000001e-01	4.0000000000000002e-01	0e+00	0e+00	0e+00
+cmp_scaled_all	four_comparisons#1	6.2133493455961186e-01	1.0913566679372915e+00	0e+00	0e+00	0e+00
+cmp_names_ordered	four_comparisons#1	e,a,d,c,b
+cmp_original	four_comparisons#2	4.0000000000000002e-01	8.0000000000000004e-01
+cmp_scaled	four_comparisons#2	1.0913566679372915e+00	4.481420117724551e+00
+cmp_flagged	four_comparisons#2	-
+cmp_contrib	four_comparisons#2	4.0000000000000002e-01	0e+00	8.0000000000000004e-01	0e+00	0e+00
+cmp_scaled_all	four_comparisons#2	1.0913566679372915e+00	0e+00	4.481420117724551e+00	0e+00	0e+00
+cmp_names_ordered	four_comparisons#2	e,a,d,c,b
+cmp_original	four_comparisons#3	5.9999999999999998e-01	1.2e+00
+cmp_scaled	four_comparisons#3	1.9576151889712174e+00	4.9295621294970067e+00
+cmp_flagged	four_comparisons#3	2
+cmp_contrib	four_comparisons#3	5.9999999999999998e-01	0e+00	0e+00	1.2e+00	0e+00
+cmp_scaled_all	four_comparisons#3	1.9576151889712174e+00	0e+00	0e+00	4.9295621294970067e+00	0e+00
+cmp_names_ordered	four_comparisons#3	e,a,d,c,b
+cmp_original	four_comparisons#4	8.0000000000000004e-01	1.6000000000000001e+00
+cmp_scaled	four_comparisons#4	4.481420117724551e+00	6.7221301765868269e+00
+cmp_flagged	four_comparisons#4	2
+cmp_contrib	four_comparisons#4	8.0000000000000004e-01	0e+00	0e+00	0e+00	1.6000000000000001e+00
+cmp_scaled_all	four_comparisons#4	4.481420117724551e+00	0e+00	0e+00	0e+00	6.7221301765868269e+00
+cmp_names_ordered	four_comparisons#4	e,a,d,c,b
+cmp_ratio	four_comparisons#1	4e+00	0e+00	0e+00	0e+00	Inf
+cmp_relative	four_comparisons#1	4e+00	0e+00	0e+00	0e+00	Inf
+cmp_ratio	four_comparisons#2	2.9999999999999996e+00	0e+00	0e+00	Inf	0e+00
+cmp_relative	four_comparisons#2	3e+00	0e+00	0e+00	Inf	0e+00
+cmp_ratio	four_comparisons#3	2e+00	0e+00	Inf	0e+00	0e+00
+cmp_relative	four_comparisons#3	2e+00	0e+00	Inf	0e+00	0e+00
+cmp_object_names	four_comparisons	d1,d2,d3,d4
+cmp_case	count_measure
+cmp_meta	count_measure	count	5.0000000000000003e-02	2	a,b,c;a,d,e
+cmp_levels	count_measure	g1,g2,g3,g10
+cmp_sources	count_measure	-
+cmp_targets	count_measure	-
+cmp_prob	count_measure#1	2.0000000000000001e-01	0e+00	0e+00	0e+00	0e+00	2.9999999999999999e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	4.0000000000000002e-01	0e+00	0e+00	0e+00	0e+00	4.0000000000000002e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	5.9999999999999998e-01	0e+00	0e+00	0e+00	0e+00	5.9999999999999998e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00
+cmp_pval	count_measure#1	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02
+cmp_prob	count_measure#2	9.0000000000000002e-01	0e+00	0e+00	0e+00	0e+00	1.0000000000000001e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	8.0000000000000004e-01	0e+00	0e+00	0e+00	0e+00	2.0000000000000001e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	6.9999999999999996e-01	0e+00	0e+00	0e+00	0e+00	2.9999999999999999e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00
+cmp_pval	count_measure#2	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02
+cmp_names_all	count_measure	a,b,c,d,e
+cmp_values_assign	count_measure	-
+cmp_position	count_measure	-
+cmp_order	count_measure	4,5,1,2,3
+cmp_original	count_measure#1	2e+00	2e+00	2e+00
+cmp_scaled	count_measure#1	2e+00	2e+00	2e+00
+cmp_flagged	count_measure#1	-
+cmp_contrib	count_measure#1	2e+00	2e+00	2e+00	0e+00	0e+00
+cmp_scaled_all	count_measure#1	2e+00	2e+00	2e+00	0e+00	0e+00
+cmp_names_ordered	count_measure#1	d,e,a,b,c
+cmp_original	count_measure#2	2e+00	2e+00	2e+00
+cmp_scaled	count_measure#2	2e+00	2e+00	2e+00
+cmp_flagged	count_measure#2	-
+cmp_contrib	count_measure#2	2e+00	0e+00	0e+00	2e+00	2e+00
+cmp_scaled_all	count_measure#2	2e+00	0e+00	0e+00	2e+00	2e+00
+cmp_names_ordered	count_measure#2	d,e,a,b,c
+cmp_ratio	count_measure#1	1e+00	0e+00	0e+00	Inf	Inf
+cmp_relative	count_measure#1	1e+00	0e+00	0e+00	Inf	Inf
+cmp_object_names	count_measure	d1,d2
+cmp_case	thresh_empties_second
+cmp_meta	thresh_empties_second	weight	5.0000000000000003e-02	2	a,b;a,b
+cmp_levels	thresh_empties_second	g1,g2,g3,g10
+cmp_sources	thresh_empties_second	-
+cmp_targets	thresh_empties_second	-
+cmp_prob	thresh_empties_second#1	5e-01	0e+00	0e+00	0e+00	0e+00	5e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	5e-01	0e+00	0e+00	0e+00	0e+00	5e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00
+cmp_pval	thresh_empties_second#1	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02
+cmp_prob	thresh_empties_second#2	5e-01	0e+00	0e+00	0e+00	0e+00	5e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	5e-01	0e+00	0e+00	0e+00	0e+00	5e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00
+cmp_pval	thresh_empties_second#2	9.0000000000000002e-01	9.0000000000000002e-01	9.0000000000000002e-01	9.0000000000000002e-01	9.0000000000000002e-01	9.0000000000000002e-01	9.0000000000000002e-01	9.0000000000000002e-01	9.0000000000000002e-01	9.0000000000000002e-01	9.0000000000000002e-01	9.0000000000000002e-01	9.0000000000000002e-01	9.0000000000000002e-01	9.0000000000000002e-01	9.0000000000000002e-01	9.0000000000000002e-01	9.0000000000000002e-01	9.0000000000000002e-01	9.0000000000000002e-01	9.0000000000000002e-01	9.0000000000000002e-01	9.0000000000000002e-01	9.0000000000000002e-01	9.0000000000000002e-01	9.0000000000000002e-01	9.0000000000000002e-01	9.0000000000000002e-01	9.0000000000000002e-01	9.0000000000000002e-01	9.0000000000000002e-01	9.0000000000000002e-01
+cmp_error	thresh_empties_second	No inferred communications for the input!
+cmp_case	filters
+cmp_meta	filters	weight	5.0000000000000003e-02	2	a,b,c;a,b,c
+cmp_levels	filters	g1,g2,g3,g10
+cmp_sources	filters	g1
+cmp_targets	filters	g2
+cmp_prob	filters#1	5e-01	0e+00	0e+00	0e+00	0e+00	5e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	4.0000000000000002e-01	0e+00	0e+00	0e+00	0e+00	4.0000000000000002e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	2.9999999999999999e-01	0e+00	0e+00	0e+00	0e+00	2.9999999999999999e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00
+cmp_pval	filters#1	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02
+cmp_prob	filters#2	2.0000000000000001e-01	0e+00	0e+00	0e+00	0e+00	2.0000000000000001e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	5.9999999999999998e-01	0e+00	0e+00	0e+00	0e+00	5.9999999999999998e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	1.0000000000000001e-01	0e+00	0e+00	0e+00	0e+00	1.0000000000000001e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00
+cmp_pval	filters#2	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02
+cmp_error	filters	No inferred communications for the input!
+cmp_case	order_ties
+cmp_meta	order_ties	weight	5.0000000000000003e-02	2	z,y,x,w;z,y,v,u
+cmp_levels	order_ties	g1,g2,g3,g10
+cmp_sources	order_ties	-
+cmp_targets	order_ties	-
+cmp_prob	order_ties#1	1e+00	0e+00	0e+00	0e+00	0e+00	1e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	1e+00	0e+00	0e+00	0e+00	0e+00	1e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	1e+00	0e+00	0e+00	0e+00	0e+00	1e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	1e+00	0e+00	0e+00	0e+00	0e+00	1e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00
+cmp_pval	order_ties#1	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02
+cmp_prob	order_ties#2	1e+00	0e+00	0e+00	0e+00	0e+00	1e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	1e+00	0e+00	0e+00	0e+00	0e+00	1e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	1e+00	0e+00	0e+00	0e+00	0e+00	1e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	1e+00	0e+00	0e+00	0e+00	0e+00	1e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00
+cmp_pval	order_ties#2	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02
+cmp_names_all	order_ties	z,y,x,w,v,u
+cmp_values_assign	order_ties	-1.5869645449778598e+00,-1.6694042616000861e+00,-1.7518439782223127e+00,-1.8342836948445391e+00,-1.9167234114667655e+00,-1.9991631280889921e+00,-2.0816028447112185e+00,-2.1640425613334449e+00
+cmp_position	order_ties	1,2,3,4,5,6,7,8
+cmp_order	order_ties	5,6,1,2,3,4
+cmp_original	order_ties#1	2e+00	2e+00	2e+00	2e+00
+cmp_scaled	order_ties#1	-1.5869645449778598e+00	-1.6694042616000861e+00	-1.7518439782223127e+00	-1.8342836948445391e+00
+cmp_flagged	order_ties#1	1,2,3,4
+cmp_contrib	order_ties#1	2e+00	2e+00	2e+00	2e+00	0e+00	0e+00
+cmp_scaled_all	order_ties#1	-1.5869645449778598e+00	-1.6694042616000861e+00	-1.7518439782223127e+00	-1.8342836948445391e+00	0e+00	0e+00
+cmp_names_ordered	order_ties#1	v,u,z,y,x,w
+cmp_original	order_ties#2	2e+00	2e+00	2e+00	2e+00
+cmp_scaled	order_ties#2	-1.9167234114667655e+00	-1.9991631280889921e+00	-2.0816028447112185e+00	-2.1640425613334449e+00
+cmp_flagged	order_ties#2	1,2,3,4
+cmp_contrib	order_ties#2	2e+00	2e+00	0e+00	0e+00	2e+00	2e+00
+cmp_scaled_all	order_ties#2	-1.9167234114667655e+00	-1.9991631280889921e+00	0e+00	0e+00	-2.0816028447112185e+00	-2.1640425613334449e+00
+cmp_names_ordered	order_ties#2	v,u,z,y,x,w
+cmp_ratio	order_ties#1	1e+00	1e+00	0e+00	0e+00	Inf	Inf
+cmp_relative	order_ties#1	1e+00	1e+00	0e+00	0e+00	Inf	Inf
+cmp_object_names	order_ties	d1,d2
+cmp_case	all_degenerate
+cmp_meta	all_degenerate	weight	5.0000000000000003e-02	2	one,two;one,two
+cmp_levels	all_degenerate	g1,g2,g3,g10
+cmp_sources	all_degenerate	-
+cmp_targets	all_degenerate	-
+cmp_prob	all_degenerate#1	5e-01	0e+00	0e+00	0e+00	0e+00	5e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	5e-01	0e+00	0e+00	0e+00	0e+00	5e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00
+cmp_pval	all_degenerate#1	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02
+cmp_prob	all_degenerate#2	5e-01	0e+00	0e+00	0e+00	0e+00	5e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	5e-01	0e+00	0e+00	0e+00	0e+00	5e-01	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00
+cmp_pval	all_degenerate#2	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02	1e-02
+cmp_error	all_degenerate	'from' must be a finite number
+relcase	collapse
+rel_num	collapse	1e+00	1.004e+00	1.04e+00	9.96e-01
+rel_den	collapse	1e+00	1e+00	1e+00	1e+00
+relative	collapse	1e+00	1e+00	1e+00	1e+00
+relcase	significant
+rel_num	significant	4.3200000000000002e-02	4.3200000000000001e-03	1.234e+03	9.8765e+04
+rel_den	significant	1e+00	1e+00	1e+00	1e+00
+relative	significant	4.0000000000000001e-02	4.0000000000000001e-03	1e+03	1e+05
+relcase	signs
+rel_num	signs	-2e+00	2e+00	-5e-01	5e-01
+rel_den	signs	1e+00	1e+00	1e+00	1e+00
+relative	signs	-2e+00	2e+00	-5e-01	5e-01
+relcase	zeros
+rel_num	zeros	0e+00	9.9999999999999998e-13	1e+12	0e+00
+rel_den	zeros	1e+00	1e+00	1e+00	9.9999999999999998e-13
+relative	zeros	0e+00	9.9999999999999998e-13	1e+12	0e+00
+relcase	zero_denominator
+rel_num	zero_denominator	1e+00	2e+00	3e+00
+rel_den	zero_denominator	1e+00	0e+00	0e+00
+relative	zero_denominator	1e+00	Inf	Inf
+relcase	padded
+rel_num	padded	5e-01	5e+01	5e+03
+rel_den	padded	1e+00	1e+00	1e+00
+relative	padded	5e-01	5e+01	5e+03

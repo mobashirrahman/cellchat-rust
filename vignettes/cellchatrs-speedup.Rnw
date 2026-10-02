@@ -1,0 +1,151 @@
+%\VignetteIndexEntry{cellchatrs: a drop-in CellChat accelerator}
+%\VignetteEngine{knitr::knitr}
+%\VignetteEncoding{UTF-8}
+\documentclass{article}
+\usepackage{amsmath}
+\title{cellchatrs: a drop-in accelerator for CellChat inference}
+\author{cellchat-rs authors}
+\begin{document}
+\maketitle
+
+\section{What this package is}
+
+\texttt{cellchatrs} re-implements CellChat's numeric inference kernel in Rust and
+overrides the corresponding R functions, so existing CellChat code runs unchanged and
+faster. Visualization and the Shiny app stay upstream R code. What follows uses only
+\texttt{cellchatrs}; parity against pinned upstream CellChat
+(commit \texttt{75253cd}, v2.2.0.9001) is established by the repository's test suite
+(418 differential comparisons, a 200-configuration matrix, metamorphic and fuzz suites --
+see \texttt{tests/parity/}), not re-proved here.
+
+<<setup, include=FALSE>>=
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+library(cellchatrs)
+@
+
+\section{A complete run on synthetic data}
+
+A tiny synthetic dataset -- 300 cells, 3 groups, 60 genes, 4 ligand-receptor pairs --
+exercises the whole accelerated path in seconds. Real-data timings are quoted in
+Section~\ref{sec:speedup} from pre-measured, protocol-bound runs, not from this chunk.
+
+<<synthetic>>=
+set.seed(11)
+nC <- 300L
+grp <- factor(rep(c("A", "B", "C"), each = 100))
+## Four real ligand-receptor pairs from the bundled database export, so the vignette exercises
+## genuine complex/cofactor resolution rather than toy names that match nothing. A synthetic pair
+## table (e.g. G1/G2) would resolve against no export: the kernel reads complexes from the pinned
+## CellChatDB export, and invented names make it raise "subscript out of bounds" for a missing
+## subunit -- which is the correct behaviour for names outside the database, and the wrong thing
+## for a vignette to demonstrate. Single-gene ligands and receptors with empty cofactor fields keep
+## the demo small while staying inside the real schema.
+dbix <- system.file("db", "human", "interactions.tsv", package = "cellchatrs")
+dblines <- strsplit(readLines(dbix), "\t", fixed = TRUE)
+is_simple <- vapply(dblines, function(f) {
+  ## Single genes only: complex names join subunits with underscores (`ACVR1_TGFBR1`), and the
+  ## `[,;]` test alone lets those through. A non-empty annotation is required too: pairs without
+  ## one have no pathway, and `computeCommunProbPathway` groups by pathway -- an empty grouping
+  ## variable fails downstream in `tapply()` with "arguments must have same length", which names
+  ## neither the pair nor the missing annotation.
+  nzchar(f[3]) && nzchar(f[4]) && !grepl("[,;_]", f[3]) && !grepl("[,;_]", f[4]) &&
+    !nzchar(f[5]) && !nzchar(f[6]) && !nzchar(f[7]) && !nzchar(f[8]) && nzchar(f[9])
+}, TRUE)
+pick <- Filter(function(f) f[[1]] != "", lapply(which(is_simple)[1:4], function(i) dblines[[i]]))
+genes <- paste0("G", seq_len(60))
+sig_genes <- unique(unlist(lapply(pick, function(f) c(f[3], f[4]))))
+genes[seq_along(sig_genes)] <- sig_genes
+X <- matrix(rpois(60L * nC, lambda = 2), nrow = 60,
+            dimnames = list(genes, paste0("c", seq_len(nC))))
+LRsig <- data.frame(
+  interaction_name = vapply(pick, `[[`, "", 1),
+  pathway_name = vapply(pick, `[[`, "", 2),
+  ligand = vapply(pick, `[[`, "", 3),
+  receptor = vapply(pick, `[[`, "", 4),
+  agonist = "", antagonist = "",
+  co_A_receptor = "", co_I_receptor = "",
+  annotation = vapply(pick, `[[`, "", 9),
+  row.names = vapply(pick, `[[`, "", 1),
+  stringsAsFactors = FALSE)
+DB <- list(complex = data.frame(),
+           cofactor = data.frame(),
+           interaction = LRsig,
+           geneInfo = data.frame(Symbol = genes))
+meta <- data.frame(labels = grp, row.names = colnames(X))
+cellchat <- createCellChat(object = log1p(X), meta = meta, group.by = "labels")
+cellchat@DB <- DB
+cellchat <- subsetData(cellchat)
+## Thresholds wide open, and stated as such: synthetic noise has no truly
+## over-expressed genes, so the tutorial defaults would keep zero pairs and the rest of
+## this vignette would run on an empty network. \texttt{thresh.p = 1} keeps every tested
+## gene; on real data (Section~\ref{sec:speedup}) the defaults apply.
+cellchat <- identifyOverExpressedGenes(cellchat, do.fast = FALSE, thresh.p = 1)
+cellchat <- identifyOverExpressedInteractions(cellchat)
+cellchat <- computeCommunProb(cellchat, type = "triMean", nboot = 10L, seed.use = 1L)
+cellchat <- filterCommunication(cellchat, min.cells = 5)
+cellchat <- computeCommunProbPathway(cellchat)
+cellchat <- aggregateNet(cellchat)
+dim(cellchat@net$prob)
+@
+
+The object has the same shape, slots, dimnames and option fields an upstream run
+produces; downstream code (\texttt{subsetCommunication}, plotting, export) is
+unaffected because nothing about the object changes except how fast it was computed.
+
+\section{Measured speedup}
+\label{sec:speedup}
+
+The numbers below are pre-measured on the pinned host (8c/16t AMD Zen3, 32\,GB),
+taskset-pinned, medians over $\geq 5$ timed repeats with bootstrap 95\% CIs, and
+reproducible via \texttt{bench-runner/bench\_real.R} and
+\texttt{bench-runner/bench\_amdahl.R}. They are quoted here so the vignette states
+what was measured rather than re-measuring something smaller and incomparable.
+
+\begin{center}
+\begin{tabular}{lrrrr}
+\hline
+dataset & upstream & cellchatrs & speedup & Amdahl limit \\
+\hline
+human skin (7,563 cells, kernel, nboot=100) & 101.4\,s & 2.41\,s & 42.1x & -- \\
+human skin (full pipeline) & 100.1\,s & 6.0\,s & 16.7x & 24.8x \\
+mouse wound (21,557 cells, kernel, nboot=100) & 245.3\,s & 9.41\,s & 26.1x & -- \\
+mouse wound (full pipeline) & 202.3\,s & 20.9\,s & 9.7x & 13.3x \\
+\hline
+\end{tabular}
+\end{center}
+
+Two readings, stated in the order that matters. The \emph{pipeline} number (9.7--16.7x)
+is what a user running the vignette workflow observes: the kernel is 92--96\% of
+upstream's pipeline, and the remaining $\sim$10\,s is I/O, preprocessing and
+over-expression analysis that no kernel accelerates (all $\sim$1x, as it should be --
+both sides run the same presto-backed code there). The \emph{kernel} number (22--42x)
+is the gated, bit-identical computation in isolation. Quoting only the second would imply
+more than the evidence supports; the Amdahl limit column states the ceiling implied by
+the measured shares.
+
+Bit-identity holds on the authors' own data, not just on fixtures: 1,207,952
+\texttt{Prob} values across both datasets with maximum absolute difference exactly
+zero, and a log-log parity scatter in \texttt{bench-runner/results/}.
+
+\section{Scope and honest limits}
+
+\begin{itemize}
+\item Four centrality measures (\texttt{hub}, \texttt{authority}, \texttt{eigen},
+\texttt{page\_rank}) call igraph directly: they are iterative solvers whose output
+varies run to run, so reimplementing them would trade identical-by-construction for a
+reimplementation that breaks with igraph's next tolerance retune. Degrees, strengths
+and betweenness are computed in Rust, bit-identical to igraph.
+\item Spatial neighbour search uses an exact k-d tree where upstream uses approximate
+Annoy. On the authors' visium data the two differ in 42 of 64 inter-group distances
+(2.8\% max) and 19.6\% of \texttt{Prob} entries (1.0\% of peak) -- a systematic bias
+in the approximation, not noise (Annoy agrees with itself). See
+\texttt{bench-runner/results/spatial\_divergence.json}.
+\item \texttt{identifyOverExpressedGenes(do.fast=TRUE)} delegates to presto: a different
+algorithm (normal approximation), not a faster Wilcoxon. Both branches select the same
+features on the fixtures; p-values agree to 3.8e-3 with no threshold crossing.
+\item Upstream's recommendation to downsample large datasets is a runtime workaround.
+With the I/O floor measured in seconds, subsetting cells to fit a runtime budget is
+unnecessary -- the correction is quantitative (the Amdahl table above), not rhetorical.
+\end{itemize}
+
+\end{document}

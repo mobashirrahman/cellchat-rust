@@ -1,0 +1,88 @@
+{
+ "schema": 1,
+ "host": {
+  "cpus": 16,
+  "cores": 8,
+  "model": "AMD Ryzen 7 3700X",
+  "mem_total_mb": 32806
+ },
+ "pinned": "0-7",
+ "host_state": {
+  "window_secs": 1.5,
+  "threshold_pct": 10,
+  "per_cpu_busy_pct": {
+   "0": 30.82191780821918,
+   "1": 30.344827586206897,
+   "2": 34.899328859060404,
+   "3": 28.37837837837838,
+   "4": 19.863013698630137,
+   "5": 30.069930069930066,
+   "6": 18.493150684931507,
+   "7": 27.027027027027028
+  },
+  "contended": true,
+  "override": true
+ },
+ "threads": 8,
+ "fixture": {
+  "fixture": "humanSkin.rda",
+  "n_genes_total": 17328,
+  "n_cells": 7563,
+  "n_groups": 12,
+  "n_genes_signaling": 1094,
+  "n_lr": 1583,
+  "nnz_pct": 3.8568770650726463
+ },
+ "nboot": 100,
+ "repeats": 5,
+ "warmup": 1,
+ "seed": 1,
+ "r_upstream": {
+  "raw_secs": [
+   104.37900000000002,
+   105.83099999999996,
+   101.43900000000002,
+   100.82099999999997,
+   101
+  ],
+  "median": 101.43900000000002,
+  "ci_lo": 100.82099999999997,
+  "ci_hi": 105.83099999999996,
+  "min": 100.82099999999997,
+  "max": 105.83099999999996
+ },
+ "rust": {
+  "raw_secs": [
+   2.4069999999999254,
+   2.4689999999999372,
+   2.3710000000000946,
+   2.4049999999999727,
+   2.453000000000088
+  ],
+  "median": 2.4069999999999254,
+  "ci_lo": 2.3710000000000946,
+  "ci_hi": 2.4689999999999372,
+  "min": 2.3710000000000946,
+  "max": 2.4689999999999372
+ },
+ "speedup": 42.14333194848491,
+ "speedup_ci_lo": 40.83475091130115,
+ "speedup_ci_hi": 44.635596794599635,
+ "peak_rss_mb": 1269.66796875,
+ "parity_net": true,
+ "parity_prob": true,
+ "max_abs_diff": 0,
+ "dense_stream_mb": 63.12501525878906,
+ "mem_available_mb": 24323.3515625,
+ "scatter_summary": {
+  "n_values": 227952,
+  "n_finite": 227952,
+  "n_nonfinite": 0,
+  "max_abs_log10_difference": 0.0,
+  "n_off_identity": 0,
+  "bins": 160,
+  "svg": "bench-runner/results/parity_human_skin.svg",
+  "svg_bytes": 12316,
+  "note": "per-value vectors dropped by analyse.py --trim-scatter; regenerate from bench_real.R"
+ }
+}

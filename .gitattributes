@@ -1,0 +1,19 @@
+# The three large golden corpora are exact-output fixtures: every byte is significant, because the
+# Rust tests compare them bit-for-bit against what the pinned upstream produced. Marking them
+# `-text` stops git from applying line-ending normalisation on checkout, which would otherwise
+# rewrite a fixture on a Windows clone and turn a passing bit-exactness test into a failing one
+# that looks like a kernel regression.
+tests/fixtures/rng_stress.txt   -text
+tests/fixtures/f80_ref.txt     -text
+tests/fixtures/stats_vectors.bin -text
+
+# The bundled CellChatDB exports are TSVs read by the shim and by the differential suite. Same
+# reasoning: they are data, and a CRLF checkout would change the digests in their MANIFEST.tsv.
+tests/fixtures/db_*/*.tsv -text
+inst/db/*/*.tsv          -text
+
+# Build outputs that must never be committed, restated here so the rule survives someone deleting
+# .gitignore. `src/cellchatrs.so` is the compiled cdylib, which `./configure` builds per platform.
+/target/            export-ignore
+/src/cellchatrs.so  export-ignore
+/.rlib/             export-ignore

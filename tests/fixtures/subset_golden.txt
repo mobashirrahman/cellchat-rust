@@ -1,0 +1,1214 @@
+n_cases	34
+case	no_thresholds
+in_cols	no_thresholds	source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence,ligand.pvalues,ligand.logFC,ligand.pct.1,ligand.pct.2,receptor.pvalues,receptor.logFC,receptor.pct.1,receptor.pct.2,datasets
+in_nrow	no_thresholds	12
+in_row	no_thresholds	1	g1	g1	L1	R1	5e-01	1e-02	LR1	a	pA	anno1	e1	1e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	5.0000000000000003e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	d1
+in_row	no_thresholds	2	g1	g2	L2	R2	2.5e-01	2e-02	LR2	b	pB	anno2	<NA>	2.0000000000000001e-01	-5e-01	1.0000000000000001e-01	9.0000000000000002e-01	5.9999999999999998e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	d1
+in_row	no_thresholds	3	g2	g1	L1	R1	1.25e-01	5e-01	LR3	a	pC	anno1	e1	2.9999999999999999e-01	1.5e+00	5e-01	2.0000000000000001e-01	1e-02	-1e+00	4.0000000000000002e-01	5.9999999999999998e-01	d1
+in_row	no_thresholds	4	g2	g2	L2	R2	1e+00	1e-03	LR4	b	pA	anno2	<NA>	4.0000000000000001e-02	0e+00	5.9999999999999998e-01	2.9999999999999999e-01	2e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	d1
+in_row	no_thresholds	5	g10	g1	L1	R1	6.25e-02	2.0000000000000001e-01	LR5	a	pB	anno1	e1	<NA>	-2e+00	2.0000000000000001e-01	8.0000000000000004e-01	2.9999999999999999e-01	5e-01	1.0000000000000001e-01	9.0000000000000002e-01	d1
+in_row	no_thresholds	6	g10	g2	L2	R2	3.125e-02	4.0000000000000001e-02	LR6	b	pC	anno2	<NA>	5e-01	2.5e-01	8.0000000000000004e-01	1.0000000000000001e-01	4.0000000000000001e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	d1
+in_row	no_thresholds	7	g1	g10	L1	R1	2e+00	<NA>	LR7	a	pA	anno1	e1	2e-02	<NA>	4.0000000000000002e-01	5e-01	2e-02	0e+00	5e-01	5e-01	d2
+in_row	no_thresholds	8	g2	g10	L2	R2	5e-01	2.9999999999999999e-02	LR8	b	pB	anno2	<NA>	2e-02	7.5e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	d2
+in_row	no_thresholds	9	g10	g10	L1	R1	7.5e-01	9.0000000000000002e-01	LR9	a	pC	anno1	e1	<NaN>	1.0000000000000001e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	d2
+in_row	no_thresholds	10	g1	g2	L2	R2	3.3333333333333331e-01	5.0000000000000001e-03	LR10	b	pA	anno2	<NA>	1.0000000000000001e-01	0e+00	6.9999999999999996e-01	2.0000000000000001e-01	1e-02	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	d2
+in_row	no_thresholds	11	g1	g1	L1	R1	2.0000000000000001e-01	<NaN>	LR11	a	pB	anno1	e1	1.0000000000000001e-01	-1e+00	2.9999999999999999e-01	5.9999999999999998e-01	1.0000000000000001e-01	<NA>	2.0000000000000001e-01	8.0000000000000004e-01	d2
+in_row	no_thresholds	12	<NA>	g1	L2	R2	4.0000000000000002e-01	5.9999999999999998e-02	LR12	b	pC	anno2	<NA>	1.0000000000000001e-01	0e+00	5e-01	4.0000000000000002e-01	1.0000000000000001e-01	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	d2
+slot	no_thresholds	net
+arg	no_thresholds	sources.use	-
+arg	no_thresholds	targets.use	-
+arg	no_thresholds	datasets	-
+arg	no_thresholds	ligand.pvalues	-
+arg	no_thresholds	ligand.logFC	-
+arg	no_thresholds	ligand.pct.1	-
+arg	no_thresholds	ligand.pct.2	-
+arg	no_thresholds	receptor.pvalues	-
+arg	no_thresholds	receptor.logFC	-
+arg	no_thresholds	receptor.pct.1	-
+arg	no_thresholds	receptor.pct.2	-
+warn	no_thresholds	-
+out_cols	no_thresholds	source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence,datasets,ligand.logFC,ligand.pct.1,ligand.pct.2,ligand.pvalues,receptor.logFC,receptor.pct.1,receptor.pct.2,receptor.pvalues
+out_nrow	no_thresholds	12
+out_row	no_thresholds	1	g1	g1	L1	R1	5e-01	1e-02	LR1	a	pA	anno1	e1	d1	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	1e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	5.0000000000000003e-02
+out_row	no_thresholds	2	g1	g2	L2	R2	2.5e-01	2e-02	LR2	b	pB	anno2	<NA>	d1	-5e-01	1.0000000000000001e-01	9.0000000000000002e-01	2.0000000000000001e-01	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	5.9999999999999998e-02
+out_row	no_thresholds	3	g2	g1	L1	R1	1.25e-01	5e-01	LR3	a	pC	anno1	e1	d1	1.5e+00	5e-01	2.0000000000000001e-01	2.9999999999999999e-01	-1e+00	4.0000000000000002e-01	5.9999999999999998e-01	1e-02
+out_row	no_thresholds	4	g2	g2	L2	R2	1e+00	1e-03	LR4	b	pA	anno2	<NA>	d1	0e+00	5.9999999999999998e-01	2.9999999999999999e-01	4.0000000000000001e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	2e-02
+out_row	no_thresholds	5	g10	g1	L1	R1	6.25e-02	2.0000000000000001e-01	LR5	a	pB	anno1	e1	d1	-2e+00	2.0000000000000001e-01	8.0000000000000004e-01	<NA>	5e-01	1.0000000000000001e-01	9.0000000000000002e-01	2.9999999999999999e-01
+out_row	no_thresholds	6	g10	g2	L2	R2	3.125e-02	4.0000000000000001e-02	LR6	b	pC	anno2	<NA>	d1	2.5e-01	8.0000000000000004e-01	1.0000000000000001e-01	5e-01	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	4.0000000000000001e-02
+out_row	no_thresholds	7	g1	g10	L1	R1	2e+00	<NA>	LR7	a	pA	anno1	e1	d2	<NA>	4.0000000000000002e-01	5e-01	2e-02	0e+00	5e-01	5e-01	2e-02
+out_row	no_thresholds	8	g2	g10	L2	R2	5e-01	2.9999999999999999e-02	LR8	b	pB	anno2	<NA>	d2	7.5e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	2e-02
+out_row	no_thresholds	9	g10	g10	L1	R1	7.5e-01	9.0000000000000002e-01	LR9	a	pC	anno1	e1	d2	1.0000000000000001e-01	4.0000000000000002e-01	5e-01	<NaN>	5e-01	5e-01	5e-01	2e-02
+out_row	no_thresholds	10	g1	g2	L2	R2	3.3333333333333331e-01	5.0000000000000001e-03	LR10	b	pA	anno2	<NA>	d2	0e+00	6.9999999999999996e-01	2.0000000000000001e-01	1.0000000000000001e-01	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	1e-02
+out_row	no_thresholds	11	g1	g1	L1	R1	2.0000000000000001e-01	<NaN>	LR11	a	pB	anno1	e1	d2	-1e+00	2.9999999999999999e-01	5.9999999999999998e-01	1.0000000000000001e-01	<NA>	2.0000000000000001e-01	8.0000000000000004e-01	1.0000000000000001e-01
+out_row	no_thresholds	12	<NA>	g1	L2	R2	4.0000000000000002e-01	5.9999999999999998e-02	LR12	b	pC	anno2	<NA>	d2	0e+00	5e-01	4.0000000000000002e-01	1.0000000000000001e-01	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	1.0000000000000001e-01
+out_rn	no_thresholds	1,2,3,4,5,6,7,8,9,10,11,12
+case	no_thresholds_nodatasets
+in_cols	no_thresholds_nodatasets	source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence,datasets
+in_nrow	no_thresholds_nodatasets	12
+in_row	no_thresholds_nodatasets	1	g1	g1	L1	R1	5e-01	1e-02	LR1	a	pA	anno1	e1	d1
+in_row	no_thresholds_nodatasets	2	g1	g2	L2	R2	2.5e-01	2e-02	LR2	b	pB	anno2	<NA>	d1
+in_row	no_thresholds_nodatasets	3	g2	g1	L1	R1	1.25e-01	5e-01	LR3	a	pC	anno1	e1	d1
+in_row	no_thresholds_nodatasets	4	g2	g2	L2	R2	1e+00	1e-03	LR4	b	pA	anno2	<NA>	d1
+in_row	no_thresholds_nodatasets	5	g10	g1	L1	R1	6.25e-02	2.0000000000000001e-01	LR5	a	pB	anno1	e1	d1
+in_row	no_thresholds_nodatasets	6	g10	g2	L2	R2	3.125e-02	4.0000000000000001e-02	LR6	b	pC	anno2	<NA>	d1
+in_row	no_thresholds_nodatasets	7	g1	g10	L1	R1	2e+00	<NA>	LR7	a	pA	anno1	e1	d2
+in_row	no_thresholds_nodatasets	8	g2	g10	L2	R2	5e-01	2.9999999999999999e-02	LR8	b	pB	anno2	<NA>	d2
+in_row	no_thresholds_nodatasets	9	g10	g10	L1	R1	7.5e-01	9.0000000000000002e-01	LR9	a	pC	anno1	e1	d2
+in_row	no_thresholds_nodatasets	10	g1	g2	L2	R2	3.3333333333333331e-01	5.0000000000000001e-03	LR10	b	pA	anno2	<NA>	d2
+in_row	no_thresholds_nodatasets	11	g1	g1	L1	R1	2.0000000000000001e-01	<NaN>	LR11	a	pB	anno1	e1	d2
+in_row	no_thresholds_nodatasets	12	<NA>	g1	L2	R2	4.0000000000000002e-01	5.9999999999999998e-02	LR12	b	pC	anno2	<NA>	d2
+slot	no_thresholds_nodatasets	net
+arg	no_thresholds_nodatasets	sources.use	-
+arg	no_thresholds_nodatasets	targets.use	-
+arg	no_thresholds_nodatasets	datasets	-
+arg	no_thresholds_nodatasets	ligand.pvalues	-
+arg	no_thresholds_nodatasets	ligand.logFC	-
+arg	no_thresholds_nodatasets	ligand.pct.1	-
+arg	no_thresholds_nodatasets	ligand.pct.2	-
+arg	no_thresholds_nodatasets	receptor.pvalues	-
+arg	no_thresholds_nodatasets	receptor.logFC	-
+arg	no_thresholds_nodatasets	receptor.pct.1	-
+arg	no_thresholds_nodatasets	receptor.pct.2	-
+warn	no_thresholds_nodatasets	-
+out_cols	no_thresholds_nodatasets	source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence
+out_nrow	no_thresholds_nodatasets	12
+out_row	no_thresholds_nodatasets	1	g1	g1	L1	R1	5e-01	1e-02	LR1	a	pA	anno1	e1
+out_row	no_thresholds_nodatasets	2	g1	g2	L2	R2	2.5e-01	2e-02	LR2	b	pB	anno2	<NA>
+out_row	no_thresholds_nodatasets	3	g2	g1	L1	R1	1.25e-01	5e-01	LR3	a	pC	anno1	e1
+out_row	no_thresholds_nodatasets	4	g2	g2	L2	R2	1e+00	1e-03	LR4	b	pA	anno2	<NA>
+out_row	no_thresholds_nodatasets	5	g10	g1	L1	R1	6.25e-02	2.0000000000000001e-01	LR5	a	pB	anno1	e1
+out_row	no_thresholds_nodatasets	6	g10	g2	L2	R2	3.125e-02	4.0000000000000001e-02	LR6	b	pC	anno2	<NA>
+out_row	no_thresholds_nodatasets	7	g1	g10	L1	R1	2e+00	<NA>	LR7	a	pA	anno1	e1
+out_row	no_thresholds_nodatasets	8	g2	g10	L2	R2	5e-01	2.9999999999999999e-02	LR8	b	pB	anno2	<NA>
+out_row	no_thresholds_nodatasets	9	g10	g10	L1	R1	7.5e-01	9.0000000000000002e-01	LR9	a	pC	anno1	e1
+out_row	no_thresholds_nodatasets	10	g1	g2	L2	R2	3.3333333333333331e-01	5.0000000000000001e-03	LR10	b	pA	anno2	<NA>
+out_row	no_thresholds_nodatasets	11	g1	g1	L1	R1	2.0000000000000001e-01	<NaN>	LR11	a	pB	anno1	e1
+out_row	no_thresholds_nodatasets	12	<NA>	g1	L2	R2	4.0000000000000002e-01	5.9999999999999998e-02	LR12	b	pC	anno2	<NA>
+out_rn	no_thresholds_nodatasets	1,2,3,4,5,6,7,8,9,10,11,12
+case	all_na_row_no_threshold
+in_cols	all_na_row_no_threshold	source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence,ligand.pvalues,ligand.logFC,ligand.pct.1,ligand.pct.2,receptor.pvalues,receptor.logFC,receptor.pct.1,receptor.pct.2,datasets
+in_nrow	all_na_row_no_threshold	12
+in_row	all_na_row_no_threshold	1	g1	g1	L1	R1	5e-01	1e-02	LR1	a	pA	anno1	e1	1e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	5.0000000000000003e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	d1
+in_row	all_na_row_no_threshold	2	g1	g2	L2	R2	2.5e-01	2e-02	LR2	b	pB	anno2	<NA>	2.0000000000000001e-01	-5e-01	1.0000000000000001e-01	9.0000000000000002e-01	5.9999999999999998e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	d1
+in_row	all_na_row_no_threshold	3	g2	g1	L1	R1	1.25e-01	5e-01	LR3	a	pC	anno1	e1	2.9999999999999999e-01	1.5e+00	5e-01	2.0000000000000001e-01	1e-02	-1e+00	4.0000000000000002e-01	5.9999999999999998e-01	d1
+in_row	all_na_row_no_threshold	4	g2	g2	L2	R2	1e+00	1e-03	LR4	b	pA	anno2	<NA>	4.0000000000000001e-02	0e+00	5.9999999999999998e-01	2.9999999999999999e-01	2e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	d1
+in_row	all_na_row_no_threshold	5	g10	g1	L1	R1	6.25e-02	2.0000000000000001e-01	LR5	a	pB	anno1	e1	<NA>	-2e+00	2.0000000000000001e-01	8.0000000000000004e-01	2.9999999999999999e-01	5e-01	1.0000000000000001e-01	9.0000000000000002e-01	d1
+in_row	all_na_row_no_threshold	6	g10	g2	L2	R2	3.125e-02	4.0000000000000001e-02	LR6	b	pC	anno2	<NA>	5e-01	2.5e-01	8.0000000000000004e-01	1.0000000000000001e-01	4.0000000000000001e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	d1
+in_row	all_na_row_no_threshold	7	g1	g10	L1	R1	2e+00	<NA>	LR7	a	pA	anno1	e1	2e-02	<NA>	4.0000000000000002e-01	5e-01	2e-02	0e+00	5e-01	5e-01	d2
+in_row	all_na_row_no_threshold	8	g2	g10	L2	R2	5e-01	2.9999999999999999e-02	LR8	b	pB	anno2	<NA>	2e-02	7.5e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	d2
+in_row	all_na_row_no_threshold	9	g10	g10	L1	R1	7.5e-01	9.0000000000000002e-01	LR9	a	pC	anno1	e1	<NaN>	1.0000000000000001e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	d2
+in_row	all_na_row_no_threshold	10	g1	g2	L2	R2	3.3333333333333331e-01	5.0000000000000001e-03	LR10	b	pA	anno2	<NA>	1.0000000000000001e-01	0e+00	6.9999999999999996e-01	2.0000000000000001e-01	1e-02	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	d2
+in_row	all_na_row_no_threshold	11	g1	g1	L1	R1	2.0000000000000001e-01	<NaN>	LR11	a	pB	anno1	e1	1.0000000000000001e-01	-1e+00	2.9999999999999999e-01	5.9999999999999998e-01	1.0000000000000001e-01	<NA>	2.0000000000000001e-01	8.0000000000000004e-01	d2
+in_row	all_na_row_no_threshold	12	<NA>	<NA>	<NA>	<NA>	<NA>	<NA>	<NA>	<NA>	<NA>	<NA>	<NA>	<NA>	<NA>	<NA>	<NA>	<NA>	<NA>	<NA>	<NA>	<NA>
+slot	all_na_row_no_threshold	net
+arg	all_na_row_no_threshold	sources.use	-
+arg	all_na_row_no_threshold	targets.use	-
+arg	all_na_row_no_threshold	datasets	-
+arg	all_na_row_no_threshold	ligand.pvalues	-
+arg	all_na_row_no_threshold	ligand.logFC	-
+arg	all_na_row_no_threshold	ligand.pct.1	-
+arg	all_na_row_no_threshold	ligand.pct.2	-
+arg	all_na_row_no_threshold	receptor.pvalues	-
+arg	all_na_row_no_threshold	receptor.logFC	-
+arg	all_na_row_no_threshold	receptor.pct.1	-
+arg	all_na_row_no_threshold	receptor.pct.2	-
+warn	all_na_row_no_threshold	-
+out_cols	all_na_row_no_threshold	source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence,datasets,ligand.logFC,ligand.pct.1,ligand.pct.2,ligand.pvalues,receptor.logFC,receptor.pct.1,receptor.pct.2,receptor.pvalues
+out_nrow	all_na_row_no_threshold	11
+out_row	all_na_row_no_threshold	1	g1	g1	L1	R1	5e-01	1e-02	LR1	a	pA	anno1	e1	d1	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	1e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	5.0000000000000003e-02
+out_row	all_na_row_no_threshold	2	g1	g2	L2	R2	2.5e-01	2e-02	LR2	b	pB	anno2	<NA>	d1	-5e-01	1.0000000000000001e-01	9.0000000000000002e-01	2.0000000000000001e-01	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	5.9999999999999998e-02
+out_row	all_na_row_no_threshold	3	g2	g1	L1	R1	1.25e-01	5e-01	LR3	a	pC	anno1	e1	d1	1.5e+00	5e-01	2.0000000000000001e-01	2.9999999999999999e-01	-1e+00	4.0000000000000002e-01	5.9999999999999998e-01	1e-02
+out_row	all_na_row_no_threshold	4	g2	g2	L2	R2	1e+00	1e-03	LR4	b	pA	anno2	<NA>	d1	0e+00	5.9999999999999998e-01	2.9999999999999999e-01	4.0000000000000001e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	2e-02
+out_row	all_na_row_no_threshold	5	g10	g1	L1	R1	6.25e-02	2.0000000000000001e-01	LR5	a	pB	anno1	e1	d1	-2e+00	2.0000000000000001e-01	8.0000000000000004e-01	<NA>	5e-01	1.0000000000000001e-01	9.0000000000000002e-01	2.9999999999999999e-01
+out_row	all_na_row_no_threshold	6	g10	g2	L2	R2	3.125e-02	4.0000000000000001e-02	LR6	b	pC	anno2	<NA>	d1	2.5e-01	8.0000000000000004e-01	1.0000000000000001e-01	5e-01	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	4.0000000000000001e-02
+out_row	all_na_row_no_threshold	7	g1	g10	L1	R1	2e+00	<NA>	LR7	a	pA	anno1	e1	d2	<NA>	4.0000000000000002e-01	5e-01	2e-02	0e+00	5e-01	5e-01	2e-02
+out_row	all_na_row_no_threshold	8	g2	g10	L2	R2	5e-01	2.9999999999999999e-02	LR8	b	pB	anno2	<NA>	d2	7.5e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	2e-02
+out_row	all_na_row_no_threshold	9	g10	g10	L1	R1	7.5e-01	9.0000000000000002e-01	LR9	a	pC	anno1	e1	d2	1.0000000000000001e-01	4.0000000000000002e-01	5e-01	<NaN>	5e-01	5e-01	5e-01	2e-02
+out_row	all_na_row_no_threshold	10	g1	g2	L2	R2	3.3333333333333331e-01	5.0000000000000001e-03	LR10	b	pA	anno2	<NA>	d2	0e+00	6.9999999999999996e-01	2.0000000000000001e-01	1.0000000000000001e-01	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	1e-02
+out_row	all_na_row_no_threshold	11	g1	g1	L1	R1	2.0000000000000001e-01	<NaN>	LR11	a	pB	anno1	e1	d2	-1e+00	2.9999999999999999e-01	5.9999999999999998e-01	1.0000000000000001e-01	<NA>	2.0000000000000001e-01	8.0000000000000004e-01	1.0000000000000001e-01
+out_rn	all_na_row_no_threshold	1,2,3,4,5,6,7,8,9,10,11
+case	ligand_pvalues
+in_cols	ligand_pvalues	source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence,ligand.pvalues,ligand.logFC,ligand.pct.1,ligand.pct.2,receptor.pvalues,receptor.logFC,receptor.pct.1,receptor.pct.2,datasets
+in_nrow	ligand_pvalues	12
+in_row	ligand_pvalues	1	g1	g1	L1	R1	5e-01	1e-02	LR1	a	pA	anno1	e1	1e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	5.0000000000000003e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	d1
+in_row	ligand_pvalues	2	g1	g2	L2	R2	2.5e-01	2e-02	LR2	b	pB	anno2	<NA>	2.0000000000000001e-01	-5e-01	1.0000000000000001e-01	9.0000000000000002e-01	5.9999999999999998e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	d1
+in_row	ligand_pvalues	3	g2	g1	L1	R1	1.25e-01	5e-01	LR3	a	pC	anno1	e1	2.9999999999999999e-01	1.5e+00	5e-01	2.0000000000000001e-01	1e-02	-1e+00	4.0000000000000002e-01	5.9999999999999998e-01	d1
+in_row	ligand_pvalues	4	g2	g2	L2	R2	1e+00	1e-03	LR4	b	pA	anno2	<NA>	4.0000000000000001e-02	0e+00	5.9999999999999998e-01	2.9999999999999999e-01	2e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	d1
+in_row	ligand_pvalues	5	g10	g1	L1	R1	6.25e-02	2.0000000000000001e-01	LR5	a	pB	anno1	e1	<NA>	-2e+00	2.0000000000000001e-01	8.0000000000000004e-01	2.9999999999999999e-01	5e-01	1.0000000000000001e-01	9.0000000000000002e-01	d1
+in_row	ligand_pvalues	6	g10	g2	L2	R2	3.125e-02	4.0000000000000001e-02	LR6	b	pC	anno2	<NA>	5e-01	2.5e-01	8.0000000000000004e-01	1.0000000000000001e-01	4.0000000000000001e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	d1
+in_row	ligand_pvalues	7	g1	g10	L1	R1	2e+00	<NA>	LR7	a	pA	anno1	e1	2e-02	<NA>	4.0000000000000002e-01	5e-01	2e-02	0e+00	5e-01	5e-01	d2
+in_row	ligand_pvalues	8	g2	g10	L2	R2	5e-01	2.9999999999999999e-02	LR8	b	pB	anno2	<NA>	2e-02	7.5e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	d2
+in_row	ligand_pvalues	9	g10	g10	L1	R1	7.5e-01	9.0000000000000002e-01	LR9	a	pC	anno1	e1	<NaN>	1.0000000000000001e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	d2
+in_row	ligand_pvalues	10	g1	g2	L2	R2	3.3333333333333331e-01	5.0000000000000001e-03	LR10	b	pA	anno2	<NA>	1.0000000000000001e-01	0e+00	6.9999999999999996e-01	2.0000000000000001e-01	1e-02	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	d2
+in_row	ligand_pvalues	11	g1	g1	L1	R1	2.0000000000000001e-01	<NaN>	LR11	a	pB	anno1	e1	1.0000000000000001e-01	-1e+00	2.9999999999999999e-01	5.9999999999999998e-01	1.0000000000000001e-01	<NA>	2.0000000000000001e-01	8.0000000000000004e-01	d2
+in_row	ligand_pvalues	12	<NA>	g1	L2	R2	4.0000000000000002e-01	5.9999999999999998e-02	LR12	b	pC	anno2	<NA>	1.0000000000000001e-01	0e+00	5e-01	4.0000000000000002e-01	1.0000000000000001e-01	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	d2
+slot	ligand_pvalues	net
+arg	ligand_pvalues	sources.use	-
+arg	ligand_pvalues	targets.use	-
+arg	ligand_pvalues	datasets	-
+arg	ligand_pvalues	ligand.pvalues	5.0000000000000003e-02
+arg	ligand_pvalues	ligand.logFC	-
+arg	ligand_pvalues	ligand.pct.1	-
+arg	ligand_pvalues	ligand.pct.2	-
+arg	ligand_pvalues	receptor.pvalues	-
+arg	ligand_pvalues	receptor.logFC	-
+arg	ligand_pvalues	receptor.pct.1	-
+arg	ligand_pvalues	receptor.pct.2	-
+warn	ligand_pvalues	-
+out_cols	ligand_pvalues	source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence,datasets,ligand.logFC,ligand.pct.1,ligand.pct.2,ligand.pvalues,receptor.logFC,receptor.pct.1,receptor.pct.2,receptor.pvalues
+out_nrow	ligand_pvalues	4
+out_row	ligand_pvalues	1	g1	g1	L1	R1	5e-01	1e-02	LR1	a	pA	anno1	e1	d1	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	1e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	5.0000000000000003e-02
+out_row	ligand_pvalues	2	g2	g2	L2	R2	1e+00	1e-03	LR4	b	pA	anno2	<NA>	d1	0e+00	5.9999999999999998e-01	2.9999999999999999e-01	4.0000000000000001e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	2e-02
+out_row	ligand_pvalues	3	g1	g10	L1	R1	2e+00	<NA>	LR7	a	pA	anno1	e1	d2	<NA>	4.0000000000000002e-01	5e-01	2e-02	0e+00	5e-01	5e-01	2e-02
+out_row	ligand_pvalues	4	g2	g10	L2	R2	5e-01	2.9999999999999999e-02	LR8	b	pB	anno2	<NA>	d2	7.5e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	2e-02
+out_rn	ligand_pvalues	1,2,3,4
+case	ligand_pvalues_none
+in_cols	ligand_pvalues_none	source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence,ligand.pvalues,ligand.logFC,ligand.pct.1,ligand.pct.2,receptor.pvalues,receptor.logFC,receptor.pct.1,receptor.pct.2,datasets
+in_nrow	ligand_pvalues_none	12
+in_row	ligand_pvalues_none	1	g1	g1	L1	R1	5e-01	1e-02	LR1	a	pA	anno1	e1	1e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	5.0000000000000003e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	d1
+in_row	ligand_pvalues_none	2	g1	g2	L2	R2	2.5e-01	2e-02	LR2	b	pB	anno2	<NA>	2.0000000000000001e-01	-5e-01	1.0000000000000001e-01	9.0000000000000002e-01	5.9999999999999998e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	d1
+in_row	ligand_pvalues_none	3	g2	g1	L1	R1	1.25e-01	5e-01	LR3	a	pC	anno1	e1	2.9999999999999999e-01	1.5e+00	5e-01	2.0000000000000001e-01	1e-02	-1e+00	4.0000000000000002e-01	5.9999999999999998e-01	d1
+in_row	ligand_pvalues_none	4	g2	g2	L2	R2	1e+00	1e-03	LR4	b	pA	anno2	<NA>	4.0000000000000001e-02	0e+00	5.9999999999999998e-01	2.9999999999999999e-01	2e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	d1
+in_row	ligand_pvalues_none	5	g10	g1	L1	R1	6.25e-02	2.0000000000000001e-01	LR5	a	pB	anno1	e1	<NA>	-2e+00	2.0000000000000001e-01	8.0000000000000004e-01	2.9999999999999999e-01	5e-01	1.0000000000000001e-01	9.0000000000000002e-01	d1
+in_row	ligand_pvalues_none	6	g10	g2	L2	R2	3.125e-02	4.0000000000000001e-02	LR6	b	pC	anno2	<NA>	5e-01	2.5e-01	8.0000000000000004e-01	1.0000000000000001e-01	4.0000000000000001e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	d1
+in_row	ligand_pvalues_none	7	g1	g10	L1	R1	2e+00	<NA>	LR7	a	pA	anno1	e1	2e-02	<NA>	4.0000000000000002e-01	5e-01	2e-02	0e+00	5e-01	5e-01	d2
+in_row	ligand_pvalues_none	8	g2	g10	L2	R2	5e-01	2.9999999999999999e-02	LR8	b	pB	anno2	<NA>	2e-02	7.5e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	d2
+in_row	ligand_pvalues_none	9	g10	g10	L1	R1	7.5e-01	9.0000000000000002e-01	LR9	a	pC	anno1	e1	<NaN>	1.0000000000000001e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	d2
+in_row	ligand_pvalues_none	10	g1	g2	L2	R2	3.3333333333333331e-01	5.0000000000000001e-03	LR10	b	pA	anno2	<NA>	1.0000000000000001e-01	0e+00	6.9999999999999996e-01	2.0000000000000001e-01	1e-02	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	d2
+in_row	ligand_pvalues_none	11	g1	g1	L1	R1	2.0000000000000001e-01	<NaN>	LR11	a	pB	anno1	e1	1.0000000000000001e-01	-1e+00	2.9999999999999999e-01	5.9999999999999998e-01	1.0000000000000001e-01	<NA>	2.0000000000000001e-01	8.0000000000000004e-01	d2
+in_row	ligand_pvalues_none	12	<NA>	g1	L2	R2	4.0000000000000002e-01	5.9999999999999998e-02	LR12	b	pC	anno2	<NA>	1.0000000000000001e-01	0e+00	5e-01	4.0000000000000002e-01	1.0000000000000001e-01	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	d2
+slot	ligand_pvalues_none	net
+arg	ligand_pvalues_none	sources.use	-
+arg	ligand_pvalues_none	targets.use	-
+arg	ligand_pvalues_none	datasets	-
+arg	ligand_pvalues_none	ligand.pvalues	0e+00
+arg	ligand_pvalues_none	ligand.logFC	-
+arg	ligand_pvalues_none	ligand.pct.1	-
+arg	ligand_pvalues_none	ligand.pct.2	-
+arg	ligand_pvalues_none	receptor.pvalues	-
+arg	ligand_pvalues_none	receptor.logFC	-
+arg	ligand_pvalues_none	receptor.pct.1	-
+arg	ligand_pvalues_none	receptor.pct.2	-
+warn	ligand_pvalues_none	-
+error	ligand_pvalues_none	No significant signaling interactions are inferred based on the input!
+case	ligand_logfc_pos
+in_cols	ligand_logfc_pos	source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence,ligand.pvalues,ligand.logFC,ligand.pct.1,ligand.pct.2,receptor.pvalues,receptor.logFC,receptor.pct.1,receptor.pct.2,datasets
+in_nrow	ligand_logfc_pos	12
+in_row	ligand_logfc_pos	1	g1	g1	L1	R1	5e-01	1e-02	LR1	a	pA	anno1	e1	1e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	5.0000000000000003e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	d1
+in_row	ligand_logfc_pos	2	g1	g2	L2	R2	2.5e-01	2e-02	LR2	b	pB	anno2	<NA>	2.0000000000000001e-01	-5e-01	1.0000000000000001e-01	9.0000000000000002e-01	5.9999999999999998e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	d1
+in_row	ligand_logfc_pos	3	g2	g1	L1	R1	1.25e-01	5e-01	LR3	a	pC	anno1	e1	2.9999999999999999e-01	1.5e+00	5e-01	2.0000000000000001e-01	1e-02	-1e+00	4.0000000000000002e-01	5.9999999999999998e-01	d1
+in_row	ligand_logfc_pos	4	g2	g2	L2	R2	1e+00	1e-03	LR4	b	pA	anno2	<NA>	4.0000000000000001e-02	0e+00	5.9999999999999998e-01	2.9999999999999999e-01	2e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	d1
+in_row	ligand_logfc_pos	5	g10	g1	L1	R1	6.25e-02	2.0000000000000001e-01	LR5	a	pB	anno1	e1	<NA>	-2e+00	2.0000000000000001e-01	8.0000000000000004e-01	2.9999999999999999e-01	5e-01	1.0000000000000001e-01	9.0000000000000002e-01	d1
+in_row	ligand_logfc_pos	6	g10	g2	L2	R2	3.125e-02	4.0000000000000001e-02	LR6	b	pC	anno2	<NA>	5e-01	2.5e-01	8.0000000000000004e-01	1.0000000000000001e-01	4.0000000000000001e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	d1
+in_row	ligand_logfc_pos	7	g1	g10	L1	R1	2e+00	<NA>	LR7	a	pA	anno1	e1	2e-02	<NA>	4.0000000000000002e-01	5e-01	2e-02	0e+00	5e-01	5e-01	d2
+in_row	ligand_logfc_pos	8	g2	g10	L2	R2	5e-01	2.9999999999999999e-02	LR8	b	pB	anno2	<NA>	2e-02	7.5e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	d2
+in_row	ligand_logfc_pos	9	g10	g10	L1	R1	7.5e-01	9.0000000000000002e-01	LR9	a	pC	anno1	e1	<NaN>	1.0000000000000001e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	d2
+in_row	ligand_logfc_pos	10	g1	g2	L2	R2	3.3333333333333331e-01	5.0000000000000001e-03	LR10	b	pA	anno2	<NA>	1.0000000000000001e-01	0e+00	6.9999999999999996e-01	2.0000000000000001e-01	1e-02	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	d2
+in_row	ligand_logfc_pos	11	g1	g1	L1	R1	2.0000000000000001e-01	<NaN>	LR11	a	pB	anno1	e1	1.0000000000000001e-01	-1e+00	2.9999999999999999e-01	5.9999999999999998e-01	1.0000000000000001e-01	<NA>	2.0000000000000001e-01	8.0000000000000004e-01	d2
+in_row	ligand_logfc_pos	12	<NA>	g1	L2	R2	4.0000000000000002e-01	5.9999999999999998e-02	LR12	b	pC	anno2	<NA>	1.0000000000000001e-01	0e+00	5e-01	4.0000000000000002e-01	1.0000000000000001e-01	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	d2
+slot	ligand_logfc_pos	net
+arg	ligand_logfc_pos	sources.use	-
+arg	ligand_logfc_pos	targets.use	-
+arg	ligand_logfc_pos	datasets	-
+arg	ligand_logfc_pos	ligand.pvalues	-
+arg	ligand_logfc_pos	ligand.logFC	5e-01
+arg	ligand_logfc_pos	ligand.pct.1	-
+arg	ligand_logfc_pos	ligand.pct.2	-
+arg	ligand_logfc_pos	receptor.pvalues	-
+arg	ligand_logfc_pos	receptor.logFC	-
+arg	ligand_logfc_pos	receptor.pct.1	-
+arg	ligand_logfc_pos	receptor.pct.2	-
+warn	ligand_logfc_pos	-
+out_cols	ligand_logfc_pos	source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence,datasets,ligand.logFC,ligand.pct.1,ligand.pct.2,ligand.pvalues,receptor.logFC,receptor.pct.1,receptor.pct.2,receptor.pvalues
+out_nrow	ligand_logfc_pos	3
+out_row	ligand_logfc_pos	1	g1	g1	L1	R1	5e-01	1e-02	LR1	a	pA	anno1	e1	d1	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	1e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	5.0000000000000003e-02
+out_row	ligand_logfc_pos	2	g2	g1	L1	R1	1.25e-01	5e-01	LR3	a	pC	anno1	e1	d1	1.5e+00	5e-01	2.0000000000000001e-01	2.9999999999999999e-01	-1e+00	4.0000000000000002e-01	5.9999999999999998e-01	1e-02
+out_row	ligand_logfc_pos	3	g2	g10	L2	R2	5e-01	2.9999999999999999e-02	LR8	b	pB	anno2	<NA>	d2	7.5e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	2e-02
+out_rn	ligand_logfc_pos	1,2,3
+case	ligand_logfc_neg
+in_cols	ligand_logfc_neg	source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence,ligand.pvalues,ligand.logFC,ligand.pct.1,ligand.pct.2,receptor.pvalues,receptor.logFC,receptor.pct.1,receptor.pct.2,datasets
+in_nrow	ligand_logfc_neg	12
+in_row	ligand_logfc_neg	1	g1	g1	L1	R1	5e-01	1e-02	LR1	a	pA	anno1	e1	1e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	5.0000000000000003e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	d1
+in_row	ligand_logfc_neg	2	g1	g2	L2	R2	2.5e-01	2e-02	LR2	b	pB	anno2	<NA>	2.0000000000000001e-01	-5e-01	1.0000000000000001e-01	9.0000000000000002e-01	5.9999999999999998e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	d1
+in_row	ligand_logfc_neg	3	g2	g1	L1	R1	1.25e-01	5e-01	LR3	a	pC	anno1	e1	2.9999999999999999e-01	1.5e+00	5e-01	2.0000000000000001e-01	1e-02	-1e+00	4.0000000000000002e-01	5.9999999999999998e-01	d1
+in_row	ligand_logfc_neg	4	g2	g2	L2	R2	1e+00	1e-03	LR4	b	pA	anno2	<NA>	4.0000000000000001e-02	0e+00	5.9999999999999998e-01	2.9999999999999999e-01	2e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	d1
+in_row	ligand_logfc_neg	5	g10	g1	L1	R1	6.25e-02	2.0000000000000001e-01	LR5	a	pB	anno1	e1	<NA>	-2e+00	2.0000000000000001e-01	8.0000000000000004e-01	2.9999999999999999e-01	5e-01	1.0000000000000001e-01	9.0000000000000002e-01	d1
+in_row	ligand_logfc_neg	6	g10	g2	L2	R2	3.125e-02	4.0000000000000001e-02	LR6	b	pC	anno2	<NA>	5e-01	2.5e-01	8.0000000000000004e-01	1.0000000000000001e-01	4.0000000000000001e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	d1
+in_row	ligand_logfc_neg	7	g1	g10	L1	R1	2e+00	<NA>	LR7	a	pA	anno1	e1	2e-02	<NA>	4.0000000000000002e-01	5e-01	2e-02	0e+00	5e-01	5e-01	d2
+in_row	ligand_logfc_neg	8	g2	g10	L2	R2	5e-01	2.9999999999999999e-02	LR8	b	pB	anno2	<NA>	2e-02	7.5e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	d2
+in_row	ligand_logfc_neg	9	g10	g10	L1	R1	7.5e-01	9.0000000000000002e-01	LR9	a	pC	anno1	e1	<NaN>	1.0000000000000001e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	d2
+in_row	ligand_logfc_neg	10	g1	g2	L2	R2	3.3333333333333331e-01	5.0000000000000001e-03	LR10	b	pA	anno2	<NA>	1.0000000000000001e-01	0e+00	6.9999999999999996e-01	2.0000000000000001e-01	1e-02	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	d2
+in_row	ligand_logfc_neg	11	g1	g1	L1	R1	2.0000000000000001e-01	<NaN>	LR11	a	pB	anno1	e1	1.0000000000000001e-01	-1e+00	2.9999999999999999e-01	5.9999999999999998e-01	1.0000000000000001e-01	<NA>	2.0000000000000001e-01	8.0000000000000004e-01	d2
+in_row	ligand_logfc_neg	12	<NA>	g1	L2	R2	4.0000000000000002e-01	5.9999999999999998e-02	LR12	b	pC	anno2	<NA>	1.0000000000000001e-01	0e+00	5e-01	4.0000000000000002e-01	1.0000000000000001e-01	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	d2
+slot	ligand_logfc_neg	net
+arg	ligand_logfc_neg	sources.use	-
+arg	ligand_logfc_neg	targets.use	-
+arg	ligand_logfc_neg	datasets	-
+arg	ligand_logfc_neg	ligand.pvalues	-
+arg	ligand_logfc_neg	ligand.logFC	-5e-01
+arg	ligand_logfc_neg	ligand.pct.1	-
+arg	ligand_logfc_neg	ligand.pct.2	-
+arg	ligand_logfc_neg	receptor.pvalues	-
+arg	ligand_logfc_neg	receptor.logFC	-
+arg	ligand_logfc_neg	receptor.pct.1	-
+arg	ligand_logfc_neg	receptor.pct.2	-
+warn	ligand_logfc_neg	-
+out_cols	ligand_logfc_neg	source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence,datasets,ligand.logFC,ligand.pct.1,ligand.pct.2,ligand.pvalues,receptor.logFC,receptor.pct.1,receptor.pct.2,receptor.pvalues
+out_nrow	ligand_logfc_neg	3
+out_row	ligand_logfc_neg	1	g1	g2	L2	R2	2.5e-01	2e-02	LR2	b	pB	anno2	<NA>	d1	-5e-01	1.0000000000000001e-01	9.0000000000000002e-01	2.0000000000000001e-01	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	5.9999999999999998e-02
+out_row	ligand_logfc_neg	2	g10	g1	L1	R1	6.25e-02	2.0000000000000001e-01	LR5	a	pB	anno1	e1	d1	-2e+00	2.0000000000000001e-01	8.0000000000000004e-01	<NA>	5e-01	1.0000000000000001e-01	9.0000000000000002e-01	2.9999999999999999e-01
+out_row	ligand_logfc_neg	3	g1	g1	L1	R1	2.0000000000000001e-01	<NaN>	LR11	a	pB	anno1	e1	d2	-1e+00	2.9999999999999999e-01	5.9999999999999998e-01	1.0000000000000001e-01	<NA>	2.0000000000000001e-01	8.0000000000000004e-01	1.0000000000000001e-01
+out_rn	ligand_logfc_neg	1,2,3
+case	ligand_logfc_zero
+in_cols	ligand_logfc_zero	source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence,ligand.pvalues,ligand.logFC,ligand.pct.1,ligand.pct.2,receptor.pvalues,receptor.logFC,receptor.pct.1,receptor.pct.2,datasets
+in_nrow	ligand_logfc_zero	12
+in_row	ligand_logfc_zero	1	g1	g1	L1	R1	5e-01	1e-02	LR1	a	pA	anno1	e1	1e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	5.0000000000000003e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	d1
+in_row	ligand_logfc_zero	2	g1	g2	L2	R2	2.5e-01	2e-02	LR2	b	pB	anno2	<NA>	2.0000000000000001e-01	-5e-01	1.0000000000000001e-01	9.0000000000000002e-01	5.9999999999999998e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	d1
+in_row	ligand_logfc_zero	3	g2	g1	L1	R1	1.25e-01	5e-01	LR3	a	pC	anno1	e1	2.9999999999999999e-01	1.5e+00	5e-01	2.0000000000000001e-01	1e-02	-1e+00	4.0000000000000002e-01	5.9999999999999998e-01	d1
+in_row	ligand_logfc_zero	4	g2	g2	L2	R2	1e+00	1e-03	LR4	b	pA	anno2	<NA>	4.0000000000000001e-02	0e+00	5.9999999999999998e-01	2.9999999999999999e-01	2e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	d1
+in_row	ligand_logfc_zero	5	g10	g1	L1	R1	6.25e-02	2.0000000000000001e-01	LR5	a	pB	anno1	e1	<NA>	-2e+00	2.0000000000000001e-01	8.0000000000000004e-01	2.9999999999999999e-01	5e-01	1.0000000000000001e-01	9.0000000000000002e-01	d1
+in_row	ligand_logfc_zero	6	g10	g2	L2	R2	3.125e-02	4.0000000000000001e-02	LR6	b	pC	anno2	<NA>	5e-01	2.5e-01	8.0000000000000004e-01	1.0000000000000001e-01	4.0000000000000001e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	d1
+in_row	ligand_logfc_zero	7	g1	g10	L1	R1	2e+00	<NA>	LR7	a	pA	anno1	e1	2e-02	<NA>	4.0000000000000002e-01	5e-01	2e-02	0e+00	5e-01	5e-01	d2
+in_row	ligand_logfc_zero	8	g2	g10	L2	R2	5e-01	2.9999999999999999e-02	LR8	b	pB	anno2	<NA>	2e-02	7.5e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	d2
+in_row	ligand_logfc_zero	9	g10	g10	L1	R1	7.5e-01	9.0000000000000002e-01	LR9	a	pC	anno1	e1	<NaN>	1.0000000000000001e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	d2
+in_row	ligand_logfc_zero	10	g1	g2	L2	R2	3.3333333333333331e-01	5.0000000000000001e-03	LR10	b	pA	anno2	<NA>	1.0000000000000001e-01	0e+00	6.9999999999999996e-01	2.0000000000000001e-01	1e-02	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	d2
+in_row	ligand_logfc_zero	11	g1	g1	L1	R1	2.0000000000000001e-01	<NaN>	LR11	a	pB	anno1	e1	1.0000000000000001e-01	-1e+00	2.9999999999999999e-01	5.9999999999999998e-01	1.0000000000000001e-01	<NA>	2.0000000000000001e-01	8.0000000000000004e-01	d2
+in_row	ligand_logfc_zero	12	<NA>	g1	L2	R2	4.0000000000000002e-01	5.9999999999999998e-02	LR12	b	pC	anno2	<NA>	1.0000000000000001e-01	0e+00	5e-01	4.0000000000000002e-01	1.0000000000000001e-01	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	d2
+slot	ligand_logfc_zero	net
+arg	ligand_logfc_zero	sources.use	-
+arg	ligand_logfc_zero	targets.use	-
+arg	ligand_logfc_zero	datasets	-
+arg	ligand_logfc_zero	ligand.pvalues	-
+arg	ligand_logfc_zero	ligand.logFC	0e+00
+arg	ligand_logfc_zero	ligand.pct.1	-
+arg	ligand_logfc_zero	ligand.pct.2	-
+arg	ligand_logfc_zero	receptor.pvalues	-
+arg	ligand_logfc_zero	receptor.logFC	-
+arg	ligand_logfc_zero	receptor.pct.1	-
+arg	ligand_logfc_zero	receptor.pct.2	-
+warn	ligand_logfc_zero	-
+out_cols	ligand_logfc_zero	source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence,datasets,ligand.logFC,ligand.pct.1,ligand.pct.2,ligand.pvalues,receptor.logFC,receptor.pct.1,receptor.pct.2,receptor.pvalues
+out_nrow	ligand_logfc_zero	8
+out_row	ligand_logfc_zero	1	g1	g1	L1	R1	5e-01	1e-02	LR1	a	pA	anno1	e1	d1	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	1e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	5.0000000000000003e-02
+out_row	ligand_logfc_zero	2	g2	g1	L1	R1	1.25e-01	5e-01	LR3	a	pC	anno1	e1	d1	1.5e+00	5e-01	2.0000000000000001e-01	2.9999999999999999e-01	-1e+00	4.0000000000000002e-01	5.9999999999999998e-01	1e-02
+out_row	ligand_logfc_zero	3	g2	g2	L2	R2	1e+00	1e-03	LR4	b	pA	anno2	<NA>	d1	0e+00	5.9999999999999998e-01	2.9999999999999999e-01	4.0000000000000001e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	2e-02
+out_row	ligand_logfc_zero	4	g10	g2	L2	R2	3.125e-02	4.0000000000000001e-02	LR6	b	pC	anno2	<NA>	d1	2.5e-01	8.0000000000000004e-01	1.0000000000000001e-01	5e-01	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	4.0000000000000001e-02
+out_row	ligand_logfc_zero	5	g2	g10	L2	R2	5e-01	2.9999999999999999e-02	LR8	b	pB	anno2	<NA>	d2	7.5e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	2e-02
+out_row	ligand_logfc_zero	6	g10	g10	L1	R1	7.5e-01	9.0000000000000002e-01	LR9	a	pC	anno1	e1	d2	1.0000000000000001e-01	4.0000000000000002e-01	5e-01	<NaN>	5e-01	5e-01	5e-01	2e-02
+out_row	ligand_logfc_zero	7	g1	g2	L2	R2	3.3333333333333331e-01	5.0000000000000001e-03	LR10	b	pA	anno2	<NA>	d2	0e+00	6.9999999999999996e-01	2.0000000000000001e-01	1.0000000000000001e-01	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	1e-02
+out_row	ligand_logfc_zero	8	<NA>	g1	L2	R2	4.0000000000000002e-01	5.9999999999999998e-02	LR12	b	pC	anno2	<NA>	d2	0e+00	5e-01	4.0000000000000002e-01	1.0000000000000001e-01	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	1.0000000000000001e-01
+out_rn	ligand_logfc_zero	1,2,3,4,5,6,7,8
+case	ligand_pct1
+in_cols	ligand_pct1	source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence,ligand.pvalues,ligand.logFC,ligand.pct.1,ligand.pct.2,receptor.pvalues,receptor.logFC,receptor.pct.1,receptor.pct.2,datasets
+in_nrow	ligand_pct1	12
+in_row	ligand_pct1	1	g1	g1	L1	R1	5e-01	1e-02	LR1	a	pA	anno1	e1	1e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	5.0000000000000003e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	d1
+in_row	ligand_pct1	2	g1	g2	L2	R2	2.5e-01	2e-02	LR2	b	pB	anno2	<NA>	2.0000000000000001e-01	-5e-01	1.0000000000000001e-01	9.0000000000000002e-01	5.9999999999999998e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	d1
+in_row	ligand_pct1	3	g2	g1	L1	R1	1.25e-01	5e-01	LR3	a	pC	anno1	e1	2.9999999999999999e-01	1.5e+00	5e-01	2.0000000000000001e-01	1e-02	-1e+00	4.0000000000000002e-01	5.9999999999999998e-01	d1
+in_row	ligand_pct1	4	g2	g2	L2	R2	1e+00	1e-03	LR4	b	pA	anno2	<NA>	4.0000000000000001e-02	0e+00	5.9999999999999998e-01	2.9999999999999999e-01	2e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	d1
+in_row	ligand_pct1	5	g10	g1	L1	R1	6.25e-02	2.0000000000000001e-01	LR5	a	pB	anno1	e1	<NA>	-2e+00	2.0000000000000001e-01	8.0000000000000004e-01	2.9999999999999999e-01	5e-01	1.0000000000000001e-01	9.0000000000000002e-01	d1
+in_row	ligand_pct1	6	g10	g2	L2	R2	3.125e-02	4.0000000000000001e-02	LR6	b	pC	anno2	<NA>	5e-01	2.5e-01	8.0000000000000004e-01	1.0000000000000001e-01	4.0000000000000001e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	d1
+in_row	ligand_pct1	7	g1	g10	L1	R1	2e+00	<NA>	LR7	a	pA	anno1	e1	2e-02	<NA>	4.0000000000000002e-01	5e-01	2e-02	0e+00	5e-01	5e-01	d2
+in_row	ligand_pct1	8	g2	g10	L2	R2	5e-01	2.9999999999999999e-02	LR8	b	pB	anno2	<NA>	2e-02	7.5e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	d2
+in_row	ligand_pct1	9	g10	g10	L1	R1	7.5e-01	9.0000000000000002e-01	LR9	a	pC	anno1	e1	<NaN>	1.0000000000000001e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	d2
+in_row	ligand_pct1	10	g1	g2	L2	R2	3.3333333333333331e-01	5.0000000000000001e-03	LR10	b	pA	anno2	<NA>	1.0000000000000001e-01	0e+00	6.9999999999999996e-01	2.0000000000000001e-01	1e-02	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	d2
+in_row	ligand_pct1	11	g1	g1	L1	R1	2.0000000000000001e-01	<NaN>	LR11	a	pB	anno1	e1	1.0000000000000001e-01	-1e+00	2.9999999999999999e-01	5.9999999999999998e-01	1.0000000000000001e-01	<NA>	2.0000000000000001e-01	8.0000000000000004e-01	d2
+in_row	ligand_pct1	12	<NA>	g1	L2	R2	4.0000000000000002e-01	5.9999999999999998e-02	LR12	b	pC	anno2	<NA>	1.0000000000000001e-01	0e+00	5e-01	4.0000000000000002e-01	1.0000000000000001e-01	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	d2
+slot	ligand_pct1	net
+arg	ligand_pct1	sources.use	-
+arg	ligand_pct1	targets.use	-
+arg	ligand_pct1	datasets	-
+arg	ligand_pct1	ligand.pvalues	-
+arg	ligand_pct1	ligand.logFC	-
+arg	ligand_pct1	ligand.pct.1	5e-01
+arg	ligand_pct1	ligand.pct.2	-
+arg	ligand_pct1	receptor.pvalues	-
+arg	ligand_pct1	receptor.logFC	-
+arg	ligand_pct1	receptor.pct.1	-
+arg	ligand_pct1	receptor.pct.2	-
+warn	ligand_pct1	-
+out_cols	ligand_pct1	source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence,datasets,ligand.logFC,ligand.pct.1,ligand.pct.2,ligand.pvalues,receptor.logFC,receptor.pct.1,receptor.pct.2,receptor.pvalues
+out_nrow	ligand_pct1	6
+out_row	ligand_pct1	1	g1	g1	L1	R1	5e-01	1e-02	LR1	a	pA	anno1	e1	d1	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	1e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	5.0000000000000003e-02
+out_row	ligand_pct1	2	g2	g1	L1	R1	1.25e-01	5e-01	LR3	a	pC	anno1	e1	d1	1.5e+00	5e-01	2.0000000000000001e-01	2.9999999999999999e-01	-1e+00	4.0000000000000002e-01	5.9999999999999998e-01	1e-02
+out_row	ligand_pct1	3	g2	g2	L2	R2	1e+00	1e-03	LR4	b	pA	anno2	<NA>	d1	0e+00	5.9999999999999998e-01	2.9999999999999999e-01	4.0000000000000001e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	2e-02
+out_row	ligand_pct1	4	g10	g2	L2	R2	3.125e-02	4.0000000000000001e-02	LR6	b	pC	anno2	<NA>	d1	2.5e-01	8.0000000000000004e-01	1.0000000000000001e-01	5e-01	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	4.0000000000000001e-02
+out_row	ligand_pct1	5	g1	g2	L2	R2	3.3333333333333331e-01	5.0000000000000001e-03	LR10	b	pA	anno2	<NA>	d2	0e+00	6.9999999999999996e-01	2.0000000000000001e-01	1.0000000000000001e-01	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	1e-02
+out_row	ligand_pct1	6	<NA>	g1	L2	R2	4.0000000000000002e-01	5.9999999999999998e-02	LR12	b	pC	anno2	<NA>	d2	0e+00	5e-01	4.0000000000000002e-01	1.0000000000000001e-01	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	1.0000000000000001e-01
+out_rn	ligand_pct1	1,2,3,4,5,6
+case	ligand_pct2
+in_cols	ligand_pct2	source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence,ligand.pvalues,ligand.logFC,ligand.pct.1,ligand.pct.2,receptor.pvalues,receptor.logFC,receptor.pct.1,receptor.pct.2,datasets
+in_nrow	ligand_pct2	12
+in_row	ligand_pct2	1	g1	g1	L1	R1	5e-01	1e-02	LR1	a	pA	anno1	e1	1e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	5.0000000000000003e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	d1
+in_row	ligand_pct2	2	g1	g2	L2	R2	2.5e-01	2e-02	LR2	b	pB	anno2	<NA>	2.0000000000000001e-01	-5e-01	1.0000000000000001e-01	9.0000000000000002e-01	5.9999999999999998e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	d1
+in_row	ligand_pct2	3	g2	g1	L1	R1	1.25e-01	5e-01	LR3	a	pC	anno1	e1	2.9999999999999999e-01	1.5e+00	5e-01	2.0000000000000001e-01	1e-02	-1e+00	4.0000000000000002e-01	5.9999999999999998e-01	d1
+in_row	ligand_pct2	4	g2	g2	L2	R2	1e+00	1e-03	LR4	b	pA	anno2	<NA>	4.0000000000000001e-02	0e+00	5.9999999999999998e-01	2.9999999999999999e-01	2e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	d1
+in_row	ligand_pct2	5	g10	g1	L1	R1	6.25e-02	2.0000000000000001e-01	LR5	a	pB	anno1	e1	<NA>	-2e+00	2.0000000000000001e-01	8.0000000000000004e-01	2.9999999999999999e-01	5e-01	1.0000000000000001e-01	9.0000000000000002e-01	d1
+in_row	ligand_pct2	6	g10	g2	L2	R2	3.125e-02	4.0000000000000001e-02	LR6	b	pC	anno2	<NA>	5e-01	2.5e-01	8.0000000000000004e-01	1.0000000000000001e-01	4.0000000000000001e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	d1
+in_row	ligand_pct2	7	g1	g10	L1	R1	2e+00	<NA>	LR7	a	pA	anno1	e1	2e-02	<NA>	4.0000000000000002e-01	5e-01	2e-02	0e+00	5e-01	5e-01	d2
+in_row	ligand_pct2	8	g2	g10	L2	R2	5e-01	2.9999999999999999e-02	LR8	b	pB	anno2	<NA>	2e-02	7.5e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	d2
+in_row	ligand_pct2	9	g10	g10	L1	R1	7.5e-01	9.0000000000000002e-01	LR9	a	pC	anno1	e1	<NaN>	1.0000000000000001e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	d2
+in_row	ligand_pct2	10	g1	g2	L2	R2	3.3333333333333331e-01	5.0000000000000001e-03	LR10	b	pA	anno2	<NA>	1.0000000000000001e-01	0e+00	6.9999999999999996e-01	2.0000000000000001e-01	1e-02	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	d2
+in_row	ligand_pct2	11	g1	g1	L1	R1	2.0000000000000001e-01	<NaN>	LR11	a	pB	anno1	e1	1.0000000000000001e-01	-1e+00	2.9999999999999999e-01	5.9999999999999998e-01	1.0000000000000001e-01	<NA>	2.0000000000000001e-01	8.0000000000000004e-01	d2
+in_row	ligand_pct2	12	<NA>	g1	L2	R2	4.0000000000000002e-01	5.9999999999999998e-02	LR12	b	pC	anno2	<NA>	1.0000000000000001e-01	0e+00	5e-01	4.0000000000000002e-01	1.0000000000000001e-01	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	d2
+slot	ligand_pct2	net
+arg	ligand_pct2	sources.use	-
+arg	ligand_pct2	targets.use	-
+arg	ligand_pct2	datasets	-
+arg	ligand_pct2	ligand.pvalues	-
+arg	ligand_pct2	ligand.logFC	-
+arg	ligand_pct2	ligand.pct.1	-
+arg	ligand_pct2	ligand.pct.2	5e-01
+arg	ligand_pct2	receptor.pvalues	-
+arg	ligand_pct2	receptor.logFC	-
+arg	ligand_pct2	receptor.pct.1	-
+arg	ligand_pct2	receptor.pct.2	-
+warn	ligand_pct2	-
+out_cols	ligand_pct2	source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence,datasets,ligand.logFC,ligand.pct.1,ligand.pct.2,ligand.pvalues,receptor.logFC,receptor.pct.1,receptor.pct.2,receptor.pvalues
+out_nrow	ligand_pct2	6
+out_row	ligand_pct2	1	g1	g2	L2	R2	2.5e-01	2e-02	LR2	b	pB	anno2	<NA>	d1	-5e-01	1.0000000000000001e-01	9.0000000000000002e-01	2.0000000000000001e-01	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	5.9999999999999998e-02
+out_row	ligand_pct2	2	g10	g1	L1	R1	6.25e-02	2.0000000000000001e-01	LR5	a	pB	anno1	e1	d1	-2e+00	2.0000000000000001e-01	8.0000000000000004e-01	<NA>	5e-01	1.0000000000000001e-01	9.0000000000000002e-01	2.9999999999999999e-01
+out_row	ligand_pct2	3	g1	g10	L1	R1	2e+00	<NA>	LR7	a	pA	anno1	e1	d2	<NA>	4.0000000000000002e-01	5e-01	2e-02	0e+00	5e-01	5e-01	2e-02
+out_row	ligand_pct2	4	g2	g10	L2	R2	5e-01	2.9999999999999999e-02	LR8	b	pB	anno2	<NA>	d2	7.5e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	2e-02
+out_row	ligand_pct2	5	g10	g10	L1	R1	7.5e-01	9.0000000000000002e-01	LR9	a	pC	anno1	e1	d2	1.0000000000000001e-01	4.0000000000000002e-01	5e-01	<NaN>	5e-01	5e-01	5e-01	2e-02
+out_row	ligand_pct2	6	g1	g1	L1	R1	2.0000000000000001e-01	<NaN>	LR11	a	pB	anno1	e1	d2	-1e+00	2.9999999999999999e-01	5.9999999999999998e-01	1.0000000000000001e-01	<NA>	2.0000000000000001e-01	8.0000000000000004e-01	1.0000000000000001e-01
+out_rn	ligand_pct2	1,2,3,4,5,6
+case	receptor_pvalues
+in_cols	receptor_pvalues	source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence,ligand.pvalues,ligand.logFC,ligand.pct.1,ligand.pct.2,receptor.pvalues,receptor.logFC,receptor.pct.1,receptor.pct.2,datasets
+in_nrow	receptor_pvalues	12
+in_row	receptor_pvalues	1	g1	g1	L1	R1	5e-01	1e-02	LR1	a	pA	anno1	e1	1e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	5.0000000000000003e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	d1
+in_row	receptor_pvalues	2	g1	g2	L2	R2	2.5e-01	2e-02	LR2	b	pB	anno2	<NA>	2.0000000000000001e-01	-5e-01	1.0000000000000001e-01	9.0000000000000002e-01	5.9999999999999998e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	d1
+in_row	receptor_pvalues	3	g2	g1	L1	R1	1.25e-01	5e-01	LR3	a	pC	anno1	e1	2.9999999999999999e-01	1.5e+00	5e-01	2.0000000000000001e-01	1e-02	-1e+00	4.0000000000000002e-01	5.9999999999999998e-01	d1
+in_row	receptor_pvalues	4	g2	g2	L2	R2	1e+00	1e-03	LR4	b	pA	anno2	<NA>	4.0000000000000001e-02	0e+00	5.9999999999999998e-01	2.9999999999999999e-01	2e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	d1
+in_row	receptor_pvalues	5	g10	g1	L1	R1	6.25e-02	2.0000000000000001e-01	LR5	a	pB	anno1	e1	<NA>	-2e+00	2.0000000000000001e-01	8.0000000000000004e-01	2.9999999999999999e-01	5e-01	1.0000000000000001e-01	9.0000000000000002e-01	d1
+in_row	receptor_pvalues	6	g10	g2	L2	R2	3.125e-02	4.0000000000000001e-02	LR6	b	pC	anno2	<NA>	5e-01	2.5e-01	8.0000000000000004e-01	1.0000000000000001e-01	4.0000000000000001e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	d1
+in_row	receptor_pvalues	7	g1	g10	L1	R1	2e+00	<NA>	LR7	a	pA	anno1	e1	2e-02	<NA>	4.0000000000000002e-01	5e-01	2e-02	0e+00	5e-01	5e-01	d2
+in_row	receptor_pvalues	8	g2	g10	L2	R2	5e-01	2.9999999999999999e-02	LR8	b	pB	anno2	<NA>	2e-02	7.5e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	d2
+in_row	receptor_pvalues	9	g10	g10	L1	R1	7.5e-01	9.0000000000000002e-01	LR9	a	pC	anno1	e1	<NaN>	1.0000000000000001e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	d2
+in_row	receptor_pvalues	10	g1	g2	L2	R2	3.3333333333333331e-01	5.0000000000000001e-03	LR10	b	pA	anno2	<NA>	1.0000000000000001e-01	0e+00	6.9999999999999996e-01	2.0000000000000001e-01	1e-02	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	d2
+in_row	receptor_pvalues	11	g1	g1	L1	R1	2.0000000000000001e-01	<NaN>	LR11	a	pB	anno1	e1	1.0000000000000001e-01	-1e+00	2.9999999999999999e-01	5.9999999999999998e-01	1.0000000000000001e-01	<NA>	2.0000000000000001e-01	8.0000000000000004e-01	d2
+in_row	receptor_pvalues	12	<NA>	g1	L2	R2	4.0000000000000002e-01	5.9999999999999998e-02	LR12	b	pC	anno2	<NA>	1.0000000000000001e-01	0e+00	5e-01	4.0000000000000002e-01	1.0000000000000001e-01	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	d2
+slot	receptor_pvalues	net
+arg	receptor_pvalues	sources.use	-
+arg	receptor_pvalues	targets.use	-
+arg	receptor_pvalues	datasets	-
+arg	receptor_pvalues	ligand.pvalues	-
+arg	receptor_pvalues	ligand.logFC	-
+arg	receptor_pvalues	ligand.pct.1	-
+arg	receptor_pvalues	ligand.pct.2	-
+arg	receptor_pvalues	receptor.pvalues	2e-02
+arg	receptor_pvalues	receptor.logFC	-
+arg	receptor_pvalues	receptor.pct.1	-
+arg	receptor_pvalues	receptor.pct.2	-
+warn	receptor_pvalues	-
+out_cols	receptor_pvalues	source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence,datasets,ligand.logFC,ligand.pct.1,ligand.pct.2,ligand.pvalues,receptor.logFC,receptor.pct.1,receptor.pct.2,receptor.pvalues
+out_nrow	receptor_pvalues	6
+out_row	receptor_pvalues	1	g2	g1	L1	R1	1.25e-01	5e-01	LR3	a	pC	anno1	e1	d1	1.5e+00	5e-01	2.0000000000000001e-01	2.9999999999999999e-01	-1e+00	4.0000000000000002e-01	5.9999999999999998e-01	1e-02
+out_row	receptor_pvalues	2	g2	g2	L2	R2	1e+00	1e-03	LR4	b	pA	anno2	<NA>	d1	0e+00	5.9999999999999998e-01	2.9999999999999999e-01	4.0000000000000001e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	2e-02
+out_row	receptor_pvalues	3	g1	g10	L1	R1	2e+00	<NA>	LR7	a	pA	anno1	e1	d2	<NA>	4.0000000000000002e-01	5e-01	2e-02	0e+00	5e-01	5e-01	2e-02
+out_row	receptor_pvalues	4	g2	g10	L2	R2	5e-01	2.9999999999999999e-02	LR8	b	pB	anno2	<NA>	d2	7.5e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	2e-02
+out_row	receptor_pvalues	5	g10	g10	L1	R1	7.5e-01	9.0000000000000002e-01	LR9	a	pC	anno1	e1	d2	1.0000000000000001e-01	4.0000000000000002e-01	5e-01	<NaN>	5e-01	5e-01	5e-01	2e-02
+out_row	receptor_pvalues	6	g1	g2	L2	R2	3.3333333333333331e-01	5.0000000000000001e-03	LR10	b	pA	anno2	<NA>	d2	0e+00	6.9999999999999996e-01	2.0000000000000001e-01	1.0000000000000001e-01	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	1e-02
+out_rn	receptor_pvalues	1,2,3,4,5,6
+case	receptor_logfc_pos
+in_cols	receptor_logfc_pos	source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence,ligand.pvalues,ligand.logFC,ligand.pct.1,ligand.pct.2,receptor.pvalues,receptor.logFC,receptor.pct.1,receptor.pct.2,datasets
+in_nrow	receptor_logfc_pos	12
+in_row	receptor_logfc_pos	1	g1	g1	L1	R1	5e-01	1e-02	LR1	a	pA	anno1	e1	1e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	5.0000000000000003e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	d1
+in_row	receptor_logfc_pos	2	g1	g2	L2	R2	2.5e-01	2e-02	LR2	b	pB	anno2	<NA>	2.0000000000000001e-01	-5e-01	1.0000000000000001e-01	9.0000000000000002e-01	5.9999999999999998e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	d1
+in_row	receptor_logfc_pos	3	g2	g1	L1	R1	1.25e-01	5e-01	LR3	a	pC	anno1	e1	2.9999999999999999e-01	1.5e+00	5e-01	2.0000000000000001e-01	1e-02	-1e+00	4.0000000000000002e-01	5.9999999999999998e-01	d1
+in_row	receptor_logfc_pos	4	g2	g2	L2	R2	1e+00	1e-03	LR4	b	pA	anno2	<NA>	4.0000000000000001e-02	0e+00	5.9999999999999998e-01	2.9999999999999999e-01	2e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	d1
+in_row	receptor_logfc_pos	5	g10	g1	L1	R1	6.25e-02	2.0000000000000001e-01	LR5	a	pB	anno1	e1	<NA>	-2e+00	2.0000000000000001e-01	8.0000000000000004e-01	2.9999999999999999e-01	5e-01	1.0000000000000001e-01	9.0000000000000002e-01	d1
+in_row	receptor_logfc_pos	6	g10	g2	L2	R2	3.125e-02	4.0000000000000001e-02	LR6	b	pC	anno2	<NA>	5e-01	2.5e-01	8.0000000000000004e-01	1.0000000000000001e-01	4.0000000000000001e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	d1
+in_row	receptor_logfc_pos	7	g1	g10	L1	R1	2e+00	<NA>	LR7	a	pA	anno1	e1	2e-02	<NA>	4.0000000000000002e-01	5e-01	2e-02	0e+00	5e-01	5e-01	d2
+in_row	receptor_logfc_pos	8	g2	g10	L2	R2	5e-01	2.9999999999999999e-02	LR8	b	pB	anno2	<NA>	2e-02	7.5e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	d2
+in_row	receptor_logfc_pos	9	g10	g10	L1	R1	7.5e-01	9.0000000000000002e-01	LR9	a	pC	anno1	e1	<NaN>	1.0000000000000001e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	d2
+in_row	receptor_logfc_pos	10	g1	g2	L2	R2	3.3333333333333331e-01	5.0000000000000001e-03	LR10	b	pA	anno2	<NA>	1.0000000000000001e-01	0e+00	6.9999999999999996e-01	2.0000000000000001e-01	1e-02	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	d2
+in_row	receptor_logfc_pos	11	g1	g1	L1	R1	2.0000000000000001e-01	<NaN>	LR11	a	pB	anno1	e1	1.0000000000000001e-01	-1e+00	2.9999999999999999e-01	5.9999999999999998e-01	1.0000000000000001e-01	<NA>	2.0000000000000001e-01	8.0000000000000004e-01	d2
+in_row	receptor_logfc_pos	12	<NA>	g1	L2	R2	4.0000000000000002e-01	5.9999999999999998e-02	LR12	b	pC	anno2	<NA>	1.0000000000000001e-01	0e+00	5e-01	4.0000000000000002e-01	1.0000000000000001e-01	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	d2
+slot	receptor_logfc_pos	net
+arg	receptor_logfc_pos	sources.use	-
+arg	receptor_logfc_pos	targets.use	-
+arg	receptor_logfc_pos	datasets	-
+arg	receptor_logfc_pos	ligand.pvalues	-
+arg	receptor_logfc_pos	ligand.logFC	-
+arg	receptor_logfc_pos	ligand.pct.1	-
+arg	receptor_logfc_pos	ligand.pct.2	-
+arg	receptor_logfc_pos	receptor.pvalues	-
+arg	receptor_logfc_pos	receptor.logFC	5e-01
+arg	receptor_logfc_pos	receptor.pct.1	-
+arg	receptor_logfc_pos	receptor.pct.2	-
+warn	receptor_logfc_pos	-
+out_cols	receptor_logfc_pos	source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence,datasets,ligand.logFC,ligand.pct.1,ligand.pct.2,ligand.pvalues,receptor.logFC,receptor.pct.1,receptor.pct.2,receptor.pvalues
+out_nrow	receptor_logfc_pos	9
+out_row	receptor_logfc_pos	1	g1	g1	L1	R1	5e-01	1e-02	LR1	a	pA	anno1	e1	d1	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	1e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	5.0000000000000003e-02
+out_row	receptor_logfc_pos	2	g1	g2	L2	R2	2.5e-01	2e-02	LR2	b	pB	anno2	<NA>	d1	-5e-01	1.0000000000000001e-01	9.0000000000000002e-01	2.0000000000000001e-01	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	5.9999999999999998e-02
+out_row	receptor_logfc_pos	3	g2	g2	L2	R2	1e+00	1e-03	LR4	b	pA	anno2	<NA>	d1	0e+00	5.9999999999999998e-01	2.9999999999999999e-01	4.0000000000000001e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	2e-02
+out_row	receptor_logfc_pos	4	g10	g1	L1	R1	6.25e-02	2.0000000000000001e-01	LR5	a	pB	anno1	e1	d1	-2e+00	2.0000000000000001e-01	8.0000000000000004e-01	<NA>	5e-01	1.0000000000000001e-01	9.0000000000000002e-01	2.9999999999999999e-01
+out_row	receptor_logfc_pos	5	g10	g2	L2	R2	3.125e-02	4.0000000000000001e-02	LR6	b	pC	anno2	<NA>	d1	2.5e-01	8.0000000000000004e-01	1.0000000000000001e-01	5e-01	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	4.0000000000000001e-02
+out_row	receptor_logfc_pos	6	g2	g10	L2	R2	5e-01	2.9999999999999999e-02	LR8	b	pB	anno2	<NA>	d2	7.5e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	2e-02
+out_row	receptor_logfc_pos	7	g10	g10	L1	R1	7.5e-01	9.0000000000000002e-01	LR9	a	pC	anno1	e1	d2	1.0000000000000001e-01	4.0000000000000002e-01	5e-01	<NaN>	5e-01	5e-01	5e-01	2e-02
+out_row	receptor_logfc_pos	8	g1	g2	L2	R2	3.3333333333333331e-01	5.0000000000000001e-03	LR10	b	pA	anno2	<NA>	d2	0e+00	6.9999999999999996e-01	2.0000000000000001e-01	1.0000000000000001e-01	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	1e-02
+out_row	receptor_logfc_pos	9	<NA>	g1	L2	R2	4.0000000000000002e-01	5.9999999999999998e-02	LR12	b	pC	anno2	<NA>	d2	0e+00	5e-01	4.0000000000000002e-01	1.0000000000000001e-01	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	1.0000000000000001e-01
+out_rn	receptor_logfc_pos	1,2,3,4,5,6,7,8,9
+case	receptor_logfc_neg
+in_cols	receptor_logfc_neg	source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence,ligand.pvalues,ligand.logFC,ligand.pct.1,ligand.pct.2,receptor.pvalues,receptor.logFC,receptor.pct.1,receptor.pct.2,datasets
+in_nrow	receptor_logfc_neg	12
+in_row	receptor_logfc_neg	1	g1	g1	L1	R1	5e-01	1e-02	LR1	a	pA	anno1	e1	1e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	5.0000000000000003e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	d1
+in_row	receptor_logfc_neg	2	g1	g2	L2	R2	2.5e-01	2e-02	LR2	b	pB	anno2	<NA>	2.0000000000000001e-01	-5e-01	1.0000000000000001e-01	9.0000000000000002e-01	5.9999999999999998e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	d1
+in_row	receptor_logfc_neg	3	g2	g1	L1	R1	1.25e-01	5e-01	LR3	a	pC	anno1	e1	2.9999999999999999e-01	1.5e+00	5e-01	2.0000000000000001e-01	1e-02	-1e+00	4.0000000000000002e-01	5.9999999999999998e-01	d1
+in_row	receptor_logfc_neg	4	g2	g2	L2	R2	1e+00	1e-03	LR4	b	pA	anno2	<NA>	4.0000000000000001e-02	0e+00	5.9999999999999998e-01	2.9999999999999999e-01	2e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	d1
+in_row	receptor_logfc_neg	5	g10	g1	L1	R1	6.25e-02	2.0000000000000001e-01	LR5	a	pB	anno1	e1	<NA>	-2e+00	2.0000000000000001e-01	8.0000000000000004e-01	2.9999999999999999e-01	5e-01	1.0000000000000001e-01	9.0000000000000002e-01	d1
+in_row	receptor_logfc_neg	6	g10	g2	L2	R2	3.125e-02	4.0000000000000001e-02	LR6	b	pC	anno2	<NA>	5e-01	2.5e-01	8.0000000000000004e-01	1.0000000000000001e-01	4.0000000000000001e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	d1
+in_row	receptor_logfc_neg	7	g1	g10	L1	R1	2e+00	<NA>	LR7	a	pA	anno1	e1	2e-02	<NA>	4.0000000000000002e-01	5e-01	2e-02	0e+00	5e-01	5e-01	d2
+in_row	receptor_logfc_neg	8	g2	g10	L2	R2	5e-01	2.9999999999999999e-02	LR8	b	pB	anno2	<NA>	2e-02	7.5e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	d2
+in_row	receptor_logfc_neg	9	g10	g10	L1	R1	7.5e-01	9.0000000000000002e-01	LR9	a	pC	anno1	e1	<NaN>	1.0000000000000001e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	d2
+in_row	receptor_logfc_neg	10	g1	g2	L2	R2	3.3333333333333331e-01	5.0000000000000001e-03	LR10	b	pA	anno2	<NA>	1.0000000000000001e-01	0e+00	6.9999999999999996e-01	2.0000000000000001e-01	1e-02	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	d2
+in_row	receptor_logfc_neg	11	g1	g1	L1	R1	2.0000000000000001e-01	<NaN>	LR11	a	pB	anno1	e1	1.0000000000000001e-01	-1e+00	2.9999999999999999e-01	5.9999999999999998e-01	1.0000000000000001e-01	<NA>	2.0000000000000001e-01	8.0000000000000004e-01	d2
+in_row	receptor_logfc_neg	12	<NA>	g1	L2	R2	4.0000000000000002e-01	5.9999999999999998e-02	LR12	b	pC	anno2	<NA>	1.0000000000000001e-01	0e+00	5e-01	4.0000000000000002e-01	1.0000000000000001e-01	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	d2
+slot	receptor_logfc_neg	net
+arg	receptor_logfc_neg	sources.use	-
+arg	receptor_logfc_neg	targets.use	-
+arg	receptor_logfc_neg	datasets	-
+arg	receptor_logfc_neg	ligand.pvalues	-
+arg	receptor_logfc_neg	ligand.logFC	-
+arg	receptor_logfc_neg	ligand.pct.1	-
+arg	receptor_logfc_neg	ligand.pct.2	-
+arg	receptor_logfc_neg	receptor.pvalues	-
+arg	receptor_logfc_neg	receptor.logFC	-5e-01
+arg	receptor_logfc_neg	receptor.pct.1	-
+arg	receptor_logfc_neg	receptor.pct.2	-
+warn	receptor_logfc_neg	-
+out_cols	receptor_logfc_neg	source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence,datasets,ligand.logFC,ligand.pct.1,ligand.pct.2,ligand.pvalues,receptor.logFC,receptor.pct.1,receptor.pct.2,receptor.pvalues
+out_nrow	receptor_logfc_neg	1
+out_row	receptor_logfc_neg	1	g2	g1	L1	R1	1.25e-01	5e-01	LR3	a	pC	anno1	e1	d1	1.5e+00	5e-01	2.0000000000000001e-01	2.9999999999999999e-01	-1e+00	4.0000000000000002e-01	5.9999999999999998e-01	1e-02
+out_rn	receptor_logfc_neg	1
+case	receptor_pct1
+in_cols	receptor_pct1	source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence,ligand.pvalues,ligand.logFC,ligand.pct.1,ligand.pct.2,receptor.pvalues,receptor.logFC,receptor.pct.1,receptor.pct.2,datasets
+in_nrow	receptor_pct1	12
+in_row	receptor_pct1	1	g1	g1	L1	R1	5e-01	1e-02	LR1	a	pA	anno1	e1	1e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	5.0000000000000003e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	d1
+in_row	receptor_pct1	2	g1	g2	L2	R2	2.5e-01	2e-02	LR2	b	pB	anno2	<NA>	2.0000000000000001e-01	-5e-01	1.0000000000000001e-01	9.0000000000000002e-01	5.9999999999999998e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	d1
+in_row	receptor_pct1	3	g2	g1	L1	R1	1.25e-01	5e-01	LR3	a	pC	anno1	e1	2.9999999999999999e-01	1.5e+00	5e-01	2.0000000000000001e-01	1e-02	-1e+00	4.0000000000000002e-01	5.9999999999999998e-01	d1
+in_row	receptor_pct1	4	g2	g2	L2	R2	1e+00	1e-03	LR4	b	pA	anno2	<NA>	4.0000000000000001e-02	0e+00	5.9999999999999998e-01	2.9999999999999999e-01	2e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	d1
+in_row	receptor_pct1	5	g10	g1	L1	R1	6.25e-02	2.0000000000000001e-01	LR5	a	pB	anno1	e1	<NA>	-2e+00	2.0000000000000001e-01	8.0000000000000004e-01	2.9999999999999999e-01	5e-01	1.0000000000000001e-01	9.0000000000000002e-01	d1
+in_row	receptor_pct1	6	g10	g2	L2	R2	3.125e-02	4.0000000000000001e-02	LR6	b	pC	anno2	<NA>	5e-01	2.5e-01	8.0000000000000004e-01	1.0000000000000001e-01	4.0000000000000001e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	d1
+in_row	receptor_pct1	7	g1	g10	L1	R1	2e+00	<NA>	LR7	a	pA	anno1	e1	2e-02	<NA>	4.0000000000000002e-01	5e-01	2e-02	0e+00	5e-01	5e-01	d2
+in_row	receptor_pct1	8	g2	g10	L2	R2	5e-01	2.9999999999999999e-02	LR8	b	pB	anno2	<NA>	2e-02	7.5e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	d2
+in_row	receptor_pct1	9	g10	g10	L1	R1	7.5e-01	9.0000000000000002e-01	LR9	a	pC	anno1	e1	<NaN>	1.0000000000000001e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	d2
+in_row	receptor_pct1	10	g1	g2	L2	R2	3.3333333333333331e-01	5.0000000000000001e-03	LR10	b	pA	anno2	<NA>	1.0000000000000001e-01	0e+00	6.9999999999999996e-01	2.0000000000000001e-01	1e-02	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	d2
+in_row	receptor_pct1	11	g1	g1	L1	R1	2.0000000000000001e-01	<NaN>	LR11	a	pB	anno1	e1	1.0000000000000001e-01	-1e+00	2.9999999999999999e-01	5.9999999999999998e-01	1.0000000000000001e-01	<NA>	2.0000000000000001e-01	8.0000000000000004e-01	d2
+in_row	receptor_pct1	12	<NA>	g1	L2	R2	4.0000000000000002e-01	5.9999999999999998e-02	LR12	b	pC	anno2	<NA>	1.0000000000000001e-01	0e+00	5e-01	4.0000000000000002e-01	1.0000000000000001e-01	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	d2
+slot	receptor_pct1	net
+arg	receptor_pct1	sources.use	-
+arg	receptor_pct1	targets.use	-
+arg	receptor_pct1	datasets	-
+arg	receptor_pct1	ligand.pvalues	-
+arg	receptor_pct1	ligand.logFC	-
+arg	receptor_pct1	ligand.pct.1	-
+arg	receptor_pct1	ligand.pct.2	-
+arg	receptor_pct1	receptor.pvalues	-
+arg	receptor_pct1	receptor.logFC	-
+arg	receptor_pct1	receptor.pct.1	5e-01
+arg	receptor_pct1	receptor.pct.2	-
+warn	receptor_pct1	-
+out_cols	receptor_pct1	source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence,datasets,ligand.logFC,ligand.pct.1,ligand.pct.2,ligand.pvalues,receptor.logFC,receptor.pct.1,receptor.pct.2,receptor.pvalues
+out_nrow	receptor_pct1	9
+out_row	receptor_pct1	1	g1	g1	L1	R1	5e-01	1e-02	LR1	a	pA	anno1	e1	d1	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	1e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	5.0000000000000003e-02
+out_row	receptor_pct1	2	g1	g2	L2	R2	2.5e-01	2e-02	LR2	b	pB	anno2	<NA>	d1	-5e-01	1.0000000000000001e-01	9.0000000000000002e-01	2.0000000000000001e-01	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	5.9999999999999998e-02
+out_row	receptor_pct1	3	g2	g2	L2	R2	1e+00	1e-03	LR4	b	pA	anno2	<NA>	d1	0e+00	5.9999999999999998e-01	2.9999999999999999e-01	4.0000000000000001e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	2e-02
+out_row	receptor_pct1	4	g10	g2	L2	R2	3.125e-02	4.0000000000000001e-02	LR6	b	pC	anno2	<NA>	d1	2.5e-01	8.0000000000000004e-01	1.0000000000000001e-01	5e-01	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	4.0000000000000001e-02
+out_row	receptor_pct1	5	g1	g10	L1	R1	2e+00	<NA>	LR7	a	pA	anno1	e1	d2	<NA>	4.0000000000000002e-01	5e-01	2e-02	0e+00	5e-01	5e-01	2e-02
+out_row	receptor_pct1	6	g2	g10	L2	R2	5e-01	2.9999999999999999e-02	LR8	b	pB	anno2	<NA>	d2	7.5e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	2e-02
+out_row	receptor_pct1	7	g10	g10	L1	R1	7.5e-01	9.0000000000000002e-01	LR9	a	pC	anno1	e1	d2	1.0000000000000001e-01	4.0000000000000002e-01	5e-01	<NaN>	5e-01	5e-01	5e-01	2e-02
+out_row	receptor_pct1	8	g1	g2	L2	R2	3.3333333333333331e-01	5.0000000000000001e-03	LR10	b	pA	anno2	<NA>	d2	0e+00	6.9999999999999996e-01	2.0000000000000001e-01	1.0000000000000001e-01	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	1e-02
+out_row	receptor_pct1	9	<NA>	g1	L2	R2	4.0000000000000002e-01	5.9999999999999998e-02	LR12	b	pC	anno2	<NA>	d2	0e+00	5e-01	4.0000000000000002e-01	1.0000000000000001e-01	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	1.0000000000000001e-01
+out_rn	receptor_pct1	1,2,3,4,5,6,7,8,9
+case	receptor_pct2
+in_cols	receptor_pct2	source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence,ligand.pvalues,ligand.logFC,ligand.pct.1,ligand.pct.2,receptor.pvalues,receptor.logFC,receptor.pct.1,receptor.pct.2,datasets
+in_nrow	receptor_pct2	12
+in_row	receptor_pct2	1	g1	g1	L1	R1	5e-01	1e-02	LR1	a	pA	anno1	e1	1e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	5.0000000000000003e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	d1
+in_row	receptor_pct2	2	g1	g2	L2	R2	2.5e-01	2e-02	LR2	b	pB	anno2	<NA>	2.0000000000000001e-01	-5e-01	1.0000000000000001e-01	9.0000000000000002e-01	5.9999999999999998e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	d1
+in_row	receptor_pct2	3	g2	g1	L1	R1	1.25e-01	5e-01	LR3	a	pC	anno1	e1	2.9999999999999999e-01	1.5e+00	5e-01	2.0000000000000001e-01	1e-02	-1e+00	4.0000000000000002e-01	5.9999999999999998e-01	d1
+in_row	receptor_pct2	4	g2	g2	L2	R2	1e+00	1e-03	LR4	b	pA	anno2	<NA>	4.0000000000000001e-02	0e+00	5.9999999999999998e-01	2.9999999999999999e-01	2e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	d1
+in_row	receptor_pct2	5	g10	g1	L1	R1	6.25e-02	2.0000000000000001e-01	LR5	a	pB	anno1	e1	<NA>	-2e+00	2.0000000000000001e-01	8.0000000000000004e-01	2.9999999999999999e-01	5e-01	1.0000000000000001e-01	9.0000000000000002e-01	d1
+in_row	receptor_pct2	6	g10	g2	L2	R2	3.125e-02	4.0000000000000001e-02	LR6	b	pC	anno2	<NA>	5e-01	2.5e-01	8.0000000000000004e-01	1.0000000000000001e-01	4.0000000000000001e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	d1
+in_row	receptor_pct2	7	g1	g10	L1	R1	2e+00	<NA>	LR7	a	pA	anno1	e1	2e-02	<NA>	4.0000000000000002e-01	5e-01	2e-02	0e+00	5e-01	5e-01	d2
+in_row	receptor_pct2	8	g2	g10	L2	R2	5e-01	2.9999999999999999e-02	LR8	b	pB	anno2	<NA>	2e-02	7.5e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	d2
+in_row	receptor_pct2	9	g10	g10	L1	R1	7.5e-01	9.0000000000000002e-01	LR9	a	pC	anno1	e1	<NaN>	1.0000000000000001e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	d2
+in_row	receptor_pct2	10	g1	g2	L2	R2	3.3333333333333331e-01	5.0000000000000001e-03	LR10	b	pA	anno2	<NA>	1.0000000000000001e-01	0e+00	6.9999999999999996e-01	2.0000000000000001e-01	1e-02	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	d2
+in_row	receptor_pct2	11	g1	g1	L1	R1	2.0000000000000001e-01	<NaN>	LR11	a	pB	anno1	e1	1.0000000000000001e-01	-1e+00	2.9999999999999999e-01	5.9999999999999998e-01	1.0000000000000001e-01	<NA>	2.0000000000000001e-01	8.0000000000000004e-01	d2
+in_row	receptor_pct2	12	<NA>	g1	L2	R2	4.0000000000000002e-01	5.9999999999999998e-02	LR12	b	pC	anno2	<NA>	1.0000000000000001e-01	0e+00	5e-01	4.0000000000000002e-01	1.0000000000000001e-01	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	d2
+slot	receptor_pct2	net
+arg	receptor_pct2	sources.use	-
+arg	receptor_pct2	targets.use	-
+arg	receptor_pct2	datasets	-
+arg	receptor_pct2	ligand.pvalues	-
+arg	receptor_pct2	ligand.logFC	-
+arg	receptor_pct2	ligand.pct.1	-
+arg	receptor_pct2	ligand.pct.2	-
+arg	receptor_pct2	receptor.pvalues	-
+arg	receptor_pct2	receptor.logFC	-
+arg	receptor_pct2	receptor.pct.1	-
+arg	receptor_pct2	receptor.pct.2	5e-01
+warn	receptor_pct2	-
+out_cols	receptor_pct2	source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence,datasets,ligand.logFC,ligand.pct.1,ligand.pct.2,ligand.pvalues,receptor.logFC,receptor.pct.1,receptor.pct.2,receptor.pvalues
+out_nrow	receptor_pct2	6
+out_row	receptor_pct2	1	g2	g1	L1	R1	1.25e-01	5e-01	LR3	a	pC	anno1	e1	d1	1.5e+00	5e-01	2.0000000000000001e-01	2.9999999999999999e-01	-1e+00	4.0000000000000002e-01	5.9999999999999998e-01	1e-02
+out_row	receptor_pct2	2	g10	g1	L1	R1	6.25e-02	2.0000000000000001e-01	LR5	a	pB	anno1	e1	d1	-2e+00	2.0000000000000001e-01	8.0000000000000004e-01	<NA>	5e-01	1.0000000000000001e-01	9.0000000000000002e-01	2.9999999999999999e-01
+out_row	receptor_pct2	3	g1	g10	L1	R1	2e+00	<NA>	LR7	a	pA	anno1	e1	d2	<NA>	4.0000000000000002e-01	5e-01	2e-02	0e+00	5e-01	5e-01	2e-02
+out_row	receptor_pct2	4	g2	g10	L2	R2	5e-01	2.9999999999999999e-02	LR8	b	pB	anno2	<NA>	d2	7.5e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	2e-02
+out_row	receptor_pct2	5	g10	g10	L1	R1	7.5e-01	9.0000000000000002e-01	LR9	a	pC	anno1	e1	d2	1.0000000000000001e-01	4.0000000000000002e-01	5e-01	<NaN>	5e-01	5e-01	5e-01	2e-02
+out_row	receptor_pct2	6	g1	g1	L1	R1	2.0000000000000001e-01	<NaN>	LR11	a	pB	anno1	e1	d2	-1e+00	2.9999999999999999e-01	5.9999999999999998e-01	1.0000000000000001e-01	<NA>	2.0000000000000001e-01	8.0000000000000004e-01	1.0000000000000001e-01
+out_rn	receptor_pct2	1,2,3,4,5,6
+case	all_eight_permissive
+in_cols	all_eight_permissive	source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence,ligand.pvalues,ligand.logFC,ligand.pct.1,ligand.pct.2,receptor.pvalues,receptor.logFC,receptor.pct.1,receptor.pct.2,datasets
+in_nrow	all_eight_permissive	12
+in_row	all_eight_permissive	1	g1	g1	L1	R1	5e-01	1e-02	LR1	a	pA	anno1	e1	1e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	5.0000000000000003e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	d1
+in_row	all_eight_permissive	2	g1	g2	L2	R2	2.5e-01	2e-02	LR2	b	pB	anno2	<NA>	2.0000000000000001e-01	-5e-01	1.0000000000000001e-01	9.0000000000000002e-01	5.9999999999999998e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	d1
+in_row	all_eight_permissive	3	g2	g1	L1	R1	1.25e-01	5e-01	LR3	a	pC	anno1	e1	2.9999999999999999e-01	1.5e+00	5e-01	2.0000000000000001e-01	1e-02	-1e+00	4.0000000000000002e-01	5.9999999999999998e-01	d1
+in_row	all_eight_permissive	4	g2	g2	L2	R2	1e+00	1e-03	LR4	b	pA	anno2	<NA>	4.0000000000000001e-02	0e+00	5.9999999999999998e-01	2.9999999999999999e-01	2e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	d1
+in_row	all_eight_permissive	5	g10	g1	L1	R1	6.25e-02	2.0000000000000001e-01	LR5	a	pB	anno1	e1	<NA>	-2e+00	2.0000000000000001e-01	8.0000000000000004e-01	2.9999999999999999e-01	5e-01	1.0000000000000001e-01	9.0000000000000002e-01	d1
+in_row	all_eight_permissive	6	g10	g2	L2	R2	3.125e-02	4.0000000000000001e-02	LR6	b	pC	anno2	<NA>	5e-01	2.5e-01	8.0000000000000004e-01	1.0000000000000001e-01	4.0000000000000001e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	d1
+in_row	all_eight_permissive	7	g1	g10	L1	R1	2e+00	<NA>	LR7	a	pA	anno1	e1	2e-02	<NA>	4.0000000000000002e-01	5e-01	2e-02	0e+00	5e-01	5e-01	d2
+in_row	all_eight_permissive	8	g2	g10	L2	R2	5e-01	2.9999999999999999e-02	LR8	b	pB	anno2	<NA>	2e-02	7.5e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	d2
+in_row	all_eight_permissive	9	g10	g10	L1	R1	7.5e-01	9.0000000000000002e-01	LR9	a	pC	anno1	e1	<NaN>	1.0000000000000001e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	d2
+in_row	all_eight_permissive	10	g1	g2	L2	R2	3.3333333333333331e-01	5.0000000000000001e-03	LR10	b	pA	anno2	<NA>	1.0000000000000001e-01	0e+00	6.9999999999999996e-01	2.0000000000000001e-01	1e-02	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	d2
+in_row	all_eight_permissive	11	g1	g1	L1	R1	2.0000000000000001e-01	<NaN>	LR11	a	pB	anno1	e1	1.0000000000000001e-01	-1e+00	2.9999999999999999e-01	5.9999999999999998e-01	1.0000000000000001e-01	<NA>	2.0000000000000001e-01	8.0000000000000004e-01	d2
+in_row	all_eight_permissive	12	<NA>	g1	L2	R2	4.0000000000000002e-01	5.9999999999999998e-02	LR12	b	pC	anno2	<NA>	1.0000000000000001e-01	0e+00	5e-01	4.0000000000000002e-01	1.0000000000000001e-01	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	d2
+slot	all_eight_permissive	net
+arg	all_eight_permissive	sources.use	-
+arg	all_eight_permissive	targets.use	-
+arg	all_eight_permissive	datasets	-
+arg	all_eight_permissive	ligand.pvalues	5e-01
+arg	all_eight_permissive	ligand.logFC	0e+00
+arg	all_eight_permissive	ligand.pct.1	1.0000000000000001e-01
+arg	all_eight_permissive	ligand.pct.2	1.0000000000000001e-01
+arg	all_eight_permissive	receptor.pvalues	1.0000000000000001e-01
+arg	all_eight_permissive	receptor.logFC	0e+00
+arg	all_eight_permissive	receptor.pct.1	1.0000000000000001e-01
+arg	all_eight_permissive	receptor.pct.2	1.0000000000000001e-01
+warn	all_eight_permissive	-
+out_cols	all_eight_permissive	source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence,datasets,ligand.logFC,ligand.pct.1,ligand.pct.2,ligand.pvalues,receptor.logFC,receptor.pct.1,receptor.pct.2,receptor.pvalues
+out_nrow	all_eight_permissive	6
+out_row	all_eight_permissive	1	g1	g1	L1	R1	5e-01	1e-02	LR1	a	pA	anno1	e1	d1	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	1e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	5.0000000000000003e-02
+out_row	all_eight_permissive	2	g2	g2	L2	R2	1e+00	1e-03	LR4	b	pA	anno2	<NA>	d1	0e+00	5.9999999999999998e-01	2.9999999999999999e-01	4.0000000000000001e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	2e-02
+out_row	all_eight_permissive	3	g10	g2	L2	R2	3.125e-02	4.0000000000000001e-02	LR6	b	pC	anno2	<NA>	d1	2.5e-01	8.0000000000000004e-01	1.0000000000000001e-01	5e-01	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	4.0000000000000001e-02
+out_row	all_eight_permissive	4	g2	g10	L2	R2	5e-01	2.9999999999999999e-02	LR8	b	pB	anno2	<NA>	d2	7.5e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	2e-02
+out_row	all_eight_permissive	5	g1	g2	L2	R2	3.3333333333333331e-01	5.0000000000000001e-03	LR10	b	pA	anno2	<NA>	d2	0e+00	6.9999999999999996e-01	2.0000000000000001e-01	1.0000000000000001e-01	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	1e-02
+out_row	all_eight_permissive	6	<NA>	g1	L2	R2	4.0000000000000002e-01	5.9999999999999998e-02	LR12	b	pC	anno2	<NA>	d2	0e+00	5e-01	4.0000000000000002e-01	1.0000000000000001e-01	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	1.0000000000000001e-01
+out_rn	all_eight_permissive	1,2,3,4,5,6
+case	single_threshold_blanking
+in_cols	single_threshold_blanking	source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence,ligand.pvalues,ligand.logFC,ligand.pct.1,ligand.pct.2,receptor.pvalues,receptor.logFC,receptor.pct.1,receptor.pct.2,datasets
+in_nrow	single_threshold_blanking	12
+in_row	single_threshold_blanking	1	g1	g1	L1	R1	5e-01	1e-02	LR1	a	pA	anno1	e1	1e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	5.0000000000000003e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	d1
+in_row	single_threshold_blanking	2	g1	g2	L2	R2	2.5e-01	2e-02	LR2	b	pB	anno2	<NA>	2.0000000000000001e-01	-5e-01	1.0000000000000001e-01	9.0000000000000002e-01	5.9999999999999998e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	d1
+in_row	single_threshold_blanking	3	g2	g1	L1	R1	1.25e-01	5e-01	LR3	a	pC	anno1	e1	2.9999999999999999e-01	1.5e+00	5e-01	2.0000000000000001e-01	1e-02	-1e+00	4.0000000000000002e-01	5.9999999999999998e-01	d1
+in_row	single_threshold_blanking	4	g2	g2	L2	R2	1e+00	1e-03	LR4	b	pA	anno2	<NA>	4.0000000000000001e-02	0e+00	5.9999999999999998e-01	2.9999999999999999e-01	2e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	d1
+in_row	single_threshold_blanking	5	g10	g1	L1	R1	6.25e-02	2.0000000000000001e-01	LR5	a	pB	anno1	e1	<NA>	-2e+00	2.0000000000000001e-01	8.0000000000000004e-01	2.9999999999999999e-01	5e-01	1.0000000000000001e-01	9.0000000000000002e-01	d1
+in_row	single_threshold_blanking	6	g10	g2	L2	R2	3.125e-02	4.0000000000000001e-02	LR6	b	pC	anno2	<NA>	5e-01	2.5e-01	8.0000000000000004e-01	1.0000000000000001e-01	4.0000000000000001e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	d1
+in_row	single_threshold_blanking	7	g1	g10	L1	R1	2e+00	<NA>	LR7	a	pA	anno1	e1	2e-02	<NA>	4.0000000000000002e-01	5e-01	2e-02	0e+00	5e-01	5e-01	d2
+in_row	single_threshold_blanking	8	g2	g10	L2	R2	5e-01	2.9999999999999999e-02	LR8	b	pB	anno2	<NA>	2e-02	7.5e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	d2
+in_row	single_threshold_blanking	9	g10	g10	L1	R1	7.5e-01	9.0000000000000002e-01	LR9	a	pC	anno1	e1	<NaN>	1.0000000000000001e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	d2
+in_row	single_threshold_blanking	10	g1	g2	L2	R2	3.3333333333333331e-01	5.0000000000000001e-03	LR10	b	pA	anno2	<NA>	1.0000000000000001e-01	0e+00	6.9999999999999996e-01	2.0000000000000001e-01	1e-02	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	d2
+in_row	single_threshold_blanking	11	g1	g1	L1	R1	2.0000000000000001e-01	<NaN>	LR11	a	pB	anno1	e1	1.0000000000000001e-01	-1e+00	2.9999999999999999e-01	5.9999999999999998e-01	1.0000000000000001e-01	<NA>	2.0000000000000001e-01	8.0000000000000004e-01	d2
+in_row	single_threshold_blanking	12	<NA>	g1	L2	R2	4.0000000000000002e-01	5.9999999999999998e-02	LR12	b	pC	anno2	<NA>	1.0000000000000001e-01	0e+00	5e-01	4.0000000000000002e-01	1.0000000000000001e-01	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	d2
+slot	single_threshold_blanking	net
+arg	single_threshold_blanking	sources.use	-
+arg	single_threshold_blanking	targets.use	-
+arg	single_threshold_blanking	datasets	-
+arg	single_threshold_blanking	ligand.pvalues	5e-01
+arg	single_threshold_blanking	ligand.logFC	-
+arg	single_threshold_blanking	ligand.pct.1	-
+arg	single_threshold_blanking	ligand.pct.2	-
+arg	single_threshold_blanking	receptor.pvalues	-
+arg	single_threshold_blanking	receptor.logFC	-
+arg	single_threshold_blanking	receptor.pct.1	-
+arg	single_threshold_blanking	receptor.pct.2	-
+warn	single_threshold_blanking	-
+out_cols	single_threshold_blanking	source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence,datasets,ligand.logFC,ligand.pct.1,ligand.pct.2,ligand.pvalues,receptor.logFC,receptor.pct.1,receptor.pct.2,receptor.pvalues
+out_nrow	single_threshold_blanking	10
+out_row	single_threshold_blanking	1	g1	g1	L1	R1	5e-01	1e-02	LR1	a	pA	anno1	e1	d1	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	1e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	5.0000000000000003e-02
+out_row	single_threshold_blanking	2	g1	g2	L2	R2	2.5e-01	2e-02	LR2	b	pB	anno2	<NA>	d1	-5e-01	1.0000000000000001e-01	9.0000000000000002e-01	2.0000000000000001e-01	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	5.9999999999999998e-02
+out_row	single_threshold_blanking	3	g2	g1	L1	R1	1.25e-01	5e-01	LR3	a	pC	anno1	e1	d1	1.5e+00	5e-01	2.0000000000000001e-01	2.9999999999999999e-01	-1e+00	4.0000000000000002e-01	5.9999999999999998e-01	1e-02
+out_row	single_threshold_blanking	4	g2	g2	L2	R2	1e+00	1e-03	LR4	b	pA	anno2	<NA>	d1	0e+00	5.9999999999999998e-01	2.9999999999999999e-01	4.0000000000000001e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	2e-02
+out_row	single_threshold_blanking	5	g10	g2	L2	R2	3.125e-02	4.0000000000000001e-02	LR6	b	pC	anno2	<NA>	d1	2.5e-01	8.0000000000000004e-01	1.0000000000000001e-01	5e-01	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	4.0000000000000001e-02
+out_row	single_threshold_blanking	6	g1	g10	L1	R1	2e+00	<NA>	LR7	a	pA	anno1	e1	d2	<NA>	4.0000000000000002e-01	5e-01	2e-02	0e+00	5e-01	5e-01	2e-02
+out_row	single_threshold_blanking	7	g2	g10	L2	R2	5e-01	2.9999999999999999e-02	LR8	b	pB	anno2	<NA>	d2	7.5e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	2e-02
+out_row	single_threshold_blanking	8	g1	g2	L2	R2	3.3333333333333331e-01	5.0000000000000001e-03	LR10	b	pA	anno2	<NA>	d2	0e+00	6.9999999999999996e-01	2.0000000000000001e-01	1.0000000000000001e-01	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	1e-02
+out_row	single_threshold_blanking	9	g1	g1	L1	R1	2.0000000000000001e-01	<NaN>	LR11	a	pB	anno1	e1	d2	-1e+00	2.9999999999999999e-01	5.9999999999999998e-01	1.0000000000000001e-01	<NA>	2.0000000000000001e-01	8.0000000000000004e-01	1.0000000000000001e-01
+out_row	single_threshold_blanking	10	<NA>	g1	L2	R2	4.0000000000000002e-01	5.9999999999999998e-02	LR12	b	pC	anno2	<NA>	d2	0e+00	5e-01	4.0000000000000002e-01	1.0000000000000001e-01	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	1.0000000000000001e-01
+out_rn	single_threshold_blanking	1,2,3,4,5,6,7,8,9,10
+case	all_eight_tight
+in_cols	all_eight_tight	source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence,ligand.pvalues,ligand.logFC,ligand.pct.1,ligand.pct.2,receptor.pvalues,receptor.logFC,receptor.pct.1,receptor.pct.2,datasets
+in_nrow	all_eight_tight	12
+in_row	all_eight_tight	1	g1	g1	L1	R1	5e-01	1e-02	LR1	a	pA	anno1	e1	1e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	5.0000000000000003e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	d1
+in_row	all_eight_tight	2	g1	g2	L2	R2	2.5e-01	2e-02	LR2	b	pB	anno2	<NA>	2.0000000000000001e-01	-5e-01	1.0000000000000001e-01	9.0000000000000002e-01	5.9999999999999998e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	d1
+in_row	all_eight_tight	3	g2	g1	L1	R1	1.25e-01	5e-01	LR3	a	pC	anno1	e1	2.9999999999999999e-01	1.5e+00	5e-01	2.0000000000000001e-01	1e-02	-1e+00	4.0000000000000002e-01	5.9999999999999998e-01	d1
+in_row	all_eight_tight	4	g2	g2	L2	R2	1e+00	1e-03	LR4	b	pA	anno2	<NA>	4.0000000000000001e-02	0e+00	5.9999999999999998e-01	2.9999999999999999e-01	2e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	d1
+in_row	all_eight_tight	5	g10	g1	L1	R1	6.25e-02	2.0000000000000001e-01	LR5	a	pB	anno1	e1	<NA>	-2e+00	2.0000000000000001e-01	8.0000000000000004e-01	2.9999999999999999e-01	5e-01	1.0000000000000001e-01	9.0000000000000002e-01	d1
+in_row	all_eight_tight	6	g10	g2	L2	R2	3.125e-02	4.0000000000000001e-02	LR6	b	pC	anno2	<NA>	5e-01	2.5e-01	8.0000000000000004e-01	1.0000000000000001e-01	4.0000000000000001e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	d1
+in_row	all_eight_tight	7	g1	g10	L1	R1	2e+00	<NA>	LR7	a	pA	anno1	e1	2e-02	<NA>	4.0000000000000002e-01	5e-01	2e-02	0e+00	5e-01	5e-01	d2
+in_row	all_eight_tight	8	g2	g10	L2	R2	5e-01	2.9999999999999999e-02	LR8	b	pB	anno2	<NA>	2e-02	7.5e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	d2
+in_row	all_eight_tight	9	g10	g10	L1	R1	7.5e-01	9.0000000000000002e-01	LR9	a	pC	anno1	e1	<NaN>	1.0000000000000001e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	d2
+in_row	all_eight_tight	10	g1	g2	L2	R2	3.3333333333333331e-01	5.0000000000000001e-03	LR10	b	pA	anno2	<NA>	1.0000000000000001e-01	0e+00	6.9999999999999996e-01	2.0000000000000001e-01	1e-02	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	d2
+in_row	all_eight_tight	11	g1	g1	L1	R1	2.0000000000000001e-01	<NaN>	LR11	a	pB	anno1	e1	1.0000000000000001e-01	-1e+00	2.9999999999999999e-01	5.9999999999999998e-01	1.0000000000000001e-01	<NA>	2.0000000000000001e-01	8.0000000000000004e-01	d2
+in_row	all_eight_tight	12	<NA>	g1	L2	R2	4.0000000000000002e-01	5.9999999999999998e-02	LR12	b	pC	anno2	<NA>	1.0000000000000001e-01	0e+00	5e-01	4.0000000000000002e-01	1.0000000000000001e-01	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	d2
+slot	all_eight_tight	net
+arg	all_eight_tight	sources.use	-
+arg	all_eight_tight	targets.use	-
+arg	all_eight_tight	datasets	-
+arg	all_eight_tight	ligand.pvalues	5.0000000000000003e-02
+arg	all_eight_tight	ligand.logFC	2.5e-01
+arg	all_eight_tight	ligand.pct.1	8.4999999999999998e-01
+arg	all_eight_tight	ligand.pct.2	5.0000000000000003e-02
+arg	all_eight_tight	receptor.pvalues	5.0000000000000003e-02
+arg	all_eight_tight	receptor.logFC	4.0000000000000002e-01
+arg	all_eight_tight	receptor.pct.1	7.5e-01
+arg	all_eight_tight	receptor.pct.2	1.4999999999999999e-01
+warn	all_eight_tight	-
+out_cols	all_eight_tight	source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence,datasets,ligand.logFC,ligand.pct.1,ligand.pct.2,ligand.pvalues,receptor.logFC,receptor.pct.1,receptor.pct.2,receptor.pvalues
+out_nrow	all_eight_tight	1
+out_row	all_eight_tight	1	g1	g1	L1	R1	5e-01	1e-02	LR1	a	pA	anno1	e1	d1	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	1e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	5.0000000000000003e-02
+out_rn	all_eight_tight	1
+case	datasets_d1
+in_cols	datasets_d1	source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence,ligand.pvalues,ligand.logFC,ligand.pct.1,ligand.pct.2,receptor.pvalues,receptor.logFC,receptor.pct.1,receptor.pct.2,datasets
+in_nrow	datasets_d1	12
+in_row	datasets_d1	1	g1	g1	L1	R1	5e-01	1e-02	LR1	a	pA	anno1	e1	1e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	5.0000000000000003e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	d1
+in_row	datasets_d1	2	g1	g2	L2	R2	2.5e-01	2e-02	LR2	b	pB	anno2	<NA>	2.0000000000000001e-01	-5e-01	1.0000000000000001e-01	9.0000000000000002e-01	5.9999999999999998e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	d1
+in_row	datasets_d1	3	g2	g1	L1	R1	1.25e-01	5e-01	LR3	a	pC	anno1	e1	2.9999999999999999e-01	1.5e+00	5e-01	2.0000000000000001e-01	1e-02	-1e+00	4.0000000000000002e-01	5.9999999999999998e-01	d1
+in_row	datasets_d1	4	g2	g2	L2	R2	1e+00	1e-03	LR4	b	pA	anno2	<NA>	4.0000000000000001e-02	0e+00	5.9999999999999998e-01	2.9999999999999999e-01	2e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	d1
+in_row	datasets_d1	5	g10	g1	L1	R1	6.25e-02	2.0000000000000001e-01	LR5	a	pB	anno1	e1	<NA>	-2e+00	2.0000000000000001e-01	8.0000000000000004e-01	2.9999999999999999e-01	5e-01	1.0000000000000001e-01	9.0000000000000002e-01	d1
+in_row	datasets_d1	6	g10	g2	L2	R2	3.125e-02	4.0000000000000001e-02	LR6	b	pC	anno2	<NA>	5e-01	2.5e-01	8.0000000000000004e-01	1.0000000000000001e-01	4.0000000000000001e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	d1
+in_row	datasets_d1	7	g1	g10	L1	R1	2e+00	<NA>	LR7	a	pA	anno1	e1	2e-02	<NA>	4.0000000000000002e-01	5e-01	2e-02	0e+00	5e-01	5e-01	d2
+in_row	datasets_d1	8	g2	g10	L2	R2	5e-01	2.9999999999999999e-02	LR8	b	pB	anno2	<NA>	2e-02	7.5e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	d2
+in_row	datasets_d1	9	g10	g10	L1	R1	7.5e-01	9.0000000000000002e-01	LR9	a	pC	anno1	e1	<NaN>	1.0000000000000001e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	d2
+in_row	datasets_d1	10	g1	g2	L2	R2	3.3333333333333331e-01	5.0000000000000001e-03	LR10	b	pA	anno2	<NA>	1.0000000000000001e-01	0e+00	6.9999999999999996e-01	2.0000000000000001e-01	1e-02	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	d2
+in_row	datasets_d1	11	g1	g1	L1	R1	2.0000000000000001e-01	<NaN>	LR11	a	pB	anno1	e1	1.0000000000000001e-01	-1e+00	2.9999999999999999e-01	5.9999999999999998e-01	1.0000000000000001e-01	<NA>	2.0000000000000001e-01	8.0000000000000004e-01	d2
+in_row	datasets_d1	12	<NA>	g1	L2	R2	4.0000000000000002e-01	5.9999999999999998e-02	LR12	b	pC	anno2	<NA>	1.0000000000000001e-01	0e+00	5e-01	4.0000000000000002e-01	1.0000000000000001e-01	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	d2
+slot	datasets_d1	net
+arg	datasets_d1	sources.use	-
+arg	datasets_d1	targets.use	-
+arg	datasets_d1	datasets	d1
+arg	datasets_d1	ligand.pvalues	-
+arg	datasets_d1	ligand.logFC	-
+arg	datasets_d1	ligand.pct.1	-
+arg	datasets_d1	ligand.pct.2	-
+arg	datasets_d1	receptor.pvalues	-
+arg	datasets_d1	receptor.logFC	-
+arg	datasets_d1	receptor.pct.1	-
+arg	datasets_d1	receptor.pct.2	-
+warn	datasets_d1	-
+out_cols	datasets_d1	source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence,datasets,ligand.logFC,ligand.pct.1,ligand.pct.2,ligand.pvalues,receptor.logFC,receptor.pct.1,receptor.pct.2,receptor.pvalues
+out_nrow	datasets_d1	6
+out_row	datasets_d1	1	g1	g1	L1	R1	5e-01	1e-02	LR1	a	pA	anno1	e1	d1	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	1e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	5.0000000000000003e-02
+out_row	datasets_d1	2	g1	g2	L2	R2	2.5e-01	2e-02	LR2	b	pB	anno2	<NA>	d1	-5e-01	1.0000000000000001e-01	9.0000000000000002e-01	2.0000000000000001e-01	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	5.9999999999999998e-02
+out_row	datasets_d1	3	g2	g1	L1	R1	1.25e-01	5e-01	LR3	a	pC	anno1	e1	d1	1.5e+00	5e-01	2.0000000000000001e-01	2.9999999999999999e-01	-1e+00	4.0000000000000002e-01	5.9999999999999998e-01	1e-02
+out_row	datasets_d1	4	g2	g2	L2	R2	1e+00	1e-03	LR4	b	pA	anno2	<NA>	d1	0e+00	5.9999999999999998e-01	2.9999999999999999e-01	4.0000000000000001e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	2e-02
+out_row	datasets_d1	5	g10	g1	L1	R1	6.25e-02	2.0000000000000001e-01	LR5	a	pB	anno1	e1	d1	-2e+00	2.0000000000000001e-01	8.0000000000000004e-01	<NA>	5e-01	1.0000000000000001e-01	9.0000000000000002e-01	2.9999999999999999e-01
+out_row	datasets_d1	6	g10	g2	L2	R2	3.125e-02	4.0000000000000001e-02	LR6	b	pC	anno2	<NA>	d1	2.5e-01	8.0000000000000004e-01	1.0000000000000001e-01	5e-01	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	4.0000000000000001e-02
+out_rn	datasets_d1	1,2,3,4,5,6
+case	datasets_d2_nodeg
+in_cols	datasets_d2_nodeg	source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence,datasets
+in_nrow	datasets_d2_nodeg	12
+in_row	datasets_d2_nodeg	1	g1	g1	L1	R1	5e-01	1e-02	LR1	a	pA	anno1	e1	d1
+in_row	datasets_d2_nodeg	2	g1	g2	L2	R2	2.5e-01	2e-02	LR2	b	pB	anno2	<NA>	d1
+in_row	datasets_d2_nodeg	3	g2	g1	L1	R1	1.25e-01	5e-01	LR3	a	pC	anno1	e1	d1
+in_row	datasets_d2_nodeg	4	g2	g2	L2	R2	1e+00	1e-03	LR4	b	pA	anno2	<NA>	d1
+in_row	datasets_d2_nodeg	5	g10	g1	L1	R1	6.25e-02	2.0000000000000001e-01	LR5	a	pB	anno1	e1	d1
+in_row	datasets_d2_nodeg	6	g10	g2	L2	R2	3.125e-02	4.0000000000000001e-02	LR6	b	pC	anno2	<NA>	d1
+in_row	datasets_d2_nodeg	7	g1	g10	L1	R1	2e+00	<NA>	LR7	a	pA	anno1	e1	d2
+in_row	datasets_d2_nodeg	8	g2	g10	L2	R2	5e-01	2.9999999999999999e-02	LR8	b	pB	anno2	<NA>	d2
+in_row	datasets_d2_nodeg	9	g10	g10	L1	R1	7.5e-01	9.0000000000000002e-01	LR9	a	pC	anno1	e1	d2
+in_row	datasets_d2_nodeg	10	g1	g2	L2	R2	3.3333333333333331e-01	5.0000000000000001e-03	LR10	b	pA	anno2	<NA>	d2
+in_row	datasets_d2_nodeg	11	g1	g1	L1	R1	2.0000000000000001e-01	<NaN>	LR11	a	pB	anno1	e1	d2
+in_row	datasets_d2_nodeg	12	<NA>	g1	L2	R2	4.0000000000000002e-01	5.9999999999999998e-02	LR12	b	pC	anno2	<NA>	d2
+slot	datasets_d2_nodeg	net
+arg	datasets_d2_nodeg	sources.use	-
+arg	datasets_d2_nodeg	targets.use	-
+arg	datasets_d2_nodeg	datasets	d2
+arg	datasets_d2_nodeg	ligand.pvalues	-
+arg	datasets_d2_nodeg	ligand.logFC	-
+arg	datasets_d2_nodeg	ligand.pct.1	-
+arg	datasets_d2_nodeg	ligand.pct.2	-
+arg	datasets_d2_nodeg	receptor.pvalues	-
+arg	datasets_d2_nodeg	receptor.logFC	-
+arg	datasets_d2_nodeg	receptor.pct.1	-
+arg	datasets_d2_nodeg	receptor.pct.2	-
+warn	datasets_d2_nodeg	-
+out_cols	datasets_d2_nodeg	source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence
+out_nrow	datasets_d2_nodeg	6
+out_row	datasets_d2_nodeg	1	g1	g10	L1	R1	2e+00	<NA>	LR7	a	pA	anno1	e1
+out_row	datasets_d2_nodeg	2	g2	g10	L2	R2	5e-01	2.9999999999999999e-02	LR8	b	pB	anno2	<NA>
+out_row	datasets_d2_nodeg	3	g10	g10	L1	R1	7.5e-01	9.0000000000000002e-01	LR9	a	pC	anno1	e1
+out_row	datasets_d2_nodeg	4	g1	g2	L2	R2	3.3333333333333331e-01	5.0000000000000001e-03	LR10	b	pA	anno2	<NA>
+out_row	datasets_d2_nodeg	5	g1	g1	L1	R1	2.0000000000000001e-01	<NaN>	LR11	a	pB	anno1	e1
+out_row	datasets_d2_nodeg	6	<NA>	g1	L2	R2	4.0000000000000002e-01	5.9999999999999998e-02	LR12	b	pC	anno2	<NA>
+out_rn	datasets_d2_nodeg	1,2,3,4,5,6
+case	sources_targets
+in_cols	sources_targets	source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence,ligand.pvalues,ligand.logFC,ligand.pct.1,ligand.pct.2,receptor.pvalues,receptor.logFC,receptor.pct.1,receptor.pct.2,datasets
+in_nrow	sources_targets	12
+in_row	sources_targets	1	g1	g1	L1	R1	5e-01	1e-02	LR1	a	pA	anno1	e1	1e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	5.0000000000000003e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	d1
+in_row	sources_targets	2	g1	g2	L2	R2	2.5e-01	2e-02	LR2	b	pB	anno2	<NA>	2.0000000000000001e-01	-5e-01	1.0000000000000001e-01	9.0000000000000002e-01	5.9999999999999998e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	d1
+in_row	sources_targets	3	g2	g1	L1	R1	1.25e-01	5e-01	LR3	a	pC	anno1	e1	2.9999999999999999e-01	1.5e+00	5e-01	2.0000000000000001e-01	1e-02	-1e+00	4.0000000000000002e-01	5.9999999999999998e-01	d1
+in_row	sources_targets	4	g2	g2	L2	R2	1e+00	1e-03	LR4	b	pA	anno2	<NA>	4.0000000000000001e-02	0e+00	5.9999999999999998e-01	2.9999999999999999e-01	2e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	d1
+in_row	sources_targets	5	g10	g1	L1	R1	6.25e-02	2.0000000000000001e-01	LR5	a	pB	anno1	e1	<NA>	-2e+00	2.0000000000000001e-01	8.0000000000000004e-01	2.9999999999999999e-01	5e-01	1.0000000000000001e-01	9.0000000000000002e-01	d1
+in_row	sources_targets	6	g10	g2	L2	R2	3.125e-02	4.0000000000000001e-02	LR6	b	pC	anno2	<NA>	5e-01	2.5e-01	8.0000000000000004e-01	1.0000000000000001e-01	4.0000000000000001e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	d1
+in_row	sources_targets	7	g1	g10	L1	R1	2e+00	<NA>	LR7	a	pA	anno1	e1	2e-02	<NA>	4.0000000000000002e-01	5e-01	2e-02	0e+00	5e-01	5e-01	d2
+in_row	sources_targets	8	g2	g10	L2	R2	5e-01	2.9999999999999999e-02	LR8	b	pB	anno2	<NA>	2e-02	7.5e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	d2
+in_row	sources_targets	9	g10	g10	L1	R1	7.5e-01	9.0000000000000002e-01	LR9	a	pC	anno1	e1	<NaN>	1.0000000000000001e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	d2
+in_row	sources_targets	10	g1	g2	L2	R2	3.3333333333333331e-01	5.0000000000000001e-03	LR10	b	pA	anno2	<NA>	1.0000000000000001e-01	0e+00	6.9999999999999996e-01	2.0000000000000001e-01	1e-02	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	d2
+in_row	sources_targets	11	g1	g1	L1	R1	2.0000000000000001e-01	<NaN>	LR11	a	pB	anno1	e1	1.0000000000000001e-01	-1e+00	2.9999999999999999e-01	5.9999999999999998e-01	1.0000000000000001e-01	<NA>	2.0000000000000001e-01	8.0000000000000004e-01	d2
+in_row	sources_targets	12	<NA>	g1	L2	R2	4.0000000000000002e-01	5.9999999999999998e-02	LR12	b	pC	anno2	<NA>	1.0000000000000001e-01	0e+00	5e-01	4.0000000000000002e-01	1.0000000000000001e-01	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	d2
+slot	sources_targets	net
+arg	sources_targets	sources.use	g1
+arg	sources_targets	targets.use	g2,g10
+arg	sources_targets	datasets	-
+arg	sources_targets	ligand.pvalues	-
+arg	sources_targets	ligand.logFC	-
+arg	sources_targets	ligand.pct.1	-
+arg	sources_targets	ligand.pct.2	-
+arg	sources_targets	receptor.pvalues	-
+arg	sources_targets	receptor.logFC	-
+arg	sources_targets	receptor.pct.1	-
+arg	sources_targets	receptor.pct.2	-
+warn	sources_targets	-
+out_cols	sources_targets	source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence,datasets,ligand.logFC,ligand.pct.1,ligand.pct.2,ligand.pvalues,receptor.logFC,receptor.pct.1,receptor.pct.2,receptor.pvalues
+out_nrow	sources_targets	3
+out_row	sources_targets	1	g1	g2	L2	R2	2.5e-01	2e-02	LR2	b	pB	anno2	<NA>	d1	-5e-01	1.0000000000000001e-01	9.0000000000000002e-01	2.0000000000000001e-01	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	5.9999999999999998e-02
+out_row	sources_targets	2	g1	g10	L1	R1	2e+00	<NA>	LR7	a	pA	anno1	e1	d2	<NA>	4.0000000000000002e-01	5e-01	2e-02	0e+00	5e-01	5e-01	2e-02
+out_row	sources_targets	3	g1	g2	L2	R2	3.3333333333333331e-01	5.0000000000000001e-03	LR10	b	pA	anno2	<NA>	d2	0e+00	6.9999999999999996e-01	2.0000000000000001e-01	1.0000000000000001e-01	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	1e-02
+out_rn	sources_targets	1,2,3
+case	sources_missing
+in_cols	sources_missing	source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence,ligand.pvalues,ligand.logFC,ligand.pct.1,ligand.pct.2,receptor.pvalues,receptor.logFC,receptor.pct.1,receptor.pct.2,datasets
+in_nrow	sources_missing	12
+in_row	sources_missing	1	g1	g1	L1	R1	5e-01	1e-02	LR1	a	pA	anno1	e1	1e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	5.0000000000000003e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	d1
+in_row	sources_missing	2	g1	g2	L2	R2	2.5e-01	2e-02	LR2	b	pB	anno2	<NA>	2.0000000000000001e-01	-5e-01	1.0000000000000001e-01	9.0000000000000002e-01	5.9999999999999998e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	d1
+in_row	sources_missing	3	g2	g1	L1	R1	1.25e-01	5e-01	LR3	a	pC	anno1	e1	2.9999999999999999e-01	1.5e+00	5e-01	2.0000000000000001e-01	1e-02	-1e+00	4.0000000000000002e-01	5.9999999999999998e-01	d1
+in_row	sources_missing	4	g2	g2	L2	R2	1e+00	1e-03	LR4	b	pA	anno2	<NA>	4.0000000000000001e-02	0e+00	5.9999999999999998e-01	2.9999999999999999e-01	2e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	d1
+in_row	sources_missing	5	g10	g1	L1	R1	6.25e-02	2.0000000000000001e-01	LR5	a	pB	anno1	e1	<NA>	-2e+00	2.0000000000000001e-01	8.0000000000000004e-01	2.9999999999999999e-01	5e-01	1.0000000000000001e-01	9.0000000000000002e-01	d1
+in_row	sources_missing	6	g10	g2	L2	R2	3.125e-02	4.0000000000000001e-02	LR6	b	pC	anno2	<NA>	5e-01	2.5e-01	8.0000000000000004e-01	1.0000000000000001e-01	4.0000000000000001e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	d1
+in_row	sources_missing	7	g1	g10	L1	R1	2e+00	<NA>	LR7	a	pA	anno1	e1	2e-02	<NA>	4.0000000000000002e-01	5e-01	2e-02	0e+00	5e-01	5e-01	d2
+in_row	sources_missing	8	g2	g10	L2	R2	5e-01	2.9999999999999999e-02	LR8	b	pB	anno2	<NA>	2e-02	7.5e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	d2
+in_row	sources_missing	9	g10	g10	L1	R1	7.5e-01	9.0000000000000002e-01	LR9	a	pC	anno1	e1	<NaN>	1.0000000000000001e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	d2
+in_row	sources_missing	10	g1	g2	L2	R2	3.3333333333333331e-01	5.0000000000000001e-03	LR10	b	pA	anno2	<NA>	1.0000000000000001e-01	0e+00	6.9999999999999996e-01	2.0000000000000001e-01	1e-02	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	d2
+in_row	sources_missing	11	g1	g1	L1	R1	2.0000000000000001e-01	<NaN>	LR11	a	pB	anno1	e1	1.0000000000000001e-01	-1e+00	2.9999999999999999e-01	5.9999999999999998e-01	1.0000000000000001e-01	<NA>	2.0000000000000001e-01	8.0000000000000004e-01	d2
+in_row	sources_missing	12	<NA>	g1	L2	R2	4.0000000000000002e-01	5.9999999999999998e-02	LR12	b	pC	anno2	<NA>	1.0000000000000001e-01	0e+00	5e-01	4.0000000000000002e-01	1.0000000000000001e-01	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	d2
+slot	sources_missing	net
+arg	sources_missing	sources.use	gNA
+arg	sources_missing	targets.use	-
+arg	sources_missing	datasets	-
+arg	sources_missing	ligand.pvalues	-
+arg	sources_missing	ligand.logFC	-
+arg	sources_missing	ligand.pct.1	-
+arg	sources_missing	ligand.pct.2	-
+arg	sources_missing	receptor.pvalues	-
+arg	sources_missing	receptor.logFC	-
+arg	sources_missing	receptor.pct.1	-
+arg	sources_missing	receptor.pct.2	-
+warn	sources_missing	No significant signaling interactions are inferred!
+out_cols	sources_missing	source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence,datasets,ligand.logFC,ligand.pct.1,ligand.pct.2,ligand.pvalues,receptor.logFC,receptor.pct.1,receptor.pct.2,receptor.pvalues
+out_nrow	sources_missing	0
+out_rn	sources_missing	
+case	err_ligand_pvalues_missing
+in_cols	err_ligand_pvalues_missing	source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence
+in_nrow	err_ligand_pvalues_missing	12
+in_row	err_ligand_pvalues_missing	1	g1	g1	L1	R1	5e-01	1e-02	LR1	a	pA	anno1	e1
+in_row	err_ligand_pvalues_missing	2	g1	g2	L2	R2	2.5e-01	2e-02	LR2	b	pB	anno2	<NA>
+in_row	err_ligand_pvalues_missing	3	g2	g1	L1	R1	1.25e-01	5e-01	LR3	a	pC	anno1	e1
+in_row	err_ligand_pvalues_missing	4	g2	g2	L2	R2	1e+00	1e-03	LR4	b	pA	anno2	<NA>
+in_row	err_ligand_pvalues_missing	5	g10	g1	L1	R1	6.25e-02	2.0000000000000001e-01	LR5	a	pB	anno1	e1
+in_row	err_ligand_pvalues_missing	6	g10	g2	L2	R2	3.125e-02	4.0000000000000001e-02	LR6	b	pC	anno2	<NA>
+in_row	err_ligand_pvalues_missing	7	g1	g10	L1	R1	2e+00	<NA>	LR7	a	pA	anno1	e1
+in_row	err_ligand_pvalues_missing	8	g2	g10	L2	R2	5e-01	2.9999999999999999e-02	LR8	b	pB	anno2	<NA>
+in_row	err_ligand_pvalues_missing	9	g10	g10	L1	R1	7.5e-01	9.0000000000000002e-01	LR9	a	pC	anno1	e1
+in_row	err_ligand_pvalues_missing	10	g1	g2	L2	R2	3.3333333333333331e-01	5.0000000000000001e-03	LR10	b	pA	anno2	<NA>
+in_row	err_ligand_pvalues_missing	11	g1	g1	L1	R1	2.0000000000000001e-01	<NaN>	LR11	a	pB	anno1	e1
+in_row	err_ligand_pvalues_missing	12	<NA>	g1	L2	R2	4.0000000000000002e-01	5.9999999999999998e-02	LR12	b	pC	anno2	<NA>
+slot	err_ligand_pvalues_missing	net
+arg	err_ligand_pvalues_missing	sources.use	-
+arg	err_ligand_pvalues_missing	targets.use	-
+arg	err_ligand_pvalues_missing	datasets	-
+arg	err_ligand_pvalues_missing	ligand.pvalues	5.0000000000000003e-02
+arg	err_ligand_pvalues_missing	ligand.logFC	-
+arg	err_ligand_pvalues_missing	ligand.pct.1	-
+arg	err_ligand_pvalues_missing	ligand.pct.2	-
+arg	err_ligand_pvalues_missing	receptor.pvalues	-
+arg	err_ligand_pvalues_missing	receptor.logFC	-
+arg	err_ligand_pvalues_missing	receptor.pct.1	-
+arg	err_ligand_pvalues_missing	receptor.pct.2	-
+warn	err_ligand_pvalues_missing	-
+error	err_ligand_pvalues_missing	Please run `identifyOverExpressedGenes` and `netMappingDEG` before using the threshold 'ligand.pvalues'
+case	err_ligand_logfc_missing
+in_cols	err_ligand_logfc_missing	source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence
+in_nrow	err_ligand_logfc_missing	12
+in_row	err_ligand_logfc_missing	1	g1	g1	L1	R1	5e-01	1e-02	LR1	a	pA	anno1	e1
+in_row	err_ligand_logfc_missing	2	g1	g2	L2	R2	2.5e-01	2e-02	LR2	b	pB	anno2	<NA>
+in_row	err_ligand_logfc_missing	3	g2	g1	L1	R1	1.25e-01	5e-01	LR3	a	pC	anno1	e1
+in_row	err_ligand_logfc_missing	4	g2	g2	L2	R2	1e+00	1e-03	LR4	b	pA	anno2	<NA>
+in_row	err_ligand_logfc_missing	5	g10	g1	L1	R1	6.25e-02	2.0000000000000001e-01	LR5	a	pB	anno1	e1
+in_row	err_ligand_logfc_missing	6	g10	g2	L2	R2	3.125e-02	4.0000000000000001e-02	LR6	b	pC	anno2	<NA>
+in_row	err_ligand_logfc_missing	7	g1	g10	L1	R1	2e+00	<NA>	LR7	a	pA	anno1	e1
+in_row	err_ligand_logfc_missing	8	g2	g10	L2	R2	5e-01	2.9999999999999999e-02	LR8	b	pB	anno2	<NA>
+in_row	err_ligand_logfc_missing	9	g10	g10	L1	R1	7.5e-01	9.0000000000000002e-01	LR9	a	pC	anno1	e1
+in_row	err_ligand_logfc_missing	10	g1	g2	L2	R2	3.3333333333333331e-01	5.0000000000000001e-03	LR10	b	pA	anno2	<NA>
+in_row	err_ligand_logfc_missing	11	g1	g1	L1	R1	2.0000000000000001e-01	<NaN>	LR11	a	pB	anno1	e1
+in_row	err_ligand_logfc_missing	12	<NA>	g1	L2	R2	4.0000000000000002e-01	5.9999999999999998e-02	LR12	b	pC	anno2	<NA>
+slot	err_ligand_logfc_missing	net
+arg	err_ligand_logfc_missing	sources.use	-
+arg	err_ligand_logfc_missing	targets.use	-
+arg	err_ligand_logfc_missing	datasets	-
+arg	err_ligand_logfc_missing	ligand.pvalues	-
+arg	err_ligand_logfc_missing	ligand.logFC	5e-01
+arg	err_ligand_logfc_missing	ligand.pct.1	-
+arg	err_ligand_logfc_missing	ligand.pct.2	-
+arg	err_ligand_logfc_missing	receptor.pvalues	-
+arg	err_ligand_logfc_missing	receptor.logFC	-
+arg	err_ligand_logfc_missing	receptor.pct.1	-
+arg	err_ligand_logfc_missing	receptor.pct.2	-
+warn	err_ligand_logfc_missing	-
+error	err_ligand_logfc_missing	Please run `identifyOverExpressedGenes` and `netMappingDEG` before using the threshold 'ligand.logFC'
+case	err_receptor_pct2_missing
+in_cols	err_receptor_pct2_missing	source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence
+in_nrow	err_receptor_pct2_missing	12
+in_row	err_receptor_pct2_missing	1	g1	g1	L1	R1	5e-01	1e-02	LR1	a	pA	anno1	e1
+in_row	err_receptor_pct2_missing	2	g1	g2	L2	R2	2.5e-01	2e-02	LR2	b	pB	anno2	<NA>
+in_row	err_receptor_pct2_missing	3	g2	g1	L1	R1	1.25e-01	5e-01	LR3	a	pC	anno1	e1
+in_row	err_receptor_pct2_missing	4	g2	g2	L2	R2	1e+00	1e-03	LR4	b	pA	anno2	<NA>
+in_row	err_receptor_pct2_missing	5	g10	g1	L1	R1	6.25e-02	2.0000000000000001e-01	LR5	a	pB	anno1	e1
+in_row	err_receptor_pct2_missing	6	g10	g2	L2	R2	3.125e-02	4.0000000000000001e-02	LR6	b	pC	anno2	<NA>
+in_row	err_receptor_pct2_missing	7	g1	g10	L1	R1	2e+00	<NA>	LR7	a	pA	anno1	e1
+in_row	err_receptor_pct2_missing	8	g2	g10	L2	R2	5e-01	2.9999999999999999e-02	LR8	b	pB	anno2	<NA>
+in_row	err_receptor_pct2_missing	9	g10	g10	L1	R1	7.5e-01	9.0000000000000002e-01	LR9	a	pC	anno1	e1
+in_row	err_receptor_pct2_missing	10	g1	g2	L2	R2	3.3333333333333331e-01	5.0000000000000001e-03	LR10	b	pA	anno2	<NA>
+in_row	err_receptor_pct2_missing	11	g1	g1	L1	R1	2.0000000000000001e-01	<NaN>	LR11	a	pB	anno1	e1
+in_row	err_receptor_pct2_missing	12	<NA>	g1	L2	R2	4.0000000000000002e-01	5.9999999999999998e-02	LR12	b	pC	anno2	<NA>
+slot	err_receptor_pct2_missing	net
+arg	err_receptor_pct2_missing	sources.use	-
+arg	err_receptor_pct2_missing	targets.use	-
+arg	err_receptor_pct2_missing	datasets	-
+arg	err_receptor_pct2_missing	ligand.pvalues	-
+arg	err_receptor_pct2_missing	ligand.logFC	-
+arg	err_receptor_pct2_missing	ligand.pct.1	-
+arg	err_receptor_pct2_missing	ligand.pct.2	-
+arg	err_receptor_pct2_missing	receptor.pvalues	-
+arg	err_receptor_pct2_missing	receptor.logFC	-
+arg	err_receptor_pct2_missing	receptor.pct.1	-
+arg	err_receptor_pct2_missing	receptor.pct.2	5e-01
+warn	err_receptor_pct2_missing	-
+error	err_receptor_pct2_missing	Please run `identifyOverExpressedGenes` and `netMappingDEG` before using the threshold 'receptor.pct.2'
+case	err_datasets_missing
+in_cols	err_datasets_missing	source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence
+in_nrow	err_datasets_missing	12
+in_row	err_datasets_missing	1	g1	g1	L1	R1	5e-01	1e-02	LR1	a	pA	anno1	e1
+in_row	err_datasets_missing	2	g1	g2	L2	R2	2.5e-01	2e-02	LR2	b	pB	anno2	<NA>
+in_row	err_datasets_missing	3	g2	g1	L1	R1	1.25e-01	5e-01	LR3	a	pC	anno1	e1
+in_row	err_datasets_missing	4	g2	g2	L2	R2	1e+00	1e-03	LR4	b	pA	anno2	<NA>
+in_row	err_datasets_missing	5	g10	g1	L1	R1	6.25e-02	2.0000000000000001e-01	LR5	a	pB	anno1	e1
+in_row	err_datasets_missing	6	g10	g2	L2	R2	3.125e-02	4.0000000000000001e-02	LR6	b	pC	anno2	<NA>
+in_row	err_datasets_missing	7	g1	g10	L1	R1	2e+00	<NA>	LR7	a	pA	anno1	e1
+in_row	err_datasets_missing	8	g2	g10	L2	R2	5e-01	2.9999999999999999e-02	LR8	b	pB	anno2	<NA>
+in_row	err_datasets_missing	9	g10	g10	L1	R1	7.5e-01	9.0000000000000002e-01	LR9	a	pC	anno1	e1
+in_row	err_datasets_missing	10	g1	g2	L2	R2	3.3333333333333331e-01	5.0000000000000001e-03	LR10	b	pA	anno2	<NA>
+in_row	err_datasets_missing	11	g1	g1	L1	R1	2.0000000000000001e-01	<NaN>	LR11	a	pB	anno1	e1
+in_row	err_datasets_missing	12	<NA>	g1	L2	R2	4.0000000000000002e-01	5.9999999999999998e-02	LR12	b	pC	anno2	<NA>
+slot	err_datasets_missing	net
+arg	err_datasets_missing	sources.use	-
+arg	err_datasets_missing	targets.use	-
+arg	err_datasets_missing	datasets	d1
+arg	err_datasets_missing	ligand.pvalues	-
+arg	err_datasets_missing	ligand.logFC	-
+arg	err_datasets_missing	ligand.pct.1	-
+arg	err_datasets_missing	ligand.pct.2	-
+arg	err_datasets_missing	receptor.pvalues	-
+arg	err_datasets_missing	receptor.logFC	-
+arg	err_datasets_missing	receptor.pct.1	-
+arg	err_datasets_missing	receptor.pct.2	-
+warn	err_datasets_missing	-
+error	err_datasets_missing	Please run `identifyOverExpressedGenes` and `netMappingDEG` before selecting 'datasets'
+case	err_two_absent_order
+in_cols	err_two_absent_order	source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence
+in_nrow	err_two_absent_order	12
+in_row	err_two_absent_order	1	g1	g1	L1	R1	5e-01	1e-02	LR1	a	pA	anno1	e1
+in_row	err_two_absent_order	2	g1	g2	L2	R2	2.5e-01	2e-02	LR2	b	pB	anno2	<NA>
+in_row	err_two_absent_order	3	g2	g1	L1	R1	1.25e-01	5e-01	LR3	a	pC	anno1	e1
+in_row	err_two_absent_order	4	g2	g2	L2	R2	1e+00	1e-03	LR4	b	pA	anno2	<NA>
+in_row	err_two_absent_order	5	g10	g1	L1	R1	6.25e-02	2.0000000000000001e-01	LR5	a	pB	anno1	e1
+in_row	err_two_absent_order	6	g10	g2	L2	R2	3.125e-02	4.0000000000000001e-02	LR6	b	pC	anno2	<NA>
+in_row	err_two_absent_order	7	g1	g10	L1	R1	2e+00	<NA>	LR7	a	pA	anno1	e1
+in_row	err_two_absent_order	8	g2	g10	L2	R2	5e-01	2.9999999999999999e-02	LR8	b	pB	anno2	<NA>
+in_row	err_two_absent_order	9	g10	g10	L1	R1	7.5e-01	9.0000000000000002e-01	LR9	a	pC	anno1	e1
+in_row	err_two_absent_order	10	g1	g2	L2	R2	3.3333333333333331e-01	5.0000000000000001e-03	LR10	b	pA	anno2	<NA>
+in_row	err_two_absent_order	11	g1	g1	L1	R1	2.0000000000000001e-01	<NaN>	LR11	a	pB	anno1	e1
+in_row	err_two_absent_order	12	<NA>	g1	L2	R2	4.0000000000000002e-01	5.9999999999999998e-02	LR12	b	pC	anno2	<NA>
+slot	err_two_absent_order	net
+arg	err_two_absent_order	sources.use	-
+arg	err_two_absent_order	targets.use	-
+arg	err_two_absent_order	datasets	d1
+arg	err_two_absent_order	ligand.pvalues	5.0000000000000003e-02
+arg	err_two_absent_order	ligand.logFC	-
+arg	err_two_absent_order	ligand.pct.1	-
+arg	err_two_absent_order	ligand.pct.2	-
+arg	err_two_absent_order	receptor.pvalues	-
+arg	err_two_absent_order	receptor.logFC	5e-01
+arg	err_two_absent_order	receptor.pct.1	-
+arg	err_two_absent_order	receptor.pct.2	-
+warn	err_two_absent_order	-
+error	err_two_absent_order	Please run `identifyOverExpressedGenes` and `netMappingDEG` before selecting 'datasets'
+case	err_empty_result
+in_cols	err_empty_result	source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence,ligand.pvalues,ligand.logFC,ligand.pct.1,ligand.pct.2,receptor.pvalues,receptor.logFC,receptor.pct.1,receptor.pct.2,datasets
+in_nrow	err_empty_result	12
+in_row	err_empty_result	1	g1	g1	L1	R1	5e-01	1e-02	LR1	a	pA	anno1	e1	1e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	5.0000000000000003e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	d1
+in_row	err_empty_result	2	g1	g2	L2	R2	2.5e-01	2e-02	LR2	b	pB	anno2	<NA>	2.0000000000000001e-01	-5e-01	1.0000000000000001e-01	9.0000000000000002e-01	5.9999999999999998e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	d1
+in_row	err_empty_result	3	g2	g1	L1	R1	1.25e-01	5e-01	LR3	a	pC	anno1	e1	2.9999999999999999e-01	1.5e+00	5e-01	2.0000000000000001e-01	1e-02	-1e+00	4.0000000000000002e-01	5.9999999999999998e-01	d1
+in_row	err_empty_result	4	g2	g2	L2	R2	1e+00	1e-03	LR4	b	pA	anno2	<NA>	4.0000000000000001e-02	0e+00	5.9999999999999998e-01	2.9999999999999999e-01	2e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	d1
+in_row	err_empty_result	5	g10	g1	L1	R1	6.25e-02	2.0000000000000001e-01	LR5	a	pB	anno1	e1	<NA>	-2e+00	2.0000000000000001e-01	8.0000000000000004e-01	2.9999999999999999e-01	5e-01	1.0000000000000001e-01	9.0000000000000002e-01	d1
+in_row	err_empty_result	6	g10	g2	L2	R2	3.125e-02	4.0000000000000001e-02	LR6	b	pC	anno2	<NA>	5e-01	2.5e-01	8.0000000000000004e-01	1.0000000000000001e-01	4.0000000000000001e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	d1
+in_row	err_empty_result	7	g1	g10	L1	R1	2e+00	<NA>	LR7	a	pA	anno1	e1	2e-02	<NA>	4.0000000000000002e-01	5e-01	2e-02	0e+00	5e-01	5e-01	d2
+in_row	err_empty_result	8	g2	g10	L2	R2	5e-01	2.9999999999999999e-02	LR8	b	pB	anno2	<NA>	2e-02	7.5e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	d2
+in_row	err_empty_result	9	g10	g10	L1	R1	7.5e-01	9.0000000000000002e-01	LR9	a	pC	anno1	e1	<NaN>	1.0000000000000001e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	d2
+in_row	err_empty_result	10	g1	g2	L2	R2	3.3333333333333331e-01	5.0000000000000001e-03	LR10	b	pA	anno2	<NA>	1.0000000000000001e-01	0e+00	6.9999999999999996e-01	2.0000000000000001e-01	1e-02	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	d2
+in_row	err_empty_result	11	g1	g1	L1	R1	2.0000000000000001e-01	<NaN>	LR11	a	pB	anno1	e1	1.0000000000000001e-01	-1e+00	2.9999999999999999e-01	5.9999999999999998e-01	1.0000000000000001e-01	<NA>	2.0000000000000001e-01	8.0000000000000004e-01	d2
+in_row	err_empty_result	12	<NA>	g1	L2	R2	4.0000000000000002e-01	5.9999999999999998e-02	LR12	b	pC	anno2	<NA>	1.0000000000000001e-01	0e+00	5e-01	4.0000000000000002e-01	1.0000000000000001e-01	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	d2
+slot	err_empty_result	net
+arg	err_empty_result	sources.use	-
+arg	err_empty_result	targets.use	-
+arg	err_empty_result	datasets	-
+arg	err_empty_result	ligand.pvalues	-
+arg	err_empty_result	ligand.logFC	-
+arg	err_empty_result	ligand.pct.1	2e+00
+arg	err_empty_result	ligand.pct.2	-
+arg	err_empty_result	receptor.pvalues	-
+arg	err_empty_result	receptor.logFC	-
+arg	err_empty_result	receptor.pct.1	-
+arg	err_empty_result	receptor.pct.2	-
+warn	err_empty_result	-
+error	err_empty_result	No significant signaling interactions are inferred based on the input!
+case	netp_plain
+in_cols	netp_plain	source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence,ligand.pvalues,ligand.logFC,ligand.pct.1,ligand.pct.2,receptor.pvalues,receptor.logFC,receptor.pct.1,receptor.pct.2,datasets
+in_nrow	netp_plain	12
+in_row	netp_plain	1	g1	g1	L1	R1	5e-01	1e-02	LR1	a	pA	anno1	e1	1e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	5.0000000000000003e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	d1
+in_row	netp_plain	2	g1	g2	L2	R2	2.5e-01	2e-02	LR2	b	pB	anno2	<NA>	2.0000000000000001e-01	-5e-01	1.0000000000000001e-01	9.0000000000000002e-01	5.9999999999999998e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	d1
+in_row	netp_plain	3	g2	g1	L1	R1	1.25e-01	5e-01	LR3	a	pC	anno1	e1	2.9999999999999999e-01	1.5e+00	5e-01	2.0000000000000001e-01	1e-02	-1e+00	4.0000000000000002e-01	5.9999999999999998e-01	d1
+in_row	netp_plain	4	g2	g2	L2	R2	1e+00	1e-03	LR4	b	pA	anno2	<NA>	4.0000000000000001e-02	0e+00	5.9999999999999998e-01	2.9999999999999999e-01	2e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	d1
+in_row	netp_plain	5	g10	g1	L1	R1	6.25e-02	2.0000000000000001e-01	LR5	a	pB	anno1	e1	<NA>	-2e+00	2.0000000000000001e-01	8.0000000000000004e-01	2.9999999999999999e-01	5e-01	1.0000000000000001e-01	9.0000000000000002e-01	d1
+in_row	netp_plain	6	g10	g2	L2	R2	3.125e-02	4.0000000000000001e-02	LR6	b	pC	anno2	<NA>	5e-01	2.5e-01	8.0000000000000004e-01	1.0000000000000001e-01	4.0000000000000001e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	d1
+in_row	netp_plain	7	g1	g10	L1	R1	2e+00	<NA>	LR7	a	pA	anno1	e1	2e-02	<NA>	4.0000000000000002e-01	5e-01	2e-02	0e+00	5e-01	5e-01	d2
+in_row	netp_plain	8	g2	g10	L2	R2	5e-01	2.9999999999999999e-02	LR8	b	pB	anno2	<NA>	2e-02	7.5e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	d2
+in_row	netp_plain	9	g10	g10	L1	R1	7.5e-01	9.0000000000000002e-01	LR9	a	pC	anno1	e1	<NaN>	1.0000000000000001e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	d2
+in_row	netp_plain	10	g1	g2	L2	R2	3.3333333333333331e-01	5.0000000000000001e-03	LR10	b	pA	anno2	<NA>	1.0000000000000001e-01	0e+00	6.9999999999999996e-01	2.0000000000000001e-01	1e-02	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	d2
+in_row	netp_plain	11	g1	g1	L1	R1	2.0000000000000001e-01	<NaN>	LR11	a	pB	anno1	e1	1.0000000000000001e-01	-1e+00	2.9999999999999999e-01	5.9999999999999998e-01	1.0000000000000001e-01	<NA>	2.0000000000000001e-01	8.0000000000000004e-01	d2
+in_row	netp_plain	12	<NA>	g1	L2	R2	4.0000000000000002e-01	5.9999999999999998e-02	LR12	b	pC	anno2	<NA>	1.0000000000000001e-01	0e+00	5e-01	4.0000000000000002e-01	1.0000000000000001e-01	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	d2
+slot	netp_plain	netP
+arg	netp_plain	sources.use	-
+arg	netp_plain	targets.use	-
+arg	netp_plain	datasets	-
+arg	netp_plain	ligand.pvalues	-
+arg	netp_plain	ligand.logFC	-
+arg	netp_plain	ligand.pct.1	-
+arg	netp_plain	ligand.pct.2	-
+arg	netp_plain	receptor.pvalues	-
+arg	netp_plain	receptor.logFC	-
+arg	netp_plain	receptor.pct.1	-
+arg	netp_plain	receptor.pct.2	-
+warn	netp_plain	Using an external vector in selections was deprecated in tidyselect 1.1.0.<NL>ℹ Please use `all_of()` or `any_of()` instead.<NL>  # Was:<NL>  data %>% select(col.use)<NL><NL>  # Now:<NL>  data %>% select(all_of(col.use))<NL><NL>See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>. || Setting row names on a tibble is deprecated.
+out_cols	netp_plain	source,target,pathway_name,prob,pval
+out_nrow	netp_plain	12
+out_row	netp_plain	1	NA	g1	pC	4.0000000000000002e-01	5.9999999999999998e-02
+out_row	netp_plain	2	g10	g1	pB	6.25e-02	2.0000000000000001e-01
+out_row	netp_plain	3	g10	g10	pC	7.5e-01	9.0000000000000002e-01
+out_row	netp_plain	4	g10	g2	pC	3.125e-02	4.0000000000000001e-02
+out_row	netp_plain	5	g1	g1	pA	5e-01	1e-02
+out_row	netp_plain	6	g1	g1	pB	2.0000000000000001e-01	<NaN>
+out_row	netp_plain	7	g1	g10	pA	2e+00	<NA>
+out_row	netp_plain	8	g1	g2	pA	3.3333333333333331e-01	5.0000000000000001e-03
+out_row	netp_plain	9	g1	g2	pB	2.5e-01	2e-02
+out_row	netp_plain	10	g2	g1	pC	1.25e-01	5e-01
+out_row	netp_plain	11	g2	g10	pB	5e-01	2.9999999999999999e-02
+out_row	netp_plain	12	g2	g2	pA	1e+00	1e-03
+out_rn	netp_plain	1,2,3,4,5,6,7,8,9,10,11,12
+case	netp_after_deg
+in_cols	netp_after_deg	source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence,ligand.pvalues,ligand.logFC,ligand.pct.1,ligand.pct.2,receptor.pvalues,receptor.logFC,receptor.pct.1,receptor.pct.2,datasets
+in_nrow	netp_after_deg	12
+in_row	netp_after_deg	1	g1	g1	L1	R1	5e-01	1e-02	LR1	a	pA	anno1	e1	1e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	5.0000000000000003e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	d1
+in_row	netp_after_deg	2	g1	g2	L2	R2	2.5e-01	2e-02	LR2	b	pB	anno2	<NA>	2.0000000000000001e-01	-5e-01	1.0000000000000001e-01	9.0000000000000002e-01	5.9999999999999998e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	d1
+in_row	netp_after_deg	3	g2	g1	L1	R1	1.25e-01	5e-01	LR3	a	pC	anno1	e1	2.9999999999999999e-01	1.5e+00	5e-01	2.0000000000000001e-01	1e-02	-1e+00	4.0000000000000002e-01	5.9999999999999998e-01	d1
+in_row	netp_after_deg	4	g2	g2	L2	R2	1e+00	1e-03	LR4	b	pA	anno2	<NA>	4.0000000000000001e-02	0e+00	5.9999999999999998e-01	2.9999999999999999e-01	2e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	d1
+in_row	netp_after_deg	5	g10	g1	L1	R1	6.25e-02	2.0000000000000001e-01	LR5	a	pB	anno1	e1	<NA>	-2e+00	2.0000000000000001e-01	8.0000000000000004e-01	2.9999999999999999e-01	5e-01	1.0000000000000001e-01	9.0000000000000002e-01	d1
+in_row	netp_after_deg	6	g10	g2	L2	R2	3.125e-02	4.0000000000000001e-02	LR6	b	pC	anno2	<NA>	5e-01	2.5e-01	8.0000000000000004e-01	1.0000000000000001e-01	4.0000000000000001e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	d1
+in_row	netp_after_deg	7	g1	g10	L1	R1	2e+00	<NA>	LR7	a	pA	anno1	e1	2e-02	<NA>	4.0000000000000002e-01	5e-01	2e-02	0e+00	5e-01	5e-01	d2
+in_row	netp_after_deg	8	g2	g10	L2	R2	5e-01	2.9999999999999999e-02	LR8	b	pB	anno2	<NA>	2e-02	7.5e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	d2
+in_row	netp_after_deg	9	g10	g10	L1	R1	7.5e-01	9.0000000000000002e-01	LR9	a	pC	anno1	e1	<NaN>	1.0000000000000001e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	d2
+in_row	netp_after_deg	10	g1	g2	L2	R2	3.3333333333333331e-01	5.0000000000000001e-03	LR10	b	pA	anno2	<NA>	1.0000000000000001e-01	0e+00	6.9999999999999996e-01	2.0000000000000001e-01	1e-02	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	d2
+in_row	netp_after_deg	11	g1	g1	L1	R1	2.0000000000000001e-01	<NaN>	LR11	a	pB	anno1	e1	1.0000000000000001e-01	-1e+00	2.9999999999999999e-01	5.9999999999999998e-01	1.0000000000000001e-01	<NA>	2.0000000000000001e-01	8.0000000000000004e-01	d2
+in_row	netp_after_deg	12	<NA>	g1	L2	R2	4.0000000000000002e-01	5.9999999999999998e-02	LR12	b	pC	anno2	<NA>	1.0000000000000001e-01	0e+00	5e-01	4.0000000000000002e-01	1.0000000000000001e-01	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	d2
+slot	netp_after_deg	netP
+arg	netp_after_deg	sources.use	-
+arg	netp_after_deg	targets.use	-
+arg	netp_after_deg	datasets	-
+arg	netp_after_deg	ligand.pvalues	5.0000000000000003e-02
+arg	netp_after_deg	ligand.logFC	-
+arg	netp_after_deg	ligand.pct.1	-
+arg	netp_after_deg	ligand.pct.2	-
+arg	netp_after_deg	receptor.pvalues	-
+arg	netp_after_deg	receptor.logFC	4.0000000000000002e-01
+arg	netp_after_deg	receptor.pct.1	-
+arg	netp_after_deg	receptor.pct.2	-
+warn	netp_after_deg	Setting row names on a tibble is deprecated.
+out_cols	netp_after_deg	source,target,pathway_name,prob,pval
+out_nrow	netp_after_deg	3
+out_row	netp_after_deg	1	g1	g1	pA	5e-01	1e-02
+out_row	netp_after_deg	2	g2	g10	pB	5e-01	2.9999999999999999e-02
+out_row	netp_after_deg	3	g2	g2	pA	1e+00	1e-03
+out_rn	netp_after_deg	1,2,3
+case	netp_sources_targets
+in_cols	netp_sources_targets	source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence,ligand.pvalues,ligand.logFC,ligand.pct.1,ligand.pct.2,receptor.pvalues,receptor.logFC,receptor.pct.1,receptor.pct.2,datasets
+in_nrow	netp_sources_targets	12
+in_row	netp_sources_targets	1	g1	g1	L1	R1	5e-01	1e-02	LR1	a	pA	anno1	e1	1e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	5.0000000000000003e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	d1
+in_row	netp_sources_targets	2	g1	g2	L2	R2	2.5e-01	2e-02	LR2	b	pB	anno2	<NA>	2.0000000000000001e-01	-5e-01	1.0000000000000001e-01	9.0000000000000002e-01	5.9999999999999998e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	d1
+in_row	netp_sources_targets	3	g2	g1	L1	R1	1.25e-01	5e-01	LR3	a	pC	anno1	e1	2.9999999999999999e-01	1.5e+00	5e-01	2.0000000000000001e-01	1e-02	-1e+00	4.0000000000000002e-01	5.9999999999999998e-01	d1
+in_row	netp_sources_targets	4	g2	g2	L2	R2	1e+00	1e-03	LR4	b	pA	anno2	<NA>	4.0000000000000001e-02	0e+00	5.9999999999999998e-01	2.9999999999999999e-01	2e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	d1
+in_row	netp_sources_targets	5	g10	g1	L1	R1	6.25e-02	2.0000000000000001e-01	LR5	a	pB	anno1	e1	<NA>	-2e+00	2.0000000000000001e-01	8.0000000000000004e-01	2.9999999999999999e-01	5e-01	1.0000000000000001e-01	9.0000000000000002e-01	d1
+in_row	netp_sources_targets	6	g10	g2	L2	R2	3.125e-02	4.0000000000000001e-02	LR6	b	pC	anno2	<NA>	5e-01	2.5e-01	8.0000000000000004e-01	1.0000000000000001e-01	4.0000000000000001e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	d1
+in_row	netp_sources_targets	7	g1	g10	L1	R1	2e+00	<NA>	LR7	a	pA	anno1	e1	2e-02	<NA>	4.0000000000000002e-01	5e-01	2e-02	0e+00	5e-01	5e-01	d2
+in_row	netp_sources_targets	8	g2	g10	L2	R2	5e-01	2.9999999999999999e-02	LR8	b	pB	anno2	<NA>	2e-02	7.5e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	d2
+in_row	netp_sources_targets	9	g10	g10	L1	R1	7.5e-01	9.0000000000000002e-01	LR9	a	pC	anno1	e1	<NaN>	1.0000000000000001e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	d2
+in_row	netp_sources_targets	10	g1	g2	L2	R2	3.3333333333333331e-01	5.0000000000000001e-03	LR10	b	pA	anno2	<NA>	1.0000000000000001e-01	0e+00	6.9999999999999996e-01	2.0000000000000001e-01	1e-02	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	d2
+in_row	netp_sources_targets	11	g1	g1	L1	R1	2.0000000000000001e-01	<NaN>	LR11	a	pB	anno1	e1	1.0000000000000001e-01	-1e+00	2.9999999999999999e-01	5.9999999999999998e-01	1.0000000000000001e-01	<NA>	2.0000000000000001e-01	8.0000000000000004e-01	d2
+in_row	netp_sources_targets	12	<NA>	g1	L2	R2	4.0000000000000002e-01	5.9999999999999998e-02	LR12	b	pC	anno2	<NA>	1.0000000000000001e-01	0e+00	5e-01	4.0000000000000002e-01	1.0000000000000001e-01	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	d2
+slot	netp_sources_targets	netP
+arg	netp_sources_targets	sources.use	g1,g10
+arg	netp_sources_targets	targets.use	g2
+arg	netp_sources_targets	datasets	-
+arg	netp_sources_targets	ligand.pvalues	-
+arg	netp_sources_targets	ligand.logFC	-
+arg	netp_sources_targets	ligand.pct.1	-
+arg	netp_sources_targets	ligand.pct.2	-
+arg	netp_sources_targets	receptor.pvalues	-
+arg	netp_sources_targets	receptor.logFC	-
+arg	netp_sources_targets	receptor.pct.1	-
+arg	netp_sources_targets	receptor.pct.2	-
+warn	netp_sources_targets	Setting row names on a tibble is deprecated.
+out_cols	netp_sources_targets	source,target,pathway_name,prob,pval
+out_nrow	netp_sources_targets	3
+out_row	netp_sources_targets	1	g10	g2	pC	3.125e-02	4.0000000000000001e-02
+out_row	netp_sources_targets	2	g1	g2	pA	3.3333333333333331e-01	5.0000000000000001e-03
+out_row	netp_sources_targets	3	g1	g2	pB	2.5e-01	2e-02
+out_rn	netp_sources_targets	1,2,3
+case	netp_allna_row
+in_cols	netp_allna_row	source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence,ligand.pvalues,ligand.logFC,ligand.pct.1,ligand.pct.2,receptor.pvalues,receptor.logFC,receptor.pct.1,receptor.pct.2,datasets
+in_nrow	netp_allna_row	12
+in_row	netp_allna_row	1	g1	g1	L1	R1	5e-01	1e-02	LR1	a	pA	anno1	e1	1e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	5.0000000000000003e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	d1
+in_row	netp_allna_row	2	g1	g2	L2	R2	2.5e-01	2e-02	LR2	b	pB	anno2	<NA>	2.0000000000000001e-01	-5e-01	1.0000000000000001e-01	9.0000000000000002e-01	5.9999999999999998e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	d1
+in_row	netp_allna_row	3	g2	g1	L1	R1	1.25e-01	5e-01	LR3	a	pC	anno1	e1	2.9999999999999999e-01	1.5e+00	5e-01	2.0000000000000001e-01	1e-02	-1e+00	4.0000000000000002e-01	5.9999999999999998e-01	d1
+in_row	netp_allna_row	4	g2	g2	L2	R2	1e+00	1e-03	LR4	b	pA	anno2	<NA>	4.0000000000000001e-02	0e+00	5.9999999999999998e-01	2.9999999999999999e-01	2e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	d1
+in_row	netp_allna_row	5	g10	g1	L1	R1	6.25e-02	2.0000000000000001e-01	LR5	a	pB	anno1	e1	<NA>	-2e+00	2.0000000000000001e-01	8.0000000000000004e-01	2.9999999999999999e-01	5e-01	1.0000000000000001e-01	9.0000000000000002e-01	d1
+in_row	netp_allna_row	6	g10	g2	L2	R2	3.125e-02	4.0000000000000001e-02	LR6	b	pC	anno2	<NA>	5e-01	2.5e-01	8.0000000000000004e-01	1.0000000000000001e-01	4.0000000000000001e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	d1
+in_row	netp_allna_row	7	g1	g10	L1	R1	2e+00	<NA>	LR7	a	pA	anno1	e1	2e-02	<NA>	4.0000000000000002e-01	5e-01	2e-02	0e+00	5e-01	5e-01	d2
+in_row	netp_allna_row	8	g2	g10	L2	R2	5e-01	2.9999999999999999e-02	LR8	b	pB	anno2	<NA>	2e-02	7.5e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	d2
+in_row	netp_allna_row	9	g10	g10	L1	R1	7.5e-01	9.0000000000000002e-01	LR9	a	pC	anno1	e1	<NaN>	1.0000000000000001e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	d2
+in_row	netp_allna_row	10	g1	g2	L2	R2	3.3333333333333331e-01	5.0000000000000001e-03	LR10	b	pA	anno2	<NA>	1.0000000000000001e-01	0e+00	6.9999999999999996e-01	2.0000000000000001e-01	1e-02	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	d2
+in_row	netp_allna_row	11	g1	g1	L1	R1	2.0000000000000001e-01	<NaN>	LR11	a	pB	anno1	e1	1.0000000000000001e-01	-1e+00	2.9999999999999999e-01	5.9999999999999998e-01	1.0000000000000001e-01	<NA>	2.0000000000000001e-01	8.0000000000000004e-01	d2
+in_row	netp_allna_row	12	<NA>	<NA>	<NA>	<NA>	<NA>	<NA>	<NA>	<NA>	<NA>	<NA>	<NA>	<NA>	<NA>	<NA>	<NA>	<NA>	<NA>	<NA>	<NA>	<NA>
+slot	netp_allna_row	netP
+arg	netp_allna_row	sources.use	-
+arg	netp_allna_row	targets.use	-
+arg	netp_allna_row	datasets	-
+arg	netp_allna_row	ligand.pvalues	-
+arg	netp_allna_row	ligand.logFC	-
+arg	netp_allna_row	ligand.pct.1	-
+arg	netp_allna_row	ligand.pct.2	-
+arg	netp_allna_row	receptor.pvalues	-
+arg	netp_allna_row	receptor.logFC	-
+arg	netp_allna_row	receptor.pct.1	-
+arg	netp_allna_row	receptor.pct.2	-
+warn	netp_allna_row	Setting row names on a tibble is deprecated.
+out_cols	netp_allna_row	source,target,pathway_name,prob,pval
+out_nrow	netp_allna_row	11
+out_row	netp_allna_row	1	g10	g1	pB	6.25e-02	2.0000000000000001e-01
+out_row	netp_allna_row	2	g10	g10	pC	7.5e-01	9.0000000000000002e-01
+out_row	netp_allna_row	3	g10	g2	pC	3.125e-02	4.0000000000000001e-02
+out_row	netp_allna_row	4	g1	g1	pA	5e-01	1e-02
+out_row	netp_allna_row	5	g1	g1	pB	2.0000000000000001e-01	<NaN>
+out_row	netp_allna_row	6	g1	g10	pA	2e+00	<NA>
+out_row	netp_allna_row	7	g1	g2	pA	3.3333333333333331e-01	5.0000000000000001e-03
+out_row	netp_allna_row	8	g1	g2	pB	2.5e-01	2e-02
+out_row	netp_allna_row	9	g2	g1	pC	1.25e-01	5e-01
+out_row	netp_allna_row	10	g2	g10	pB	5e-01	2.9999999999999999e-02
+out_row	netp_allna_row	11	g2	g2	pA	1e+00	1e-03
+out_rn	netp_allna_row	1,2,3,4,5,6,7,8,9,10,11
+case	unknown_slot
+in_cols	unknown_slot	source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence,ligand.pvalues,ligand.logFC,ligand.pct.1,ligand.pct.2,receptor.pvalues,receptor.logFC,receptor.pct.1,receptor.pct.2,datasets
+in_nrow	unknown_slot	12
+in_row	unknown_slot	1	g1	g1	L1	R1	5e-01	1e-02	LR1	a	pA	anno1	e1	1e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	5.0000000000000003e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	d1
+in_row	unknown_slot	2	g1	g2	L2	R2	2.5e-01	2e-02	LR2	b	pB	anno2	<NA>	2.0000000000000001e-01	-5e-01	1.0000000000000001e-01	9.0000000000000002e-01	5.9999999999999998e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	d1
+in_row	unknown_slot	3	g2	g1	L1	R1	1.25e-01	5e-01	LR3	a	pC	anno1	e1	2.9999999999999999e-01	1.5e+00	5e-01	2.0000000000000001e-01	1e-02	-1e+00	4.0000000000000002e-01	5.9999999999999998e-01	d1
+in_row	unknown_slot	4	g2	g2	L2	R2	1e+00	1e-03	LR4	b	pA	anno2	<NA>	4.0000000000000001e-02	0e+00	5.9999999999999998e-01	2.9999999999999999e-01	2e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	d1
+in_row	unknown_slot	5	g10	g1	L1	R1	6.25e-02	2.0000000000000001e-01	LR5	a	pB	anno1	e1	<NA>	-2e+00	2.0000000000000001e-01	8.0000000000000004e-01	2.9999999999999999e-01	5e-01	1.0000000000000001e-01	9.0000000000000002e-01	d1
+in_row	unknown_slot	6	g10	g2	L2	R2	3.125e-02	4.0000000000000001e-02	LR6	b	pC	anno2	<NA>	5e-01	2.5e-01	8.0000000000000004e-01	1.0000000000000001e-01	4.0000000000000001e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	d1
+in_row	unknown_slot	7	g1	g10	L1	R1	2e+00	<NA>	LR7	a	pA	anno1	e1	2e-02	<NA>	4.0000000000000002e-01	5e-01	2e-02	0e+00	5e-01	5e-01	d2
+in_row	unknown_slot	8	g2	g10	L2	R2	5e-01	2.9999999999999999e-02	LR8	b	pB	anno2	<NA>	2e-02	7.5e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	d2
+in_row	unknown_slot	9	g10	g10	L1	R1	7.5e-01	9.0000000000000002e-01	LR9	a	pC	anno1	e1	<NaN>	1.0000000000000001e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	d2
+in_row	unknown_slot	10	g1	g2	L2	R2	3.3333333333333331e-01	5.0000000000000001e-03	LR10	b	pA	anno2	<NA>	1.0000000000000001e-01	0e+00	6.9999999999999996e-01	2.0000000000000001e-01	1e-02	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	d2
+in_row	unknown_slot	11	g1	g1	L1	R1	2.0000000000000001e-01	<NaN>	LR11	a	pB	anno1	e1	1.0000000000000001e-01	-1e+00	2.9999999999999999e-01	5.9999999999999998e-01	1.0000000000000001e-01	<NA>	2.0000000000000001e-01	8.0000000000000004e-01	d2
+in_row	unknown_slot	12	<NA>	g1	L2	R2	4.0000000000000002e-01	5.9999999999999998e-02	LR12	b	pC	anno2	<NA>	1.0000000000000001e-01	0e+00	5e-01	4.0000000000000002e-01	1.0000000000000001e-01	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	d2
+slot	unknown_slot	foo
+arg	unknown_slot	sources.use	-
+arg	unknown_slot	targets.use	-
+arg	unknown_slot	datasets	-
+arg	unknown_slot	ligand.pvalues	-
+arg	unknown_slot	ligand.logFC	-
+arg	unknown_slot	ligand.pct.1	-
+arg	unknown_slot	ligand.pct.2	-
+arg	unknown_slot	receptor.pvalues	-
+arg	unknown_slot	receptor.logFC	-
+arg	unknown_slot	receptor.pct.1	-
+arg	unknown_slot	receptor.pct.2	-
+warn	unknown_slot	-
+out_cols	unknown_slot	source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence,ligand.pvalues,ligand.logFC,ligand.pct.1,ligand.pct.2,receptor.pvalues,receptor.logFC,receptor.pct.1,receptor.pct.2,datasets
+out_nrow	unknown_slot	12
+out_row	unknown_slot	1	g1	g1	L1	R1	5e-01	1e-02	LR1	a	pA	anno1	e1	1e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	5.0000000000000003e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	d1
+out_row	unknown_slot	2	g1	g2	L2	R2	2.5e-01	2e-02	LR2	b	pB	anno2	<NA>	2.0000000000000001e-01	-5e-01	1.0000000000000001e-01	9.0000000000000002e-01	5.9999999999999998e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	d1
+out_row	unknown_slot	3	g2	g1	L1	R1	1.25e-01	5e-01	LR3	a	pC	anno1	e1	2.9999999999999999e-01	1.5e+00	5e-01	2.0000000000000001e-01	1e-02	-1e+00	4.0000000000000002e-01	5.9999999999999998e-01	d1
+out_row	unknown_slot	4	g2	g2	L2	R2	1e+00	1e-03	LR4	b	pA	anno2	<NA>	4.0000000000000001e-02	0e+00	5.9999999999999998e-01	2.9999999999999999e-01	2e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	d1
+out_row	unknown_slot	5	g10	g1	L1	R1	6.25e-02	2.0000000000000001e-01	LR5	a	pB	anno1	e1	<NA>	-2e+00	2.0000000000000001e-01	8.0000000000000004e-01	2.9999999999999999e-01	5e-01	1.0000000000000001e-01	9.0000000000000002e-01	d1
+out_row	unknown_slot	6	g10	g2	L2	R2	3.125e-02	4.0000000000000001e-02	LR6	b	pC	anno2	<NA>	5e-01	2.5e-01	8.0000000000000004e-01	1.0000000000000001e-01	4.0000000000000001e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	d1
+out_row	unknown_slot	7	g1	g10	L1	R1	2e+00	<NA>	LR7	a	pA	anno1	e1	2e-02	<NA>	4.0000000000000002e-01	5e-01	2e-02	0e+00	5e-01	5e-01	d2
+out_row	unknown_slot	8	g2	g10	L2	R2	5e-01	2.9999999999999999e-02	LR8	b	pB	anno2	<NA>	2e-02	7.5e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	d2
+out_row	unknown_slot	9	g10	g10	L1	R1	7.5e-01	9.0000000000000002e-01	LR9	a	pC	anno1	e1	<NaN>	1.0000000000000001e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	d2
+out_row	unknown_slot	10	g1	g2	L2	R2	3.3333333333333331e-01	5.0000000000000001e-03	LR10	b	pA	anno2	<NA>	1.0000000000000001e-01	0e+00	6.9999999999999996e-01	2.0000000000000001e-01	1e-02	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	d2
+out_row	unknown_slot	11	g1	g1	L1	R1	2.0000000000000001e-01	<NaN>	LR11	a	pB	anno1	e1	1.0000000000000001e-01	-1e+00	2.9999999999999999e-01	5.9999999999999998e-01	1.0000000000000001e-01	<NA>	2.0000000000000001e-01	8.0000000000000004e-01	d2
+out_row	unknown_slot	12	<NA>	g1	L2	R2	4.0000000000000002e-01	5.9999999999999998e-02	LR12	b	pC	anno2	<NA>	1.0000000000000001e-01	0e+00	5e-01	4.0000000000000002e-01	1.0000000000000001e-01	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	d2
+out_rn	unknown_slot	1,2,3,4,5,6,7,8,9,10,11,12
+case	unknown_slot_deg
+in_cols	unknown_slot_deg	source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence,ligand.pvalues,ligand.logFC,ligand.pct.1,ligand.pct.2,receptor.pvalues,receptor.logFC,receptor.pct.1,receptor.pct.2,datasets
+in_nrow	unknown_slot_deg	12
+in_row	unknown_slot_deg	1	g1	g1	L1	R1	5e-01	1e-02	LR1	a	pA	anno1	e1	1e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	5.0000000000000003e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	d1
+in_row	unknown_slot_deg	2	g1	g2	L2	R2	2.5e-01	2e-02	LR2	b	pB	anno2	<NA>	2.0000000000000001e-01	-5e-01	1.0000000000000001e-01	9.0000000000000002e-01	5.9999999999999998e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	d1
+in_row	unknown_slot_deg	3	g2	g1	L1	R1	1.25e-01	5e-01	LR3	a	pC	anno1	e1	2.9999999999999999e-01	1.5e+00	5e-01	2.0000000000000001e-01	1e-02	-1e+00	4.0000000000000002e-01	5.9999999999999998e-01	d1
+in_row	unknown_slot_deg	4	g2	g2	L2	R2	1e+00	1e-03	LR4	b	pA	anno2	<NA>	4.0000000000000001e-02	0e+00	5.9999999999999998e-01	2.9999999999999999e-01	2e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	d1
+in_row	unknown_slot_deg	5	g10	g1	L1	R1	6.25e-02	2.0000000000000001e-01	LR5	a	pB	anno1	e1	<NA>	-2e+00	2.0000000000000001e-01	8.0000000000000004e-01	2.9999999999999999e-01	5e-01	1.0000000000000001e-01	9.0000000000000002e-01	d1
+in_row	unknown_slot_deg	6	g10	g2	L2	R2	3.125e-02	4.0000000000000001e-02	LR6	b	pC	anno2	<NA>	5e-01	2.5e-01	8.0000000000000004e-01	1.0000000000000001e-01	4.0000000000000001e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	d1
+in_row	unknown_slot_deg	7	g1	g10	L1	R1	2e+00	<NA>	LR7	a	pA	anno1	e1	2e-02	<NA>	4.0000000000000002e-01	5e-01	2e-02	0e+00	5e-01	5e-01	d2
+in_row	unknown_slot_deg	8	g2	g10	L2	R2	5e-01	2.9999999999999999e-02	LR8	b	pB	anno2	<NA>	2e-02	7.5e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	d2
+in_row	unknown_slot_deg	9	g10	g10	L1	R1	7.5e-01	9.0000000000000002e-01	LR9	a	pC	anno1	e1	<NaN>	1.0000000000000001e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	d2
+in_row	unknown_slot_deg	10	g1	g2	L2	R2	3.3333333333333331e-01	5.0000000000000001e-03	LR10	b	pA	anno2	<NA>	1.0000000000000001e-01	0e+00	6.9999999999999996e-01	2.0000000000000001e-01	1e-02	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	d2
+in_row	unknown_slot_deg	11	g1	g1	L1	R1	2.0000000000000001e-01	<NaN>	LR11	a	pB	anno1	e1	1.0000000000000001e-01	-1e+00	2.9999999999999999e-01	5.9999999999999998e-01	1.0000000000000001e-01	<NA>	2.0000000000000001e-01	8.0000000000000004e-01	d2
+in_row	unknown_slot_deg	12	<NA>	g1	L2	R2	4.0000000000000002e-01	5.9999999999999998e-02	LR12	b	pC	anno2	<NA>	1.0000000000000001e-01	0e+00	5e-01	4.0000000000000002e-01	1.0000000000000001e-01	5e-01	5.9999999999999998e-01	4.0000000000000002e-01	d2
+slot	unknown_slot_deg	foo
+arg	unknown_slot_deg	sources.use	-
+arg	unknown_slot_deg	targets.use	-
+arg	unknown_slot_deg	datasets	-
+arg	unknown_slot_deg	ligand.pvalues	5.0000000000000003e-02
+arg	unknown_slot_deg	ligand.logFC	-
+arg	unknown_slot_deg	ligand.pct.1	-
+arg	unknown_slot_deg	ligand.pct.2	-
+arg	unknown_slot_deg	receptor.pvalues	-
+arg	unknown_slot_deg	receptor.logFC	-
+arg	unknown_slot_deg	receptor.pct.1	-
+arg	unknown_slot_deg	receptor.pct.2	-
+warn	unknown_slot_deg	-
+out_cols	unknown_slot_deg	source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence,ligand.pvalues,ligand.logFC,ligand.pct.1,ligand.pct.2,receptor.pvalues,receptor.logFC,receptor.pct.1,receptor.pct.2,datasets
+out_nrow	unknown_slot_deg	4
+out_row	unknown_slot_deg	1	g1	g1	L1	R1	5e-01	1e-02	LR1	a	pA	anno1	e1	1e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	5.0000000000000003e-02	5e-01	8.0000000000000004e-01	2.0000000000000001e-01	d1
+out_row	unknown_slot_deg	2	g2	g2	L2	R2	1e+00	1e-03	LR4	b	pA	anno2	<NA>	4.0000000000000001e-02	0e+00	5.9999999999999998e-01	2.9999999999999999e-01	2e-02	5e-01	9.0000000000000002e-01	1.0000000000000001e-01	d1
+out_row	unknown_slot_deg	3	g1	g10	L1	R1	2e+00	<NA>	LR7	a	pA	anno1	e1	2e-02	<NA>	4.0000000000000002e-01	5e-01	2e-02	0e+00	5e-01	5e-01	d2
+out_row	unknown_slot_deg	4	g2	g10	L2	R2	5e-01	2.9999999999999999e-02	LR8	b	pB	anno2	<NA>	2e-02	7.5e-01	4.0000000000000002e-01	5e-01	2e-02	5e-01	5e-01	5e-01	d2
+out_rn	unknown_slot_deg	1,2,3,4

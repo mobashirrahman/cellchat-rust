@@ -1,0 +1,1302 @@
+{
+  "upstream": {
+    "repo": "jinworks/CellChat",
+    "commit": "75253cd0c9e68410e6e721a6d3a0419a1d7e358f",
+    "version": "2.2.0.9001"
+  },
+  "rung_vocabulary": {
+    "exact": "raw bit patterns compared and required equal",
+    "exact-nan": "as exact, with non-finite inputs in the corpus",
+    "identical": "R identical() on the object, run through the installed shim",
+    "error-equal": "error messages compared byte for byte",
+    "measured-divergent": "the divergence from upstream's approximate index is measured on real data and published, rather than silently accepted; the exact side is gated by the same kernel tests as the rest",
+    "untested": "no passing test establishes this yet"
+  },
+  "summary": {
+    "quantities": 160,
+    "at_rung": 160,
+    "untested": 0
+  },
+  "entries": [
+    {
+      "quantity": "rng.mersenne_twister",
+      "pin": "set.seed/MT_genrand stream, incl. FixupSeeds and unsigned shifts",
+      "test": "cargo test --release -p r-core --test rng_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "rng.sample_int",
+      "pin": "sample.int permutation and sampling without replacement",
+      "test": "cargo test --release -p r-core --test rng_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "rng.stress",
+      "pin": "879-record corpus, 25 MB, >2e6 compared values",
+      "test": "cargo test --release -p r-core --test rng_stress",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "longdouble.add",
+      "pin": "x87 80-bit add and subtract vs real long double in C",
+      "test": "cargo test --release -p r-core --test f80_vs_x87",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "longdouble.mul",
+      "pin": "x87 80-bit multiply, needed for R's prod",
+      "test": "cargo test --release -p r-core --test f80_vs_x87",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "stats.fquantile_type7",
+      "pin": "collapse::fquantile type 7, incl. the radix/dquickselect path",
+      "test": "cargo test --release -p r-core --test stats_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "stats.tri_mean",
+      "pin": "triMean, incl. the na.rm=FALSE inner mean",
+      "test": "cargo test --release -p r-core --test stats_parity",
+      "rung": "exact-nan",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "stats.geometric_mean",
+      "pin": "geometricMean, incl. log(0) = -Inf and log(-Inf) = NaN",
+      "test": "cargo test --release -p r-core --test stats_parity",
+      "rung": "exact-nan",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "stats.r_prod",
+      "pin": "R's prod: LDOUBLE accumulation with the DBL_MAX clamp",
+      "test": "cargo test --release -p r-core --test stats_parity",
+      "rung": "exact-nan",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "stats.thresholded_mean",
+      "pin": "thresholdedMean, incl. the NaN-raise on missing values and the zero-below-threshold rule",
+      "test": "cargo test --release -p r-core --test stats_parity",
+      "rung": "exact-nan",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "db.extract_gene",
+      "pin": "extractGene / extractGeneSubset, both species, order for order",
+      "test": "cargo test --release -p r-core --test db_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "expr.computeExpr_LR",
+      "pin": "computeExpr_LR and computeExpr_complex, 416 x 6 fixture",
+      "test": "cargo test --release -p r-core --test expr_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "expr.computeExpr_coreceptor",
+      "pin": "computeExpr_coreceptor, incl. the all-ones no-op",
+      "test": "cargo test --release -p r-core --test expr_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "expr.computeExpr_agonist",
+      "pin": "computeExpr_agonist / _antagonist, 30 records x 5 Kh/n",
+      "test": "cargo test --release -p r-core --test expr_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "expr.computeExprGroup",
+      "pin": "the exported group-mean variants, triMean over cells",
+      "test": "cargo test --release -p r-core --test expr_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "expr.subscript_out_of_bounds",
+      "pin": "upstream's abort on a complex with a missing subunit",
+      "test": "cargo test --release -p r-core --test expr_parity",
+      "rung": "error-equal",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "aggregate.aggregate_1",
+      "pin": "aggregate(matrix, list(factor), FUN) group order and layout",
+      "test": "cargo test --release -p r-core --lib aggregate",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "prob.data_use_avg",
+      "pin": "data.use.avg for all four type.mean values, vs R's own output",
+      "test": "cargo test --release -p r-core --test prob_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "prob.prob",
+      "pin": "net$prob over 8 parameter configurations, bit for bit",
+      "test": "cargo test --release -p r-core --test prob_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "prob.pval",
+      "pin": "net$pval over 8 parameter configurations, bit for bit",
+      "test": "cargo test --release -p r-core --test prob_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "net.aggregate_net",
+      "pin": "net$count and net$weight, 4 fixtures x 3 thresholds, LDOUBLE sum",
+      "test": "cargo test --release -p r-core --test net_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "net.subset_communication",
+      "pin": "row order, column set, factor levels and every cell",
+      "test": "cargo test --release -p r-core --test net_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "net.subset_empty_error",
+      "pin": "upstream's refusal to return an empty table",
+      "test": "cargo test --release -p r-core --test net_parity",
+      "rung": "error-equal",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "de.compute_ave_expr",
+      "pin": "computeAveExpr over all three types, incl. R's intersect order",
+      "test": "cargo test --release -p r-core --test de_parity",
+      "rung": "exact-nan",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "de.intersect_order",
+      "pin": "R's intersect: first argument's order, deduplicated",
+      "test": "cargo test --release -p r-core --test de_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "de.subset_data",
+      "pin": "subsetData's gene list and the annotation reordering",
+      "test": "cargo test --release -p r-core --test de_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "de.subset_db",
+      "pin": "subsetDB's annotation filter and its non_protein flip",
+      "test": "cargo test --release -p r-core --test de_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "de.match_arg_message",
+      "pin": "computeAveExpr's match.arg error, curly quotes included",
+      "test": "cargo test --release -p r-core --test de_parity",
+      "rung": "error-equal",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "de.subset_db_key_error",
+      "pin": "subsetDB's unknown-key error, byte for byte",
+      "test": "cargo test --release -p r-core --test de_parity",
+      "rung": "error-equal",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "rshim.identical",
+      "pin": "identical() on net$prob, net$pval, dimnames, options$parameter",
+      "test": "R_LIBS=.rlib R --vanilla -f tests/parity/check_identical.R",
+      "rung": "identical",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "rshim.match_arg",
+      "pin": "match.arg partial matching and its error message, byte for byte",
+      "test": "R_LIBS=.rlib R --vanilla -f tests/parity/check_identical.R",
+      "rung": "error-equal",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "rshim.aggregate_net",
+      "pin": "aggregateNet through the installed shim, three thresholds",
+      "test": "R_LIBS=.rlib R --vanilla -f tests/parity/check_identical.R",
+      "rung": "identical",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "rshim.subset_communication",
+      "pin": "subsetCommunication through the installed shim, three filters",
+      "test": "R_LIBS=.rlib R --vanilla -f tests/parity/check_identical.R",
+      "rung": "identical",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "rshim.compute_ave_expr",
+      "pin": "computeAveExpr through the installed shim, six configurations",
+      "test": "R_LIBS=.rlib R --vanilla -f tests/parity/check_identical.R",
+      "rung": "identical",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "rshim.subset_db",
+      "pin": "subsetDB through the installed shim, four configurations",
+      "test": "R_LIBS=.rlib R --vanilla -f tests/parity/check_identical.R",
+      "rung": "identical",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "wilcox.wilcox_test",
+      "pin": "stats::wilcox.test: W and p.value bit for bit, 13 x 3 x 2 records",
+      "test": "cargo test --release -p r-core --test wilcox_parity",
+      "rung": "exact-nan",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "wilcox.correct_argument",
+      "pin": "R's `correct` argument, both settings distinguished",
+      "test": "cargo test --release -p r-core --test wilcox_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "wilcox.rank",
+      "pin": "stats::rank, incl. na.last = 'keep' ranking NA last",
+      "test": "cargo test --release -p r-core --test wilcox_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "wilcox.p_adjust_bonferroni",
+      "pin": "stats::p.adjust(method = 'bonferroni')",
+      "test": "cargo test --release -p r-core --test wilcox_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "wilcox.pnorm",
+      "pin": "Cody's pnint, lower and upper tail, vs R, bit for bit",
+      "test": "cargo test --release -p r-core --lib mathfn",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "wilcox.mean_fxn",
+      "pin": "log(mean(expm1(x)) + 1) via apply(MARGIN = 1)",
+      "test": "cargo test --release -p r-core --test wilcox_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "de.group_dataset_selection",
+      "pin": "group.dataset changes only cell.use1/cell.use2 -- by dataset and group, or pooled across groups with no labels term at all when group.DE.combined is TRUE. The kernel takes the selection as a parameter rather than growing a flag through the Wilcoxon path",
+      "test": "R_LIBS=.rlib Rscript tests/parity/check_identical.R",
+      "rung": "identical",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "de.group_dataset_tostring_collapse",
+      "pin": "labels.dataset[labels.dataset != pos.dataset] <- toString(setdiff(unique(...), pos.dataset)) puts every non-positive dataset in ONE level, so a four-dataset comparison has two levels, one named \"D2, D3, D4\"; the datasets factor and its row order depend on it",
+      "test": "R_LIBS=.rlib Rscript tests/parity/check_identical.R",
+      "rung": "identical",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "de.group_dataset_bare_stop",
+      "pin": "an unusable pos.dataset makes upstream cat() the names and then call a bare stop(), so the error message is empty; a helpful message here would be a divergence",
+      "test": "R_LIBS=.rlib Rscript tests/parity/check_identical.R",
+      "rung": "error-equal",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "de.single_candidate_group",
+      "pin": "a group with exactly one percentage-passing feature contributes NO markers: apply(X, 1, FUN) on a one-row matrix returns an unnamed scalar, so FC[features] is NA and features.diff is character(0)",
+      "test": "cargo test --release -p r-core --lib",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "de.row_names_are_not_associative",
+      "pin": "markers.all is rbind-ed one group at a time, and R's row-name uniquification falls back to appending a bare digit once `x.1` is taken, so do.call(rbind, frames) renames differently",
+      "test": "R_LIBS=.rlib Rscript tests/parity/check_identical.R",
+      "rung": "identical",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "de.identify_marker_table",
+      "pin": "the marker table row for row, incl. the 0x1 collapsed schema",
+      "test": "cargo test --release -p r-core --test wilcox_parity",
+      "rung": "exact-nan",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "de.marker_row_names",
+      "pin": "features.info row names are the features, in row order",
+      "test": "cargo test --release -p r-core --test wilcox_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "de.pct_scale",
+      "pin": "pct.1/pct.2 as round(x, 3) fractions; thresh.pc vs fraction and percent",
+      "test": "cargo test --release -p r-core --test wilcox_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "de.expressed_in_min_cells",
+      "pin": "the do.DE = FALSE branch, where min.cells is actually used",
+      "test": "cargo test --release -p r-core --test wilcox_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "rshim.identify_over_expressed_genes",
+      "pin": "identifyOverExpressedGenes through the installed shim, 7 configs, whole var.features",
+      "test": "R_LIBS=.rlib R --vanilla -f tests/parity/check_identical.R",
+      "rung": "identical",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "rshim.oeg_falls_back",
+      "pin": "do.fast = TRUE falls back rather than running the Wilcoxon kernel",
+      "test": "R_LIBS=.rlib R --vanilla -f tests/parity/check_identical.R",
+      "rung": "error-equal",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "pathway.prob_pathways",
+      "pin": "prob.pathways per (source, target, pathway), 9 fixtures, bit for bit",
+      "test": "cargo test --release -p r-core --test pathway_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "pathway.pathway_ranking",
+      "pin": "netP$pathways by decreasing total, incl. tied totals",
+      "test": "cargo test --release -p r-core --test pathway_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "pathway.lr_sig",
+      "pin": "net$LRs: the L-R pairs with a non-zero total after thresholding",
+      "test": "cargo test --release -p r-core --test pathway_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "pathway.apply_sums",
+      "pin": "both apply() sums in their own orders, LONG_DOUBLE accumulation",
+      "test": "cargo test --release -p r-core --test pathway_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "pathway.aperm_layout",
+      "pin": "the pathway axis is last after aperm(..., c(2,3,1))",
+      "test": "cargo test --release -p r-core --test pathway_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "pathway.single_pathway_error",
+      "pin": "upstream's aperm failure for a one-pathway LRsig, preserved",
+      "test": "cargo test --release -p r-core --test pathway_parity",
+      "rung": "error-equal",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "rshim.compute_commun_prob_pathway",
+      "pin": "computeCommunProbPathway through the installed shim, 9 fixtures, both return shapes",
+      "test": "R_LIBS=.rlib R --vanilla -f tests/parity/check_identical.R",
+      "rung": "identical",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "net.aggregate_net_unfiltered",
+      "pin": "aggregateNet's unfiltered branch, 12 fixtures, every cell",
+      "test": "cargo test --release -p r-core --test netfiltered_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "net.aggregate_net_filtered",
+      "pin": "aggregateNet's filtered branch: 0x0 or kxk of zeros, as upstream",
+      "test": "cargo test --release -p r-core --test netfiltered_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "net.group_by_key_order",
+      "pin": "dplyr::group_by on the joined string key orders byte-wise",
+      "test": "cargo test --release -p r-core --test netfiltered_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "net.remove_isolate_shape",
+      "pin": "remove.isolate decides 0x0 vs kxk, via upstream's str_split regex",
+      "test": "cargo test --release -p r-core --test netfiltered_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "rshim.aggregate_net_filtered",
+      "pin": "aggregateNet's filtered branch through the installed shim, 12 fixtures, whole object",
+      "test": "R_LIBS=.rlib R --vanilla -f tests/parity/check_identical.R",
+      "rung": "identical",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "filter.prob_after_filter",
+      "pin": "the min.cells zero-fill and the cross-sample mask, every element",
+      "test": "cargo test --release -p r-core --test filter_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "filter.per_sample_binarisation",
+      "pin": "avg.s each sample to 0/1, and the excluded rows zeroed",
+      "test": "cargo test --release -p r-core --test filter_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "filter.min_cells_threshold",
+      "pin": "groups at or below min.cells, reported in level order",
+      "test": "cargo test --release -p r-core --test filter_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "filter.absent_group_is_zero",
+      "pin": "a group missing from a sample's idents counts as 0 cells",
+      "test": "cargo test --release -p r-core --test filter_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "filter.cell_excludes",
+      "pin": "cell.excludes is the union over samples of the excluded groups",
+      "test": "cargo test --release -p r-core --test filter_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "filter.type_mean_choices",
+      "pin": "all four type.mean values, incl. truncated and thresholded",
+      "test": "cargo test --release -p r-core --test filter_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "filter.upstream_failures",
+      "pin": "min.samples > n_samples and the all-zero 'subscript out of bounds', both preserved",
+      "test": "cargo test --release -p r-core --test filter_parity",
+      "rung": "error-equal",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "filter.nonfilter_keep",
+      "pin": "nonFilter.keep = TRUE, a no-op because upstream drops the augmented net",
+      "test": "cargo test --release -p r-core --test filter_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "subset.threshold_order",
+      "pin": "the eight DEG thresholds in upstream's own if-order, and the two stop() wordings",
+      "test": "cargo test --release -p r-core --test subset_parity",
+      "rung": "error-equal",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "subset.na_blanking",
+      "pin": "an NA or NaN in an applied threshold column blanks the row, which the shared all-NA drop removes",
+      "test": "cargo test --release -p r-core --test subset_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "subset.all_na_drop",
+      "pin": "rowSums(is.na(x)) != ncol(x) runs with no threshold at all",
+      "test": "cargo test --release -p r-core --test subset_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "subset.logfc_sign",
+      "pin": "the sign of the logFC *argument* picks the comparison, so 0 takes the >= branch",
+      "test": "cargo test --release -p r-core --test subset_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "subset.warn_vs_error",
+      "pin": "empty after a threshold is a stop(); empty after sources.use is only a warning",
+      "test": "cargo test --release -p r-core --test subset_parity",
+      "rung": "error-equal",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "subset.netp_group_order",
+      "pin": "group_by on the pasted 'sourceTotarget' key, byte-wise, so g10 before g1",
+      "test": "cargo test --release -p r-core --test subset_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "subset.netp_na_to_string",
+      "pin": "paste turns a missing cell into the string \"NA\", which becomes a real group key",
+      "test": "cargo test --release -p r-core --test subset_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "subset.netp_aggregates",
+      "pin": "mean(pval) and sum(prob) in LONG_DOUBLE, and NA vs NaN kept apart",
+      "test": "cargo test --release -p r-core --test subset_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "subset.datasets_needs_logfc",
+      "pin": "the datasets column survives only alongside ligand.logFC",
+      "test": "cargo test --release -p r-core --test subset_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "subset.unknown_slot",
+      "pin": "an unrecognised slot.name falls through both final if/else branches and keeps every column",
+      "test": "cargo test --release -p r-core --test subset_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "rshim.subset_communication_deg",
+      "pin": "subsetCommunication's DEG and netP branches through the installed shim, 34 fixtures, whole data frame",
+      "test": "R_LIBS=.rlib R --vanilla -f tests/parity/check_identical.R",
+      "rung": "identical",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "ranknet.information_flow",
+      "pin": "the per-pathway apply(prob, 3, sum) in LONG_DOUBLE, 11 fixtures",
+      "test": "cargo test --release -p r-core --test ranknet_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "ranknet.weight_transform",
+      "pin": "-1/log, the is.na reset, and the seq(max*1.1, max*1.5) reassignment",
+      "test": "cargo test --release -p r-core --test ranknet_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "ranknet.degenerate_flagging",
+      "pin": "only a total above 1 is flagged; 0 and negative are not",
+      "test": "cargo test --release -p r-core --test ranknet_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "ranknet.reassignment_order",
+      "pin": "match(1:m, position) inverts the sort, preserving original order",
+      "test": "cargo test --release -p r-core --test ranknet_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "ranknet.all_degenerate_error",
+      "pin": "upstream's seq(-Inf) crash, preserved verbatim",
+      "test": "cargo test --release -p r-core --test ranknet_parity",
+      "rung": "error-equal",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "ranknet.count_measure",
+      "pin": "1*(prob > 0) and no rescaling, 11 fixtures",
+      "test": "cargo test --release -p r-core --test ranknet_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "ranknet.group_filters",
+      "pin": "sources/targets zero different axes; both validated against axis 1",
+      "test": "cargo test --release -p r-core --test ranknet_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "ranknet.order_stable",
+      "pin": "order() on a double is radix and therefore stable, ties included",
+      "test": "cargo test --release -p r-core --test ranknet_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "ranknet.relative_digits1",
+      "pin": "as.numeric(format(x, digits = 1)): one significant digit, Inf survives",
+      "test": "cargo test --release -p r-core --test ranknet_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "ranknet.empty_network_error",
+      "pin": "sum(prob) == 0 stops before the per-pathway sums",
+      "test": "cargo test --release -p r-core --test ranknet_parity",
+      "rung": "error-equal",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "spatial.trimmed_mean",
+      "pin": "R's mean(x, trim, na.rm): floor(n*trim) per end, NaN dropped, median branch",
+      "test": "cargo test --release -p r-core --test spatial_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "spatial.fdist",
+      "pin": "collapse::fdist, the full matrix bit for bit and the dist triangle as a multiset",
+      "test": "cargo test --release -p r-core --test spatial_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "spatial.kdtree_exact",
+      "pin": "the exact k-d tree against exhaustive search: lattice, duplicates, collinear, circle, clusters",
+      "test": "cargo test --release -p r-core --test spatial_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "analysis.centrality_deterministic",
+      "pin": "unweighted degrees, weighted strengths (plain sequential f64 in edge-ID order, not R's long-double rowSums) and Brandes betweenness (Dijkstra with dist-plus-one encoding, exact 2-way-heap tie rules, epsilon comparisons at 1e-10) against installed igraph 2.3.4 on a 77-case corpus incl. 6 real tutorial slices, plus igraph's exact NA/positivity messages",
+      "test": "cargo test --release -p r-core --test centrality_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "spatial.kdtree_tie_break",
+      "pin": "ties break to the lower index, which unique() makes observable downstream",
+      "test": "cargo test --release -p r-core --test spatial_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "spatial.kdtree_subquadratic",
+      "pin": "the search is subquadratic, which is the reason to replace Annoy",
+      "test": "cargo test --release -p r-core --test spatial_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "spatial.region_arithmetic",
+      "pin": "computeRegionDistance's arithmetic against upstream's body with the neighbour query substituted: threshold tests, per-sample merge, binarisation, symmetrisation, NaN placement",
+      "test": "cargo test --release -p r-core --test region_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "spatial.region_ratio_recycling",
+      "pin": "a length-1 ratio/tol is recycled the way R's ratio[k] is, and any other short length refused",
+      "test": "cargo test --release -p r-core --test region_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "spatial.region_null_ratio",
+      "pin": "the default signature: ratio = tol = NULL empties the selection, leaving d.spatial all NaN",
+      "test": "cargo test --release -p r-core --test region_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "spatial.region_absent_level",
+      "pin": "a declared level with no cells: NaN in the unwritten row and column, and the row names upstream assigns do not label the data it returns",
+      "test": "cargo test --release -p r-core --test region_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "spatial.region_d_spatial_always_symmetric",
+      "pin": "d.spatial <- (d + t(d))/2 sits OUTSIDE if (do.symmetric) upstream, so it is symmetric either way",
+      "test": "cargo test --release -p r-core --test region_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "spatial.region_contact_null_range",
+      "pin": "contact.range = NULL makes dist - NULL an empty selection, not a skipped pair, so adj.contact is 0 throughout and only the adj.contact.knn swap can produce a 1",
+      "test": "cargo test --release -p r-core --test region_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "spatial.region_contact_knn_k_replaces",
+      "pin": "contact.knn.k replaces adj.contact rather than merging, on a fixture where the range-based and rank-based counts disagree",
+      "test": "cargo test --release -p r-core --test region_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "spatial.region_corpus_margin",
+      "pin": "every fixture's recorded nearest-neighbour margin, which is what makes the exact-substitution oracle sound; a layout edit that breaks it fails here and not only in the generator",
+      "test": "cargo test --release -p r-core --test region_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "rshim.computeCellDistance",
+      "pin": "computeCellDistance against upstream: the dist rewrap (call/method/Labels), the ncol error, ratio applied when non-NULL, the threshold needing BOTH range and tol, and tol as an addend",
+      "test": "R_LIBS=.rlib R --vanilla -f tests/parity/check_identical.R",
+      "rung": "identical",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "rshim.computeRegionDistance",
+      "pin": "the R-side marshalling for all 12 corpus fixtures: levels(factor) order, the declared-but-absent level, match() on the factor, and the dimnames",
+      "test": "R_LIBS=.rlib R --vanilla -f tests/parity/check_identical.R",
+      "rung": "identical",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "ranknet.comparison_flow",
+      "pin": "rankNet(mode = 'comparison'): per-comparison flow over 9 fixtures, the POOLED degenerate reassignment, and the raw relative ratios",
+      "test": "cargo test --release -p r-core --test ranknet_comparison_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "ranknet.comparison_pooled_reassignment",
+      "pin": "one values.assign / pSum.original.all / position across every comparison, not one per comparison; separated from the per-comparison version by a fixture with flagged pathways in both comparisons at once",
+      "test": "cargo test --release -p r-core --test ranknet_comparison_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "ranknet.comparison_flag_is_a_range",
+      "pin": "`pSum < 0` flags every pathway whose total reaches or exceeds 1, not only the one that totals exactly 1",
+      "test": "cargo test --release -p r-core --test ranknet_comparison_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "rshim.ranknet_comparison",
+      "pin": "rankNet(mode = 'comparison') through the installed shim, 9 fixtures: the union of pathway vocabularies, the row order from the multi-key order(), the rbind-uniquified row names, the zero-dropping loop, and ggplot_build()$data for the plot",
+      "test": "R_LIBS=.rlib R --vanilla -f tests/parity/check_identical.R",
+      "rung": "identical",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "prob.data_max_scaling",
+      "pin": "`data.use <- data/max(data)`, upstream's first numerical step: absent from the kernel until the configuration matrix caught it, invisible while every fixture had max == 1",
+      "test": "cargo test --release -p r-core --test prob_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "prob.scale_invariance",
+      "pin": "Prob is invariant to a constant factor on the expression matrix, because upstream divides by max(data) first; asserted directly, x1 against x3",
+      "test": "R_LIBS=.rlib Rscript tests/parity/check_matrix.R",
+      "rung": "identical",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "longdouble.nan_and_inf",
+      "pin": "R's max() and sum() propagate NaN and carry Inf; Rust's f64::max is a maxNum and F80 had no special values at all",
+      "test": "cargo test --release -p r-core --test longdouble_special_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "prob.if_na_raises",
+      "pin": "`if (sum(P1_Pspatial) == 0)` with a NaN sum raises R's 'missing value where TRUE/FALSE needed'; returning an all-NaN network instead is what a port without an `if` would do",
+      "test": "cargo test --release -p r-core --test prob_parity",
+      "rung": "error-equal",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "stats.nnzero_is_na",
+      "pin": "`Matrix::nnzero` returns NA for any vector with a missing value, not a smaller count, so upstream's `thresholdedMean` raises at `if (percent < trim)`; the port counted non-zeros and skipped the missing ones, and a unit test had locked that reading in",
+      "test": "cargo test --release -p r-core --lib",
+      "rung": "error-equal",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "prob.observed_means_raise",
+      "pin": "upstream aggregates every gene at modelling.R:115, so a raise inside FunMean on a gene no interaction references still fires; the port computed that NaN and discarded it, turning a hard error into an all-zero Prob",
+      "test": "cargo test --release -p r-core --lib",
+      "rung": "error-equal",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "prob.error_precedence",
+      "pin": "upstream aggregates the observed data (:115) before the bootstrap replicates (:208); the port ran them in the reverse order, so its error precedence differed from upstream's",
+      "test": "R_LIBS=.rlib Rscript tests/parity/check_matrix.R",
+      "rung": "error-equal",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "ranknet.pairwise_order",
+      "pin": "`rankNetPairwise`'s `order(pval, -prob)` per group pair: a stable radix sort, so equal keys keep input order; the data-frame construction around it stays in R",
+      "test": "R_LIBS=.rlib Rscript tests/parity/check_identical.R",
+      "rung": "identical",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "ranknet.order_later_key_na",
+      "pin": "R's `order(c(1,1,2), c(NA,5,3))` is `2 1 3` -- a missing value in a *later* key sorts last within its group, and an all-missing primary key is still ordered by the remaining keys. Both were wrong, and neither is visible without a repeated key",
+      "test": "cargo test --release -p r-core --lib",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "ranknet.pairwise_lr_use_mismatch",
+      "pin": "upstream does not reconcile a short `LR.use` with `dim(prob)[3]`: its `data.frame(row.names =)` raises, and the port must raise from its own code rather than by slicing prob to LR.use",
+      "test": "R_LIBS=.rlib Rscript tests/parity/check_identical.R",
+      "rung": "error-equal",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "ranknet.pairwise_nonsquare",
+      "pin": "`numCluster` is `dim(prob)[1]` and upstream loops it in both dimensions, so a non-square prob reads the leading k x k block and then raises on `names(temp) <- colnames(prob)`",
+      "test": "R_LIBS=.rlib Rscript tests/parity/check_identical.R",
+      "rung": "error-equal",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "rshim.rankNetPairwise",
+      "pin": "the shim's rankNetPairwise reaches the Rust ordering on every gated case; a pass-through and a port are both `identical` to upstream, so the gate counts fallback warnings as failures",
+      "test": "R_LIBS=.rlib Rscript tests/parity/check_identical.R",
+      "rung": "identical",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "prob.bootstrap_parallel_identity",
+      "pin": "parallelising the bootstrap aggregate leaves every output bit-identical: each replicate reads a disjoint permutation and writes a disjoint slot, and indexed collect() keeps replicate order so the F80 accumulation order within a replicate is untouched. Checked on 1 207 952 real-data Prob values across the two authors' fixtures, max absolute difference 0",
+      "test": "R_LIBS=.rlib NB=20 Rscript bench-runner/check_parity_real.R",
+      "rung": "identical",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "prob.permutation_stream_order",
+      "pin": "R draws all nboot permutations from ONE MT19937 stream, so replicate nE consumes the nE-th slice; drawing them in parallel would need a stream per replicate, which is a different permutation set rather than a different order of the same one",
+      "test": "cargo test --release -p r-core --test prob_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "meta.scaling",
+      "pin": "Prob under data*f: port == upstream exactly for f in {0.5, 3, 1e4, 7.25}, and invariant relative to the unscaled run -- exactly for powers of two, to within 1 ulp otherwise, because max(f*x) is not f*max(x) in floating point",
+      "test": "R_LIBS=.rlib Rscript tests/parity/metamorphic.R",
+      "rung": "identical",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "meta.gene_permutation",
+      "pin": "permuting the rows of data.signaling with the dimnames attached changes nothing, and the negative control (doubling one gene) does change it, so the invariance is not vacuous",
+      "test": "R_LIBS=.rlib Rscript tests/parity/metamorphic.R",
+      "rung": "identical",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "meta.cluster_relabelling",
+      "pin": "prob[i,j,l] is 'group i sends to group j', so relabelling permutes BOTH indices: prob[ord(i), ord(j), l] must equal the original, and an order-preserving relabel must leave the values in place while the dimnames change",
+      "test": "R_LIBS=.rlib Rscript tests/parity/metamorphic.R",
+      "rung": "identical",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "meta.cell_duplication",
+      "pin": "duplicating every cell within its own group multiplies every group size by two and leaves Prob unchanged, which is what proves the kernel is not weighting by group size",
+      "test": "R_LIBS=.rlib Rscript tests/parity/metamorphic.R",
+      "rung": "identical",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "meta.cell_permutation",
+      "pin": "permuting the cells (labels travelling with the columns) leaves the observed Prob invariant but MUST move Pval, since the bootstrap draws sample.int(nC, nC) over cell indices. Asserting whole-object equality here would assert something false",
+      "test": "R_LIBS=.rlib Rscript tests/parity/metamorphic.R",
+      "rung": "identical",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "meta.nboot_invariance",
+      "pin": "Prob comes from the observed aggregate and is invariant to nboot at 3, 10, 25 and 100, while Pval is always exactly k/nboot and is 1 wherever Prob is 0",
+      "test": "R_LIBS=.rlib Rscript tests/parity/metamorphic.R",
+      "rung": "identical",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "meta.recorded_invariants",
+      "pin": "checked on every object the metamorphic file builds: dimnames consistency, Pval in {k/nboot}, Pval[Prob==0] == 1, and Prob in [0,1]",
+      "test": "R_LIBS=.rlib Rscript tests/parity/metamorphic.R",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "fuzz.db_resolution",
+      "pin": "randomly generated L-R databases -- empty subunit lists, names colliding across the complex, cofactor and symbol tables, self-referential complexes -- resolved through resolve_entity and compute_expr_lr. Every entry point is total: a missing subunit is an Err carrying upstream's subscript out of bounds, never a Rust panic",
+      "test": "cargo test --release -p r-core --test db_fuzz",
+      "rung": "error-equal",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "fuzz.extract_gene_split",
+      "pin": "extractGene splits on the OFFICIAL SYMBOL list, not on membership of the complex table: a symbol is kept as itself and never expanded, a non-symbol is looked up in the complex table and contributes only its non-empty subunits. Asserting the complex-table rule instead fails on four different generated shapes",
+      "test": "cargo test --release -p r-core --test db_fuzz",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "props.r_order",
+      "pin": "generated multi-key vectors against a transcription of R's `order(..., na.last = TRUE)`: a missing value sorts last in EVERY key, and an all-missing primary key is still ordered by the remaining keys. Found both order_f64_multi bugs, which no fixture could see because no fixture had a repeated key",
+      "test": "cargo test --release -p r-core --test properties",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "props.longdouble_mul_specials",
+      "pin": "F80::mul against R's measured infinite-product table. Infinity is encoded with a ZERO mantissa, so the old leading zero-check caught every infinite operand and prod(c(-Inf)) was 0 where R gives -Inf. R's rule is Inf with the XOR of the signs -- including Inf * -Inf, which IEEE calls NaN -- and NaN only for zero times infinity",
+      "test": "cargo test --release -p r-core --lib longdouble",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "props.signed_zero",
+      "pin": "a zero product keeps the XOR of the signs (prod(c(-0,5)) and prod(c(5,-0)) are both -0) and to_f64 must not drop the sign of a zero mantissa",
+      "test": "cargo test --release -p r-core --lib longdouble",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "props.aggregate_level_order",
+      "pin": "aggregate returns one row per level in LEVEL order, never order of first appearance, and the Mean row is the arithmetic mean of exactly that group's values in ascending cell order",
+      "test": "cargo test --release -p r-core --test properties",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "props.rng_permutation",
+      "pin": "sample.int without replacement is always a permutation of 1..n for arbitrary n, k and seed, and the stream is reproducible and inside [0,1)",
+      "test": "cargo test --release -p r-core --test properties",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "matrix.configuration_coverage",
+      "pin": "the configuration matrix: 200 configurations over 14 axes, all 1051 axis pairs covered, reported with the achieved coverage rather than asserted in prose",
+      "test": "R_LIBS=.rlib Rscript tests/parity/check_matrix.R",
+      "rung": "identical",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "matrix.scale_invariance",
+      "pin": "the matrix's scale axis and the direct x1-vs-x3 invariance check",
+      "test": "R_LIBS=.rlib Rscript tests/parity/check_matrix.R",
+      "rung": "identical",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "rshim.ranknet_single",
+      "pin": "rankNet(mode = 'single') through the installed shim, 11 fixtures, data frame and plot data",
+      "test": "R_LIBS=.rlib R --vanilla -f tests/parity/check_identical.R",
+      "rung": "identical",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "prob.spatial_branch",
+      "pin": "computeCommunProb's spatial branch: P.spatial from the exact k-d tree, the scale.distance stop, and the four nLR1 branches chosen by the annotation column",
+      "test": "R_LIBS=.rlib R --vanilla -f tests/parity/check_identical.R",
+      "rung": "identical",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "prob.raw_use_false",
+      "pin": "computeCommunProb(raw.use = FALSE): 9 configurations reading data.smooth",
+      "test": "R_LIBS=.rlib R --vanilla -f tests/parity/check_identical.R",
+      "rung": "identical",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "filter.raw_use_smooth",
+      "pin": "6 filterCommunication fixtures on data.smooth, cell for cell",
+      "test": "cargo test --release -p r-core --test filter_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "filter.raw_use_scaling",
+      "pin": "data <- data/max(data) applies to the *selected* matrix, not to data.signaling",
+      "test": "cargo test --release -p r-core --test filter_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "filter.mincells_is_count_only",
+      "pin": "with min.samples = NULL the two settings agree: the min.cells half counts cells",
+      "test": "cargo test --release -p r-core --test filter_parity",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "rshim.filter_communication",
+      "pin": "filterCommunication through the installed shim, 13 fixtures, whole object and stdout",
+      "test": "R_LIBS=.rlib R --vanilla -f tests/parity/check_identical.R",
+      "rung": "identical",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "suite.rust",
+      "pin": "every Rust test, 331 passing",
+      "test": "cargo test --release",
+      "rung": "exact",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "gate.r_shim_identical",
+      "pin": "the acceptance gate: identical() on the S4 object from the installed shim",
+      "test": "R_LIBS=.rlib R --vanilla -f tests/parity/check_identical.R",
+      "rung": "identical",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "stats.independent_stream_equivalence",
+      "pin": "120 seeds drawn from a Park-Miller stream this test implements itself, salted by the fixture's shape so neither the port nor upstream can influence the sequence: bit-identical Prob and Pval at every seed, KS = 0 on the pooled values, the same set of null distributions drawn on both sides, and the objective's Pval invariants at every seed",
+      "test": "R_LIBS=.rlib R --vanilla -f tests/parity/stat_equiv.R",
+      "rung": "identical",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "prob.spatial_divergence_measured",
+      "pin": "the exact k-d tree against BiocNeighbors AnnoyParam on the authors' mouse cortex visium data (1,073 spots, 8 cell types, 437 L-R pairs, nboot = 100), measured three ways: exact vs Annoy differs in 42 of 64 d.spatial entries (2.8% max relative) and 1,682 of 8,576 Prob entries (19.6%, 1.0% of peak), while Annoy vs Annoy on identical input differs in none -- so the approximation is a systematic bias, not run-to-run noise. The exact tree is also 274x faster. bench-runner/measure_spatial_divergence.R and bench-runner/results/spatial_divergence.json",
+      "test": "R_LIBS=.rlib R --vanilla -f bench-runner/measure_spatial_divergence.R",
+      "rung": "measured-divergent",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "utilities.identify_over_expressed_genes_fast",
+      "pin": "identifyOverExpressedGenes(do.fast = TRUE), the presto branch, gated against pinned upstream with presto 1.1.0 installed: identical() on the whole marker table, plus a measurement of how far the two branches actually are -- same 12 features selected, p-values within 3.8e-3 with no threshold crossing at 0.05, and pct.1 differing by exactly a factor of 100 because the two branches report it as a fraction and a percentage while filtering on the same thresh.pc * 100",
+      "test": "R_LIBS=.rlib R --vanilla -f tests/parity/check_oeg_fast.R",
+      "rung": "identical",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "delegation.complete",
+      "pin": "every non-visual name upstream exports resolves in the installed shim, every generated wrapper reaches the pinned upstream rather than a stub, and triMean/geometricMean agree with upstream identical() on fixed vectors; the tutorial reproduction exercises the pipeline ones end-to-end. Visualization/app names stay absent per locked decision 14.1",
+      "test": "R_LIBS=.rlib R --vanilla -f tests/parity/check_delegation.R",
+      "rung": "identical",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "tutorial.reproduction",
+      "pin": "the vignette's computational pipeline on the authors' human-skin data (createCellChat to netAnalysis_computeCentrality, nboot = 100, no plots per 14.1): identical() on every non-visual slot after every stage, whole-object identical() modulo run.time, and the objective's Pval/dimname invariants on the tutorial's own output",
+      "test": "R_LIBS=.rlib R --vanilla -f tests/parity/tutorial_repro.R",
+      "rung": "identical",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "analysis.netP_centrality",
+      "pin": "netAnalysis_computeCentrality assembled from Rust deterministic measures plus igraph solvers plus upstream's sna tryCatch, identical() on real pathway slices with both sides seeded identically, with the NA/NaN matrix error and the tiny-weights warning verified byte for byte. hub/authority/eigen/page_rank stay delegated: those solvers disagree with themselves across runs, so bit-parity with them is meaningless -- identical by construction (same package, same call) instead of by reimplementation",
+      "test": "R_LIBS=.rlib R --vanilla -f tests/parity/check_centrality.R",
+      "rung": "identical",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "cli.standalone",
+      "pin": "the `cellchatrs` binary on 14 configurations -- all four type.mean values (two of them given as match.arg prefixes), population.size both ways, nboot 1..9, Kh across six orders of magnitude, n at 1 and 2, raw.use both ways, two seeds: Prob, Pval, computeAveExpr's means and aggregateNet's two matrices all identical() to pinned upstream, with the binary built once by cargo and exercised as the artifact a user would install",
+      "test": "R_LIBS=.rlib R --vanilla -f tests/parity/check_cli.R",
+      "rung": "identical",
+      "exit_code": 0,
+      "detail": ""
+    },
+    {
+      "quantity": "analysis.mergeCellChat",
+      "pin": "mergeCellChat's own contract (gene/meta intersections, idents$joint level order, add.names propagation, both stop() messages) plus the ported aggregateNet / subsetCommunication / filterCommunication / rankNet run on a per-dataset net lifted out of a merged object. Not reimplemented -- it is S4 slot assembly with no arithmetic, so the 14.1 scope decision leaves it in R and this is the pass-through rung",
+      "test": "R_LIBS=.rlib R --vanilla -f tests/parity/check_merge.R",
+      "rung": "identical",
+      "exit_code": 0,
+      "detail": ""
+    }
+  ]
+}

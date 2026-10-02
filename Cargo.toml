@@ -1,0 +1,84 @@
+[workspace]
+resolver = "2"
+members = ["crates/r-core", "crates/cellchatrs", "crates/cellchatrs-cli"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.84"
+license = "GPL-3.0-or-later"
+description = "Rust re-implementation of the CellChat cell-cell communication inference kernel"
+
+[workspace.dependencies]
+rayon = "1.12"
+rayon-core = "1.13"
+criterion = { version = "0.7", default-features = false, features = ["cargo_bench_support"] }
+proptest = "1.6"
+rand = "0.9"
+num-traits = "0.2"
+approx = "0.5"
+serde = { version = "1", features = ["derive"] }
+extendr-api = "0.9"
+extendr-macros = "0.9"
+
+[profile.release]
+opt-level = 3
+lto = "fat"
+codegen-units = 1
+panic = "unwind"
+
+# Keep this identical to `release` so criterion micro-benchmarks are not
+# benchmarked against a different optimisation level than the shipped build.
+[profile.bench]
+opt-level = 3
+lto = "fat"
+codegen-units = 1
+
+# ---------------------------------------------------------------------------
+# Clippy policy. Lives here rather than in `crates/r-core/src/lib.rs` because
+# integration tests under `tests/` are separate crates and do not inherit a
+# library's inner attributes -- a policy that lived in `lib.rs` would cover
+# `src/` and silently miss every test.
+#
+# `excessive_precision` and `approx_constant` are the two that must be off, and
+# both are the same mistake seen from two sides. The lint wants a float literal
+# truncated to the digits the type can distinguish: `0.16700000000000001f64`
+# becomes `0.167_f64`, and `0.69314718055994529` becomes `f64::consts::LN_2`. In
+# a crate whose entire contract is bit-identical parity those digits are not
+# redundancy -- they are the values R printed, and they are what makes a
+# `to_bits()` comparison mean anything. 283 of the crate's 325 clippy findings
+# were `excessive_precision`; taking its advice would have quietly weakened every
+# constant in the golden corpora.
+#
+# `type_complexity` and `too_many_arguments` are the signature being the contract:
+# the kernel's entry points take a dozen named parameters because that is
+# upstream's argument list, and the shim binds them one for one. A struct would
+# only put a translation layer between the two.
+#
+# `needless_range_loop` is allowed because the index order *is* the
+# specification. The aggregation walks column-major -- `for j in 0..k { l[j] =
+# m.at(r, j) }` -- and an iterator rewrite is behaviour-preserving only by
+# accident, which is the same reason the buffer is column-major in the first
+# place.
+#
+# `neg_cmp_op_on_partial_ord` is allowed for a correctness reason: for a partial
+# order `a >= b` is not `!(a < b)`, they disagree on `NaN`, and upstream writes
+# `if (!(pv < thresh))` deliberately so a `NaN` p-value is *retained* rather
+# than dropped. Taking clippy's rewrite would silently change which
+# interactions survive a threshold.
+#
+# `should_implement_trait` is allowed because `F80` provides *both* forms: the inherent
+# `F80::add`/`sub`/`mul`/`neg` that the rest of the crate calls, and the `std::ops` impls that
+# forward to them. The lint only checks whether an inherent method shadows a std trait method and
+# cannot see that the trait is implemented too.
+#
+# Everything not listed stays at its default and is denied in CI
+# (`cargo clippy --workspace --all-targets -- -D warnings`).
+[workspace.lints.clippy]
+excessive_precision = "allow"
+approx_constant = "allow"
+type_complexity = "allow"
+too_many_arguments = "allow"
+needless_range_loop = "allow"
+neg_cmp_op_on_partial_ord = "allow"
+should_implement_trait = "allow"

@@ -1,0 +1,19 @@
+# Rust sources are built by ./configure and staged as src/cellchatrs.so. There are no R/C
+# sources whose object code is needed.
+#
+# Three constraints collide in `src/`, and this file plus `cellchatrs_stub.c` resolve them.
+#
+# 1. `R CMD check` warns "Subdirectory 'src' contains no source files" when `src/` holds only
+#    `Makevars`, so a source file is needed to keep the check clean. It is a stub that
+#    defines nothing.
+# 2. `OBJECTS` is empty on purpose. R's install links `$(SHLIB)` (which is `<pkg>.so` and
+#    cannot be renamed -- R's Makeconf sets it and a package `Makevars` override is ignored)
+#    from `$(OBJECTS)`. With a compiled object present, `gcc -shared -o cellchatrs.so` runs
+#    and **overwrites** the Rust cdylib that ./configure staged, after which the package fails
+#    to load with "no such symbol wrap__make_cellchatrs_wrappers".
+# 3. With `OBJECTS` empty the link rule has no prerequisites, make reports the existing
+#    `src/cellchatrs.so` as up to date, and the Rust library is installed untouched.
+#
+# The native entry point is `R_init_cellchatrs` in the Rust crate, registered through the
+# `#[no_mangle]` shim in crates/cellchatrs/src/lib.rs and `useDynLib(..., .registration = TRUE)`.
+OBJECTS =

@@ -1,0 +1,19 @@
+/target/
+/src/cellchatrs.so
+/.rlib/
+*.log
+
+# R's default graphics device output. Any Rscript that draws without an explicit device leaves one
+# behind, and it is a build artifact, not source.
+/Rplots.pdf
+# `R CMD build` output. Rebuilt by the release script; never committed.
+/cellchatrs_*.tar.gz
+/cellchatrs.Rcheck/
+# A leftover dump of the MT19937 reference run. The fixture itself is
+# tests/fixtures/rng_golden.txt, which is what the tests read; this file was a stray
+# redirect of the same output and had no reader.
+/stdout
+
+# A runner that refuses to measure writes this beside its output. It is evidence of *why* a
+# measurement was declined, not a result, so it never belongs in the repository.
+bench-runner/results/*.refused.json

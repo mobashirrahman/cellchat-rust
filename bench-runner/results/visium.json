@@ -1,0 +1,80 @@
+{
+ "schema": 1,
+ "host": {
+  "cpus": 16,
+  "cores": 8,
+  "model": "AMD Ryzen 7 3700X",
+  "mem_total_mb": 32806
+ },
+ "pinned": "0-7",
+ "threads": 8,
+ "fixture": {
+  "dataset": "visium",
+  "n_spots": 1073,
+  "n_genes_total": 648,
+  "n_genes_signaling": 433,
+  "n_groups": 8,
+  "n_lr": 134,
+  "n_lr_total": 437
+ },
+ "params": {
+  "interaction_range": 1000,
+  "contact_range": 65,
+  "ratio": 1,
+  "tol": 0,
+  "k_min": 10
+ },
+ "nboot": 100,
+ "repeats": 5,
+ "warmup": 1,
+ "seed": 1,
+ "r_upstream": {
+  "raw_secs": [
+   17.172,
+   16.782000000000004,
+   17.110000000000007,
+   16.974999999999994,
+   17.153000000000006
+  ],
+  "median": 17.110000000000007,
+  "ci_lo": 16.782000000000004,
+  "ci_hi": 17.172,
+  "min": 16.782000000000004,
+  "max": 17.172
+ },
+ "rust": {
+  "raw_secs": [
+   0.3090000000000117,
+   0.277000000000001,
+   0.2990000000000066,
+   0.3050000000000068,
+   0.2890000000000015
+  ],
+  "median": 0.2990000000000066,
+  "ci_lo": 0.277000000000001,
+  "ci_hi": 0.3090000000000117,
+  "min": 0.277000000000001,
+  "max": 0.3090000000000117
+ },
+ "speedup": 57.22408026755729,
+ "speedup_ci_lo": 54.31067961164844,
+ "speedup_ci_hi": 61.992779783393274,
+ "peak_rss_mb": 553.2265625,
+ "parity_net": false,
+ "parity_prob": false,
+ "max_abs_diff": 0.001774885936636432,
+ "divergence_consistent": true,
+ "divergence_ref_max_abs": 0.001774885936636432,
+ "mem_available_mb": 25680.0703125,
+ "scatter_summary": {
+  "n_values": 8576,
+  "n_finite": 8576,
+  "n_nonfinite": 0,
+  "max_abs_log10_difference": 0.012433539815216665,
+  "n_off_identity": 0,
+  "bins": 160,
+  "svg": "bench-runner/results/parity_visium.svg",
+  "svg_bytes": 12310,
+  "note": "per-value vectors dropped by analyse.py --trim-scatter; regenerate from bench_real.R"
+ }
+}

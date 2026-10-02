@@ -1,0 +1,6 @@
+This LICENSE file is the verbatim GNU General Public License v3 text shipped by the
+pinned upstream (jinworks/CellChat @ 75253cd, GPL-3), reproduced here because R
+packages declaring `License: GPL-3` must ship the license text, and because a port
+keeps its upstream's license. No cellchatrs-specific terms are added by this file;
+see DESCRIPTION (R) and Cargo.toml (Rust, GPL-3.0-or-later, compatible via the
+or-later clause in the text below).

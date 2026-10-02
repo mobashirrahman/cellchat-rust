@@ -1,0 +1,112 @@
+{
+ "scaling": {
+  "real": {},
+  "amdahl": {
+   "points": [
+    {
+     "threads": 1,
+     "median_secs": 10.578000000000003,
+     "speedup_vs_1": 1.0,
+     "efficiency": 1.0
+    },
+    {
+     "threads": 2,
+     "median_secs": 5.722000000000001,
+     "speedup_vs_1": 1.8486543166724922,
+     "efficiency": 0.9243271583362461
+    },
+    {
+     "threads": 4,
+     "median_secs": 3.5219999999999985,
+     "speedup_vs_1": 3.0034071550255557,
+     "efficiency": 0.7508517887563889
+    },
+    {
+     "threads": 8,
+     "median_secs": 2.155000000000001,
+     "speedup_vs_1": 4.908584686774941,
+     "efficiency": 0.6135730858468676
+    },
+    {
+     "threads": 16,
+     "median_secs": 2.3389999999999986,
+     "speedup_vs_1": 4.522445489525442,
+     "efficiency": 0.2826528430953401
+    }
+   ],
+   "amdahl_alpha_serial_secs": 1.3214583333333323,
+   "amdahl_parallel_term": 9.13997849462366,
+   "amdahl_fit_r2": 0.9929641274412531,
+   "implied_serial_fraction": 0.12492515913531214,
+   "note": "SMT: thread counts above the 8 physical cores share execution units, so efficiency falling past 8 is expected and is not a scaling defect"
+  },
+  "fixed_nboot_100_fit": {
+   "role": "descriptive; not the scaling model (see synthetic grid)",
+   "n_points": 6,
+   "min_points_required": 3,
+   "points": [
+    {
+     "fixture": "dataset_nl",
+     "n_cells": 2552,
+     "rust_median_secs": 0.4819999999999993
+    },
+    {
+     "fixture": "dataset_ls",
+     "n_cells": 5011,
+     "rust_median_secs": 0.6619999999999777
+    },
+    {
+     "fixture": "human_skin",
+     "n_cells": 7563,
+     "rust_median_secs": 2.4069999999999254
+    },
+    {
+     "fixture": "dataset_e14",
+     "n_cells": 12179,
+     "rust_median_secs": 2.270999999999958
+    },
+    {
+     "fixture": "dataset_e13",
+     "n_cells": 12951,
+     "rust_median_secs": 2.169999999999959
+    },
+    {
+     "fixture": "mouse_wound",
+     "n_cells": 21557,
+     "rust_median_secs": 9.414999999999964
+    }
+   ],
+   "intercept_secs": -1.6194898525812769,
+   "slope_secs_per_cell": 0.00043880638563874015,
+   "r2": 0.8228238241843491,
+   "excluded_spatial": {
+    "visium": "visium"
+   }
+  },
+  "protocol": {
+   "min_repeats": 5,
+   "min_fit_points": 3,
+   "fixtures_below_min_repeats": {}
+  }
+ },
+ "parity_plots": {
+  "human_skin": {
+   "n_finite": 227952,
+   "n_nonfinite": 0,
+   "max_log10_dev": 0.0,
+   "n_off_identity": 0,
+   "bins": 160,
+   "svg": "bench-runner/results/parity_human_skin.svg",
+   "svg_bytes": 12316
+  },
+  "mouse_wound": {
+   "n_finite": 980000,
+   "n_nonfinite": 0,
+   "max_log10_dev": 0.0,
+   "n_off_identity": 0,
+   "bins": 160,
+   "svg": "bench-runner/results/parity_mouse_wound.svg",
+   "svg_bytes": 12313
+  }
+ }
+}

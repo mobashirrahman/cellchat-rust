@@ -1,0 +1,21 @@
+[package]
+name = "cellchatrs"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+description = "extendr bindings exposing r-core to R as a CellChat-compatible drop-in"
+
+[lib]
+# `cdylib` is what R's dyn.load() needs.
+crate-type = ["cdylib"]
+name = "cellchatrs"
+
+[dependencies]
+r-core = { path = "../r-core" }
+extendr-api = { workspace = true }
+extendr-macros = { workspace = true }
+rayon = { workspace = true }
+
+[lints]
+workspace = true

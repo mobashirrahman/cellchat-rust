@@ -1,0 +1,45 @@
+# pkgdown site for cellchatrs. Builds with `pkgdown::build_site()` once pkgdown is
+# installed; until then this file documents the intended structure so the site is designed
+# rather than defaulted.
+url: https://github.com/cellchat-rs/cellchatrs
+template:
+  bootstrap: 5
+
+reference:
+- title: Drop-in pipeline
+  contents:
+  - computeCommunProb
+  - computeCommunProbPathway
+  - aggregateNet
+  - computeAveExpr
+  - filterCommunication
+  - subsetCommunication
+  - rankNet
+  - rankNetPairwise
+  - mergeCellChat
+  - netAnalysis_computeCentrality
+- title: Preprocessing and differential expression
+  contents:
+  - createCellChat
+  - subsetData
+  - subsetDB
+  - identifyOverExpressedGenes
+  - identifyOverExpressedInteractions
+  - normalizeData
+  - scaleData
+- title: Spatial
+  contents:
+  - computeRegionDistance
+  - computeCellDistance
+- title: Pinned upstream reference
+  desc: Verbatim upstream bodies used by the differential suite and as fallback.
+  contents:
+  - starts_with("cellchatrs_upstream")
+- title: Standalone kernel
+  desc: The `cellchatrs` CLI (installed separately from crates/cellchatrs-cli).
+  contents: []
+
+articles:
+- title: Accelerated CellChat inference
+  contents:
+  - cellchatrs-speedup

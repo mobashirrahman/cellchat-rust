@@ -1,0 +1,18 @@
+[package]
+name = "cellchatrs-cli"
+description = "Standalone driver for the CellChat inference kernel, with no R dependency"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[[bin]]
+name = "cellchatrs"
+path = "src/main.rs"
+
+[dependencies]
+r-core = { path = "../r-core" }
+rayon.workspace = true
+
+[lints]
+workspace = true

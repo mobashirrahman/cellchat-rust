@@ -1,0 +1,169 @@
+case	one_sample_mincells	10	NA	24	FALSE	FALSE
+msg	one_sample_mincells	The cell-cell communication related with the following cell groups are excluded due to the few number of cells:  g1, g2, g3 ! <TAB>100.0% interactions are removed!
+filter	one_sample_mincells	n_inter0=45	n_inter1=0	n_inter2=0
+filter	one_sample_mincells	prob=0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+filter	one_sample_mincells	dim=3x3x6
+filter	one_sample_mincells	dimnames=g1,g2,g3|g1,g2,g3|L1_R1,L2_R2,L3_R3,L4_R4,L5_R5,L6_R6
+filter	one_sample_mincells	pval=0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01
+filter	one_sample_mincells	slot_names=dimnames,prob,prob.dim,pval
+case	one_sample_keep	3	NA	24	FALSE	FALSE
+filter	one_sample_keep	n_inter0=45	n_inter1=45	n_inter2=45
+filter	one_sample_keep	prob=0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.20000000000000001,0.20000000000000001,0.20000000000000001,0.20000000000000001,0.20000000000000001,0.20000000000000001,0.20000000000000001,0.20000000000000001,0.20000000000000001,0,0,0,0,0,0,0,0,0,0.29999999999999999,0.29999999999999999,0.29999999999999999,0.29999999999999999,0.29999999999999999,0.29999999999999999,0.29999999999999999,0.29999999999999999,0.29999999999999999,0.10000000000000001,0.10000000000000001,0.10000000000000001,0.10000000000000001,0.10000000000000001,0.10000000000000001,0.10000000000000001,0.10000000000000001,0.10000000000000001,0.40000000000000002,0.40000000000000002,0.40000000000000002,0.40000000000000002,0.40000000000000002,0.40000000000000002,0.40000000000000002,0.40000000000000002,0.40000000000000002
+filter	one_sample_keep	dim=3x3x6
+filter	one_sample_keep	dimnames=g1,g2,g3|g1,g2,g3|L1_R1,L2_R2,L3_R3,L4_R4,L5_R5,L6_R6
+filter	one_sample_keep	pval=0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01
+filter	one_sample_keep	slot_names=dimnames,prob,prob.dim,pval
+case	two_samples_ms2	3	2	24	FALSE	FALSE
+msg	two_samples_ms2	The number of cells of the following cell groups in s1 sample are less than 3 cells: g3!
+msg	two_samples_ms2	The number of cells of the following cell groups in s2 sample are less than 3 cells: g1!
+msg	two_samples_ms2	88.9% interactions are removed due to their inconsistence across 2 samples!
+filter	two_samples_ms2	n_inter0=45	n_inter1=5	n_inter2=5
+filter	two_samples_ms2	prob=0,0,0,0,0.5,0,0,0,0,0,0,0,0,0.20000000000000001,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.29999999999999999,0,0,0,0,0,0,0,0,0.10000000000000001,0,0,0,0,0,0,0,0,0.40000000000000002,0,0,0,0
+filter	two_samples_ms2	dim=3x3x6
+filter	two_samples_ms2	dimnames=g1,g2,g3|g1,g2,g3|L1_R1,L2_R2,L3_R3,L4_R4,L5_R5,L6_R6
+filter	two_samples_ms2	pval=0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01
+filter	two_samples_ms2	slot_names=dimnames,prob,prob.dim,pval
+case	three_samples_ms2	3	2	24	FALSE	FALSE
+msg	three_samples_ms2	The number of cells of the following cell groups in s1 sample are less than 3 cells: g2, g3!
+msg	three_samples_ms2	The number of cells of the following cell groups in s2 sample are less than 3 cells: g1, g3!
+msg	three_samples_ms2	The number of cells of the following cell groups in s3 sample are less than 3 cells: g1, g2!
+msg	three_samples_ms2	100.0% interactions are removed due to their inconsistence across 2 samples!
+filter	three_samples_ms2	n_inter0=36	n_inter1=0	n_inter2=0
+filter	three_samples_ms2	prob=0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+filter	three_samples_ms2	dim=3x3x6
+filter	three_samples_ms2	dimnames=g1,g2,g3|g1,g2,g3|L1_R1,L2_R2,L3_R3,L4_R4,L5_R5,L6_R6
+filter	three_samples_ms2	pval=0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01
+filter	three_samples_ms2	slot_names=dimnames,prob,prob.dim,pval
+case	rare_keep	3	2	26	TRUE	FALSE
+msg	rare_keep	The number of cells of the following cell groups in s1 sample are less than 3 cells: g2, g3!
+msg	rare_keep	The number of cells of the following cell groups in s2 sample are less than 3 cells: g1, g3!
+msg	rare_keep	The number of cells of the following cell groups in s3 sample are less than 3 cells: g1, g2!
+msg	rare_keep	0.0% interactions are removed due to their inconsistence across 2 samples!
+filter	rare_keep	n_inter0=45	n_inter1=45	n_inter2=45
+filter	rare_keep	prob=0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.20000000000000001,0.20000000000000001,0.20000000000000001,0.20000000000000001,0.20000000000000001,0.20000000000000001,0.20000000000000001,0.20000000000000001,0.20000000000000001,0,0,0,0,0,0,0,0,0,0.29999999999999999,0.29999999999999999,0.29999999999999999,0.29999999999999999,0.29999999999999999,0.29999999999999999,0.29999999999999999,0.29999999999999999,0.29999999999999999,0.10000000000000001,0.10000000000000001,0.10000000000000001,0.10000000000000001,0.10000000000000001,0.10000000000000001,0.10000000000000001,0.10000000000000001,0.10000000000000001,0.40000000000000002,0.40000000000000002,0.40000000000000002,0.40000000000000002,0.40000000000000002,0.40000000000000002,0.40000000000000002,0.40000000000000002,0.40000000000000002
+filter	rare_keep	dim=3x3x6
+filter	rare_keep	dimnames=g1,g2,g3|g1,g2,g3|L1_R1,L2_R2,L3_R3,L4_R4,L5_R5,L6_R6
+filter	rare_keep	pval=0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01
+filter	rare_keep	slot_names=dimnames,prob,prob.dim,pval
+case	rare_noKeep	3	2	26	FALSE	FALSE
+msg	rare_noKeep	The number of cells of the following cell groups in s1 sample are less than 3 cells: g2, g3!
+msg	rare_noKeep	The number of cells of the following cell groups in s2 sample are less than 3 cells: g1, g3!
+msg	rare_noKeep	The number of cells of the following cell groups in s3 sample are less than 3 cells: g1, g2!
+msg	rare_noKeep	100.0% interactions are removed due to their inconsistence across 2 samples!
+filter	rare_noKeep	n_inter0=45	n_inter1=0	n_inter2=0
+filter	rare_noKeep	prob=0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+filter	rare_noKeep	dim=3x3x6
+filter	rare_noKeep	dimnames=g1,g2,g3|g1,g2,g3|L1_R1,L2_R2,L3_R3,L4_R4,L5_R5,L6_R6
+filter	rare_noKeep	pval=0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01
+filter	rare_noKeep	slot_names=dimnames,prob,prob.dim,pval
+case	nonfilter_keep	4	NA	8	FALSE	TRUE
+msg	nonfilter_keep	The non-filtered cell-cell communication is stored in `object@net$prob.nonFilter` and `object@net$pval.nonFilter`. 
+msg	nonfilter_keep	The cell-cell communication related with the following cell groups are excluded due to the few number of cells:  g2 ! <TAB>75.0% interactions are removed!
+filter	nonfilter_keep	n_inter0=20	n_inter1=5	n_inter2=5
+filter	nonfilter_keep	prob=0.5,0,0,0,0.20000000000000001,0,0,0,0,0,0,0,0.29999999999999999,0,0,0,0.10000000000000001,0,0,0,0.40000000000000002,0,0,0
+filter	nonfilter_keep	dim=2x2x6
+filter	nonfilter_keep	dimnames=g1,g2|g1,g2|L1_R1,L2_R2,L3_R3,L4_R4,L5_R5,L6_R6
+filter	nonfilter_keep	prob_nonFilter=
+filter	nonfilter_keep	pval_nonFilter=
+filter	nonfilter_keep	pval=0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01
+filter	nonfilter_keep	slot_names=dimnames,prob,prob.dim,pval
+case	allzero	3	2	10	FALSE	FALSE
+filter	allzero	ERROR	subscript out of bounds
+case	too_many_samples	3	5	8	FALSE	FALSE
+filter	too_many_samples	ERROR	There are only 2 samples in the data. Please change the value of `min.samples`! 
+case	mean_triMean	3	2	18	FALSE	FALSE
+msg	mean_triMean	The number of cells of the following cell groups in s1 sample are less than 3 cells: g2, g3!
+msg	mean_triMean	The number of cells of the following cell groups in s2 sample are less than 3 cells: g1, g2!
+msg	mean_triMean	100.0% interactions are removed due to their inconsistence across 2 samples!
+filter	mean_triMean	n_inter0=45	n_inter1=0	n_inter2=0
+filter	mean_triMean	prob=0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+filter	mean_triMean	dim=3x3x6
+filter	mean_triMean	dimnames=g1,g2,g3|g1,g2,g3|L1_R1,L2_R2,L3_R3,L4_R4,L5_R5,L6_R6
+filter	mean_triMean	pval=0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01
+filter	mean_triMean	slot_names=dimnames,prob,prob.dim,pval
+case	mean_truncatedMean	3	2	18	FALSE	FALSE
+msg	mean_truncatedMean	The number of cells of the following cell groups in s1 sample are less than 3 cells: g2, g3!
+msg	mean_truncatedMean	The number of cells of the following cell groups in s2 sample are less than 3 cells: g1, g2!
+msg	mean_truncatedMean	100.0% interactions are removed due to their inconsistence across 2 samples!
+filter	mean_truncatedMean	n_inter0=45	n_inter1=0	n_inter2=0
+filter	mean_truncatedMean	prob=0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+filter	mean_truncatedMean	dim=3x3x6
+filter	mean_truncatedMean	dimnames=g1,g2,g3|g1,g2,g3|L1_R1,L2_R2,L3_R3,L4_R4,L5_R5,L6_R6
+filter	mean_truncatedMean	pval=0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01
+filter	mean_truncatedMean	slot_names=dimnames,prob,prob.dim,pval
+case	mean_thresholdedMean	3	2	18	FALSE	FALSE
+msg	mean_thresholdedMean	The number of cells of the following cell groups in s1 sample are less than 3 cells: g2, g3!
+msg	mean_thresholdedMean	The number of cells of the following cell groups in s2 sample are less than 3 cells: g1, g2!
+msg	mean_thresholdedMean	100.0% interactions are removed due to their inconsistence across 2 samples!
+filter	mean_thresholdedMean	n_inter0=45	n_inter1=0	n_inter2=0
+filter	mean_thresholdedMean	prob=0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+filter	mean_thresholdedMean	dim=3x3x6
+filter	mean_thresholdedMean	dimnames=g1,g2,g3|g1,g2,g3|L1_R1,L2_R2,L3_R3,L4_R4,L5_R5,L6_R6
+filter	mean_thresholdedMean	pval=0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01
+filter	mean_thresholdedMean	slot_names=dimnames,prob,prob.dim,pval
+case	mean_median	3	2	18	FALSE	FALSE
+msg	mean_median	The number of cells of the following cell groups in s1 sample are less than 3 cells: g2, g3!
+msg	mean_median	The number of cells of the following cell groups in s2 sample are less than 3 cells: g1, g2!
+msg	mean_median	100.0% interactions are removed due to their inconsistence across 2 samples!
+filter	mean_median	n_inter0=45	n_inter1=0	n_inter2=0
+filter	mean_median	prob=0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+filter	mean_median	dim=3x3x6
+filter	mean_median	dimnames=g1,g2,g3|g1,g2,g3|L1_R1,L2_R2,L3_R3,L4_R4,L5_R5,L6_R6
+filter	mean_median	pval=0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01
+filter	mean_median	slot_names=dimnames,prob,prob.dim,pval
+case	raw_use_false_mincells	5	NA	24	FALSE	FALSE
+msg	raw_use_false_mincells	The cell-cell communication related with the following cell groups are excluded due to the few number of cells:  g3 ! <TAB>55.6% interactions are removed!
+filter	raw_use_false_mincells	n_inter0=54	n_inter1=24	n_inter2=24
+filter	raw_use_false_mincells	prob=0.018518518518518517,0.037037037037037035,0,0.07407407407407407,0.092592592592592587,0,0,0,0,0.18518518518518517,0.20370370370370369,0,0.24074074074074073,0.25925925925925924,0,0,0,0,0.35185185185185186,0.37037037037037035,0,0.40740740740740738,0.42592592592592593,0,0,0,0,0.51851851851851849,0.53703703703703709,0,0.57407407407407407,0.59259259259259256,0,0,0,0,0.68518518518518523,0.70370370370370372,0,0.7407407407407407,0.7592592592592593,0,0,0,0,0.85185185185185186,0.87037037037037035,0,0.90740740740740744,0.92592592592592593,0,0,0,0
+filter	raw_use_false_mincells	dim=3x3x6
+filter	raw_use_false_mincells	dimnames=g1,g2,g3|g1,g2,g3|L1_R1,L2_R2,L3_R3,L4_R4,L5_R5,L6_R6
+filter	raw_use_false_mincells	pval=0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01
+filter	raw_use_false_mincells	slot_names=dimnames,prob,prob.dim,pval
+case	raw_use_false_median	3	2	24	FALSE	FALSE
+msg	raw_use_false_median	The number of cells of the following cell groups in s1 sample are less than 3 cells: g3!
+msg	raw_use_false_median	The number of cells of the following cell groups in s2 sample are less than 3 cells: g1!
+msg	raw_use_false_median	88.9% interactions are removed due to their inconsistence across 2 samples!
+filter	raw_use_false_median	n_inter0=54	n_inter1=6	n_inter2=6
+filter	raw_use_false_median	prob=0,0,0,0,0.092592592592592587,0,0,0,0,0,0,0,0,0.25925925925925924,0,0,0,0,0,0,0,0,0.42592592592592593,0,0,0,0,0,0,0,0,0.59259259259259256,0,0,0,0,0,0,0,0,0.7592592592592593,0,0,0,0,0,0,0,0,0.92592592592592593,0,0,0,0
+filter	raw_use_false_median	dim=3x3x6
+filter	raw_use_false_median	dimnames=g1,g2,g3|g1,g2,g3|L1_R1,L2_R2,L3_R3,L4_R4,L5_R5,L6_R6
+filter	raw_use_false_median	pval=0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01
+filter	raw_use_false_median	slot_names=dimnames,prob,prob.dim,pval
+case	raw_use_false_rare_keep	3	2	24	TRUE	FALSE
+msg	raw_use_false_rare_keep	The number of cells of the following cell groups in s1 sample are less than 3 cells: g3!
+msg	raw_use_false_rare_keep	The number of cells of the following cell groups in s2 sample are less than 3 cells: g1!
+msg	raw_use_false_rare_keep	0.0% interactions are removed due to their inconsistence across 2 samples!
+filter	raw_use_false_rare_keep	n_inter0=54	n_inter1=54	n_inter2=54
+filter	raw_use_false_rare_keep	prob=0.018518518518518517,0.037037037037037035,0.055555555555555552,0.07407407407407407,0.092592592592592587,0.1111111111111111,0.12962962962962962,0.14814814814814814,0.16666666666666666,0.18518518518518517,0.20370370370370369,0.22222222222222221,0.24074074074074073,0.25925925925925924,0.27777777777777779,0.29629629629629628,0.31481481481481483,0.33333333333333331,0.35185185185185186,0.37037037037037035,0.3888888888888889,0.40740740740740738,0.42592592592592593,0.44444444444444442,0.46296296296296297,0.48148148148148145,0.5,0.51851851851851849,0.53703703703703709,0.55555555555555558,0.57407407407407407,0.59259259259259256,0.61111111111111116,0.62962962962962965,0.64814814814814814,0.66666666666666663,0.68518518518518523,0.70370370370370372,0.72222222222222221,0.7407407407407407,0.7592592592592593,0.77777777777777779,0.79629629629629628,0.81481481481481477,0.83333333333333337,0.85185185185185186,0.87037037037037035,0.88888888888888884,0.90740740740740744,0.92592592592592593,0.94444444444444442,0.96296296296296291,0.98148148148148151,1
+filter	raw_use_false_rare_keep	dim=3x3x6
+filter	raw_use_false_rare_keep	dimnames=g1,g2,g3|g1,g2,g3|L1_R1,L2_R2,L3_R3,L4_R4,L5_R5,L6_R6
+filter	raw_use_false_rare_keep	pval=0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01
+filter	raw_use_false_rare_keep	slot_names=dimnames,prob,prob.dim,pval
+case	raw_use_false_slot_absent	3	NA	16	FALSE	FALSE
+filter	raw_use_false_slot_absent	n_inter0=24	n_inter1=24	n_inter2=24
+filter	raw_use_false_slot_absent	prob=0.5,0.5,0.5,0.5,0.20000000000000001,0.20000000000000001,0.20000000000000001,0.20000000000000001,0.29999999999999999,0.29999999999999999,0.29999999999999999,0.29999999999999999,0.10000000000000001,0.10000000000000001,0.10000000000000001,0.10000000000000001,0.5,0.5,0.5,0.5,0.20000000000000001,0.20000000000000001,0.20000000000000001,0.20000000000000001
+filter	raw_use_false_slot_absent	dim=2x2x6
+filter	raw_use_false_slot_absent	dimnames=g1,g2|g1,g2|L1_R1,L2_R2,L3_R3,L4_R4,L5_R5,L6_R6
+filter	raw_use_false_slot_absent	pval=0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01
+filter	raw_use_false_slot_absent	slot_names=dimnames,prob,prob.dim,pval
+case	raw_use_false_nonfilter_keep	5	NA	24	FALSE	TRUE
+msg	raw_use_false_nonfilter_keep	The non-filtered cell-cell communication is stored in `object@net$prob.nonFilter` and `object@net$pval.nonFilter`. 
+msg	raw_use_false_nonfilter_keep	The cell-cell communication related with the following cell groups are excluded due to the few number of cells:  g3 ! <TAB>55.6% interactions are removed!
+filter	raw_use_false_nonfilter_keep	n_inter0=54	n_inter1=24	n_inter2=24
+filter	raw_use_false_nonfilter_keep	prob=0.018518518518518517,0.037037037037037035,0,0.07407407407407407,0.092592592592592587,0,0,0,0,0.18518518518518517,0.20370370370370369,0,0.24074074074074073,0.25925925925925924,0,0,0,0,0.35185185185185186,0.37037037037037035,0,0.40740740740740738,0.42592592592592593,0,0,0,0,0.51851851851851849,0.53703703703703709,0,0.57407407407407407,0.59259259259259256,0,0,0,0,0.68518518518518523,0.70370370370370372,0,0.7407407407407407,0.7592592592592593,0,0,0,0,0.85185185185185186,0.87037037037037035,0,0.90740740740740744,0.92592592592592593,0,0,0,0
+filter	raw_use_false_nonfilter_keep	dim=3x3x6
+filter	raw_use_false_nonfilter_keep	dimnames=g1,g2,g3|g1,g2,g3|L1_R1,L2_R2,L3_R3,L4_R4,L5_R5,L6_R6
+filter	raw_use_false_nonfilter_keep	prob_nonFilter=
+filter	raw_use_false_nonfilter_keep	pval_nonFilter=
+filter	raw_use_false_nonfilter_keep	pval=0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01
+filter	raw_use_false_nonfilter_keep	slot_names=dimnames,prob,prob.dim,pval
+case	raw_use_false_two_samples	3	2	24	FALSE	FALSE
+msg	raw_use_false_two_samples	The number of cells of the following cell groups in s1 sample are less than 3 cells: g3!
+msg	raw_use_false_two_samples	The number of cells of the following cell groups in s2 sample are less than 3 cells: g1!
+msg	raw_use_false_two_samples	88.9% interactions are removed due to their inconsistence across 2 samples!
+filter	raw_use_false_two_samples	n_inter0=54	n_inter1=6	n_inter2=6
+filter	raw_use_false_two_samples	prob=0,0,0,0,0.092592592592592587,0,0,0,0,0,0,0,0,0.25925925925925924,0,0,0,0,0,0,0,0,0.42592592592592593,0,0,0,0,0,0,0,0,0.59259259259259256,0,0,0,0,0,0,0,0,0.7592592592592593,0,0,0,0,0,0,0,0,0.92592592592592593,0,0,0,0
+filter	raw_use_false_two_samples	dim=3x3x6
+filter	raw_use_false_two_samples	dimnames=g1,g2,g3|g1,g2,g3|L1_R1,L2_R2,L3_R3,L4_R4,L5_R5,L6_R6
+filter	raw_use_false_two_samples	pval=0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01
+filter	raw_use_false_two_samples	slot_names=dimnames,prob,prob.dim,pval

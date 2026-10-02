@@ -1,0 +1,14 @@
+#!/bin/sh
+# Build the Rust cdylib and stage it where R's useDynLib() expects it.
+# Run automatically by `R CMD INSTALL`, so `R CMD INSTALL .` is the only command a user
+# needs; no separate cargo invocation, and `R CMD check` exercises the real build.
+set -e
+CARGO="${CARGO:-cargo}"
+cd "$(dirname "$0")"
+if ! command -v "$CARGO" >/dev/null 2>&1; then
+  echo "configure: cargo not found; a Rust toolchain (>= 1.75) is required." >&2
+  exit 1
+fi
+"$CARGO" build --release --manifest-path Cargo.toml
+cp target/release/libcellchatrs.so src/cellchatrs.so
+echo "configure: staged src/cellchatrs.so"

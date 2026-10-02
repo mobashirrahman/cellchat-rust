@@ -1,0 +1,368 @@
+# Parity and packaging gate.
+#
+# What this workflow is *for*: proving, on every push, that the Rust port is still bit-identical to
+# the pinned upstream CellChat and that the published package still checks. Three requirements from
+# the objective shape it:
+#
+#   * **the pinned upstream SHA.** Every job that compares anything against upstream resolves
+#     `CELLCHAT_SRC` through `actions/checkout` at a literal SHA, and `verify-upstream` asserts that
+#     the commit is the one the repository claims. A moving reference (a branch, a tag) would make
+#     every green run a statement about a different upstream.
+#   * **stable and nightly Rust.** `rust-parity` runs the full gate set on both. Nightly is where a
+#     rounding change would show up first -- the F80 and `fquantile` ports depend on the compiler
+#     *not* contracting or reassociating, and that is exactly the class of thing a toolchain bump
+#     changes.
+#   * **multiple R versions.** The R surface is where the drop-in claim lives, and `collapse`'s
+#     `fquantile` type 7 and R's LONG_DOUBLE accumulation are version-sensitive. 4.3 and the
+#     development version both run.
+#
+# `parity.json` is published as an artifact *and* written into the job summary, because an artifact
+# nobody downloads is not a machine-checkable parity report. `scripts/parity_report.py` derives every
+# rung by running the test that establishes it, so the summary cannot claim a rung the suite did not
+# reach.
+
+name: parity
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+
+# A superseded run on the same ref is noise, and `parity` regenerates 50 MB of fixtures.
+concurrency:
+  group: parity-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # Literal, not a branch or a tag. `verify-upstream` fails the build if this is ever edited away
+  # from the SHA the repository documents.
+  UPSTREAM_REPO: jinworks/CellChat
+  UPSTREAM_SHA: 75253cd0c9e68410e6e721a6d3a0419a1d7e358f
+  UPSTREAM_PATH: upstream
+  R_LIBS_USER: ${{ github.workspace }}/.rlib
+
+jobs:
+  # ---------------------------------------------------------------------------
+  # The reference every other job depends on, checked once and reported.
+  verify-upstream:
+    name: pinned upstream
+    runs-on: ubuntu-latest
+    outputs:
+      sha: ${{ steps.pin.outputs.sha }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ env.UPSTREAM_REPO }}
+          ref: ${{ env.UPSTREAM_SHA }}
+          path: ${{ env.UPSTREAM_PATH }}
+      - id: pin
+        run: |
+          set -euo pipefail
+          got="$(git -C "$UPSTREAM_PATH" rev-parse HEAD)"
+          echo "resolved $got"
+          if [ "$got" != "$UPSTREAM_SHA" ]; then
+            echo "::error::$UPSTREAM_REPO ref did not resolve to $UPSTREAM_SHA (got $got)"
+            exit 1
+          fi
+          # A shallow clone of the wrong tree would still hash correctly but have no R/ directory.
+          test -f "$UPSTREAM_PATH/R/modeling.R" || { echo "::error::upstream R/ not present"; exit 1; }
+          test -f "$UPSTREAM_PATH/data/CellChatDB.human.rda" \
+            || { echo "::error::upstream CellChatDB.human.rda not present"; exit 1; }
+          echo "sha=$got" >> "$GITHUB_OUTPUT"
+
+  # ---------------------------------------------------------------------------
+  # The Rust side: unit, property, fuzz and golden tests on stable and nightly.
+  #
+  # The fixtures are **regenerated**, not restored from a cache or an artifact. That is deliberate:
+  # it makes each run a fresh proof that the committed goldens are exactly what the pinned upstream
+  # produces, rather than a check that a file has not been edited.
+  rust-parity:
+    name: rust ${{ matrix.toolchain }}
+    needs: verify-upstream
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        toolchain: [stable, nightly]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: ${{ matrix.toolchain }}
+      - uses: Swatinem/rust-cache@v2
+        with:
+          key: parity-${{ matrix.toolchain }}
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: 4.3
+          use-public-rspm: true
+      - name: R dependencies
+        run: |
+          set -euo pipefail
+          install -c remotes
+          # `collapse` and `dplyr` are what the goldens are generated against; `future` is sourced
+          # by upstream's own `modeling.R`. `presto` and `BiocNeighbors` are deliberately absent --
+          # both are optional in upstream, and the gates assert that the port *falls back* rather
+          # than silently taking a different algorithm.
+          remotes::install_cran(c("collapse", "dplyr", "future", "rlang", "jsonlite"), upgrade = "never")
+          echo "R_LIBS_USER=$R_LIBS_USER" >> "$GITHUB_ENV"
+          mkdir -p "$R_LIBS_USER"
+      - name: fetch the pinned upstream
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.UPSTREAM_REPO }}
+          ref: ${{ env.UPSTREAM_SHA }}
+          path: ${{ env.UPSTREAM_PATH }}
+      - name: regenerate the golden corpora
+        env:
+          CELLCHAT_SRC: ${{ github.workspace }}/${{ env.UPSTREAM_PATH }}
+        run: |
+          set -euo pipefail
+          # The goldens come from the pinned upstream, and the database exports with them. A
+          # failure here means the pinned tree no longer produces the recorded answers, which is
+          # the single most important thing this job can detect.
+          sh scripts/gen_fixtures.sh
+      - name: fmt
+        run: cargo fmt --all -- --check
+      - name: clippy
+        run: cargo clippy --workspace --all-targets -- -D warnings
+      - name: bundled DB exports match the fixtures
+        # inst/db/{human,mouse} is what a bare `library(cellchatrs)` session resolves against, and
+        # tests/fixtures/db_* is what the differential suite reads. Two committed copies of the
+        # same export drift silently; this fails the job if they differ.
+        run: sh scripts/check_inst_db.sh
+      - name: unit, property and fuzz tests
+        run: cargo test --workspace --release
+      - name: no reassociation or FMA contraction in the hot path
+        # Not a convention, and not checkable by a unit test: the claim is about a rustc flag, and
+        # the only way to see it is to build more than once and compare. The F80 port and the
+        # type-7 quantile are both bit-exact contracts, and a build that contracts `a*b+c` into an
+        # FMA changes the last bit. `scripts/codegen_variants.sh` runs the parity-critical tests
+        # under the pinned rustflags, under `-C target-feature=+fma`, and under
+        # `-C target-cpu=native`, and diffs the results.
+        run: ./scripts/codegen_variants.sh "${{ runner.temp }}/codegen"
+      - name: benchmark analysis step
+        # `analyse.py` turns the measured JSONs into the published table, the Amdahl fit and the
+        # parity SVGs, and nothing else in the repository reads its output. It assumed a fixture
+        # schema that two of the three runners do not write, raised `KeyError`, and left
+        # `tables.md` stale while every benchmark reported green -- because there was no test and
+        # because the step is only reached by hand. `python3` is present on every runner image;
+        # `bench-runner/test_analyse.py` is stdlib-only for the same reason the analysis itself is.
+        run: python3 bench-runner/test_analyse.py
+      - name: benchmark contention gate
+        # The gate that refuses to time a benchmark on a busy host. It exists because an unrelated
+        # runaway process held a core at 98% for 51 hours and moved a published median by 15% with
+        # nothing in the artifacts recording it -- and because both of that gate's first bugs failed
+        # in the permissive direction: reading `/proc/stat`'s `x[1:5]` as "busy" includes `idle`, and
+        # differencing pre-divided fractions instead of raw ticks returns 0.0 everywhere. A third
+        # off-by-one had it indexing `busy[0:7]`, which R resolves to cpus 1..7 and never measures
+        # cpu 0. `check_cpu_gate.R` reproduces each of those deterministically.
+        run: Rscript tests/parity/check_cpu_gate.R
+
+  # ---------------------------------------------------------------------------
+  # The R surface: the installed shim, on several R versions.
+  r-parity:
+    name: R ${{ matrix.r-version }}
+    needs: verify-upstream
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # 4.3 is the oldest release the package declares support for; `devel` catches a change in
+        # collapse's type-7 quantile or in the S4 machinery before a CRAN submission finds it.
+        r-version: ['4.3', '4.4', 'devel']
+    steps:
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: ${{ matrix.r-version }}
+          use-public-rspm: true
+          http-user-agent: 'r-lib/actions/setup-r@v2 (github.com/r-lib/actions)'
+      - name: R dependencies
+        run: |
+          set -euo pipefail
+          install -c remotes
+          remotes::install_cran(c("collapse", "dplyr", "future", "rlang", "jsonlite", "Matrix", "testthat",
+                                  "presto", "BiocManager"),
+                                upgrade = "never")
+          # BiocNeighbors is what upstream's spatial KNN actually calls, so `check_spatial` and the
+          # divergence measurement need it. A CRAN-hosted package, so no BiocManager repository is
+          # required for it, but its dependencies are not.
+          if ! Rscript -e 'quit(status = !requireNamespace("BiocNeighbors", quietly = TRUE))'; then
+            BiocManager::install("BiocNeighbors", ask = FALSE, update = FALSE)
+          fi
+          echo "R_LIBS_USER=$R_LIBS_USER" >> "$GITHUB_ENV"
+          mkdir -p "$R_LIBS_USER"
+      - uses: Swatinem/rust-cache@v2
+        with:
+          key: r-parity-${{ matrix.r-version }}
+      - name: build and install the shim
+        run: |
+          set -euo pipefail
+          cargo build --release
+          sh ./configure
+          R CMD INSTALL --library="$R_LIBS_USER" .
+      - name: fetch the pinned upstream
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.UPSTREAM_REPO }}
+          ref: ${{ env.UPSTREAM_SHA }}
+          path: ${{ env.UPSTREAM_PATH }}
+      - name: regenerate the golden corpora
+        env:
+          CELLCHAT_SRC: ${{ github.workspace }}/${{ env.UPSTREAM_PATH }}
+        run: sh scripts/gen_fixtures.sh
+      - name: build the standalone CLI
+        # `check_cli.R` deliberately does not build the binary itself: the gate has to exercise the
+        # artifact a user would install, not one compiled by the test it is testing.
+        run: cargo build --release -p cellchatrs-cli
+      - name: the gates
+        env:
+          CELLCHAT_SRC: ${{ github.workspace }}/${{ env.UPSTREAM_PATH }}
+          CELLCHATRS_ROOT: ${{ github.workspace }}
+          CELLCHATRS_DB: ${{ github.workspace }}/tests/fixtures/db_human
+        run: |
+          set -euo pipefail
+          Rscript tests/parity/check_rust_path.R
+          R --vanilla -q -f tests/parity/check_identical.R
+          Rscript tests/parity/metamorphic.R
+          Rscript tests/parity/check_matrix.R
+          R --vanilla -q -f tests/parity/check_merge.R
+          R --vanilla -q -f tests/parity/stat_equiv.R
+          R --vanilla -q -f tests/parity/check_cli.R
+          R --vanilla -q -f tests/parity/check_oeg_fast.R
+          R --vanilla -q -f tests/parity/check_centrality.R
+          R --vanilla -q -f tests/parity/check_delegation.R
+          R --vanilla -q -f tests/parity/tutorial_repro.R
+      - name: upload the matrix report
+        uses: actions/upload-artifact@v4
+        with:
+          name: matrix-report-R${{ matrix.r-version }}
+          path: tests/fixtures/matrix_report.json
+          if-no-files-found: error
+
+  # ---------------------------------------------------------------------------
+  # The machine-checkable parity report, and the only job whose output is a claim.
+  parity-report:
+    name: parity.json
+    needs: [verify-upstream, rust-parity, r-parity]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: 4.4
+          use-public-rspm: true
+      - name: R dependencies
+        run: |
+          set -euo pipefail
+          install -c remotes
+          remotes::install_cran(c("collapse", "dplyr", "future", "rlang", "jsonlite", "Matrix"),
+                                upgrade = "never")
+          echo "R_LIBS_USER=$R_LIBS_USER" >> "$GITHUB_ENV"
+          mkdir -p "$R_LIBS_USER"
+      - uses: Swatinem/rust-cache@v2
+        with:
+          key: parity-report
+      - name: build and install the shim
+        run: |
+          set -euo pipefail
+          cargo build --release
+          sh ./configure
+          R CMD INSTALL --library="$R_LIBS_USER" .
+      - name: fetch the pinned upstream
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.UPSTREAM_REPO }}
+          ref: ${{ env.UPSTREAM_SHA }}
+          path: ${{ env.UPSTREAM_PATH }}
+      - name: regenerate the golden corpora
+        env:
+          CELLCHAT_SRC: ${{ github.workspace }}/${{ env.UPSTREAM_PATH }}
+        run: sh scripts/gen_fixtures.sh
+      - name: emit parity.json
+        env:
+          CELLCHAT_SRC: ${{ github.workspace }}/${{ env.UPSTREAM_PATH }}
+          CELLCHATRS_ROOT: ${{ github.workspace }}
+          CELLCHATRS_DB: ${{ github.workspace }}/tests/fixtures/db_human
+        run: python3 scripts/parity_report.py
+      - name: job summary
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json, os, pathlib
+          d = json.load(open("parity.json"))
+          s = d["summary"]
+          lines = [
+            "### parity.json",
+            "",
+            f"- pinned upstream: `{d['upstream']['commit'][:12]}` ({d['upstream']['version']})",
+            f"- quantities: **{s['at_rung']}** at a passing rung of {s['quantities']}",
+            f"- untested: **{s['untested']}**",
+            "",
+            "| quantity | rung | test |",
+            "|---|---|---|",
+          ]
+          for e in d["entries"]:
+            mark = "" if e["rung"] != "untested" else " :warning:"
+              lines.append(f"| `{e['quantity']}`{mark} | {e['rung']} | `{e['test']}` |")
+          body = "\n".join(lines)
+          pathlib.Path(os.environ["GITHUB_STEP_SUMMARY"]).write_text(body + "\n")
+          print(body[:2000])
+          PY
+      - name: upload parity.json
+        uses: actions/upload-artifact@v4
+        with:
+          name: parity-json
+          path: parity.json
+          if-no-files-found: error
+
+  # ---------------------------------------------------------------------------
+  # The release gate. Separate from parity so a red box is a red box.
+  package:
+    name: R CMD check
+    needs: verify-upstream
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: 4.4
+          use-public-rspm: true
+      - name: R dependencies
+        run: |
+          set -euo pipefail
+          install -c remotes
+          remotes::install_cran(c("collapse", "dplyr", "future", "rlang", "jsonlite", "Matrix"),
+                                upgrade = "never")
+          echo "R_LIBS_USER=$R_LIBS_USER" >> "$GITHUB_ENV"
+          mkdir -p "$R_LIBS_USER"
+      - uses: Swatinem/rust-cache@v2
+        with:
+          key: package
+      - name: build and install
+        run: |
+          set -euo pipefail
+          cargo build --release
+          sh ./configure
+          R CMD INSTALL --library="$R_LIBS_USER" .
+      - name: R CMD build and check
+        # `--as-cran` because the objective asks for a CRAN-clean package, and a check that skips
+        # the CRAN notes is not evidence of that. Suggests are allowed to be missing; errors and
+        # warnings are not.
+        run: |
+          set -euo pipefail
+          R CMD build .
+          _R_CHECK_FORCE_SUGGESTS_=false R CMD check --as-cran --no-manual cellchatrs_*.tar.gz
+          tail -5 cellchatrs.Rcheck/00check.log
+      - uses: actions/upload-artifact@v4
+        with:
+          name: r-cmd-check
+          path: cellchatrs.Rcheck/00check.log
+          if-no-files-found: error

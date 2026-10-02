@@ -1,0 +1,23 @@
+# Bit-identical parity (PLAN.md §14.2, rung R6) forbids FMA contraction in the
+# aggregation: contraction changes rounding. Disabled globally rather than via
+# per-function `#[target_feature]`, which is still unstable.
+#
+# What is checked, and where:
+#   scripts/codegen_variants.sh  builds the parity-critical tests under `-fma` and under
+#                                `target-cpu=native` and requires bit-identical results.
+#                                This is the check that matters: a unit test cannot see a flag.
+#   crates/r-core/tests/no_fma.rs  asserts the flag is present, that the F80 accumulator
+#                                behaves like x87 rather than like f64, and that reassociating a
+#                                chained sum changes the answer -- so the order is being enforced
+#                                by the code and not merely hoped for.
+#
+# Measured on the pinned host: all three codegen variants give byte-identical output. That is
+# expected rather than lucky. Rust does not set LLVM's `contract` fast-math flag on fmul/fadd, so
+# there is no contraction available for the target features to enable; this flag is belt-and-braces
+# on top of a language guarantee. What it does still protect against is a future `-ffast-math`-style
+# flag appearing in RUSTFLAGS, which the same script would catch.
+[target.x86_64-unknown-linux-gnu]
+rustflags = ["-C", "target-feature=-fma"]
+
+[build]
+rustflags = ["-C", "target-feature=-fma"]

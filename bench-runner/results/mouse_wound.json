@@ -1,0 +1,88 @@
+{
+ "schema": 1,
+ "host": {
+  "cpus": 16,
+  "cores": 8,
+  "model": "AMD Ryzen 7 3700X",
+  "mem_total_mb": 32806
+ },
+ "pinned": "0-7",
+ "host_state": {
+  "window_secs": 1.5,
+  "threshold_pct": 10,
+  "per_cpu_busy_pct": {
+   "0": 29.655172413793103,
+   "1": 28.965517241379313,
+   "2": 36.734693877551024,
+   "3": 24.832214765100673,
+   "4": 17.123287671232877,
+   "5": 26.027397260273972,
+   "6": 18.666666666666668,
+   "7": 20.945945945945947
+  },
+  "contended": true,
+  "override": true
+ },
+ "threads": 8,
+ "fixture": {
+  "fixture": "wound.rda",
+  "n_genes_total": 17090,
+  "n_cells": 21557,
+  "n_groups": 25,
+  "n_genes_signaling": 1101,
+  "n_lr": 1568,
+  "nnz_pct": 6.23271670143287
+ },
+ "nboot": 100,
+ "repeats": 5,
+ "warmup": 1,
+ "seed": 1,
+ "r_upstream": {
+  "raw_secs": [
+   274.92499999999995,
+   245.336,
+   241.54600000000005,
+   229.524,
+   262.05100000000016
+  ],
+  "median": 245.336,
+  "ci_lo": 229.524,
+  "ci_hi": 274.92499999999995,
+  "min": 229.524,
+  "max": 274.92499999999995
+ },
+ "rust": {
+  "raw_secs": [
+   9.414999999999964,
+   9.310000000000173,
+   9.618999999999915,
+   9.63000000000011,
+   9.403999999999996
+  ],
+  "median": 9.414999999999964,
+  "ci_lo": 9.310000000000173,
+  "ci_hi": 9.63000000000011,
+  "min": 9.310000000000173,
+  "max": 9.63000000000011
+ },
+ "speedup": 26.057992565055866,
+ "speedup_ci_lo": 23.834267912772315,
+ "speedup_ci_hi": 29.530075187969373,
+ "peak_rss_mb": 2675.28125,
+ "parity_net": true,
+ "parity_prob": true,
+ "max_abs_diff": 0,
+ "dense_stream_mb": 181.07801055908203,
+ "mem_available_mb": 21244.30078125,
+ "scatter_summary": {
+  "n_values": 980000,
+  "n_finite": 980000,
+  "n_nonfinite": 0,
+  "max_abs_log10_difference": 0.0,
+  "n_off_identity": 0,
+  "bins": 160,
+  "svg": "bench-runner/results/parity_mouse_wound.svg",
+  "svg_bytes": 12313,
+  "note": "per-value vectors dropped by analyse.py --trim-scatter; regenerate from bench_real.R"
+ }
+}

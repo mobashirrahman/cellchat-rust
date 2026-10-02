@@ -1,0 +1,294 @@
+n_cases	13
+case	two_groups_contact_range
+meta	two_groups_contact_range	4	2	A,B	2	1	1	TRUE
+opt	two_groups_contact_range	2e+02	5e+01	-
+flags	two_groups_contact_range	TRUE
+ratio	two_groups_contact_range	1e+00
+tol	two_groups_contact_range	1e+00
+margin	two_groups_contact_range	4.0000000000000002e-01
+coord_row	two_groups_contact_range	1	-2.0000000000000001e-01	0e+00
+coord_row	two_groups_contact_range	2	2.0000000000000001e-01	0e+00
+coord_row	two_groups_contact_range	3	2.2000000000000002e+00	0e+00
+coord_row	two_groups_contact_range	4	5.2000000000000002e+00	0e+00
+group	two_groups_contact_range	0e+00	0e+00	1e+00	1e+00
+samples	two_groups_contact_range	0e+00	0e+00	0e+00	0e+00
+ds_row	two_groups_contact_range	1	0e+00	2.8500000000000001e+00
+ds_row	two_groups_contact_range	2	2.8500000000000001e+00	0e+00
+d_dimnames	two_groups_contact_range	A,B,A,B
+ac_row	two_groups_contact_range	1	1e+00	1e+00
+ac_row	two_groups_contact_range	2	1e+00	1e+00
+case	two_groups_knn
+meta	two_groups_knn	6	2	A,B	2	1	1	TRUE
+opt	two_groups_knn	2e+02	-	2
+flags	two_groups_knn	TRUE
+ratio	two_groups_knn	1e+00
+tol	two_groups_knn	1e+00
+margin	two_groups_knn	4.2307692307692318e-01
+coord_row	two_groups_knn	1	-4.0000000000000002e-01	0e+00
+coord_row	two_groups_knn	2	0e+00	0e+00
+coord_row	two_groups_knn	3	4.0000000000000002e-01	0e+00
+coord_row	two_groups_knn	4	2.6000000000000001e+00	0e+00
+coord_row	two_groups_knn	5	5.5999999999999996e+00	0e+00
+coord_row	two_groups_knn	6	1.7600000000000001e+01	0e+00
+group	two_groups_knn	0e+00	0e+00	0e+00	1e+00	1e+00	1e+00
+samples	two_groups_knn	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00
+ds_row	two_groups_knn	1	0e+00	5.4000000000000004e+00
+ds_row	two_groups_knn	2	5.4000000000000004e+00	0e+00
+d_dimnames	two_groups_knn	A,B,A,B
+ac_row	two_groups_knn	1	1e+00	1e+00
+ac_row	two_groups_knn	2	1e+00	1e+00
+case	three_chain
+meta	three_chain	12	2	A,B,C	3	1	1	TRUE
+opt	three_chain	8e+01	4e+01	-
+flags	three_chain	TRUE
+ratio	three_chain	1e+00
+tol	three_chain	1e+00
+margin	three_chain	2.014934868283057e-01
+coord_row	three_chain	1	1e+00	0e+00
+coord_row	three_chain	2	4e+00	0e+00
+coord_row	three_chain	3	1.6e+01	0e+00
+coord_row	three_chain	4	6.4e+01	0e+00
+coord_row	three_chain	5	2.1e+01	5e-01
+coord_row	three_chain	6	2.4e+01	5e-01
+coord_row	three_chain	7	3.6e+01	5e-01
+coord_row	three_chain	8	8.4e+01	5e-01
+coord_row	three_chain	9	4.1e+01	1e+00
+coord_row	three_chain	10	4.4e+01	1e+00
+coord_row	three_chain	11	5.6e+01	1e+00
+coord_row	three_chain	12	1.04e+02	1e+00
+group	three_chain	0e+00	0e+00	0e+00	0e+00	1e+00	1e+00	1e+00	1e+00	2e+00	2e+00	2e+00	2e+00
+samples	three_chain	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00
+ds_row	three_chain	1	0e+00	1.4387229104840845e+01	2.5153715988193483e+01
+ds_row	three_chain	2	1.4387229104840845e+01	0e+00	1.4387229104840845e+01
+ds_row	three_chain	3	2.5153715988193483e+01	1.4387229104840845e+01	0e+00
+d_dimnames	three_chain	A,B,C,A,B,C
+ac_row	three_chain	1	1e+00	1e+00	1e+00
+ac_row	three_chain	2	1e+00	1e+00	1e+00
+ac_row	three_chain	3	1e+00	1e+00	1e+00
+case	two_samples
+meta	two_samples	8	2	A,B	2	2	1	TRUE
+opt	two_samples	2.5e+02	1.2e+02	-
+flags	two_samples	TRUE
+ratio	two_samples	1e+00,5e-01
+tol	two_samples	1e+00,1e+00
+margin	two_samples	1.6953600679468421e-03
+coord_row	two_samples	1	-2.0000000000000001e-01	0e+00
+coord_row	two_samples	2	2.0000000000000001e-01	0e+00
+coord_row	two_samples	3	2.2000000000000002e+00	0e+00
+coord_row	two_samples	4	5.2000000000000002e+00	0e+00
+coord_row	two_samples	5	9.9979999999999995e+02	1e+03
+coord_row	two_samples	6	2.0000000000000001e-01	0e+00
+coord_row	two_samples	7	1.0022e+03	1e+03
+coord_row	two_samples	8	9.1999999999999993e+00	0e+00
+group	two_samples	0e+00	0e+00	1e+00	1e+00	0e+00	0e+00	1e+00	1e+00
+samples	two_samples	0e+00	0e+00	0e+00	0e+00	1e+00	1e+00	1e+00	1e+00
+ds_row	two_samples	1	0e+00	2.8500000000000112e+00
+ds_row	two_samples	2	2.8500000000000112e+00	0e+00
+d_dimnames	two_samples	A,B,A,B
+ac_row	two_samples	1	1e+00	1e+00
+ac_row	two_samples	2	1e+00	1e+00
+case	group_absent_in_one_sample
+meta	group_absent_in_one_sample	8	2	A,B	2	2	1	TRUE
+opt	group_absent_in_one_sample	2e+02	1.5e+02	-
+flags	group_absent_in_one_sample	TRUE
+ratio	group_absent_in_one_sample	1e+00
+tol	group_absent_in_one_sample	1e+00
+margin	group_absent_in_one_sample	4.0000000000000002e-01
+coord_row	group_absent_in_one_sample	1	-2.0000000000000001e-01	0e+00
+coord_row	group_absent_in_one_sample	2	2.0000000000000001e-01	0e+00
+coord_row	group_absent_in_one_sample	3	2.2000000000000002e+00	0e+00
+coord_row	group_absent_in_one_sample	4	5.2000000000000002e+00	0e+00
+coord_row	group_absent_in_one_sample	5	9.9979999999999995e+02	1e+03
+coord_row	group_absent_in_one_sample	6	2.0000000000000001e-01	0e+00
+coord_row	group_absent_in_one_sample	7	1.0022e+03	1e+03
+coord_row	group_absent_in_one_sample	8	5.2000000000000002e+00	0e+00
+group	group_absent_in_one_sample	0e+00	0e+00	1e+00	1e+00	0e+00	0e+00	0e+00	0e+00
+samples	group_absent_in_one_sample	0e+00	0e+00	0e+00	0e+00	1e+00	1e+00	1e+00	1e+00
+ds_row	group_absent_in_one_sample	1	0e+00	2.8500000000000001e+00
+ds_row	group_absent_in_one_sample	2	2.8500000000000001e+00	0e+00
+d_dimnames	group_absent_in_one_sample	A,B,A,B
+ac_row	group_absent_in_one_sample	1	1e+00	1e+00
+ac_row	group_absent_in_one_sample	2	1e+00	1e+00
+case	declared_but_absent_level
+meta	declared_but_absent_level	6	2	C,A,B	3	1	1	TRUE
+opt	declared_but_absent_level	2e+02	1.5e+02	-
+flags	declared_but_absent_level	TRUE
+ratio	declared_but_absent_level	1e+00
+tol	declared_but_absent_level	1e+00
+margin	declared_but_absent_level	4.2307692307692318e-01
+coord_row	declared_but_absent_level	1	-4.0000000000000002e-01	0e+00
+coord_row	declared_but_absent_level	2	0e+00	0e+00
+coord_row	declared_but_absent_level	3	4.0000000000000002e-01	0e+00
+coord_row	declared_but_absent_level	4	2.6000000000000001e+00	0e+00
+coord_row	declared_but_absent_level	5	5.5999999999999996e+00	0e+00
+coord_row	declared_but_absent_level	6	1.7600000000000001e+01	0e+00
+group	declared_but_absent_level	1e+00	1e+00	1e+00	2e+00	2e+00	2e+00
+samples	declared_but_absent_level	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00
+ds_row	declared_but_absent_level	1	0e+00	5.4000000000000004e+00	<NaN>
+ds_row	declared_but_absent_level	2	5.4000000000000004e+00	0e+00	<NaN>
+ds_row	declared_but_absent_level	3	<NaN>	<NaN>	<NaN>
+d_dimnames	declared_but_absent_level	C,A,B,C,A,B
+ac_row	declared_but_absent_level	1	1e+00	1e+00	0e+00
+ac_row	declared_but_absent_level	2	1e+00	1e+00	0e+00
+ac_row	declared_but_absent_level	3	0e+00	0e+00	0e+00
+case	not_symmetric
+meta	not_symmetric	12	2	A,B,C	3	1	1	TRUE
+opt	not_symmetric	8e+01	4e+01	-
+flags	not_symmetric	FALSE
+ratio	not_symmetric	1e+00
+tol	not_symmetric	1e+00
+margin	not_symmetric	2.014934868283057e-01
+coord_row	not_symmetric	1	1e+00	0e+00
+coord_row	not_symmetric	2	4e+00	0e+00
+coord_row	not_symmetric	3	1.6e+01	0e+00
+coord_row	not_symmetric	4	6.4e+01	0e+00
+coord_row	not_symmetric	5	2.1e+01	5e-01
+coord_row	not_symmetric	6	2.4e+01	5e-01
+coord_row	not_symmetric	7	3.6e+01	5e-01
+coord_row	not_symmetric	8	8.4e+01	5e-01
+coord_row	not_symmetric	9	4.1e+01	1e+00
+coord_row	not_symmetric	10	4.4e+01	1e+00
+coord_row	not_symmetric	11	5.6e+01	1e+00
+coord_row	not_symmetric	12	1.04e+02	1e+00
+group	not_symmetric	0e+00	0e+00	0e+00	0e+00	1e+00	1e+00	1e+00	1e+00	2e+00	2e+00	2e+00	2e+00
+samples	not_symmetric	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00
+ds_row	not_symmetric	1	0e+00	1.4387229104840845e+01	2.5153715988193483e+01
+ds_row	not_symmetric	2	1.4387229104840845e+01	0e+00	1.4387229104840845e+01
+ds_row	not_symmetric	3	2.5153715988193483e+01	1.4387229104840845e+01	0e+00
+d_dimnames	not_symmetric	A,B,C,A,B,C
+ac_row	not_symmetric	1	1e+00	1e+00	1e+00
+ac_row	not_symmetric	2	1e+00	1e+00	1e+00
+ac_row	not_symmetric	3	1e+00	1e+00	1e+00
+case	both_contact_rules
+meta	both_contact_rules	9	2	A,B,C	3	1	2	TRUE
+opt	both_contact_rules	8e+01	4e+01	1
+flags	both_contact_rules	TRUE
+ratio	both_contact_rules	1e+00
+tol	both_contact_rules	1e+00
+margin	both_contact_rules	2.9545681197793683e-01
+coord_row	both_contact_rules	1	1e+00	0e+00
+coord_row	both_contact_rules	2	4e+00	0e+00
+coord_row	both_contact_rules	3	1.6e+01	0e+00
+coord_row	both_contact_rules	4	2.1e+01	5e-01
+coord_row	both_contact_rules	5	2.4e+01	5e-01
+coord_row	both_contact_rules	6	3.6e+01	5e-01
+coord_row	both_contact_rules	7	4.1e+01	1e+00
+coord_row	both_contact_rules	8	4.4e+01	1e+00
+coord_row	both_contact_rules	9	5.6e+01	1e+00
+group	both_contact_rules	0e+00	0e+00	0e+00	1e+00	1e+00	1e+00	2e+00	2e+00	2e+00
+samples	both_contact_rules	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00
+ds_row	both_contact_rules	1	0e+00	<NaN>	<NaN>
+ds_row	both_contact_rules	2	<NaN>	0e+00	<NaN>
+ds_row	both_contact_rules	3	<NaN>	<NaN>	0e+00
+d_dimnames	both_contact_rules	A,B,C,A,B,C
+ac_row	both_contact_rules	1	1e+00	0e+00	0e+00
+ac_row	both_contact_rules	2	0e+00	0e+00	0e+00
+ac_row	both_contact_rules	3	0e+00	0e+00	0e+00
+case	not_contact_dependent
+meta	not_contact_dependent	9	2	A,B,C	3	1	2	FALSE
+opt	not_contact_dependent	8e+01	1e+00	-
+flags	not_contact_dependent	TRUE
+ratio	not_contact_dependent	1e+00
+tol	not_contact_dependent	1e+00
+margin	not_contact_dependent	2.9545681197793683e-01
+coord_row	not_contact_dependent	1	1e+00	0e+00
+coord_row	not_contact_dependent	2	4e+00	0e+00
+coord_row	not_contact_dependent	3	1.6e+01	0e+00
+coord_row	not_contact_dependent	4	2.1e+01	5e-01
+coord_row	not_contact_dependent	5	2.4e+01	5e-01
+coord_row	not_contact_dependent	6	3.6e+01	5e-01
+coord_row	not_contact_dependent	7	4.1e+01	1e+00
+coord_row	not_contact_dependent	8	4.4e+01	1e+00
+coord_row	not_contact_dependent	9	5.6e+01	1e+00
+group	not_contact_dependent	0e+00	0e+00	0e+00	1e+00	1e+00	1e+00	2e+00	2e+00	2e+00
+samples	not_contact_dependent	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00
+ds_row	not_contact_dependent	1	0e+00	<NaN>	<NaN>
+ds_row	not_contact_dependent	2	<NaN>	0e+00	<NaN>
+ds_row	not_contact_dependent	3	<NaN>	<NaN>	0e+00
+d_dimnames	not_contact_dependent	A,B,C,A,B,C
+ac_row	not_contact_dependent	1	1e+00	0e+00	0e+00
+ac_row	not_contact_dependent	2	0e+00	1e+00	0e+00
+ac_row	not_contact_dependent	3	0e+00	0e+00	1e+00
+case	k_min_too_large
+meta	k_min_too_large	4	2	A,B	2	1	9	TRUE
+opt	k_min_too_large	2e+02	1.5e+02	-
+flags	k_min_too_large	TRUE
+ratio	k_min_too_large	1e+00
+tol	k_min_too_large	1e+00
+margin	k_min_too_large	4.0000000000000002e-01
+coord_row	k_min_too_large	1	-2.0000000000000001e-01	0e+00
+coord_row	k_min_too_large	2	2.0000000000000001e-01	0e+00
+coord_row	k_min_too_large	3	2.2000000000000002e+00	0e+00
+coord_row	k_min_too_large	4	5.2000000000000002e+00	0e+00
+group	k_min_too_large	0e+00	0e+00	1e+00	1e+00
+samples	k_min_too_large	0e+00	0e+00	0e+00	0e+00
+ds_row	k_min_too_large	1	<NaN>	<NaN>
+ds_row	k_min_too_large	2	<NaN>	<NaN>
+d_dimnames	k_min_too_large	A,B,A,B
+ac_row	k_min_too_large	1	0e+00	0e+00
+ac_row	k_min_too_large	2	0e+00	0e+00
+case	err_needs_contact
+meta	err_needs_contact	4	2	A,B	2	1	1	TRUE
+opt	err_needs_contact	2e+02	-	-
+flags	err_needs_contact	TRUE
+ratio	err_needs_contact	1e+00
+tol	err_needs_contact	1e+00
+margin	err_needs_contact	4.0000000000000002e-01
+coord_row	err_needs_contact	1	-2.0000000000000001e-01	0e+00
+coord_row	err_needs_contact	2	2.0000000000000001e-01	0e+00
+coord_row	err_needs_contact	3	2.2000000000000002e+00	0e+00
+coord_row	err_needs_contact	4	5.2000000000000002e+00	0e+00
+group	err_needs_contact	0e+00	0e+00	1e+00	1e+00
+samples	err_needs_contact	0e+00	0e+00	0e+00	0e+00
+error	err_needs_contact	Please check the documentation of `computeCommunProb` and provide the value of either `contact.range` or `contact.knn.k`
+case	knn_no_range
+meta	knn_no_range	15	2	A,B,C	3	1	1	TRUE
+opt	knn_no_range	8e+01	-	3
+flags	knn_no_range	TRUE
+ratio	knn_no_range	1e+00
+tol	knn_no_range	1e+00
+margin	knn_no_range	9.4368836706684694e-02
+coord_row	knn_no_range	1	1e+00	0e+00
+coord_row	knn_no_range	2	4e+00	0e+00
+coord_row	knn_no_range	3	1.6e+01	0e+00
+coord_row	knn_no_range	4	6.4e+01	0e+00
+coord_row	knn_no_range	5	2.56e+02	0e+00
+coord_row	knn_no_range	6	2.1e+01	5e-01
+coord_row	knn_no_range	7	2.4e+01	5e-01
+coord_row	knn_no_range	8	3.6e+01	5e-01
+coord_row	knn_no_range	9	8.4e+01	5e-01
+coord_row	knn_no_range	10	2.76e+02	5e-01
+coord_row	knn_no_range	11	4.1e+01	1e+00
+coord_row	knn_no_range	12	4.4e+01	1e+00
+coord_row	knn_no_range	13	5.6e+01	1e+00
+coord_row	knn_no_range	14	1.04e+02	1e+00
+coord_row	knn_no_range	15	2.96e+02	1e+00
+group	knn_no_range	0e+00	0e+00	0e+00	0e+00	0e+00	1e+00	1e+00	1e+00	1e+00	1e+00	2e+00	2e+00	2e+00	2e+00	2e+00
+samples	knn_no_range	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00
+ds_row	knn_no_range	1	0e+00	1.5511033088621186e+01	2.8125472400051812e+01
+ds_row	knn_no_range	2	1.5511033088621186e+01	0e+00	1.5511033088621186e+01
+ds_row	knn_no_range	3	2.8125472400051812e+01	1.5511033088621186e+01	0e+00
+d_dimnames	knn_no_range	A,B,C,A,B,C
+ac_row	knn_no_range	1	1e+00	1e+00	1e+00
+ac_row	knn_no_range	2	1e+00	1e+00	1e+00
+ac_row	knn_no_range	3	1e+00	1e+00	1e+00
+case	ratio_scales_before_threshold
+meta	ratio_scales_before_threshold	6	2	A,B	2	1	1	TRUE
+opt	ratio_scales_before_threshold	2e+01	2e+01	-
+flags	ratio_scales_before_threshold	TRUE
+ratio	ratio_scales_before_threshold	1.0000000000000001e-01
+tol	ratio_scales_before_threshold	1e+00
+margin	ratio_scales_before_threshold	4.2307692307692318e-01
+coord_row	ratio_scales_before_threshold	1	-4.0000000000000002e-01	0e+00
+coord_row	ratio_scales_before_threshold	2	0e+00	0e+00
+coord_row	ratio_scales_before_threshold	3	4.0000000000000002e-01	0e+00
+coord_row	ratio_scales_before_threshold	4	2.6000000000000001e+00	0e+00
+coord_row	ratio_scales_before_threshold	5	5.5999999999999996e+00	0e+00
+coord_row	ratio_scales_before_threshold	6	1.7600000000000001e+01	0e+00
+group	ratio_scales_before_threshold	0e+00	0e+00	0e+00	1e+00	1e+00	1e+00
+samples	ratio_scales_before_threshold	0e+00	0e+00	0e+00	0e+00	0e+00	0e+00
+ds_row	ratio_scales_before_threshold	1	0e+00	5.4000000000000004e-01
+ds_row	ratio_scales_before_threshold	2	5.4000000000000004e-01	0e+00
+d_dimnames	ratio_scales_before_threshold	A,B,A,B
+ac_row	ratio_scales_before_threshold	1	1e+00	1e+00
+ac_row	ratio_scales_before_threshold	2	1e+00	1e+00

@@ -1,0 +1,30 @@
+^\.rlib$
+^\.git$
+^target$
+^stdout$
+^\.\.Rcheck$
+^bench-runner$
+^docs$
+^\.github$
+^parity\.json$
+^UPSTREAM\.md$
+^PLAN\.md$
+# Built by ./configure from crates/; shipping it would ship a stale binary and `R CMD check`
+# warns about object files in a source package.
+^src/cellchatrs\.so$
+# The Rust test targets read the golden corpora by relative path, so the fixtures and the
+# parity generators travel with them. `tests/parity/*.R` are the oracle generators and the
+# installed-shim differential gate; they need the pinned upstream tree at run time and are
+# therefore not run by `R CMD check`, but they are part of what makes the claim auditable.
+^tests/parity/check_identical\.R$
+^\.gitkeep$
+^\.cargo$
+\.gitkeep$
+# The three multi-megabyte Rust golden corpora. They are *regenerable* -- each has an R
+# generator under tests/parity/ -- and they are what pushes the source tarball past CRAN's
+# 5 MB limit (24 MB -> under 1 MB without them). They are cargo-test inputs, not R-test
+# inputs, so nothing R CMD check runs needs them; they stay in the repository, and
+# scripts/gen_fixtures.sh regenerates them.
+^tests/fixtures/rng_stress\.txt$
+^tests/fixtures/f80_ref\.txt$
+^tests/fixtures/stats_vectors\.bin$
