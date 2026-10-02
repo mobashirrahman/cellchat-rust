@@ -2,9 +2,10 @@ Package: cellchatrs
 Type: Package
 Title: Rust-Accelerated CellChat Inference Kernel
 Version: 0.1.0
-Authors@R: person("cellchat-rs", "authors", role = c("aut", "cre"), email = "noreply@example.org")
-Author: cellchat-rs authors [aut, cre]
-Maintainer: cellchat-rs authors <noreply@example.org>
+Authors@R: person("Md Mobashir", "Rahman", role = c("aut", "cre"),
+                  email = "mdra00001@stud.uni-saarland.de")
+Author: Md Mobashir Rahman [aut, cre]
+Maintainer: Md Mobashir Rahman <mdra00001@stud.uni-saarland.de>
 URL: https://github.com/mobashirrahman/cellchat-rust
 BugReports: https://github.com/mobashirrahman/cellchat-rust/issues
 Description: Drop-in accelerator for the CellChat cell-cell communication inference
