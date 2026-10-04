@@ -181,6 +181,18 @@ def prune(names: list[str]) -> None:
     (`CellChat-class.Rd`, `CellChatDB.*.Rd`, `PPI.*.Rd`, `show-CellChat-method.Rd`,
     `AnyMatrix-class.Rd`) along with the 17. `\docType` is what tells the two apart, and the
     name suffixes are checked as well so a page that omits `\docType` is still spared.
+
+    The five dataset pages are a separate, deliberate absence and are the one case where
+    sparing a `\docType{data}` page is wrong: `CellChatDB.{human,mouse,zebrafish}` and
+    `PPI.{human,mouse}` are byte-identical duplicates of the copies in
+    `inst/upstream/<sha>/data/`, and shipping both is most of what puts the source tarball over
+    CRAN's 5 MB limit, so `.Rbuildignore` keeps `data/*.rda` out and the pages went with them.
+    Documenting an object the package does not ship is the `code/documentation mismatches`
+    WARNING, which is the same failure this function exists to prevent -- so do not re-add
+    them. `tests/test-public-surface.R` still asserts those datasets are byte-identical to
+    upstream, by loading them from `inst/upstream` directly rather than through `data()`.
+    Nothing generates these pages, so nothing has to be taught to suppress them; this note is
+    here because they are the obvious thing to restore and restoring them breaks the check.
     """
     keep = set(names)
     for path in sorted(MAN.glob("*.Rd")):

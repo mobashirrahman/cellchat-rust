@@ -8,13 +8,7 @@
 ^scripts$
 ^r-build$
 ^upstream$
-^data/(humanSkin\.rda|wound\.rda|visium\.rds)$
-# `tests/parity`: 470 KB of oracle generators and differential gates. They need the pinned
-# upstream tree at run time and `R CMD check` never runs them -- `check-contract-inputs.R` and
-# friends are driven by `tests/parity/*.R` from CI, not by the package's own test targets, which
-# are the four `tests/test-*.R`. They stay in the repository, which is where the audit trail
-# lives.
-^tests/parity$
+^data/
 ^target$
 ^src/rust/r-build/target$
 ^stdout$
@@ -25,28 +19,61 @@
 ^parity\.json$
 ^UPSTREAM\.md$
 ^PLAN\.md$
-# Built by ./configure from src/rust/crates/; shipping it would ship a stale binary and `R CMD check`
-# warns about object files in a source package.
 ^src/CellChat\.so$
-# The Rust test targets read the golden corpora by relative path, so the fixtures and the
-# parity generators travel with them. `tests/parity/*.R` are the oracle generators and the
-# installed-shim differential gate; they need the pinned upstream tree at run time and are
-# therefore not run by `R CMD check`, but they are part of what makes the claim auditable.
 ^tests/parity/check_identical\.R$
+^[^/]*_[0-9][^/]*\.tar\.gz$
+^tests/fixtures$
+^tests/parity$
 ^\.gitkeep$
 \.gitkeep$
-# `R CMD build` output. It is gitignored but that is not enough: `R CMD build` does not read
-# `.gitignore`, so a tarball left in the source directory by an earlier build gets packaged into
-# the next one. A stale `cellchatrs_0.1.0.tar.gz` was 5.7 MB of the 13.8 MB tarball -- the single
-# largest item, and a recursively nested copy of the package. Name-agnostic on purpose: the
-# package was renamed from `cellchatrs` to `CellChat`, and a pattern naming either one silently
-# stops matching the day that changes.
-^[^/]*_[0-9][^/]*\.tar\.gz$
 
-# `tests/fixtures` in its entirety, not just its largest members. These are `cargo test` inputs read
-# by relative path from a repository checkout; nothing in the installed R package or in
-# `R CMD check`'s only test target (`tests/test-package.R`) reads them. They stay in the repository
+# ---------------------------------------------------------------------------
+# Read this before editing the patterns above.
+#
+# `R CMD build` does NOT parse this file. It calls `readLines` on it and passes
+# every non-empty line to `grepl` as a PCRE, so a `#` line is a *pattern*, not a
+# comment. That is why the prose below is written without parentheses, brackets,
+# asterisks or backslashes: balanced prose is a valid regex that matches no file
+# path, whereas one unclosed bracket is a PCRE compile error that fails the build
+# outright. `tools:::inRbuildignore` is the function to read if you want to see it.
+#
+# So: no parentheses in these comments, not even when quoting code. Refer to a
+# function by bare name. Where a longer explanation would need punctuation this
+# file cannot carry, put it in the commit message or in docs/ instead.
+# ---------------------------------------------------------------------------
+
+# Everything under data/ is left out of the source tarball. Two different reasons,
+# and they matter differently.
+#
+# First: humanSkin.rda, wound.rda and visium.rds are 70 MB of real single-cell
+# benchmark input. Nothing in R, tests or vignettes reads them, and
+# scripts/fetch_ci_fixtures.sh fetches each by a pinned file id with a size and
+# sha256 assertion, so they are fetched rather than committed.
+#
+# Second: the CellChatDB and PPI .rda files are byte-identical duplicates of the
+# copies in inst/upstream, which still ship. Keeping both is what puts this
+# tarball over CRAN's 5 MB limit -- 8.0 MB with them, 4.9 MB without. Of the two
+# copies the datasets are the cheaper to lose, because inst/upstream is what all
+# four tests/test files diff against; drop that instead and R CMD check runs no
+# tests at all. tests/test-public-surface.R still asserts the datasets are
+# byte-identical to upstream, loading them from inst/upstream rather than via the
+# data route, so only the data route is given up.
+
+# tests/parity is 470 KB of oracle generators and differential gates. It needs the
+# pinned upstream tree at run time, and R CMD check never runs it: the package's
+# own test targets are the four tests/test scripts. CI drives tests/parity with
+# CELLCHAT_SRC set. The files stay in the repository, which is where the audit
+# trail lives.
+
+# Any R CMD build output left in the source directory. This has to be here and not
+# only in .gitignore, because R CMD build does not read .gitignore: a stale
+# tarball is packaged into the next build. A cellchatrs_0.1.0.tar.gz was 5.7 MB of
+# a 13.8 MB tarball, and it recursed -- it contained a copy of the package.
+# The pattern is name-agnostic on purpose, since the package has been renamed
+# more than once and a pattern naming either name silently stops matching.
+
+# tests/fixtures in its entirety, not just its largest members. These are cargo
+# test inputs read by relative path from a checkout; nothing in the installed
+# package or in the four R test targets reads them. They stay in the repository
 # because they are what makes the bit-identity claim auditable, and
-# `scripts/gen_fixtures.sh` regenerates them from the pinned upstream. Shipping them cost ~1 MB
-# compressed, which is the difference between a source tarball under CRAN's 5 MB limit and over it.
-^tests/fixtures$
+# scripts/gen_fixtures.sh regenerates them from the pinned upstream.

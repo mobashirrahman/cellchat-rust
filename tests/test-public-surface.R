@@ -8,9 +8,16 @@ local({
     stopifnot(is.function(getExportedValue("CellChat",nm)),
               identical(formals(getExportedValue("CellChat",nm)),formals(reference[[nm]])))
   }
+  ## The five datasets are byte-identical to the pinned upstream copies, and that is what this
+  ## asserts. It used to go through `utils::data(list=nm, package="CellChat")`, which required
+  ## shipping a second copy of all five in `data/` -- 2.9 MB, and with `inst/upstream` also
+  ## present that is what puts the tarball over CRAN's 5 MB limit. The copy inside
+  ## `inst/upstream/<sha>/data/` still ships, so load it from there directly and keep the
+  ## identity assertion, which is the part with teeth. What is given up is only the LazyData
+  ## routing, i.e. `data(CellChatDB.human)` after a tarball install.
   for (nm in c("CellChatDB.human","CellChatDB.mouse","CellChatDB.zebrafish","PPI.human","PPI.mouse")) {
     e <- new.env(parent=emptyenv())
-    utils::data(list=nm,package="CellChat",envir=e)
+    load(file.path(system.file("upstream/CellChat-75253cd0/data",package="CellChat"),paste0(nm,".rda")),envir=e)
     stopifnot(exists(nm,e,inherits=FALSE),identical(serialize(e[[nm]],NULL),serialize(reference[[nm]],NULL)))
   }
   stopifnot(identical(attr(class(methods::new("CellChat")),"package"),"CellChat"))

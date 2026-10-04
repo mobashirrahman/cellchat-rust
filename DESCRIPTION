@@ -20,7 +20,6 @@ Description: An independently installable implementation of the CellChat interfa
 License: GPL-3 + file LICENSE
 Encoding: UTF-8
 Depends: R (>= 4.1)
-LazyData: true
 Imports: methods, utils, stats, parallel, Matrix, collapse, dplyr, rlang, tibble, ggplot2,
     future, future.apply, igraph, pbapply, irlba, NMF (>= 0.23.0), ggalluvial,
     stringr, svglite, ggrepel, circlize (>= 0.4.12), RColorBrewer, cowplot,
