@@ -11,7 +11,7 @@
 ## Emulates what `updateCellChat()` leaves in a CellChat object: log1p CPM over the signalling
 ## genes, `data.signaling` restricted to genes that any L-R pair needs (directly or as complex
 ## subunits), and `LRsig` filtered to pairs whose every subunit is present.
-suppressMessages({library(collapse); library(Matrix); library(dplyr); library(cellchatrs)})
+suppressMessages({library(collapse); library(Matrix); library(dplyr); library(CellChat)})
 CC <- Sys.getenv("CELLCHAT_SRC", "../CellChat")
 DB <- local({
   e <- new.env()

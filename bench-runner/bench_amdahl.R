@@ -27,7 +27,7 @@
 suppressWarnings(suppressMessages({
   library(stats); library(methods); library(Matrix); library(collapse); library(dplyr)
 }))
-suppressWarnings(suppressMessages(library(cellchatrs)))
+suppressWarnings(suppressMessages(library(CellChat)))
 
 `%||%` <- function(a, b) if (is.null(a)) b else a
 
@@ -207,19 +207,19 @@ prep_once <- function() {
 stages <- list(
   list(name = "io_prep",
        up = function() { o <- prep_once(); UP$subsetData(o) },
-       rs = function() { o <- prep_once(); cellchatrs::subsetData(o) }),
+       rs = function() { o <- prep_once(); CellChat::subsetData(o) }),
   list(name = "oeg",
        up = function() {
          o <- UP$identifyOverExpressedGenes(upstream_state$obj)
          UP$identifyOverExpressedInteractions(o)
        },
        rs = function() {
-         o <- cellchatrs::identifyOverExpressedGenes(shim_state$obj)
-         cellchatrs::identifyOverExpressedInteractions(o)
+         o <- CellChat::identifyOverExpressedGenes(shim_state$obj)
+         CellChat::identifyOverExpressedInteractions(o)
        }),
   list(name = "kernel",
        up = function() UP$computeCommunProb(upstream_state$obj, type = "triMean", nboot = NBOOT),
-       rs = function() cellchatrs::computeCommunProb(shim_state$obj, type = "triMean",
+       rs = function() CellChat::computeCommunProb(shim_state$obj, type = "triMean",
                                                     nboot = NBOOT)),
   list(name = "downstream",
        up = function() {
@@ -228,9 +228,9 @@ stages <- list(
          UP$aggregateNet(o)
        },
        rs = function() {
-         o <- cellchatrs::filterCommunication(shim_state$obj, min.cells = 10)
-         o <- cellchatrs::computeCommunProbPathway(o)
-         cellchatrs::aggregateNet(o)
+         o <- CellChat::filterCommunication(shim_state$obj, min.cells = 10)
+         o <- CellChat::computeCommunProbPathway(o)
+         CellChat::aggregateNet(o)
        }),
   list(name = "centrality",
        up = function() {
@@ -239,7 +239,7 @@ stages <- list(
        },
        rs = function() {
          set.seed(20240501)
-         cellchatrs::netAnalysis_computeCentrality(shim_state$obj, slot.name = "netP")
+         CellChat::netAnalysis_computeCentrality(shim_state$obj, slot.name = "netP")
        })
 )
 
@@ -250,15 +250,15 @@ upstream_state <- new.env()
 shim_state <- new.env()
 cat("AMDAHL warming inputs...\n")
 upstream_state$obj <- quietly({ o <- prep_once(); UP$subsetData(o) })
-shim_state$obj <- quietly({ o <- prep_once(); cellchatrs::subsetData(o) })
+shim_state$obj <- quietly({ o <- prep_once(); CellChat::subsetData(o) })
 stopifnot(identical(upstream_state$obj, shim_state$obj))
 upstream_state$obj <- quietly({
   o <- UP$identifyOverExpressedGenes(upstream_state$obj)
   UP$identifyOverExpressedInteractions(o)
 })
 shim_state$obj <- quietly({
-  o <- cellchatrs::identifyOverExpressedGenes(shim_state$obj)
-  cellchatrs::identifyOverExpressedInteractions(o)
+  o <- CellChat::identifyOverExpressedGenes(shim_state$obj)
+  CellChat::identifyOverExpressedInteractions(o)
 })
 stopifnot(identical(upstream_state$obj, shim_state$obj))
 

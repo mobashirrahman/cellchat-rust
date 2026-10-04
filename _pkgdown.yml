@@ -36,7 +36,7 @@ reference:
   contents:
   - starts_with("cellchatrs_upstream")
 - title: Standalone kernel
-  desc: The `cellchatrs` CLI (installed separately from crates/cellchatrs-cli).
+  desc: The `cellchatrs` CLI (installed separately from src/rust/crates/cellchatrs-cli).
   contents: []
 
 articles:

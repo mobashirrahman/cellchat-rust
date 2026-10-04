@@ -289,7 +289,7 @@ QUANTITIES: list[tuple[str, str, str, str]] = [
      "computeCellDistance against upstream: the dist rewrap (call/method/Labels), the ncol error, "
      "ratio applied when non-NULL, the threshold needing BOTH range and tol, and tol as an addend",
      "R_LIBS=.rlib R --vanilla -f tests/parity/check_identical.R", "identical"),
-    ("rshim.computeRegionDistance",
+    ("rshim.computeRegionDistance_exact",
      "the R-side marshalling for all 12 corpus fixtures: levels(factor) order, the declared-but-"
      "absent level, match() on the factor, and the dimnames",
      "R_LIBS=.rlib R --vanilla -f tests/parity/check_identical.R", "identical"),
@@ -545,7 +545,7 @@ def rust_suite() -> Result:
 R_GATES: list[tuple[str, str, str, str]] = [
     (
         "gate.r_shim_identical",
-        "the acceptance gate: identical() on the S4 object from the installed shim",
+        "the acceptance gate: serialized-byte comparisons on deterministic scientific outputs",
         "tests/parity/check_identical.R",
         "identical",
     ),
@@ -559,16 +559,12 @@ R_GATES: list[tuple[str, str, str, str]] = [
         "identical",
     ),
     (
-        "prob.spatial_divergence_measured",
-        "the exact k-d tree against BiocNeighbors AnnoyParam on the authors' mouse cortex visium "
-        "data (1,073 spots, 8 cell types, 437 L-R pairs, nboot = 100), measured three ways: exact vs "
-        "Annoy differs in 42 of 64 d.spatial entries (2.8% max relative) and 1,682 of 8,576 Prob "
-        "entries (19.6%, 1.0% of peak), while Annoy vs Annoy on identical input differs in none -- so "
-        "the approximation is a systematic bias, not run-to-run noise. The exact tree is also 274x "
-        "faster. bench-runner/measure_spatial_divergence.R and "
-        "bench-runner/results/spatial_divergence.json",
-        "bench-runner/measure_spatial_divergence.R",
-        "measured-divergent",
+        "package.independent_dropin",
+        "109 public function signatures, public datasets, independent constructors and inference, "
+        "unmodified Annoy spatial output, native SNN helper, saved-object interoperability and "
+        "PNG rendering compared as bytes across independently installed packages in clean processes",
+        "tests/parity/check_dropin.R",
+        "identical",
     ),
     (
         "utilities.identify_over_expressed_genes_fast",
@@ -712,7 +708,7 @@ def build(run_it: bool) -> dict:
             {"quantity": quantity, "pin": why, "test": None, "rung": "untested",
              "exit_code": None, "detail": "not ported yet"}
         )
-    # `measured-divergent` counts as covered: the divergence is the deliverable, and it is measured.
+    # Measurements of a divergent optional algorithm never count as byte-identical compatibility.
     # A gap that is declared here but missing from `entries` is a silent regression: the artifact
     # would report a smaller gap list and a higher pass rate, and nothing would fail. This happened --
     # removing `prob.spatial_divergence` from GAPS took `analysis.netP_centrality` with it, and the
@@ -732,8 +728,12 @@ def build(run_it: bool) -> dict:
     if dupes:
         raise SystemExit("parity.json lists a quantity twice: " + ", ".join(dupes))
 
+    for e in entries:
+        alternative = e["quantity"].startswith(("spatial.kdtree", "spatial.region", "rshim.computeRegionDistance_exact"))
+        e["scope"] = "alternative-algorithm" if alternative else "compatibility"
     n_exact = sum(1 for e in entries
-                  if e["rung"] in ("exact", "exact-nan", "identical", "error-equal", "measured-divergent"))
+                  if e["scope"] == "compatibility" and e["rung"] in
+                  ("exact", "exact-nan", "identical", "error-equal"))
     return {
         "upstream": {
             "repo": "jinworks/CellChat",
@@ -756,9 +756,11 @@ def build(run_it: bool) -> dict:
             "untested": "no passing test establishes this yet",
         },
         "summary": {
-            "quantities": len(entries),
+            "quantities": sum(e["scope"] == "compatibility" for e in entries),
+            "alternative_checks": sum(e["scope"] == "alternative-algorithm" for e in entries),
             "at_rung": n_exact,
-            "untested": len(entries) - n_exact,
+            "untested": sum(e["rung"] == "untested" for e in entries),
+            "divergent": sum(e["rung"] == "measured-divergent" for e in entries),
         },
         "entries": entries,
     }

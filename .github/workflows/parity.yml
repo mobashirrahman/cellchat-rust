@@ -40,7 +40,9 @@ env:
   UPSTREAM_REPO: jinworks/CellChat
   UPSTREAM_SHA: 75253cd0c9e68410e6e721a6d3a0419a1d7e358f
   UPSTREAM_PATH: upstream
+  CELLCHAT_SRC: ${{ github.workspace }}/upstream
   R_LIBS_USER: ${{ github.workspace }}/.rlib
+  CARGO_BUILD_JOBS: 2
 
 jobs:
   # ---------------------------------------------------------------------------
@@ -102,20 +104,21 @@ jobs:
       - name: R dependencies
         run: |
           set -euo pipefail
-          install -c remotes
+          mkdir -p "$R_LIBS_USER"
+          Rscript -e 'install.packages("remotes", repos = "https://cloud.r-project.org", lib = Sys.getenv("R_LIBS_USER"))'
           # `collapse` and `dplyr` are what the goldens are generated against; `future` is sourced
           # by upstream's own `modeling.R`. `presto` and `BiocNeighbors` are deliberately absent --
           # both are optional in upstream, and the gates assert that the port *falls back* rather
           # than silently taking a different algorithm.
-          remotes::install_cran(c("collapse", "dplyr", "future", "rlang", "jsonlite"), upgrade = "never")
-          echo "R_LIBS_USER=$R_LIBS_USER" >> "$GITHUB_ENV"
-          mkdir -p "$R_LIBS_USER"
+          Rscript -e 'remotes::install_cran(c("collapse", "dplyr", "future", "rlang", "jsonlite"), lib = Sys.getenv("R_LIBS_USER"), upgrade = "never")'
       - name: fetch the pinned upstream
         uses: actions/checkout@v4
         with:
           repository: ${{ env.UPSTREAM_REPO }}
           ref: ${{ env.UPSTREAM_SHA }}
           path: ${{ env.UPSTREAM_PATH }}
+      - name: verify the bundled upstream sources
+        run: ./scripts/check_upstream_bundle.sh
       - name: regenerate the golden corpora
         env:
           CELLCHAT_SRC: ${{ github.workspace }}/${{ env.UPSTREAM_PATH }}
@@ -130,7 +133,7 @@ jobs:
       - name: clippy
         run: cargo clippy --workspace --all-targets -- -D warnings
       - name: bundled DB exports match the fixtures
-        # inst/db/{human,mouse} is what a bare `library(cellchatrs)` session resolves against, and
+        # inst/db/{human,mouse} is what a bare `library(CellChat)` session resolves against, and
         # tests/fixtures/db_* is what the differential suite reads. Two committed copies of the
         # same export drift silently; this fails the job if they differ.
         run: sh scripts/check_inst_db.sh
@@ -183,18 +186,15 @@ jobs:
       - name: R dependencies
         run: |
           set -euo pipefail
-          install -c remotes
-          remotes::install_cran(c("collapse", "dplyr", "future", "rlang", "jsonlite", "Matrix", "testthat",
-                                  "presto", "BiocManager"),
-                                upgrade = "never")
+          mkdir -p "$R_LIBS_USER"
+          Rscript -e 'install.packages("remotes", repos = "https://cloud.r-project.org", lib = Sys.getenv("R_LIBS_USER"))'
+          Rscript -e 'remotes::install_cran(c("collapse", "dplyr", "future", "future.apply", "rlang", "jsonlite", "Matrix", "tibble", "ggplot2", "igraph", "pbapply", "testthat", "presto", "BiocManager"), lib = Sys.getenv("R_LIBS_USER"), upgrade = "never")'
           # BiocNeighbors is what upstream's spatial KNN actually calls, so `check_spatial` and the
           # divergence measurement need it. A CRAN-hosted package, so no BiocManager repository is
           # required for it, but its dependencies are not.
           if ! Rscript -e 'quit(status = !requireNamespace("BiocNeighbors", quietly = TRUE))'; then
-            BiocManager::install("BiocNeighbors", ask = FALSE, update = FALSE)
+            Rscript -e 'BiocManager::install("BiocNeighbors", ask = FALSE, update = FALSE, lib = Sys.getenv("R_LIBS_USER"))'
           fi
-          echo "R_LIBS_USER=$R_LIBS_USER" >> "$GITHUB_ENV"
-          mkdir -p "$R_LIBS_USER"
       - uses: Swatinem/rust-cache@v2
         with:
           key: r-parity-${{ matrix.r-version }}
@@ -210,6 +210,8 @@ jobs:
           repository: ${{ env.UPSTREAM_REPO }}
           ref: ${{ env.UPSTREAM_SHA }}
           path: ${{ env.UPSTREAM_PATH }}
+      - name: verify the bundled upstream sources
+        run: ./scripts/check_upstream_bundle.sh
       - name: regenerate the golden corpora
         env:
           CELLCHAT_SRC: ${{ github.workspace }}/${{ env.UPSTREAM_PATH }}
@@ -221,12 +223,7 @@ jobs:
         # parity break -- which is a worse way to learn the truth. Pinned to the exact file id
         # rather than the article page, because the article's file listing can change underneath us;
         # the size assertion is the tripwire if it ever does.
-        run: |
-          set -euo pipefail
-          mkdir -p data
-          curl -fsSL -o data/humanSkin.rda https://ndownloader.figshare.com/files/42997198
-          test "$(stat -c%s data/humanSkin.rda)" = "13426240" \
-            || { echo "::error::humanSkin.rda is not the expected 13426240 bytes"; exit 1; }
+        run: ./scripts/fetch_ci_fixtures.sh tutorial
       - name: build the standalone CLI
         # `check_cli.R` deliberately does not build the binary itself: the gate has to exercise the
         # artifact a user would install, not one compiled by the test it is testing.
@@ -266,6 +263,14 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - name: fetch the pinned upstream
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.UPSTREAM_REPO }}
+          ref: ${{ env.UPSTREAM_SHA }}
+          path: ${{ env.UPSTREAM_PATH }}
+      - name: verify the bundled upstream sources
+        run: ./scripts/check_upstream_bundle.sh
       - uses: r-lib/actions/setup-r@v2
         with:
           r-version: 4.4
@@ -273,11 +278,12 @@ jobs:
       - name: R dependencies
         run: |
           set -euo pipefail
-          install -c remotes
-          remotes::install_cran(c("collapse", "dplyr", "future", "rlang", "jsonlite", "Matrix"),
-                                upgrade = "never")
-          echo "R_LIBS_USER=$R_LIBS_USER" >> "$GITHUB_ENV"
           mkdir -p "$R_LIBS_USER"
+          Rscript -e 'install.packages("remotes", repos = "https://cloud.r-project.org", lib = Sys.getenv("R_LIBS_USER"))'
+          Rscript -e 'remotes::install_cran(c("collapse", "dplyr", "future", "future.apply", "rlang", "jsonlite", "Matrix", "tibble", "ggplot2", "igraph", "pbapply", "presto", "BiocManager"), lib = Sys.getenv("R_LIBS_USER"), upgrade = "never")'
+          if ! Rscript -e 'quit(status = !requireNamespace("BiocNeighbors", quietly = TRUE))'; then
+            Rscript -e 'BiocManager::install("BiocNeighbors", ask = FALSE, update = FALSE, lib = Sys.getenv("R_LIBS_USER"))'
+          fi
       - uses: Swatinem/rust-cache@v2
         with:
           key: parity-report
@@ -287,12 +293,6 @@ jobs:
           cargo build --release
           sh ./configure
           R CMD INSTALL --library="$R_LIBS_USER" .
-      - name: fetch the pinned upstream
-        uses: actions/checkout@v4
-        with:
-          repository: ${{ env.UPSTREAM_REPO }}
-          ref: ${{ env.UPSTREAM_SHA }}
-          path: ${{ env.UPSTREAM_PATH }}
       - name: regenerate the golden corpora
         env:
           CELLCHAT_SRC: ${{ github.workspace }}/${{ env.UPSTREAM_PATH }}
@@ -304,12 +304,7 @@ jobs:
         # parity break -- which is a worse way to learn the truth. Pinned to the exact file id
         # rather than the article page, because the article's file listing can change underneath us;
         # the size assertion is the tripwire if it ever does.
-        run: |
-          set -euo pipefail
-          mkdir -p data
-          curl -fsSL -o data/humanSkin.rda https://ndownloader.figshare.com/files/42997198
-          test "$(stat -c%s data/humanSkin.rda)" = "13426240" \
-            || { echo "::error::humanSkin.rda is not the expected 13426240 bytes"; exit 1; }
+        run: ./scripts/fetch_ci_fixtures.sh parity
       - name: emit parity.json
         env:
           CELLCHAT_SRC: ${{ github.workspace }}/${{ env.UPSTREAM_PATH }}
@@ -335,7 +330,7 @@ jobs:
           ]
           for e in d["entries"]:
             mark = "" if e["rung"] != "untested" else " :warning:"
-              lines.append(f"| `{e['quantity']}`{mark} | {e['rung']} | `{e['test']}` |")
+            lines.append(f"| `{e['quantity']}`{mark} | {e['rung']} | `{e['test']}` |")
           body = "\n".join(lines)
           pathlib.Path(os.environ["GITHUB_STEP_SUMMARY"]).write_text(body + "\n")
           print(body[:2000])
@@ -357,6 +352,14 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - name: fetch the pinned upstream
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.UPSTREAM_REPO }}
+          ref: ${{ env.UPSTREAM_SHA }}
+          path: ${{ env.UPSTREAM_PATH }}
+      - name: verify the bundled upstream sources
+        run: ./scripts/check_upstream_bundle.sh
       - uses: r-lib/actions/setup-r@v2
         with:
           r-version: 4.4
@@ -364,11 +367,9 @@ jobs:
       - name: R dependencies
         run: |
           set -euo pipefail
-          install -c remotes
-          remotes::install_cran(c("collapse", "dplyr", "future", "rlang", "jsonlite", "Matrix"),
-                                upgrade = "never")
-          echo "R_LIBS_USER=$R_LIBS_USER" >> "$GITHUB_ENV"
           mkdir -p "$R_LIBS_USER"
+          Rscript -e 'install.packages("remotes", repos = "https://cloud.r-project.org", lib = Sys.getenv("R_LIBS_USER"))'
+          Rscript -e 'remotes::install_cran(c("collapse", "dplyr", "future", "future.apply", "rlang", "jsonlite", "Matrix", "tibble", "ggplot2", "igraph", "pbapply", "knitr"), lib = Sys.getenv("R_LIBS_USER"), upgrade = "never")'
       - uses: Swatinem/rust-cache@v2
         with:
           key: package
@@ -378,6 +379,8 @@ jobs:
           cargo build --release
           sh ./configure
           R CMD INSTALL --library="$R_LIBS_USER" .
+      - name: install the source distribution outside the checkout
+        run: ./scripts/check_source_install.sh
       - name: R CMD build and check
         # `--as-cran` because the objective asks for a CRAN-clean package, and a check that skips
         # the CRAN notes is not evidence of that. Suggests are allowed to be missing; errors and
@@ -385,10 +388,10 @@ jobs:
         run: |
           set -euo pipefail
           R CMD build .
-          _R_CHECK_FORCE_SUGGESTS_=false R CMD check --as-cran --no-manual cellchatrs_*.tar.gz
-          tail -5 cellchatrs.Rcheck/00check.log
+          _R_CHECK_FORCE_SUGGESTS_=false R CMD check --as-cran --no-manual CellChat_*.tar.gz
+          tail -5 CellChat.Rcheck/00check.log
       - uses: actions/upload-artifact@v4
         with:
           name: r-cmd-check
-          path: cellchatrs.Rcheck/00check.log
+          path: CellChat.Rcheck/00check.log
           if-no-files-found: error

@@ -6,7 +6,7 @@
 #   scripts/codegen_variants.sh  builds the parity-critical tests under `-fma` and under
 #                                `target-cpu=native` and requires bit-identical results.
 #                                This is the check that matters: a unit test cannot see a flag.
-#   crates/r-core/tests/no_fma.rs  asserts the flag is present, that the F80 accumulator
+#   src/rust/crates/r-core/tests/no_fma.rs  asserts the flag is present, that the F80 accumulator
 #                                behaves like x87 rather than like f64, and that reassociating a
 #                                chained sum changes the answer -- so the order is being enforced
 #                                by the code and not merely hoped for.

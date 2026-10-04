@@ -95,7 +95,7 @@ Three details, each of which changes the last bit:
    `0.33365885416666669` in R and `0` with a naive `f64` chain — and it is *not* `1/3`
    either, because pass 1 lands on the `1` only in 64 bits.
 
-`crates/r-core/src/longdouble.rs` implements the 80-bit type and is differentially
+`src/rust/crates/r-core/src/longdouble.rs` implements the 80-bit type and is differentially
 tested against real x87 `long double` (`tests/parity/gen_f80_ref.c`, 6 180 cases
 including 180 chains up to 50 000 elements).
 
@@ -193,7 +193,7 @@ population as it goes (`x[j] = x[--n]`), and the *shrinking* `n` is what feeds
 
 ### R-isms found in the `computeExpr_*` family
 
-Found by `crates/r-core/src/expr.rs` + `tests/expr_parity.rs` against
+Found by `src/rust/crates/r-core/src/expr.rs` + `tests/expr_parity.rs` against
 `tests/fixtures/expr_golden.txt`, all of which change a returned bit and none of which
 are visible from the source alone.
 
@@ -234,7 +234,7 @@ are visible from the source alone.
 
 ### R-isms found in `computeCommunProb`
 
-Found by `crates/r-core/src/prob.rs` + `tests/prob_parity.rs` against
+Found by `src/rust/crates/r-core/src/prob.rs` + `tests/prob_parity.rs` against
 `tests/fixtures/prob_golden.txt` (eight parameter configurations, `Prob` and `Pval`
 bit-exact for all of them). 18–21 were each worth at least one wrong-bit bug in an
 implementation that looked correct.
@@ -272,7 +272,7 @@ Also confirmed by the corpus rather than assumed:
 
 ### R-isms found in `aggregateNet` / `subsetCommunication`
 
-Found by `crates/r-core/src/net.rs` + `tests/net_parity.rs` against
+Found by `src/rust/crates/r-core/src/net.rs` + `tests/net_parity.rs` against
 `tests/fixtures/net_golden.txt` (four fixtures, three thresholds, three filter
 combinations).
 
@@ -301,7 +301,7 @@ combinations).
 
 ### R-isms found in `computeAveExpr` / `subsetDB` / `subsetData`
 
-Found by `crates/r-core/src/de.rs` + `tests/de_parity.rs` against
+Found by `src/rust/crates/r-core/src/de.rs` + `tests/de_parity.rs` against
 `tests/fixtures/de_golden.txt`. 26–28.
 
 26. **`intersect` returns its *first* argument's order, not the matrix's.**
@@ -335,7 +335,7 @@ sort is tested even though the shipped export does not need it.
 ## `identifyOverExpressedGenes` (`do.fast = FALSE`)
 
 Nine R-isms, each of which produced a wrong answer before it was found. Every one is
-pinned by `crates/r-core/tests/wilcox_parity.rs` against a corpus generated from the
+pinned by `src/rust/crates/r-core/tests/wilcox_parity.rs` against a corpus generated from the
 pinned upstream (`tests/parity/gen_wilcox_golden.R`) and re-checked end to end through the
 installed shim by `tests/parity/check_identical.R`.
 
@@ -397,7 +397,7 @@ installed shim by `tests/parity/check_identical.R`.
 
 ## `computeCommunProbPathway`
 
-Four R-isms, each pinned by `crates/r-core/tests/pathway_parity.rs` (9 fixtures) and
+Four R-isms, each pinned by `src/rust/crates/r-core/tests/pathway_parity.rs` (9 fixtures) and
 re-checked end to end through the installed shim by `tests/parity/check_identical.R`.
 
 1. **Both `sum`s accumulate in LONG_DOUBLE**, and it is observable: the `bigmag` fixture's
@@ -473,7 +473,7 @@ intended never reaches the result. Verified for `sources.use`/`targets.use`, `si
 alphabetically ordered. A drop-in replacement that returned real numbers here would *differ*
 from upstream, so `r_core::net::aggregate_net_filtered` reproduces the empty/zero result and
 `docs/SEMANTICS.md` records why. Pinned by
-`crates/r-core/tests/netfiltered_parity.rs` and re-checked through the installed shim.
+`src/rust/crates/r-core/tests/netfiltered_parity.rs` and re-checked through the installed shim.
 
 The parts of the branch that *are* correct, and are pinned alongside it because they would
 matter if the regex were fixed:
@@ -488,8 +488,8 @@ matter if the regex were fixed:
 
 ## `filterCommunication`
 
-Ten R-isms. The numerics are in `crates/r-core/src/filter.rs`, pinned by
-`crates/r-core/tests/filter_parity.rs` against a corpus generated from the pinned upstream
+Ten R-isms. The numerics are in `src/rust/crates/r-core/src/filter.rs`, pinned by
+`src/rust/crates/r-core/tests/filter_parity.rs` against a corpus generated from the pinned upstream
 (`tests/parity/gen_filter_golden.R`, 13 cases / 70 records) and re-checked end to end
 through the installed shim by `tests/parity/check_identical.R`. Four of these were found
 only by the *installed-shim* gate, after the Rust test was already green — the pattern
@@ -556,7 +556,7 @@ repeated from `aggregateNet` and is the reason the shim gate is not optional.
 
 ## `subsetCommunication`'s DEG and `netP` branches
 
-Eleven R-isms, pinned by `crates/r-core/tests/subset_parity.rs` against a corpus generated
+Eleven R-isms, pinned by `src/rust/crates/r-core/tests/subset_parity.rs` against a corpus generated
 from the pinned upstream's own `subsetCommunication_internal` (`tests/parity/gen_subset_golden.R`,
 34 cases) and re-checked through the installed shim by `tests/parity/check_identical.R`. The
 input table is hand-built rather than generated: there is no RNG in this branch, so the corpus
@@ -660,7 +660,7 @@ therefore a different row order.
 
 ## `rankNet`'s information flow
 
-Eleven R-isms, pinned by `crates/r-core/tests/ranknet_parity.rs` against a corpus built by
+Eleven R-isms, pinned by `src/rust/crates/r-core/tests/ranknet_parity.rs` against a corpus built by
 `tests/parity/gen_ranknet_golden.R`, which **lifts upstream's own expressions verbatim** rather
 than reimplementing them, so the oracle is upstream's arithmetic and not a reading of it. There is
 no RNG: every probability array is written out, which is what makes the degenerate cases reachable
@@ -764,12 +764,12 @@ and `filter_parity.rs` says so rather than asserting something that passes for t
 
 ## `computeRegionDistance`
 
-`crates/r-core/src/spatial.rs`, in two layers. The **foundations** -- R's `mean(x, trim, na.rm)`,
+`src/rust/crates/r-core/src/spatial.rs`, in two layers. The **foundations** -- R's `mean(x, trim, na.rm)`,
 `collapse::fdist`, and the exact k-d tree that replaces `AnnoyParam` -- are pinned by
-`crates/r-core/tests/spatial_parity.rs` against a corpus generated from R
+`src/rust/crates/r-core/tests/spatial_parity.rs` against a corpus generated from R
 (`tests/parity/gen_spatial_golden.R`, 26 trimmed-mean cases and 7 distance matrices).
 
-The **function** is pinned by `crates/r-core/tests/region_parity.rs` against
+The **function** is pinned by `src/rust/crates/r-core/tests/region_parity.rs` against
 `tests/fixtures/region_golden.txt` (13 cases), and the R-side marshalling by the
 `computeCellDistance` and `computeRegionDistance` blocks of `tests/parity/check_identical.R`.
 
@@ -1150,7 +1150,7 @@ consistency, `Pval` in `{k/nboot}`, `Pval[Prob == 0] == 1`, and `Prob` in `[0, 1
 
 ## Fuzzing the database structure found no kernel bug and four wrong properties
 
-`crates/r-core/tests/db_fuzz.rs` generates hostile L-R databases -- empty subunit lists, names
+`src/rust/crates/r-core/tests/db_fuzz.rs` generates hostile L-R databases -- empty subunit lists, names
 colliding across the complex, cofactor and symbol tables, self-referential complexes, overlapping
 subunits -- and checks that `resolve_entity` and `compute_expr_lr` are **total**: every entry point
 returns a value or an `ExprError`, never a panic. The resolution result is compared against a
@@ -1212,7 +1212,7 @@ commutative but a signed zero is not. And `F80::to_f64` returned a bare `0.0` fo
 so every signed zero came back positive on the way out. (`-Inf * 0.0` is `NaN`, not `-0.0`; the bit
 pattern is the only way to spell a signed zero.)
 
-The moral is about test *kinds*, and it is the reason `crates/r-core/tests/properties.rs` exists.
+The moral is about test *kinds*, and it is the reason `src/rust/crates/r-core/tests/properties.rs` exists.
 A named case pins an answer; a generated case checks a rule. Both bugs here produced plausible
 outputs on every input the repository happened to contain, and would have shipped.
 
@@ -1597,7 +1597,7 @@ guarantee, and this file's job is to keep it that way rather than to credit it w
 language already provides. What it does still protect against is a `-ffast-math`-style flag
 appearing in `RUSTFLAGS` somewhere, which the same script would catch.
 
-The in-crate probes are in `crates/r-core/tests/no_fma.rs`, and they are written so they cannot be
+The in-crate probes are in `src/rust/crates/r-core/tests/no_fma.rs`, and they are written so they cannot be
 mistaken for flag checks: `a_bare_multiply_add_in_this_crate_rounds_twice` states an observable
 invariant, and passes with `+fma` too, because the language — not the flag — is what forbids the
 contraction.
@@ -1768,7 +1768,7 @@ null distributions on both sides.
 ## The standalone CLI, and the four bugs its parity gate found
 
 The objective requires `r-core` to ship "as a standalone library/CLI so the numerics are usable
-without R". `crates/cellchatrs-cli` is that CLI: a `cellchatrs` binary that reads a self-describing
+without R". `src/rust/crates/cellchatrs-cli` is that CLI: a `cellchatrs` binary that reads a self-describing
 input file and writes the `Prob`/`Pval` networks, the averaged expression and `aggregateNet`'s two
 matrices, with no R in the process at all.
 

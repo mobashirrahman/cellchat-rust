@@ -27,7 +27,7 @@
 suppressWarnings(suppressMessages({
   library(methods); library(Matrix); library(collapse); library(dplyr)
 }))
-suppressWarnings(suppressMessages(library(cellchatrs)))
+suppressWarnings(suppressMessages(library(CellChat)))
 
 CC <- Sys.getenv("CELLCHAT_SRC", "../CellChat")
 
@@ -138,7 +138,7 @@ for (nm in names(slices)) {
              error = function(e) list(error = conditionMessage(e)))
   }
   a <- run(UP$netAnalysis_computeCentrality)
-  b <- run(cellchatrs::netAnalysis_computeCentrality)
+  b <- run(CellChat::netAnalysis_computeCentrality)
   ok <- identical(a, b)
   n_cmp <- n_cmp + 1L
   cat(sprintf("%-58s %s\n", sprintf("centrality identical on %s (%dx%d)", nm, nrow(m), ncol(m)),
@@ -173,7 +173,7 @@ for (nm in c("NA", "NaN")) {
   if (nm == "NaN") mm[1, 2, 1] <- NaN
   ea <- tryCatch({ UP$netAnalysis_computeCentrality(net = mm, slot.name = "netP"); NULL },
                  error = conditionMessage)
-  eb <- tryCatch({ cellchatrs::netAnalysis_computeCentrality(net = mm, slot.name = "netP"); NULL },
+  eb <- tryCatch({ CellChat::netAnalysis_computeCentrality(net = mm, slot.name = "netP"); NULL },
                  error = conditionMessage)
   cmp(sprintf("%s matrix raises igraph's text on both sides", nm), identical(ea, eb),
       sprintf("up=[%s] rs=[%s]", ea, eb))
@@ -205,7 +205,7 @@ for (v in c(1e10, 0.5)) {
           dimnames = list(rownames(m0), colnames(m0), "P"))
   }
   wa <- warns(function() UP$netAnalysis_computeCentrality(net = arr(v), slot.name = "netP"))
-  wb <- warns(function() cellchatrs::netAnalysis_computeCentrality(net = arr(v),
+  wb <- warns(function() CellChat::netAnalysis_computeCentrality(net = arr(v),
                                                                    slot.name = "netP"))
   cmp(sprintf("warning text identical at uniform prob %.0e (%s)", v,
               if (is.null(wa)) "both silent" else "both warn"),

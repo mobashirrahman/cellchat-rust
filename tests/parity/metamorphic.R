@@ -33,7 +33,7 @@
 ## invariants are checked on every run below rather than only in the nboot test.
 
 suppressWarnings(suppressMessages({
-  library(collapse); library(Matrix); library(dplyr); library(cellchatrs)
+  library(collapse); library(Matrix); library(dplyr); library(CellChat)
 }))
 `%||%` <- function(a, b) if (is.null(a)) b else a
 
@@ -97,7 +97,7 @@ mk <- function(mat, grp = cell_group) {
       options = list(datatype = "RNA", mode = "single"), net = list(), netP = list())
 }
 
-up <- get("cellchatrs_upstream_computeCommunProb", envir = asNamespace("cellchatrs"))
+up <- get("cellchatrs_upstream_computeCommunProb", envir = asNamespace("CellChat"))
 quiet <- function(e) {
   tf <- tempfile(); sink(tf)
   out <- withCallingHandlers(e, message = function(m) invokeRestart("muffleMessage"),

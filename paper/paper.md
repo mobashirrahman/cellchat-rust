@@ -7,9 +7,9 @@ artifact that produced it; a claim without a pointer is a claim withdrawn.*
 
 CellChat inference is dominated (92--96% of pipeline time) by its bootstrap aggregation
 kernel. We reimplemented the package's numeric surface in Rust (`r-core`, zero R
-dependency) behind an R shim that overrides the corresponding CellChat functions, and
-verify it with 159 machine-checkable parity quantities: `identical()` on whole S4 objects
-across a 200-configuration matrix, an installed-shim differential gate (418 comparisons),
+dependency) behind an R package that exports matching inference entry points, and
+verify it with 160 machine-checkable parity quantities: `identical()` on whole S4 objects
+across a 200-configuration matrix, an installed-shim differential gate (427 comparisons),
 metamorphic and fuzz suites, an independent-RNG stream (120 seeds), a full tutorial
 reproduction, and a standalone CLI checked against upstream over 14 configurations (231
 comparisons). On the authors' own human-skin (7,563 cells) and mouse-wound (21,557 cells)
@@ -32,11 +32,11 @@ large datasets. That recommendation is a runtime workaround, and runtime workaro
 deserve to be remeasured when the runtime changes.
 
 `cellchatrs` keeps the R API and replaces the numerics: a pure-Rust crate implements the
-kernel, an R package overrides the matching CellChat generics, and everything else --
+kernel, an R package exports the matching inference entry points, and everything else --
 plotting, the Shiny app, database curation -- stays upstream R code by explicit scope
 decision. The contribution is therefore not a new method but a verified claim: *the same
 numbers, faster, with the verification machine-readable*. The parity ledger
-(`parity.json`, 159 quantities, each naming the test that pins it and the rung achieved)
+(`parity.json`, 160 quantities, each naming the test that pins it and the rung achieved)
 is part of the deliverable, not an appendix to it.
 
 ## Results
@@ -49,7 +49,7 @@ fixture matrix (pairwise coverage over mean type, cell count, group count, L-R c
 bootstrap depth, population size, raw use, datatype, L-R structure, Hill parameters,
 trim, and pathological inputs including all-zero, single-cell, NA/NaN/Inf and duplicate
 rownames) passes 1051/1051 axis pairs with scale invariance. The installed-shim gate
-passes 418/418 comparisons over 9 configurations; metamorphic invariances (permutation,
+passes 427/427 comparisons over 9 configurations; metamorphic invariances (permutation,
 relabelling, scaling, duplication, `nboot`-invariance of `Prob`) pass 40/40; 18
 property tests, 4 database fuzz properties, and a 120-seed independent-RNG stream
 (Kolmogorov-Smirnov $D = 0$ on 15,360 pooled values) all pass. The vignette pipeline
@@ -163,9 +163,9 @@ and the paper does not call them interchangeable.
 
 ## Methods
 
-*Port architecture.* Pure-Rust numerics (`crates/r-core`, no R dependency, all logic in
-pure functions) + extendr marshalling layer (`crates/cellchatrs`) + R shim overriding
-upstream generics + standalone CLI (`crates/cellchatrs-cli`) reading self-describing
+*Port architecture.* Pure-Rust numerics (`src/rust/crates/r-core`, no R dependency, all logic in
+pure functions) + extendr marshalling layer (`src/rust/crates/cellchatrs`) + R shim overriding
+upstream generics + standalone CLI (`src/rust/crates/cellchatrs-cli`) reading self-describing
 hex-float input. R 4.3, Rust stable/nightly per CI.
 
 *Borough of verification.* `PLAN.md` §14 records fourteen locked scope decisions;

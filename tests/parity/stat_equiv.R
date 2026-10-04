@@ -1,3 +1,6 @@
+# Compare serialized bytes, including signed zero and NaN payloads.
+identical <- function(x, y, ...) base::identical(serialize(x, NULL, version=3L),
+                                               serialize(y, NULL, version=3L))
 # Statistical equivalence over many seeds, with an independent RNG stream.
 #
 # The existing gates pin the port to upstream at a handful of `seed.use` values, and
@@ -33,7 +36,7 @@
 suppressWarnings(suppressMessages({
   library(methods); library(Matrix); library(collapse); library(dplyr)
 }))
-suppressWarnings(suppressMessages(library(cellchatrs)))
+suppressWarnings(suppressMessages(library(CellChat)))
 
 CC <- Sys.getenv("CELLCHAT_SRC", "../CellChat")
 DBDIR <- Sys.getenv("CELLCHATRS_DB", "tests/fixtures/db_human")

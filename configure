@@ -5,10 +5,68 @@
 set -e
 CARGO="${CARGO:-cargo}"
 cd "$(dirname "$0")"
-if ! command -v "$CARGO" >/dev/null 2>&1; then
-  echo "configure: cargo not found; a Rust toolchain (>= 1.75) is required." >&2
+home_dir="${HOME:-}"
+cargo_cmd="$(command -v "$CARGO" 2>/dev/null || true)"
+if [ -z "$cargo_cmd" ] && [ -n "$home_dir" ] && [ -x "$home_dir/.cargo/bin/$CARGO" ]; then
+  cargo_cmd="$home_dir/.cargo/bin/$CARGO"
+fi
+if [ -z "$cargo_cmd" ]; then
+  echo "configure: cargo not found; Rust and Cargo >= 1.84 are required." >&2
   exit 1
 fi
-"$CARGO" build --release --manifest-path Cargo.toml
-cp target/release/libcellchatrs.so src/cellchatrs.so
-echo "configure: staged src/cellchatrs.so"
+rustc_cmd="$(command -v rustc 2>/dev/null || true)"
+if [ -z "$rustc_cmd" ] && [ -n "$home_dir" ] && [ -x "$home_dir/.cargo/bin/rustc" ]; then
+  rustc_cmd="$home_dir/.cargo/bin/rustc"
+fi
+if [ -z "$rustc_cmd" ]; then
+  echo "configure: rustc not found; Rust and Cargo >= 1.84 are required." >&2
+  exit 1
+fi
+rust_version="$("$rustc_cmd" --version | awk '{print $2}')"
+cargo_version="$("$cargo_cmd" --version | awk '{print $2}')"
+if [ "$(printf '%s\n' 1.84 "$rust_version" | sort -V | head -n1)" != "1.84" ]; then
+  echo "configure: rustc $rust_version is too old; Rust and Cargo >= 1.84 are required." >&2
+  exit 1
+fi
+if [ "$(printf '%s\n' 1.84 "$cargo_version" | sort -V | head -n1)" != "1.84" ]; then
+  echo "configure: cargo $cargo_version is too old; Rust and Cargo >= 1.84 are required." >&2
+  exit 1
+fi
+case "$(uname -s):$(uname -m)" in
+  Linux:x86_64) ;;
+  *)
+    echo "configure: cellchatrs 0.1 currently supports Linux x86_64 only." >&2
+    exit 1
+    ;;
+esac
+root="$(pwd)"
+target_dir="${CARGO_TARGET_DIR:-$root/target}"
+tool_path="$(dirname "$cargo_cmd"):$(dirname "$rustc_cmd"):$PATH"
+temp_dir="$(mktemp -d "${TMPDIR:-/tmp}/cellchatrs-cargo.XXXXXX")"
+trap 'rm -rf "$temp_dir"' EXIT HUP INT TERM
+if ! (cd src/rust/r-build && sha256sum --check vendor.tar.xz.sha256); then
+  echo "configure: bundled Rust dependency archive failed its SHA-256 check." >&2
+  exit 1
+fi
+tar -xJf src/rust/r-build/vendor.tar.xz -C "$temp_dir"
+mkdir -p "$temp_dir/cargo-home"
+cat > "$temp_dir/cargo-home/config.toml" <<EOF
+[source.crates-io]
+replace-with = "vendored-sources"
+
+[source.vendored-sources]
+directory = "$temp_dir/vendor"
+EOF
+echo "configure: using rustc $rust_version and cargo $cargo_version"
+(
+  cd src/rust/r-build
+  CARGO_HOME="$temp_dir/cargo-home" \
+  CARGO_TARGET_DIR="$target_dir" \
+  CARGO_BUILD_JOBS="${CARGO_BUILD_JOBS:-2}" \
+  CARGO_NET_OFFLINE=true \
+  PATH="$tool_path" \
+  RUSTFLAGS="${RUSTFLAGS:+$RUSTFLAGS }-C target-feature=-fma" \
+    "$cargo_cmd" build --frozen --release --manifest-path Cargo.toml
+)
+cp "$target_dir/release/libcellchatrs.so" src/CellChat.so
+echo "configure: staged src/CellChat.so"

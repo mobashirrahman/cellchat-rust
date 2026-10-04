@@ -1,6 +1,6 @@
 [workspace]
 resolver = "2"
-members = ["crates/r-core", "crates/cellchatrs", "crates/cellchatrs-cli"]
+members = ["src/rust/crates/r-core", "src/rust/crates/cellchatrs", "src/rust/crates/cellchatrs-cli"]
 
 [workspace.package]
 version = "0.1.0"
@@ -35,10 +35,15 @@ lto = "fat"
 codegen-units = 1
 
 # ---------------------------------------------------------------------------
-# Clippy policy. Lives here rather than in `crates/r-core/src/lib.rs` because
+# Clippy policy. Lives here rather than in `src/rust/crates/r-core/src/lib.rs` because
 # integration tests under `tests/` are separate crates and do not inherit a
 # library's inner attributes -- a policy that lived in `lib.rs` would cover
 # `src/` and silently miss every test.
+#
+# `src/rust/crates/r-core/Cargo.toml` carries its own copy of this block, because it
+# inherits nothing from this file -- see the note there. The two must stay identical;
+# `r-core` is the only crate the R package's offline build compiles, so its copy is the
+# one CI actually exercises.
 #
 # `excessive_precision` and `approx_constant` are the two that must be off, and
 # both are the same mistake seen from two sides. The lint wants a float literal

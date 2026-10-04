@@ -1,4 +1,7 @@
 #!/usr/bin/env Rscript
+# Compare serialized bytes, including signed zero and NaN payloads.
+identical <- function(x, y, ...) base::identical(serialize(x, NULL, version=3L),
+                                               serialize(y, NULL, version=3L))
 ## Runs the configuration matrix in `matrix.R` against pinned upstream and the Rust shim, and
 ## writes a machine-checkable report.
 ##
@@ -18,7 +21,7 @@
 ## Usage: Rscript tests/parity/check_matrix.R [--max N] [--out FILE]
 
 suppressWarnings(suppressMessages({
-  library(Matrix); library(collapse); library(dplyr); library(cellchatrs)
+  library(Matrix); library(collapse); library(dplyr); library(CellChat)
 }))
 ROOT <- Sys.getenv("CELLCHATRS_ROOT", unset = getwd())
 CC <- Sys.getenv("CELLCHAT_SRC", "../CellChat")

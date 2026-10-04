@@ -28,7 +28,7 @@
 suppressWarnings(suppressMessages({
   library(stats); library(methods); library(Matrix); library(collapse); library(dplyr)
 }))
-suppressWarnings(suppressMessages(library(cellchatrs)))
+suppressWarnings(suppressMessages(library(CellChat)))
 
 `%||%` <- function(a, b) if (is.null(a)) b else a
 j_esc <- function(x) {
@@ -183,7 +183,7 @@ DBFULL <- get(ls(E)[1], E)
 ## the kernel enforces everywhere ("subscript out of bounds" otherwise), applied at selection time
 ## rather than discovered mid-run.
 CXNAMES <- rownames(DBFULL$complex)
-dbix <- system.file("db", "human", "interactions.tsv", package = "cellchatrs")
+dbix <- system.file("db", "human", "interactions.tsv", package = "CellChat")
 if (!nzchar(dbix)) stop("bundled human DB export missing; reinstall the package", call. = FALSE)
 dblines <- strsplit(readLines(dbix), "\t", fixed = TRUE)
 is_simple <- vapply(dblines, function(f) {
@@ -263,7 +263,7 @@ for (nC in GRID) {
   nlr_here <- nrow(obj_up@LR$LRsig)
   mu <- measure("R upstream", function() UP$computeCommunProb(
     obj_up, type = "triMean", nboot = NBOOT, seed.use = SEED), REPEATS, WARMUP)
-  mr <- measure("Rust kernel", function() cellchatrs::computeCommunProb(
+  mr <- measure("Rust kernel", function() CellChat::computeCommunProb(
     obj_rs, type = "triMean", nboot = NBOOT, seed.use = SEED), REPEATS, WARMUP)
   par_net <- identical(mu$value@net, mr$value@net)
   par_prob <- identical(mu$value@net$prob, mr$value@net$prob)

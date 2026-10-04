@@ -1,5 +1,8 @@
 /target/
-/src/cellchatrs.so
+/r-build/target/
+/r-build/vendor/
+/src/rust/r-build/target/
+/src/CellChat.so
 /.rlib/
 *.log
 
@@ -17,3 +20,17 @@
 # A runner that refuses to measure writes this beside its output. It is evidence of *why* a
 # measurement was declined, not a result, so it never belongs in the repository.
 bench-runner/results/*.refused.json
+
+/CellChat_*.tar.gz
+/CellChat.Rcheck/
+
+# Real single-cell datasets: 70 MB of .rda/.rds. They are benchmark *inputs*, not package
+# content -- nothing under R/, tests/ or vignettes/ reads them, `.Rbuildignore` already keeps
+# them out of the source tarball, and `scripts/fetch_ci_fixtures.sh` fetches each one by a
+# pinned file id and asserts its exact byte size and sha256. That script is the reason they are
+# not in the repository: committing 70 MB of binaries that nothing in the package needs, and
+# that git would then have to store forever, buys nothing the fetch does not already give.
+# The benchmark runners find them via `CELLCHATRS_DATA`, defaulting to `data/`.
+/data/humanSkin.rda
+/data/wound.rda
+/data/visium.rds

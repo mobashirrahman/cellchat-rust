@@ -1,3 +1,6 @@
+# Compare serialized bytes, including signed zero and NaN payloads.
+identical <- function(x, y, ...) base::identical(serialize(x, NULL, version=3L),
+                                               serialize(y, NULL, version=3L))
 # Parity gate for the standalone CLI.
 #
 # The objective says the Rust core "additionally ships as a standalone library/CLI so the numerics are

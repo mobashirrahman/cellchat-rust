@@ -138,7 +138,7 @@ The first version of the sweep -- taken *before* `build_boot` was parallelised -
 | median | 10.66 s | 10.59 s | 10.69 s | 10.63 s | 10.70 s |
 
 Flat to within noise across a 16× thread range is not a scaling result, it is the signature of a
-sequential loop, and `grep -rn "par_iter\|into_par_iter\|rayon::" crates/r-core/src/` returned
+sequential loop, and `grep -rn "par_iter\|into_par_iter\|rayon::" src/rust/crates/r-core/src/` returned
 nothing: the bootstrap replicate loop was a plain `for`, and 92-95 % of runtime is bootstrap
 aggregation. A `rayon` dependency, a `request_num_threads` API and a thread-pool builder were all
 wired up and all unused.

@@ -9,7 +9,7 @@
 ##
 ## It marshals and nothing else. `data.use <- data/max(data)`, the aggregation, the
 ## bootstrap permutation, the Hill functions and the p-value counting are all in `r-core`,
-## tested bit-exactly against upstream in `crates/r-core/tests/prob_parity.rs` over eight
+## tested bit-exactly against upstream in `src/rust/crates/r-core/tests/prob_parity.rs` over eight
 ## parameter configurations. Anything that stays here is something the kernel has not been
 ## given yet, and each such case is listed in `NOT_PORTED` below so it is visible rather
 ## than silently slow.
@@ -19,56 +19,23 @@
 ## `CELLCHATRS_FALLBACK=1` routes to `cellchatrs_upstream_computeCommunProb`, which is
 ## the pinned upstream body, verbatim. That is how the differential test obtains its
 ## reference, and it is the escape hatch if the Rust kernel is ever wrong on a machine we
-## have not tested. It is also why the shim needs the upstream source tree at runtime --
-## see `cellchatrs_upstream_env()`.
+## have not tested. The exact upstream sources are bundled with the package; see
+## `cellchatrs_upstream_env()`.
 
-#' @useDynLib cellchatrs, .registration = TRUE
+#' @useDynLib CellChat, .registration = TRUE
 NULL
 
 ## The pinned upstream body, kept verbatim for the differential test and as a fallback.
-## Sourced from the clone named by CELLCHAT_SRC; never modified.
+## Sourced from the pinned files shipped in inst/upstream; never modified.
 cellchatrs_upstream_env <- function() {
-  src <- Sys.getenv("CELLCHAT_SRC", "../CellChat")
+  src <- system.file("upstream/CellChat-75253cd0", package = "CellChat")
   f <- file.path(src, "R", "modeling.R")
-  if (!file.exists(f)) {
-    stop("pinned upstream not found at ", f,
-         "; set CELLCHAT_SRC to a clone of jinworks/CellChat at commit ",
-         "75253cd0c9e68410e6e721a6d3a0419a1d7e358f", call. = FALSE)
+  if (!nzchar(src) || !file.exists(f)) {
+    stop("the pinned CellChat source bundled with cellchatrs is missing", call. = FALSE)
   }
-  ## `parent = globalenv()`, deliberately -- and this was a real bug, not a style choice.
-  ##
-  ## A namespace's lookup chain is `namespace -> imports -> base namespace` and **stops
-  ## there**; it does not continue to the global environment or the search path. With
-  ## `parent = asNamespace("cellchatrs")`, upstream's own
-  ## `markers.all <- data.frame(features = ..., nCells = rowSums(data.use > 0))` found
-  ## `base::rowSums`, not `Matrix::rowSums`, because `Matrix`'s `rowSums` method for a
-  ## `lgCMatrix` is only reachable through an *attached* package. So the pinned upstream
-  ## body raised `'x' must be an array of at least two dimensions` on any sparse
-  ## `data.signaling` in the `do.DE = FALSE` branch -- a failure of the *reference*, which
-  ## the differential test then dutifully compared against.
-  ##
-  ## `globalenv()` makes the fallback resolve names exactly the way upstream's body would
-  ## in a user's session, which is what "the pinned upstream body, verbatim" has to mean.
-  env <- new.env(parent = globalenv())
-  for (p in c("Matrix", "collapse", "dplyr", "future", "rlang")) {
-    suppressWarnings(suppressMessages(requireNamespace(p, quietly = TRUE)))
-  }
-  ## Attached, not merely loadable -- and the vignette is what proved the difference matters.
-  ## Sourced upstream bodies call bare `select()`, `filter()`, `rowSums()` on sparse matrices and
-  ## friends, which resolve through the *search path*: `requireNamespace` alone leaves
-  ## `extractGene` failing with `could not find function "select"` in any session that has not
-  ## attached dplyr itself. Every parity script attaches these four packages manually, which is
-  ## how the requirement stayed invisible until a bare `library(cellchatrs)` session hit it.
-  ## Attaching from a package function is normally rude; here it reproduces exactly what a user
-  ## running upstream CellChat has (CellChat imports all four), so the alternative -- upstream
-  ## bodies failing for missing verbs -- is strictly worse. `rlang` stays load-only: nothing
-  ## sourced calls it unqualified.
-  for (p in c("Matrix", "collapse", "dplyr", "future")) {
-    if (!paste0("package:", p) %in% search()) {
-      suppressPackageStartupMessages(
-        library(p, character.only = TRUE, quietly = TRUE, warn.conflicts = FALSE))
-    }
-  }
+  ## Resolve imports exactly as the package namespace does, without attaching dependencies
+  ## or inheriting bindings from the caller's global environment.
+  env <- new.env(parent = parent.env(environment(cellchatrs_upstream_env)))
   ## `utilities.R` for `identifyOverExpressedGenes`/`extractGene`/`subsetData`/`subsetDB`,
   ## `database.R` for `CellChatDB`. Sourcing them all into `env` means upstream's own
   ## `subsetData` shadows nothing here but *is* what `cellchatrs_upstream_subsetData` and
@@ -92,35 +59,24 @@ cellchatrs_upstream_env <- function() {
   ## top-level code. Without it, `mergeCellChat` is unreachable from the reference environment and
   ## the comparison-analysis path cannot be tested at all.
   ##
-  ## The class file goes into `globalenv()`, and ONLY there -- not into `env`. This is load-bearing
-  ## and the failure for getting it wrong is far from the cause, which is how the vignette found it:
-  ## `methods::new("CellChat")` and `is(x, "Seurat")` resolve the class through
-  ## `getClassDef(Class, where = topenv(parent.frame()))`, i.e. the *top* of the calling chain, not
-  ## the calling environment. A `setClass` executed inside the private `env` registers the
-  ## definition under a synthetic timestamp package name ("Created a package name ... when none
-  ## found"), and the first `new()`/`is()` then tries to *load* that package:
-  ## `unable to find required package '2026-10-02 ...'`, raised inside the kernel call. Sourcing
-  ## into `globalenv()` registers the class where every lookup chain ends, so one definition serves
-  ## the reference env, this package's cached callers, and any script's own `slot()` calls -- which
-  ## is also why every parity script sources the class file globally rather than privately.
-  ## Guarded by a registry check so re-sourcing on a second call is a no-op rather than a
-  ## redefinition: `setClass` on an existing class is quiet, but the two `setClassUnion` calls are
-  ## not what this function is for, and running them twice invites the timestamp warning twice.
-  ## (This does place upstream's half-dozen class-file functions in the user's global environment --
-  ## the same names `library(CellChat)` would provide. That is deliberate: they are verbatim
-  ## upstream, and a drop-in replacement that leaves `createCellChat` unresolvable has failed at
-  ## its first line.)
-  for (f in c("modeling.R", "analysis.R", "utilities.R", "database.R", "visualization.R")) {
+  ## `CellChat` and its unions are registered by this package at load time. Evaluate only the
+  ## upstream functions here; rerunning `setClass` in .GlobalEnv would leak implementation
+  ## bindings into the caller and emit Matrix class-registration warnings.
+  for (f in c("modeling.R", "analysis.R", "utilities.R", "database.R", "visualization.R", "app.R")) {
     p <- file.path(src, "R", f)
     if (file.exists(p)) sys.source(p, envir = env, keep.source = FALSE)
   }
-  ## The class definition, globally (see the block comment above for why it cannot live in `env`).
-  if (is.null(methods::getClassDef("CellChat", where = globalenv()))) {
-    cf <- file.path(src, "R", "CellChat_class.R")
-    if (file.exists(cf)) {
-      suppressWarnings(suppressMessages(
-        sys.source(cf, envir = globalenv(), keep.source = FALSE)))
-    }
+  ## Evaluate the functions from CellChat_class.R into the private reference environment. The
+  ## class definitions and show method already live in the package namespace from load time.
+  cf <- file.path(src, "R", "CellChat_class.R")
+  class_expr <- parse(cf)
+  for (i in 5L:length(class_expr)) eval(class_expr[[i]], envir = env)
+  ## The upstream R body calls this helper by name. Its native implementation is supplied
+  ## by this package, so buildSNN and network analysis need no upstream DLL.
+  env$ComputeSNN <- ComputeSNN
+  data_dir <- file.path(src, "data")
+  for (data_file in list.files(data_dir, pattern = "\\.rda$", full.names = TRUE)) {
+    load(data_file, envir = env)
   }
   env
 }
@@ -308,7 +264,7 @@ aggregateNet <- function(object, sources.use = NULL, targets.use = NULL, signali
 ## `identical()` fail on the column type even when every value matches. And the **empty** case
 ## *warns* rather than errors, because upstream's final `nrow(net) == 0` check runs after the
 ## `sources.use` filter, where the earlier threshold-stage `stop()` no longer applies.
-.cellchatrs_subset_df <- function(res, net_levels) {
+.cellchatrs_subset_df <- function(res, net_levels, slot_name = "net") {
   ## The kernel reports its own errors as a value (see the binding): extendr 0.9 discards the
   ## text of an `Err` and raises "Must not be NA." instead, and the text is the contract.
   if (!is.null(res[["__error"]])) stop(res[["__error"]], call. = FALSE)
@@ -336,6 +292,9 @@ aggregateNet <- function(object, sources.use = NULL, targets.use = NULL, signali
     }), stringsAsFactors = FALSE, optional = TRUE)
   names(out) <- cols
   rownames(out) <- 1:nrow(out)
+  if (!slot_name %in% c("net", "netP")) {
+    attributes(out) <- attributes(out)[c("names", "row.names", "class")]
+  }
   out
 }
 
@@ -882,7 +841,7 @@ subsetCommunication <- function(object = NULL, net = NULL, slot.name = "net",
     ## fixtures fail on the class alone with every value, every rowname and every column class
     ## already matching. Concluding this from the `rankNet` evidence alone is the trap -- the two
     ## branches share a name and nothing else.
-    out <- .cellchatrs_subset_df(res, net_levels = cells.level)
+    out <- .cellchatrs_subset_df(res, net_levels = cells.level, slot_name = slot.name)
     return(out)
   }
 
@@ -1086,7 +1045,7 @@ subsetData <- function(object, features = NULL) {
 ## Each entry is a real behavioural difference, not a stylistic one, and each is on the
 ## critical path for the drop-in claim.
 NOT_PORTED <- c(
-  spatial        = "computeRegionDistance, computeCellDistance and computeCommunProb's spatial branch: Rust-backed, with an exact k-d tree in place of AnnoyParam. The divergence from Annoy is a separate measurement (PLAN.md 14.5), not a silent swap",
+  spatial        = "computeRegionDistance preserves the original Annoy algorithm; cellchatrs_computeRegionDistance_exact is an explicit alternative, outside the compatibility contract",
   rankNet        = "rankNet(mode = 'comparison') is Rust-backed for the information flow and stays in R for `format`/row assembly, as does rankNetPairwise's data-frame construction; `rankNetPairwise`'s ordering is Rust. mergeCellChat is still R throughout",
   mergeCellChat  = "mergeCellChat: still R throughout -- a list of S4 objects, slot combination and net reindexing, with no arithmetic to move",
   oeg_fast       = "identifyOverExpressedGenes(do.fast = TRUE): presto, a different algorithm, falls back",
@@ -1132,7 +1091,12 @@ computeCommunProb <- function(object,
   ## invisible from a green gate: the only symptom was that the Rust path was never executed.
   ## The test is an explicit affirmative, not a presence test.
   fallback <- tolower(Sys.getenv("CELLCHATRS_FALLBACK", "0")) %in% c("1", "true", "yes", "on")
-  if (fallback) {
+  rng_kind <- base::RNGkind()
+  ## The Rust bootstrap reproduces R's Mersenne-Twister + rejection-sampling stream. Preserve
+  ## upstream behavior for alternate RNG/sample kinds by delegating the whole call.
+  rng_supported <- identical(rng_kind[[1L]], "Mersenne-Twister") &&
+    identical(rng_kind[[3L]], "Rejection")
+  if (fallback || !rng_supported) {
     return(cellchatrs_upstream_computeCommunProb(object, type = type, trim = trim,
                                                  LR.use = LR.use, raw.use = raw.use,
                                                  population.size = population.size,
@@ -1165,13 +1129,14 @@ computeCommunProb <- function(object,
   }
   nC <- ncol(data)
 
-  db_dir <- cellchatrs_db_dir(object)
+  complex_input <- object@DB$complex
+  cofactor_input <- object@DB$cofactor
+  complex_cols <- grep("^subunit", names(complex_input), ignore.case = TRUE)
+  cofactor_cols <- grep("^cofactor", names(cofactor_input), ignore.case = TRUE)
 
   ## The spatial constraint, upstream's `if (object@options$datatype != "RNA")` block in full.
   ##
-  ## `computeRegionDistance` is the Rust kernel with the exact k-d tree, so this branch no longer
-  ## falls back to upstream -- which is the point: upstream's own path would resolve the neighbours
-  ## through `AnnoyParam`, the approximation this port exists to remove.
+  ## Preserve upstream Annoy neighbours before applying the Rust probability kernel.
   ##
   ## The R-side transformation is kept in R rather than pushed into the kernel because it is mostly
   ## *messages*: three `cat`s, two `print`s whose text embeds `Sys.time()`, and a `stop()` whose
@@ -1284,6 +1249,10 @@ computeCommunProb <- function(object,
                        "label=%d"), lr_lens[1], lr_lens), call. = FALSE)
   }
 
+  ## Upstream calls set.seed(seed.use) and draws all bootstrap permutations before its LR loop.
+  ## Rust uses its own exact MT19937 implementation to compute those same permutations, so replay
+  ## the R draws here to preserve the caller-visible .Random.seed without allocating a second
+  ## nC-by-nboot permutation matrix.
   res <- compute_commun_prob(
     data = as.numeric(t(data)),
     dim = c(nrow(data), ncol(data)),
@@ -1304,7 +1273,12 @@ computeCommunProb <- function(object,
     lr_co_a = lr_co_a,
     lr_co_i = lr_co_i,
     lr_label = lr_label,
-    db_dir = db_dir,
+    complex_names = rownames(complex_input) %||% character(0),
+    complex_subunits = as.character(as.matrix(complex_input[, complex_cols, drop = FALSE])),
+    complex_n_cols = length(complex_cols),
+    cofactor_names = rownames(cofactor_input) %||% character(0),
+    cofactor_subunits = as.character(as.matrix(cofactor_input[, cofactor_cols, drop = FALSE])),
+    cofactor_n_cols = length(cofactor_cols),
     nboot = as.integer(nboot),
     seed = as.integer(seed.use),
     kh = Kh,
@@ -1314,7 +1288,8 @@ computeCommunProb <- function(object,
     population_size = population.size,
     p_spatial = as.numeric(P.spatial),
     adj_contact = as.numeric(adj.contact),
-    n_lr1 = as.integer(nLR1)
+    n_lr1 = as.integer(nLR1),
+    advance_rng = function() cellchatrs_advance_rng(seed.use, nboot, nC)
   )
 
   Prob <- array(res$prob, dim = res$dim)
@@ -1347,6 +1322,12 @@ computeCommunProb <- function(object,
   print(paste0(">>> CellChat inference is done. Parameter values are stored in `object@options$parameter` <<< [",
                Sys.time(), "]"))
   object
+}
+
+cellchatrs_advance_rng <- function(seed, nboot, n_cells) {
+  base::set.seed(seed)
+  for (i in seq_len(nboot)) sample.int(n_cells, size = n_cells)
+  invisible(NULL)
 }
 
 ## One LR metadata column as a character vector of exactly `n` entries.
@@ -1383,74 +1364,6 @@ lr_col <- function(x, nm, n) {
     LR.use$annotation <- as.character(LR.use$annotation)
   }
   LR.use
-}
-
-## Where the `CellChatDB` export lives. `options$db` is honoured if present so a user can
-## point at their own export; otherwise the package's bundled copy is used, matched by fingerprint;
-## otherwise `CELLCHATRS_DB`; otherwise a loud error rather than a guess.
-cellchatrs_db_dir <- function(object) {
-  d <- object@options$db
-  if (is.character(d) && length(d) == 1L && dir.exists(d)) return(d)
-  system.file("db", package = "cellchatrs") -> pkgdb
-  if (nzchar(pkgdb) && dir.exists(pkgdb)) {
-    hit <- cellchatrs_match_bundled_db(object, pkgdb)
-    if (!is.null(hit)) return(hit)
-  }
-  d <- Sys.getenv("CELLCHATRS_DB", "")
-  if (!nzchar(d) || !dir.exists(d)) {
-    stop("no CellChatDB export found; set options$db or the CELLCHATRS_DB environment variable",
-         call. = FALSE)
-  }
-  d
-}
-
-## Match `object@DB` against the bundled exports' manifests by table sizes. Human (3233
-## interactions / 338 complexes / 32 cofactors) and mouse (3379 / 337 / 33) differ on all three
-## counts, so a full-size DB matches exactly one export. A subsetted DB matches none, and then
-## the caller falls through to `CELLCHATRS_DB` or the loud error above -- guessing human for a
-## subsetted mouse object would resolve every complex against the wrong species, which is a
-## silent wrong answer rather than a loud stop. Counts, not content hashes: hashing would require
-## re-serialising the object's tables in the export's exact byte layout, and equality of shape
-## plus the pinned-manifest SHA check the kernel already performs is the proportionate test.
-cellchatrs_match_bundled_db <- function(object, pkgdb) {
-  db <- object@DB
-  if (is.null(db) || is.null(db$interaction) || is.null(db$complex) || is.null(db$cofactor)) {
-    return(NULL)
-  }
-  ni <- nrow(db$interaction)
-  nc <- nrow(db$complex)
-  nf <- nrow(db$cofactor)
-  if (any(is.null(c(ni, nc, nf)))) return(NULL)
-  for (sp in c("human", "mouse")) {
-    mf <- file.path(pkgdb, sp, "MANIFEST.tsv")
-    if (!file.exists(mf)) next
-    man <- read.delim(mf, header = FALSE, col.names = c("k", "v"),
-                      comment.char = "#", stringsAsFactors = FALSE)
-    get <- function(k) suppressWarnings(as.integer(man$v[man$k == k]))
-    if (isTRUE(get("n_interactions") == ni) && isTRUE(get("n_cofactors") == nf) &&
-        isTRUE(get("n_complexes") == nc)) {
-      return(file.path(pkgdb, sp))
-    }
-    ## A subsetted DB (`subsetDB` replaces `@DB` with fewer rows) matches no manifest exactly,
-    ## but it is still safe to resolve against the full export: every name it references is in
-    ## the export, so complex/cofactor resolution sees the same rows either way. The check is
-    ## set inclusion on interaction names, in both directions refused -- a *different* table of
-    ## the same size must not match, or two species with equal row counts would be confused.
-    ## (`rownames(object@DB$interaction)` is what `computeCommunProb` keys `Prob` by, so names
-    ## rather than row order are the right key.)
-    if (isTRUE(ni < get("n_interactions"))) {
-      ix <- file.path(pkgdb, sp, "interactions.tsv")
-      if (file.exists(ix)) {
-        have <- rownames(db$interaction)
-        want <- vapply(strsplit(readLines(ix, warn = FALSE), "\t", fixed = TRUE),
-                       `[[`, "", 1L)
-        if (length(have) > 0L && all(have %in% want)) {
-          return(file.path(pkgdb, sp))
-        }
-      }
-    }
-  }
-  NULL
 }
 
 ## ----------------------------------------------------------------------------
@@ -1494,7 +1407,7 @@ cellchatrs_match_bundled_db <- function(object, pkgdb) {
 #' The kernel therefore returns `n_before_only_pos` so the shim knows which of the two
 #' shapes to build; see `r_core::wilcox::GroupMarkers`.
 #' @export
-identifyOverExpressedGenes <- function(object, group.by = NULL, idents.use = NULL,
+identifyOverExpressedGenes <- function(object, data.use = NULL, group.by = NULL, idents.use = NULL,
                                       invert = FALSE, group.dataset = NULL,
                                       pos.dataset = NULL, group.DE.combined = FALSE,
                                       features.name = "features",
@@ -1505,26 +1418,26 @@ identifyOverExpressedGenes <- function(object, group.by = NULL, idents.use = NUL
   if (!is.list(object@var.features)) {
     stop("Please update your CellChat object via `updateCellChat()`")
   }
-  if (is.null(data.use <- object@data.signaling)) {
-    if (nrow(X <- object@data.signaling) < 3) {
+  input_data_use <- data.use
+  if (is.null(data.use)) {
+    X <- object@data.signaling
+    if (nrow(X) < 3) {
       stop("Please check `object@data.signaling` and ensure that you have run `subsetData` and that the data matrix `object@data.signaling` looks OK.")
     }
-  }
-  X <- object@data.signaling
-  if (nrow(X) < 3) {
-    stop("Please check `object@data.signaling` and ensure that you have run `subsetData` and that the data matrix `object@data.signaling` looks OK.")
+  } else {
+    X <- data.use
   }
   if (is.null(features)) {
     features.use <- row.names(X)
   } else {
     features.use <- intersect(features, row.names(X))
   }
-  data.use <- X[features.use, , drop = FALSE]
+  data.use <- X[features.use, ]
 
-  if (do.fast || !do.DE) {
+  if (do.fast || !do.DE || is.null(dim(data.use))) {
     ## `do.fast = TRUE` needs presto; upstream checks with `rlang::is_installed` and
     ## emits a multi-line `message()` before stopping, so let it run.
-    if (!do.DE && !do.fast) {
+    if (!do.DE && !do.fast && !is.null(dim(data.use))) {
       ## The `else` branch, which is reachable without presto and without the Wilcoxon:
       ## ```r
       ## markers.all <- data.frame(features = as.character(rownames(data.use)),
@@ -1541,16 +1454,25 @@ identifyOverExpressedGenes <- function(object, group.by = NULL, idents.use = NUL
         features = as.character(row.names(data.use)),
         min_cells = as.integer(min.cells)
       )
-      markers.all <- data.frame(features = res$features, nCells = res$n_cells,
+      ## Matrix::rowSums returns a named double vector. Let data.frame adopt its row names
+      ## during construction to preserve both storage type and serialized attribute order.
+      counts <- stats::setNames(as.numeric(res$n_cells), res$features)
+      markers.all <- data.frame(features = res$features, nCells = counts,
                                 stringsAsFactors = FALSE)
-      ## The row names are the **feature names**, and the reason is a `rowSums` side
-      ## effect: `data.use` is a `dgCMatrix`, so `rowSums(data.use > 0)` returns a *named*
-      ## numeric vector (names = features), and `data.frame(features = <unnamed character>,
-      ## nCells = <named double>)` adopts the first named argument's names as row names.
-      ## With a dense `data.use` the same line gives 1..nrow instead, so upstream's marker
-      ## table row names are sparse-vs-dense dependent. Reproduced from the kernel's
-      ## feature vector rather than by re-deriving it, and asserted in the parity test.
-      rownames(markers.all) <- res$features
+      ## Upstream's next statement is `dplyr::filter(markers.all, nCells >= min.cells)`, and
+      ## the predicate is the only part of it that reached Rust -- so the frame itself is
+      ## built here instead. `dplyr::filter` rebuilds the frame through vctrs and leaves its
+      ## attribute pairlist in the order `row.names, names, class`; `data.frame()` produces
+      ## `names, class, row.names`.
+      ##
+      ## That difference is invisible to `identical()`, which looks attributes up by name and
+      ## so calls the two frames equal, and visible to `serialize()`, which writes the pairlist
+      ## in stored order. It is therefore observable in any `saveRDS` of a CellChat object, and
+      ## it is what `tests/test-contract-inputs.R` compares. Reorder rather than rebuild:
+      ## `c("row.names", setdiff(...))` keeps whatever attributes a future R version adds,
+      ## where naming all three would silently drop them.
+      at <- attributes(markers.all)
+      attributes(markers.all) <- at[c("row.names", setdiff(names(at), "row.names"))]
       object@var.features[[features.name]] <- markers.all$features
       object@var.features[[paste0(features.name, ".info")]] <- markers.all
       return(if (return.object) object else markers.all)
@@ -1563,7 +1485,7 @@ identifyOverExpressedGenes <- function(object, group.by = NULL, idents.use = NUL
     ## and surface as `argument is not interpretable as logical` deep inside upstream's
     ## `do.DE` branch, which is exactly what happened while this was being written.
     return(cellchatrs_upstream_identifyOverExpressedGenes(
-      object = object, group.by = group.by, idents.use = idents.use, invert = invert,
+      object = object, data.use = input_data_use, group.by = group.by, idents.use = idents.use, invert = invert,
       group.dataset = group.dataset, pos.dataset = pos.dataset,
       group.DE.combined = group.DE.combined,
       features.name = features.name, only.pos = only.pos, features = features,
@@ -1793,7 +1715,7 @@ cellchatrs_upstream_computeCommunProbPathway <- function(...) {
 #' ordinary use -- an `LRsig` where every interaction belongs to the same pathway -- and a
 #' drop-in replacement has to fail identically, so this case routes to upstream. The Rust
 #' core computes a value for it; it is the shim that must not claim it. Pinned by
-#' `crates/r-core/tests/pathway_parity.rs::single_pathway_errors_like_upstream`.
+#' `src/rust/crates/r-core/tests/pathway_parity.rs::single_pathway_errors_like_upstream`.
 #' @export
 computeCommunProbPathway <- function(object = NULL, net = NULL, pairLR.use = NULL, thresh = 0.05) {
   if (is.null(net)) net <- object@net
@@ -1868,7 +1790,7 @@ cellchatrs_percent <- function(x, accuracy = 0.1) {
 #' * **`nonFilter.keep = TRUE` is a no-op.** `net <- object@net` is bound *before* the two
 #'   `object@net$prob.nonFilter <- ...` assignments, and the function ends with
 #'   `object@net <- net`, which throws them away. The `cat()` still fires, so the flag has an
-#'   observable effect and no other one. See `crates/r-core/tests/filter_parity.rs`.
+#'   observable effect and no other one. See `src/rust/crates/r-core/tests/filter_parity.rs`.
 #' * **An all-zero `net$prob` with `min.samples >= 2` is `"subscript out of bounds"`**, from
 #'   `for (jj in 1:length(LR.nonzero))` with `LR.nonzero` empty being `1:0` and then
 #'   `score.LR[, , 0, i] <- ...`. The kernel returns that as an error carrying upstream's
@@ -2102,22 +2024,20 @@ cellchatrs_upstream_computeRegionDistance <- function(...) {
   get("computeRegionDistance", envir = cellchatrs_upstream_cached())(...)
 }
 
-#' @rdname cellchatrs_upstream_computeRegionDistance
-#'
-#' `computeRegionDistance` from pinned upstream, with `BiocNeighbors::queryKNN(..., AnnoyParam())`
-#' replaced by an **exact** k-d tree.
-#'
-#' Annoy is randomised and approximate, so this is the one place the port is deliberately not
-#' bit-identical to upstream: it removes an approximation rather than introducing one. The
-#' arithmetic is upstream's, in upstream's order, including six behaviours that read as bugs -- most
-#' consequentially that `d.spatial` is symmetrised outside the `if (do.symmetric)` guard, and that a
-#' declared level with no cells receives another level's row name. `docs/SEMANTICS.md` records each
-#' with the fixture that pins it.
-#'
-#' The R side owns `levels(factor)` and the sample order, because upstream sizes its arrays with
-#' `nlevels(group)` while filtering the level *names*, and the caller has to be able to see that.
+#' Spatial distances with the original Annoy nearest-neighbour algorithm.
 #' @export
 computeRegionDistance <- function(coordinates, meta,
+                                  interaction.range = NULL, ratio = NULL, tol = NULL,
+                                  k.min = 10, contact.dependent = TRUE,
+                                  contact.range = NULL, contact.knn.k = NULL,
+                                  do.symmetric = TRUE) {
+  cellchatrs_upstream_computeRegionDistance(coordinates, meta, interaction.range,
+    ratio, tol, k.min, contact.dependent, contact.range, contact.knn.k, do.symmetric)
+}
+
+#' Exact spatial distances, an explicit alternative to CellChat compatibility.
+#' @export
+cellchatrs_computeRegionDistance_exact <- function(coordinates, meta,
                                   interaction.range = NULL, ratio = NULL, tol = NULL,
                                   k.min = 10, contact.dependent = TRUE,
                                   contact.range = NULL, contact.knn.k = NULL,
@@ -2436,4 +2356,11 @@ netAnalysis_computeCentrality <- function(object = NULL, slot.name = "netP", net
     as.vector(matrix(0, nrow = nrow(net0), ncol = 1))
   })
   centr
+}
+
+## Compatible replacement for the original Eigen helper (not part of the public R API).
+ComputeSNN <- function(nn_ranked, prune) {
+  graph <- compute_snn(as.integer(nn_ranked), nrow(nn_ranked), ncol(nn_ranked), prune)
+  methods::new("dgCMatrix", i = graph$i, p = graph$p, x = graph$x,
+               Dim = as.integer(rep(nrow(nn_ranked), 2L)))
 }

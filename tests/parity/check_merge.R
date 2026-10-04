@@ -46,7 +46,7 @@ suppressPackageStartupMessages(library(ggplot2))
 CC <- Sys.getenv("CELLCHAT_SRC", "../CellChat")
 DBDIR <- Sys.getenv("CELLCHATRS_DB", "tests/fixtures/db_human")
 
-suppressWarnings(suppressMessages(library(cellchatrs)))
+suppressWarnings(suppressMessages(library(CellChat)))
 
 if (tolower(Sys.getenv("CELLCHATRS_FALLBACK", "0")) %in% c("1", "true", "yes", "on")) {
   stop("CELLCHATRS_FALLBACK is set: every shim call would be delegated to pinned upstream and\n",

@@ -26,7 +26,7 @@
 suppressWarnings(suppressMessages({
   library(stats); library(methods); library(Matrix); library(collapse); library(dplyr)
 }))
-suppressWarnings(suppressMessages(library(cellchatrs)))
+suppressWarnings(suppressMessages(library(CellChat)))
 
 `%||%` <- function(a, b) if (is.null(a)) b else a
 j_esc <- function(x) {

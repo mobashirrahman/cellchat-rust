@@ -44,7 +44,7 @@ suppressWarnings(suppressMessages({
 ## the shim's functions are not on the search path at all, and the first thing reached for the
 ## upstream reference is whatever happens to share its name -- which is how a script ends up
 ## reporting a class-lookup failure for a package it never loaded.
-suppressWarnings(suppressMessages(library(cellchatrs)))
+suppressWarnings(suppressMessages(library(CellChat)))
 
 CC <- Sys.getenv("CELLCHAT_SRC", "../CellChat")
 DBDIR <- Sys.getenv("CELLCHATRS_DB", "tests/fixtures/db_human")

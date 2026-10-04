@@ -40,14 +40,25 @@ run_variant() {
     rm -f "$file"
     # A separate target directory per variant: sharing one would let stale objects from a previous
     # configuration satisfy the link step, and the whole point is to compare distinct builds.
-    CARGO_TARGET_DIR="target/codegen_$name" \
-    RUSTFLAGS="$flags" \
+    if ! CARGO_TARGET_DIR="target/codegen_$name" \
+        RUSTFLAGS="$flags" \
         cargo test --release -p r-core "${TESTS[@]}" -- --test-threads=1 --nocapture \
-        2>&1 | tee "$file" | grep -E '^test |^test result' || true
-    if ! grep -q 'test result: FAILED' "$file"; then
-        :
-    else
+        2>&1 | tee "$file"; then
         echo "variant $name FAILED" >&2
+        return 1
+    fi
+    local passed
+    passed="$(grep -cE '^test result: ok\. [1-9][0-9]* passed; 0 failed;' "$file" || true)"
+    local expected=$(( ${#TESTS[@]} / 2 ))
+    if [[ "$passed" != "$expected" ]] || grep -q '^test result: FAILED' "$file"; then
+        echo "variant $name did not pass every required test binary ($passed/$expected)" >&2
+        return 1
+    fi
+    local dump="$OUT/$name.dump"
+    sed -nE 's/^.*(f80 vs x87:.*|[0-9]+ chained sums,.*|[0-9]+ cancellation chains,.*)$/\1/p' \
+        "$file" | sort > "$dump"
+    if [[ "$(wc -l < "$dump")" -lt 3 ]]; then
+        echo "variant $name did not emit the expected parity-critical values" >&2
         return 1
     fi
 }
@@ -56,15 +67,9 @@ run_variant default   "-C target-feature=-fma"
 run_variant fma       "-C target-feature=+fma"
 run_variant native    "-C target-cpu=native"
 
-# Compare only the values, not the timings or the target directories.
-extract() {
-    grep -E '^(f80|chained|products|the |a |prod |chain )' "$1" \
-        | grep -vE 'finished in|SUCCESS|Compiling|Finished' \
-        | sort
-}
-
+# Compare only the parity-critical values, not timings or target directories.
 for v in fma native; do
-    if ! diff -u <(extract "$OUT/default.txt") <(extract "$OUT/$v.txt") > "$OUT/default-vs-$v.diff"; then
+    if ! diff -u "$OUT/default.dump" "$OUT/$v.dump" > "$OUT/default-vs-$v.diff"; then
         echo "=== $v differs from default ===" >&2
         cat "$OUT/default-vs-$v.diff" >&2
         exit 1

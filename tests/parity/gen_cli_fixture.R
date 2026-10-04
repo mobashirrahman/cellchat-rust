@@ -16,7 +16,7 @@
 #   * **The matrix is written gene-major, one line per gene.** R's column-major flat buffer for a
 #     genes-by-cells matrix has, for each cell, all genes consecutive; writing one line per gene and
 #     having the reader index `data[gene * n_cells + cell]` is the explicit form of that
-#     transposition. `crates/r-core/tests/expr_parity.rs` records what happens when the inversion is
+#     transposition. `src/rust/crates/r-core/tests/expr_parity.rs` records what happens when the inversion is
 #     implicit instead: the gene *set* stays correct while the *values* permute, every name still
 #     resolves, and every number still looks plausible.
 #

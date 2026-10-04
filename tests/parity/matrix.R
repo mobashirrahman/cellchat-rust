@@ -265,7 +265,7 @@ matrix_coverage_table <- function(m) {
   do.call(rbind, rows)
 }
 
-if (identical(environment(), globalenv()) && !interactive()) {
+if (sys.nframe() == 0L && !interactive()) {
   m <- matrix_build()
   cat(sprintf("matrix: %d configurations (%d minimal for coverage, %d padded)\n",
               length(m$configs), m$n_minimal, length(m$configs) - m$n_minimal))

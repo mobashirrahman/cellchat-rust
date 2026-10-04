@@ -48,7 +48,7 @@ independent work per gene per bootstrap, i.e. ideally parallel and vectorisable.
 | Phase 0 — baseline, fixtures, harness | **done** (numbers above) |
 | Phase 1 — `r-core` numerics + parity | **done** (160/160 parity quantities; see `parity.json`) |
 | Phase 2 — R shim | **done** (drop-in overrides + 56 delegated names; tutorial identical end to end) |
-| Phase 3 — standalone CLI | **done** (`crates/cellchatrs-cli`, 14 configs identical to upstream) |
+| Phase 3 — standalone CLI | **done** (`src/rust/crates/cellchatrs-cli`, 14 configs identical to upstream) |
 | Phase 4 — benchmarks | **done** (kernel, Amdahl, spatial divergence, synthetic grid; see `docs/BENCHMARKS.md`) |
 | Phase 5 — publication | in progress (`vignettes/`, `_pkgdown.yml`, `paper/paper.md` drafted; not yet released) |
 
@@ -59,9 +59,9 @@ via `configure`, and `R CMD check` is clean.
 
 | path | what |
 |---|---|
-| `crates/r-core/` | the numerics; no R, no I/O, all pure functions (parity-testable) |
-| `crates/cellchatrs/` | extendr `cdylib`; argument marshalling only |
-| `crates/cellchatrs-cli/` | standalone binary: the same numerics without R |
+| `src/rust/crates/r-core/` | the numerics; no R, no I/O, all pure functions (parity-testable) |
+| `src/rust/crates/cellchatrs/` | extendr `cdylib`; argument marshalling only |
+| `src/rust/crates/cellchatrs-cli/` | standalone binary: the same numerics without R |
 | `R/` | the `cellchatrs` R package: `.onLoad`, the `computeCommunProb` override, and 56 generated pass-throughs to upstream names |
 | `bench-runner/` | the R harness that produced every published measurement |
 | `tests/` | fixtures and golden corpora (`fixtures/`), differential and parity gates (`parity/`), LR-structure fuzzing (`fuzz/`) |
@@ -74,13 +74,16 @@ via `configure`, and `R CMD check` is clean.
 Nothing in this README has to be taken on trust: every number has a committed artifact and a
 command that regenerates it.
 
-**Prerequisites.** The upstream checkout and the Figshare datasets are not vendored (they are
-~500 MB). Clone upstream as a sibling directory, or point the variable somewhere else:
+**Prerequisites.** Building the R package currently requires Rust and Cargo 1.84 or newer on
+Linux x86_64. The exact pinned CellChat source and database are bundled with the package. To
+recreate the parity ledger, also check out upstream at its pinned commit and download the larger
+Figshare fixtures; the helper downloads fixed file IDs and verifies their hashes:
 
 ```sh
-git clone https://github.com/jinworks/CellChat          # -> ../CellChat, at the pinned SHA
-mkdir -p data                                           # Figshare downloads; see docs/BENCHMARKS.md
-export CELLCHAT_SRC=../CellChat                         # only if you put it elsewhere
+git clone https://github.com/jinworks/CellChat ../CellChat
+git -C ../CellChat checkout 75253cd0c9e68410e6e721a6d3a0419a1d7e358f
+./scripts/fetch_ci_fixtures.sh parity
+export CELLCHAT_SRC=../CellChat
 ```
 
 **The parity ledger.** `parity.json` is generated, not written by hand:
@@ -96,7 +99,7 @@ python3 scripts/parity_report.py        # writes parity.json; exits nonzero on a
 ```sh
 cargo test --workspace --release        # 331 unit / property / RNG-golden / x87-oracle tests
 R CMD check --no-manual                 # packaging, docs, vignette
-Rscript tests/parity/check_identical.R  # 418 whole-S4 identical() comparisons, 9 configurations
+Rscript tests/parity/check_identical.R  # 427 whole-S4 identical() comparisons, 9 configurations
 Rscript tests/parity/check_matrix.R     # 200 configurations, 1051 axis pairs
 Rscript tests/parity/tutorial_repro.R   # end-to-end tutorial, 16 comparisons
 Rscript tests/parity/check_cpu_gate.R   # the benchmark host-contention gate, 47 checks
@@ -117,8 +120,12 @@ cargo test                     # numerics
 R CMD INSTALL .                # R package (runs cargo via ./configure)
 ```
 
+The R package build is offline: `src/rust/r-build/vendor.tar.xz` contains the pinned Rust source
+dependencies and is SHA-256 checked before compilation. Regenerate it after changing
+`src/rust/r-build/Cargo.lock` with `scripts/vendor_rust_deps.sh`.
+
 ```r
-library(cellchatrs)
+library(CellChat)
 cellchatrs_threads()                        # live rayon pool size
 Sys.setenv(CELLCHATRS_THREADS = "8")        # pin before load; benchmarks must pin
 ```

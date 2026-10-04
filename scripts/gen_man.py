@@ -41,7 +41,7 @@ def r_script(body: str) -> str:
     """Run a snippet through R and return its stdout, so R itself does the parsing."""
     # `R_LIBS` has to point at the repo-local library. `scripts/reinstall.sh` installs into
     # `<root>/.rlib` precisely so nothing touches the user's site library, and a subprocess that
-    # does not inherit that setting cannot `library(cellchatrs)` -- so every `\\usage` lookup fails
+    # does not inherit that setting cannot `library(CellChat)` -- so every `\\usage` lookup fails
     # and the script reports "no roxygen block found" for exports whose docs are perfectly fine.
     # The failure is silent, which is the part worth fixing: R writes the load error to stderr.
     env = dict(os.environ)
@@ -90,8 +90,8 @@ def usage_of(name: str) -> str | None:
     src = (R_DIR / "modeling.R").read_text()
     esc = re.sub(r"([.\\+*?\[\]$^])", r"\\\1", name)
     body = (
-        'suppressWarnings(suppressMessages(library(cellchatrs)));'
-        f'f <- get("{name}", envir = asNamespace("cellchatrs"));'
+        'suppressWarnings(suppressMessages(library(CellChat)));'
+        f'f <- get("{name}", envir = asNamespace("CellChat"));'
         'cat(paste(deparse(args(f)), collapse = " "), sep = "\\n")'
     )
     out = r_script(body)
@@ -161,6 +161,39 @@ def escape(s: str) -> str:
     return s.replace("\\", "\\\\").replace("%", "\\%").replace("{", "\\{").replace("}", "\\}")
 
 
+def prune(names: list[str]) -> None:
+    r"""Delete every stale *function* man/*.Rd, leaving class, data and method pages alone.
+
+    Without this the directory only ever grows. `main()` iterates `exported_names()`, so a
+    file for anything the package stopped exporting is simply never rewritten -- it is also
+    never removed, and it survives every later run. `R CMD check` then reports it under
+    "checking for code/documentation mismatches" as *usage in documentation object X but not
+    in code*, for a file no amount of re-running the generator will ever touch.
+
+    That is not hypothetical: 17 such files (`thresholdedMean`, `alpha_centrality`,
+    `node_distance`, ...) survived here, documenting upstream internals the package does not
+    define.
+
+    This module owns function help pages only. Class, data and S4 method pages are written by
+    a different route -- `R/CellChat_class.R` and the `data/` exports -- and `exported_names()`
+    cannot see them, since it matches `^export(...)` and those objects are not exported that
+    way. Pruning on "not written this run" alone therefore deleted eight legitimate pages
+    (`CellChat-class.Rd`, `CellChatDB.*.Rd`, `PPI.*.Rd`, `show-CellChat-method.Rd`,
+    `AnyMatrix-class.Rd`) along with the 17. `\docType` is what tells the two apart, and the
+    name suffixes are checked as well so a page that omits `\docType` is still spared.
+    """
+    keep = set(names)
+    for path in sorted(MAN.glob("*.Rd")):
+        if path.stem in keep:
+            continue
+        text = path.read_text(errors="replace")
+        if re.search(r"\\docType\{(data|class|methods)\}", text):
+            continue
+        if path.stem.endswith("-class") or "-method" in path.stem:
+            continue
+        path.unlink()
+
+
 def main() -> int:
     blocks: dict[str, str] = {}
     for f in sorted(p.name for p in R_DIR.glob("*.R")):
@@ -169,6 +202,10 @@ def main() -> int:
     MAN.mkdir(exist_ok=True)
     missing = []
     for name in names:
+        upstream_doc = ROOT / "inst/upstream/CellChat-75253cd0/man" / f"{name}.Rd"
+        if upstream_doc.exists():
+            (MAN / upstream_doc.name).write_text(upstream_doc.read_text())
+            continue
         prose = blocks.get(name)
         if prose is None:
             missing.append(name)
@@ -201,9 +238,7 @@ def main() -> int:
             "",
         ]
         (MAN / f"{name}.Rd").write_text("\n".join(rd))
-    stale = [p for p in MAN.glob("*.Rd") if p.stem not in names]
-    for p in stale:
-        p.unlink()
+    prune(names)
     print(f"wrote {len(names) - len(missing)} of {len(names)} Rd files")
     if missing:
         print("no roxygen block found for: " + ", ".join(missing), file=sys.stderr)

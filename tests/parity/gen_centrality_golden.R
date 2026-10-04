@@ -1,6 +1,6 @@
 # Golden corpus for the deterministic half of `computeCentralityLocal`, from igraph itself.
 #
-# `crates/r-core/src/centrality.rs` reimplements igraph's strength summation order (edges in
+# `src/rust/crates/r-core/src/centrality.rs` reimplements igraph's strength summation order (edges in
 # edge-ID order, plain sequential `f64`), its Dijkstra (dist-plus-one encoding, exact 2-way-heap
 # tie rules, epsilon comparisons at 1e-10) and its Brandes accumulation, all read out of the C
 # sources. This file is the evidence that the reimplementation is exact: every record below is what

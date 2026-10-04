@@ -1,3 +1,6 @@
+# Compare serialized bytes, including signed zero and NaN payloads.
+identical <- function(x, y, ...) base::identical(serialize(x, NULL, version=3L),
+                                               serialize(y, NULL, version=3L))
 # Differential gate: run the Rust-backed `computeCommunProb` and the pinned upstream one on
 # the same objects and require `identical()`.
 #
@@ -11,7 +14,7 @@ suppressWarnings(suppressMessages({library(Matrix); library(collapse); library(d
 CC <- Sys.getenv("CELLCHAT_SRC", "../CellChat")
 DBDIR <- Sys.getenv("CELLCHATRS_DB", "tests/fixtures/db_human")
 
-suppressWarnings(suppressMessages(library(cellchatrs)))
+suppressWarnings(suppressMessages(library(CellChat)))
 
 ## ---------------------------------------------------------------- minimal S4 object
 setClass("MiniCellChat", representation(
@@ -140,15 +143,22 @@ try_both <- function(cfg) {
     }
     return(invisible(NULL))
   }
+  set.seed(314159L)
   up <- run_up(mk(), cfg)
+  up_rng <- .Random.seed
+  up_next <- runif(4L)
+  set.seed(314159L)
   rs <- run_rs(mk(), cfg)
+  rs_rng <- .Random.seed
+  rs_next <- runif(4L)
   ok_prob <- identical(up@net$prob, rs@net$prob)
   ok_pval <- identical(up@net$pval, rs@net$pval)
   ok_par  <- identical(up@options$parameter, rs@options$parameter)
   ok_dim  <- identical(dimnames(up@net$prob), dimnames(rs@net$prob))
-  n_cmp <<- n_cmp + 3L + 1L
-  cat(sprintf("%-10s prob=%-5s pval=%-5s parameter=%-5s dimnames=%-5s  run.time up=%.4fs rs=%.4fs\n",
-              cfg$name, ok_prob, ok_pval, ok_par, ok_dim,
+  ok_rng <- identical(up_rng, rs_rng) && identical(up_next, rs_next)
+  n_cmp <<- n_cmp + 5L
+  cat(sprintf("%-10s prob=%-5s pval=%-5s parameter=%-5s dimnames=%-5s rng=%-5s  run.time up=%.4fs rs=%.4fs\n",
+              cfg$name, ok_prob, ok_pval, ok_par, ok_dim, ok_rng,
               up@options$run.time, rs@options$run.time))
   if (!ok_prob) {
     fails <<- fails + 1L
@@ -158,6 +168,10 @@ try_both <- function(cfg) {
   }
   if (!ok_pval) fails <<- fails + 1L
   if (!ok_dim)   fails <<- fails + 1L
+  if (!ok_rng) {
+    fails <<- fails + 1L
+    cat("   R's post-call RNG state or next draws differ\n")
+  }
   if (!ok_par) {
     fails <<- fails + 1L
     cat("   parameter objects:\n")
@@ -175,6 +189,30 @@ try_both <- function(cfg) {
 }
 
 invisible(lapply(configs, try_both))
+
+## Alternate sample generators are delegated wholesale; the port's permutation implementation is
+## intentionally pinned to R's default Mersenne-Twister + Rejection stream.
+check_alternate_rng <- function() {
+  old_kind <- base::RNGkind()
+  on.exit(do.call(base::RNGkind, as.list(old_kind)), add = TRUE)
+  base::RNGkind(kind = "L'Ecuyer-CMRG", normal.kind = old_kind[[2L]],
+                sample.kind = old_kind[[3L]])
+  cfg <- configs[[1L]]
+  set.seed(2718L)
+  up <- run_up(mk(), cfg)
+  up_rng <- .Random.seed
+  up_next <- runif(4L)
+  set.seed(2718L)
+  rs <- run_rs(mk(), cfg)
+  rs_rng <- .Random.seed
+  rs_next <- runif(4L)
+  identical(up@net, rs@net) && identical(up_rng, rs_rng) && identical(up_next, rs_next)
+}
+alternate_rng_ok <- check_alternate_rng()
+n_cmp <<- n_cmp + 1L
+cat(sprintf("alternate sample.kind delegated with matching output and RNG state: %s\n",
+            alternate_rng_ok))
+if (!alternate_rng_ok) fails <<- fails + 1L
 
 ## ---------------------------------------------------------------- computeAveExpr
 ## Fed the real `data` slot, with the same three `type` choices plus the `match.arg` error.
@@ -554,10 +592,10 @@ for (sp in de_ds_specs) {
 ## `pos.dataset` that names nothing in `group.dataset`: upstream `cat()`s the available names
 ## and then calls a **bare** `stop()`, so the error message is empty. A shim that writes a
 ## helpful message is a divergence, and a shim that writes a helpful *warning* is worse.
-ds_bad <- tryCatch(suppressWarnings(suppressMessages(cellchatrs::cellchatrs_upstream_identifyOverExpressedGenes(
+ds_bad <- tryCatch(suppressWarnings(suppressMessages(CellChat::cellchatrs_upstream_identifyOverExpressedGenes(
   mkds(de_ds_specs[[1]]), group.dataset = "cond", pos.dataset = "nope", do.fast = FALSE))),
   error = function(e) conditionMessage(e))
-ds_bad_p <- tryCatch(suppressWarnings(suppressMessages(cellchatrs::identifyOverExpressedGenes(
+ds_bad_p <- tryCatch(suppressWarnings(suppressMessages(CellChat::identifyOverExpressedGenes(
   mkds(de_ds_specs[[1]]), group.dataset = "cond", pos.dataset = "nope", do.fast = FALSE))),
   error = function(e) conditionMessage(e))
 n_cmp <<- n_cmp + 1L
@@ -593,7 +631,7 @@ if (!ok_fb) {
 
 ## ------------------------------------------------------- computeCommunProbPathway
 ## The corpus is read from `tests/fixtures/pathway_inputs.tsv` -- the generator's own dump,
-## and the same file `crates/r-core/tests/pathway_parity.rs` reads, so a Rust-side and an
+## and the same file `src/rust/crates/r-core/tests/pathway_parity.rs` reads, so a Rust-side and an
 ## R-side failure cannot be about different data.
 ##
 ## It is deliberately **not** obtained by `eval`-ing the generator's preamble: that preamble
@@ -690,7 +728,7 @@ for (sp in specs) {
 ## is checked against upstream on every case.
 ##
 ## The metadata is read from the generator's own dump, one `|`-separated line per case, so
-## this gate and `crates/r-core/tests/netfiltered_parity.rs` cannot disagree about the data.
+## this gate and `src/rust/crates/r-core/tests/netfiltered_parity.rs` cannot disagree about the data.
 ## The generator is deliberately *not* `eval`-ed here: its preamble opens
 ## `tests/fixtures/netfiltered_golden.txt` with "wt", which would truncate the corpus.
 nf <- readLines("tests/fixtures/netfiltered_inputs.tsv")
@@ -946,38 +984,14 @@ for (nm in names(sb_args)) {
 
 ## --------------------------------------------- computeCommunProb, the spatial branch
 ##
-## Upstream's spatial branch cannot run: it calls `computeRegionDistance`, which evaluates
-## `BiocNeighbors::queryKNN(..., AnnoyParam())`. So the *reference* here is upstream's whole body
-## with `computeRegionDistance` replaced in its own environment by the exact-neighbour oracle from
-## `tests/parity/exact_neighbour_oracle.R` -- upstream's text with two expressions swapped for
-## exhaustive search. That makes this a genuine differential test of everything else in the branch:
-## the `scale.distance` transformation, `d.min < 1`'s `stop()`, `P.spatial[is.na] <- 0`,
-## `diag(P.spatial) <- max(P.spatial)`, and the four `nLR1` branches with their exact texts.
-##
-## The layouts below put each cell group in its own well-separated block, so the substitution is
-## sound: a cell's nearest neighbour in another group is decided by a wide margin. That is the same
-## property the corpus records, and `crd_` above re-checks it on every fixture.
-## The upstream environment is not exported -- `cellchatrs_upstream_cached` is internal, so reaching
-## it through the namespace is deliberate rather than a missing export. Sourcing the four files
-## again here would be a second copy with its own `parent`, and `computeRegionDistance` has to be
-## overridden in the *same* environment the upstream body will resolve names in.
-sp_env <- get("cellchatrs_upstream_cached", envir = asNamespace("cellchatrs"))()
-source(file.path(Sys.getenv("CELLCHATRS_ROOT", unset = getwd()),
-                 "tests", "parity", "exact_neighbour_oracle.R"), local = TRUE)
-assign("computeRegionDistance", compute_region_distance_exact, envir = sp_env)
+## Compare against the unmodified pinned spatial function, including its Annoy queries.
+sp_env <- get("cellchatrs_upstream_cached", envir = asNamespace("CellChat"))()
 
 setClass("SpChat", representation(
   data.signaling = "Matrix", LRsig = "data.frame", DB = "ANY", idents = "factor",
   meta = "data.frame", images = "list", LR = "list", net = "list", options = "list"))
 
-## The same data, `LRsig` and `DB` as the RNA configurations, which come from
-## `gen_prob_golden.R` and the pinned `CellChatDB.human`. Reusing them is not tidiness: upstream
-## resolves ligand/receptor pairs through `object@DB`, while the Rust kernel reads the database
-## **from a directory on disk** (`cellchatrs_db_dir`). A hand-made `object@DB` therefore makes the
-## two sides expand the L-R pair differently, and the fixture reports a `Prob` mismatch that looks
-## like a kernel bug and is really two different databases. The first version of this block did
-## exactly that and produced `Prob[A,A]` of 0.95 against upstream's 0.41 -- a 2.3x "error" that was
-## the fixture's fault entirely.
+## Both paths resolve the supplied object database.
 SP_DB <- DB
 ## The RNA fixture's own cells, laid out spatially: `nlev` blocks `sep` apart with the cells inside
 ## a block spread over `per` columns. The number of cells and the group sizes come from
@@ -1712,14 +1726,15 @@ for (cs in cd_cases) {
 
 ## ----------------------------------------------- computeRegionDistance, against the corpus
 ##
-## Upstream cannot be called at all here -- it evaluates `BiocNeighbors::queryKNN(...,
+## This corpus tests the optional exact-neighbour algorithm; it is not an upstream compatibility gate.
+## Historical corpus provenance: upstream was not called here -- it evaluates `BiocNeighbors::queryKNN(...,
 ## AnnoyParam())` unconditionally and the package is not installable without network. So this is
 ## not a differential test; it replays `tests/fixtures/region_golden.txt` through the *shim*, whose
 ## job is the R-side marshalling the Rust suite cannot see: `levels(factor)` order, the
 ## declared-but-absent level surviving into the dimensions, `match()` on the factor, the dimnames,
 ## and recycling a scalar `ratio`/`tol`.
 ##
-## The arithmetic and the neighbour query are covered by `crates/r-core/tests/region_parity.rs`.
+## The arithmetic and the neighbour query are covered by `src/rust/crates/r-core/tests/region_parity.rs`.
 ## A fixture passing in both places is the whole path.
 rg_path <- file.path(Sys.getenv("CELLCHATRS_ROOT", unset = getwd()),
                      "tests", "fixtures", "region_golden.txt")
@@ -1801,7 +1816,7 @@ if (!file.exists(rg_path)) {
     args$interaction.range <- if (is.na(args$interaction.range)) NULL else args$interaction.range
     args$contact.range <- if (is.na(args$contact.range)) NULL else args$contact.range
 
-    eb <- tryCatch(do.call(computeRegionDistance, args), error = function(e) list(err = conditionMessage(e)))
+    eb <- tryCatch(do.call(cellchatrs_computeRegionDistance_exact, args), error = function(e) list(err = conditionMessage(e)))
     n_cmp <<- n_cmp + 2L
     if (length(err) >= 1L) {
       want <- err[1, 3]

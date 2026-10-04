@@ -5,7 +5,7 @@
 ## The k-d tree is deliberately **not** in this corpus. Annoy is approximate, so upstream is not
 ## a usable oracle for a neighbour query -- two runs of upstream can disagree. The exact tree is
 ## verified against exhaustive search instead (see `knn_matches_brute_force` in
-## `crates/r-core/tests/spatial_parity.rs`), and the *divergence* from Annoy is a separate
+## `src/rust/crates/r-core/tests/spatial_parity.rs`), and the *divergence* from Annoy is a separate
 ## measurement on real spatial data. What upstream *is* a usable oracle for is the arithmetic
 ## that consumes a neighbour's index and distance, and that is what this corpus pins.
 ##

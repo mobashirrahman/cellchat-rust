@@ -142,7 +142,7 @@ fits in this machine's 32 MB L3 — a deliberate design target, see §6.3).
 
 * `extendr-api 0.9.0` + `extendr-macros 0.9.0` compile as a `cdylib` and are callable
   from R. **The full path R package → `configure` → cargo → `dyn.load` → R function has
-  been built and executed end-to-end** (see `R/`, `configure`, `crates/cellchatrs` in
+  been built and executed end-to-end** (see `R/`, `configure`, `src/rust/crates/cellchatrs` in
   this repo), including the call `get_num_threads()` returning the real rayon pool size.
 * **Five gotchas found and fixed empirically** (each would otherwise cost days):
   1. The umbrella crate `extendr` is **not resolvable from the crates.io sparse index**
@@ -392,10 +392,10 @@ a machine-readable `parity.json` that CI publishes.
 └───────────────┬──────────────────────────────────────────────────────────────────────────┘
                 │  extendr-api, zero-copy borrow of the SEXP (dense + sparse paths)
 ┌───────────────▼──────────────────────────────────────────────────────────────────────────┐
-│  crates/r-bindings   argument marshalling only: no numerics, no logic                    │
+│  src/rust/crates/r-bindings   argument marshalling only: no numerics, no logic                    │
 └───────────────┬──────────────────────────────────────────────────────────────────────────┘
 ┌───────────────▼──────────────────────────────────────────────────────────────────────────┐
-│  crates/r-core                                                                             │
+│  src/rust/crates/r-core                                                                             │
 │    ├── rng/rng.rs          MT19937 + R_unif_index + R unif_rand                           │
 │    ├── stats/quantile.rs   collapse type-7, R type-1, median, trimean, trimmed mean       │
 │    ├── db.rs               complex/cofactor subunit tables → flat gene-id arrays          │
@@ -519,7 +519,7 @@ cellchat-rust/
 │   ├── zzz.R                     # .onLoad: register extendr wrappers, size the rayon pool
 │   ├── modeling.R                # computeCommunProb() override (Phase 2)
 │   └── dataset.R                 # CellChatDB -> Arrow (Phase 5)
-├── crates/
+├── src/rust/crates/
 │   ├── r-core/                   # pure Rust numerics, zero R dependency
 │   │   ├── src/{lib,rng,stats,db,expr,aggregate,prob,kernel,spatial}.rs
 │   │   ├── benches/aggregate.rs  # criterion micro-benchmarks
@@ -804,7 +804,7 @@ blocking bug with a new regression test.
 
 ### Phase 2 — Drop-in shim (1 week)
 
-* `cellchatrs:::.onLoad` `dyn.load`s the cdylib, generates wrappers from extendr metadata.
+* `CellChat:::.onLoad` `dyn.load`s the cdylib, generates wrappers from extendr metadata.
 * `computeCommunProb(object, ...)` keeps the **exact upstream signature and defaults**,
   extracts slots, calls Rust, writes `object@net$prob/$pval`, `object@images$distance`,
   `object@options$parameter`, `object@options$run.time`.
@@ -1048,8 +1048,8 @@ query and the R-side marshalling each have their own gate, because each has a di
 
 | piece | oracle | gate |
 |---|---|---|
-| `mean(x, trim, na.rm)`, `fdist`, the exact k-d tree | R itself, and exhaustive search for the tree | `crates/r-core/tests/spatial_parity.rs` (21 tests) |
-| `computeRegionDistance`'s arithmetic | upstream's body with the neighbour *query* substituted | `crates/r-core/tests/region_parity.rs` (10 tests, 13 fixtures) |
+| `mean(x, trim, na.rm)`, `fdist`, the exact k-d tree | R itself, and exhaustive search for the tree | `src/rust/crates/r-core/tests/spatial_parity.rs` (21 tests) |
+| `computeRegionDistance`'s arithmetic | upstream's body with the neighbour *query* substituted | `src/rust/crates/r-core/tests/region_parity.rs` (10 tests, 13 fixtures) |
 | the R shims | upstream for `computeCellDistance`; the corpus for `computeRegionDistance` | `computeCellDistance` / `computeRegionDistance` blocks of `check_identical.R` |
 
 Upstream's `computeRegionDistance` **cannot be run here at all**: it evaluates
@@ -1136,7 +1136,7 @@ Building this found three bugs, all of which had been invisible:
 `mode = "comparison"` is now Rust-backed and gated, closing the largest pure-numeric gap left in
 `R/analysis.R`. `rankNetPairwise` and `mergeCellChat`'s object plumbing remain.
 
-**What moved to Rust** (`crates/r-core/src/ranknet.rs::comparison_flow`): the per-comparison
+**What moved to Rust** (`src/rust/crates/r-core/src/ranknet.rs::comparison_flow`): the per-comparison
 `apply(prob, 3, sum)`, the `-1/log` transform, the **pooled** degenerate reassignment, the union of
 pathway vocabularies, the per-comparison threshold cut and axis filters, and the raw relative
 ratios. Nine fixtures, bit for bit.
@@ -1282,7 +1282,7 @@ rung with 5 untested; `R CMD check` `Status: OK`.
 ### Phase 3b — `rankNetPairwise`: the port, and what a pass-through costs
 
 `rankNetPairwise` and `mergeCellChat` were the two functions in the required surface that the shim
-did not provide at all -- `cellchatrs:::rankNetPairwise` did not exist, and both calls went
+did not provide at all -- `CellChat:::rankNetPairwise` did not exist, and both calls went
 straight to upstream. `rankNetPairwise` is now ported: the shim owns the function and the ordering
 `order(pval, -prob)` per `(i, j)` group pair is Rust (`ranknet_pairwise_orders`, over the existing
 `order_f64_multi`). Everything else in its body -- the `data.frame()`, its `row.names`, the nested
@@ -1343,7 +1343,7 @@ whole chain end to end.
 ### The standalone CLI
 
 The objective requires `r-core` to ship "as a standalone library/CLI so the numerics are usable without
-R", and there was no CLI. `crates/cellchatrs-cli` is one: a `cellchatrs` binary that reads a
+R", and there was no CLI. `src/rust/crates/cellchatrs-cli` is one: a `cellchatrs` binary that reads a
 self-describing input file and writes the `Prob`/`Pval` networks, the averaged expression and
 `aggregateNet`'s two matrices, with no R in the process. Subcommands are `run`, `describe`, `mean` and
 `version`.
@@ -1496,7 +1496,7 @@ speedup. `bench-runner/analyse.py` emits the tables, the Amdahl fit and the pari
 dependencies, so a reader can regenerate the paper artifacts.
 
 **The kernel was single-threaded.** The first thread sweep was flat -- 10.66 s at 1 thread, 10.63 s
-at 8 -- and `grep -rn "par_iter\|into_par_iter\|rayon::" crates/r-core/src/` returned nothing. The
+at 8 -- and `grep -rn "par_iter\|into_par_iter\|rayon::" src/rust/crates/r-core/src/` returned nothing. The
 bootstrap replicate loop was a plain `for`, and 92-95 % of runtime is bootstrap aggregation. A
 `rayon` dependency, a `request_num_threads` API and a pool builder were all wired up and all unused.
 Nothing in 418 differential comparisons, 276 Rust tests or 200 matrix configurations could see this:
@@ -1545,7 +1545,7 @@ objective's "do not publish a multiplier before it is measured" is about.
 
 `proptest` has been a declared dev-dependency since the crate was created and **no test used it**.
 The objective lists "property tests via proptest" as a required layer, and the randomised
-metamorphic and fuzz layers were also largely absent. `crates/r-core/tests/properties.rs` now has 18
+metamorphic and fuzz layers were also largely absent. `src/rust/crates/r-core/tests/properties.rs` now has 18
 properties over the primitives everything else is built on: `order_f64` / `order_f64_multi` against a
 transcription of R's documented rule, `r_max`'s `NaN` propagation, `r_mean`'s bounds, `nnzero`'s
 `NA`-on-any-missing rule, all five `GroupMean` variants on constants and bounds, `F80` summation
@@ -1616,7 +1616,7 @@ nothing is not a test. The objective's four recorded invariants -- dimnames cons
 `Pval` in `{k/nboot}`, `Pval[Prob == 0] == 1`, `Prob` in `[0, 1]` -- are checked on every object the
 file builds.
 
-**`crates/r-core/tests/db_fuzz.rs`** generates hostile L-R databases (empty subunit lists, names
+**`src/rust/crates/r-core/tests/db_fuzz.rs`** generates hostile L-R databases (empty subunit lists, names
 colliding across the complex/cofactor/symbol tables, self-referential and overlapping complexes) and
 asserts that `resolve_entity` and `compute_expr_lr` are total: a value or an `ExprError`, never a
 panic, which is what makes upstream's `subscript out of bounds` an `Err` rather than a crash. The

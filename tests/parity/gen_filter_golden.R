@@ -10,7 +10,7 @@
 #      (source, target) is present, and keep only those present in >= `min.samples`.
 #      Needs >= 2 samples; errors above the sample count.
 #
-# R-isms this stresses, all documented in crates/r-core/src/filter.rs:
+# R-isms this stresses, all documented in src/rust/crates/r-core/src/filter.rs:
 #   * `apply(score.LR[, , jj, ], c(1, 2), sum)` sums over the *sample* axis, in sample
 #     order, and R's `sum` widens to LONG_DOUBLE -- though the values are 0/1, so the
 #     interesting part is the axis, not the precision;

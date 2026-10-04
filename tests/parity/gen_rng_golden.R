@@ -1,5 +1,5 @@
 #!/usr/bin/env Rscript
-# Generate the RNG golden file consumed by crates/r-core/tests/rng_parity.rs.
+# Generate the RNG golden file consumed by src/rust/crates/r-core/tests/rng_parity.rs.
 #
 # Ground truth comes from R itself, so the constants in the Rust tests are never
 # hand-transcribed. Re-run whenever the pinned R version changes:

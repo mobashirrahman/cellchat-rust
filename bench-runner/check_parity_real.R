@@ -9,7 +9,7 @@
 ## Exits non-zero on any mismatch, so `parity_report.py` can use it as a pin and a green run means
 ## something.
 suppressWarnings(suppressMessages({
-  library(collapse); library(Matrix); library(dplyr); library(cellchatrs)
+  library(collapse); library(Matrix); library(dplyr); library(CellChat)
 }))
 `%||%` <- function(a, b) if (is.null(a)) b else a
 
@@ -46,14 +46,18 @@ CASES <- list(
 )
 
 failures <- 0L
+checked <- 0L
+missing <- character()
 for (case in CASES) {
   load_fixture_for(case$species)
   Sys.setenv(CELLCHATRS_DB = file.path(getwd(), "tests", "fixtures", case$db))
   path <- file.path(DATA, case$file)
   if (!file.exists(path)) {
-    cat(sprintf("parity %-14s SKIP (no fixture at %s)\n", case$file, path))
+    missing <- c(missing, path)
+    cat(sprintf("parity %-14s MISSING (no fixture at %s)\n", case$file, path))
     next
   }
+  checked <- checked + 1L
   built <- quiet(build_fixture(path, max_lr = 0L))
   info <- built$info
   cpp <- get("computeCommunProb", envir = quiet(upstream_env()))
@@ -74,6 +78,11 @@ for (case in CASES) {
       print(all.equal(a@net[[nm]], b@net[[nm]]))
     }
   }
+}
+if (length(missing) > 0L || checked != length(CASES)) {
+  cat(sprintf("parity: required real-data fixtures missing (%d/%d checked):\n  %s\n",
+              checked, length(CASES), paste(missing, collapse = "\n  ")))
+  quit(status = 1L)
 }
 if (failures > 0L) {
   cat(sprintf("parity: %d fixture(s) diverged from upstream\n", failures))

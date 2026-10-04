@@ -1,3 +1,6 @@
+# Compare serialized bytes, including signed zero and NaN payloads.
+identical <- function(x, y, ...) base::identical(serialize(x, NULL, version=3L),
+                                               serialize(y, NULL, version=3L))
 # End-to-end reproduction of the upstream CellChat tutorial's computational pipeline.
 #
 # This is requirement 3's "end-to-end tutorial reproduction": the vignette
@@ -31,7 +34,7 @@ suppressWarnings(suppressMessages({
   library(methods); library(Matrix); library(collapse); library(dplyr)
 }))
 suppressPackageStartupMessages(library(Matrix))
-suppressWarnings(suppressMessages(library(cellchatrs)))
+suppressWarnings(suppressMessages(library(CellChat)))
 
 CC <- Sys.getenv("CELLCHAT_SRC", "../CellChat")
 DBDIR <- Sys.getenv("CELLCHATRS_DB", "tests/fixtures/db_human")
@@ -67,37 +70,8 @@ q <- function(x) {
 }
 
 ## ---------------------------------------------------------------- upstream reference env
-## Sourced once, into its own environment with parent = globalenv() (the lookup-chain rationale is
-## on `cellchatrs_upstream_env`). Everything on the reference side is reached as `UP$fn` so there is
-## no ambiguity about which implementation produced a value.
-## `CellChat_class.R` goes into `globalenv()`, and ONLY there -- not into `UP`. This is load-bearing
-## and the failure for getting it wrong is far from the cause.
-##
-## `methods::new("CellChat")` and `is(x, "Seurat")` resolve the class through
-## `getClassDef(Class, where = topenv(parent.frame()))`, i.e. the *top* of the calling chain, not the
-## calling environment. A `setClass` executed inside a private `new.env()` registers the definition
-## under a synthetic timestamp package name ("Created a package name ... when none found"), and the
-## first `new()`/`is()` then tries to *load* that package: `unable to find required package
-## '2026-10-01 ...'`, raised inside the kernel call. Sourcing the class file into `globalenv()`
-## registers it where every lookup chain ends, so one definition serves the reference env, the
-## shim's cached env, and this script's own `slot()` calls. (`tests/parity/check_merge.R` does the
-## same; `setClass` on an already-defined class returns quietly, so this is idempotent.)
-## The five function files go into `UP` as before -- none of them defines the class.
-UP <- new.env(parent = globalenv())
-for (p in c("Matrix", "collapse", "dplyr", "future", "rlang")) {
-  suppressWarnings(suppressMessages(requireNamespace(p, quietly = TRUE)))
-}
-for (f in c("modeling.R", "analysis.R", "utilities.R", "database.R", "visualization.R")) {
-  suppressWarnings(suppressMessages(
-    sys.source(file.path(CC, "R", f), envir = UP, keep.source = FALSE)))
-}
-suppressWarnings(suppressMessages(
-  sys.source(file.path(CC, "R", "CellChat_class.R"), envir = globalenv(),
-             keep.source = FALSE)))
-stopifnot(!is.null(methods::getClass("CellChat", where = globalenv())))
-
-E <- new.env(); load(file.path(CC, "data", "CellChatDB.human.rda"), envir = E)
-DB <- get(ls(E)[1], E)
+## The unmodified bundled R functions have private imports and use the installed S4 class.
+UP <- get("cellchatrs_upstream_cached", envir = asNamespace("CellChat"))()
 
 ## ---------------------------------------------------------------- input, as the vignette builds it
 raw <- new.env(); load(SKIN, envir = raw); skin <- raw[[ls(raw)[1]]]
@@ -113,14 +87,10 @@ cpm@x <- cpm@x / rep(lib, diff(cpm@p)) * 1e4
 norm <- log1p(as.matrix(cpm))
 meta <- data.frame(labels = grp, row.names = colnames(counts))
 
-## The shim does not override createCellChat: it takes no numeric arguments, so there is nothing to
-## accelerate and the reference constructor is the constructor. It is called unqualified -- it lives
-## in `globalenv()` now (see above), not in `UP`, so `UP$createCellChat` is NULL and calling it fails
-## with the unhelpful "attempt to apply non-function". Both sides start from the same object by
-## construction, and the first compared step is subsetData.
-obj_up <- createCellChat(object = norm, meta = meta, group.by = "labels")
-obj_rs <- obj_up
-cmp("createCellChat identical by construction", identical(obj_up, obj_rs))
+## Construct each object independently through its own implementation.
+obj_up <- UP$createCellChat(object = norm, meta = meta, group.by = "labels")
+obj_rs <- CellChat::createCellChat(norm, meta = meta, group.by = "labels")
+cmp("independent createCellChat calls", identical(obj_up, obj_rs))
 
 ## Tutorial-verbatim: the vignette assigns the database next (`cellchat@DB <- CellChatDB.human`),
 ## because `createCellChat` leaves `@DB` empty and `subsetData` selects from it -- without this both
@@ -162,38 +132,38 @@ stage <- function(label, up_call, rs_call, slots = SLOTS, exclude_options = c("r
 ## ---------------------------------------------------------------- the vignette, step by step
 stage("1 subsetData",
       function(o) UP$subsetData(o),
-      function(o) cellchatrs::subsetData(o))
+      function(o) CellChat::subsetData(o))
 
 stage("2 identifyOverExpressedGenes (tutorial defaults: presto fast path)",
       function(o) UP$identifyOverExpressedGenes(o),
-      function(o) cellchatrs::identifyOverExpressedGenes(o))
+      function(o) CellChat::identifyOverExpressedGenes(o))
 
 stage("3 identifyOverExpressedInteractions",
       function(o) UP$identifyOverExpressedInteractions(o),
-      function(o) cellchatrs::identifyOverExpressedInteractions(o))
+      function(o) CellChat::identifyOverExpressedInteractions(o))
 
 stage("4 computeCommunProb triMean, tutorial defaults incl. nboot = 100",
       function(o) UP$computeCommunProb(o, type = "triMean"),
-      function(o) cellchatrs::computeCommunProb(o, type = "triMean"))
+      function(o) CellChat::computeCommunProb(o, type = "triMean"))
 
 stage("5 filterCommunication min.cells = 10",
       function(o) UP$filterCommunication(o, min.cells = 10),
-      function(o) cellchatrs::filterCommunication(o, min.cells = 10))
+      function(o) CellChat::filterCommunication(o, min.cells = 10))
 
 stage("6 computeCommunProbPathway",
       function(o) UP$computeCommunProbPathway(o),
-      function(o) cellchatrs::computeCommunProbPathway(o))
+      function(o) CellChat::computeCommunProbPathway(o))
 
 stage("7 aggregateNet",
       function(o) UP$aggregateNet(o),
-      function(o) cellchatrs::aggregateNet(o))
+      function(o) CellChat::aggregateNet(o))
 
 ## ---------------------------------------------------------------- 8 downstream spot checks
 ## `subsetCommunication` returns data frames, not objects, so it is compared directly on both slot
 ## names -- the interaction table and the pathway table, which is what the tutorial queries next.
 for (sn in c("net", "netP")) {
   a <- q(UP$subsetCommunication(obj_up, slot.name = sn))
-  b <- q(cellchatrs::subsetCommunication(obj_rs, slot.name = sn))
+  b <- q(CellChat::subsetCommunication(obj_rs, slot.name = sn))
   ok <- identical(a, b)
   cmp(sprintf("8 subsetCommunication slot %s (%d rows)", sn, NROW(a)), ok)
   if (!ok) {
@@ -234,7 +204,7 @@ for (sn in c("net", "netP")) {
 set.seed(20240501)
 a9 <- q(UP$netAnalysis_computeCentrality(obj_up, slot.name = "netP"))
 set.seed(20240501)
-b9 <- q(cellchatrs::netAnalysis_computeCentrality(obj_rs, slot.name = "netP"))
+b9 <- q(CellChat::netAnalysis_computeCentrality(obj_rs, slot.name = "netP"))
 obj_up <- a9
 obj_rs <- b9
 cmp("9 netAnalysis_computeCentrality netP (same igraph seed both sides)",

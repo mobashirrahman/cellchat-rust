@@ -10,12 +10,13 @@
 
 \section{What this package is}
 
-\texttt{cellchatrs} re-implements CellChat's numeric inference kernel in Rust and
-overrides the corresponding R functions, so existing CellChat code runs unchanged and
-faster. Visualization and the Shiny app stay upstream R code. What follows uses only
+\texttt{cellchatrs} re-implements CellChat's numeric inference kernel in Rust and exports
+the matching inference entry points with the same object structure. Code using the unqualified
+API can use the accelerator by loading \texttt{cellchatrs} in place of CellChat. Visualization
+and the Shiny app stay upstream R code. What follows uses only
 \texttt{cellchatrs}; parity against pinned upstream CellChat
 (commit \texttt{75253cd}, v2.2.0.9001) is established by the repository's test suite
-(418 differential comparisons, a 200-configuration matrix, metamorphic and fuzz suites --
+(427 differential comparisons, a 200-configuration matrix, metamorphic and fuzz suites --
 see \texttt{tests/parity/}), not re-proved here.
 
 <<setup, include=FALSE>>=

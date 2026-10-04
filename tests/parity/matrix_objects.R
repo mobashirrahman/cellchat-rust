@@ -9,12 +9,8 @@
 
 ## ------------------------------------------------------------------ the pinned upstream
 ##
-## `computeRegionDistance` is replaced by the exact-neighbour oracle so the spatial half of the
-## matrix can run at all; `BiocNeighbors` is not installable here and Annoy is approximate. The
-## oracle's arithmetic is upstream's.
-up <- get("cellchatrs_upstream_cached", envir = asNamespace("cellchatrs"))()
-source(file.path(ROOT, "tests", "parity", "exact_neighbour_oracle.R"), local = TRUE)
-assign("computeRegionDistance", compute_region_distance_exact, envir = up)
+## Use the original spatial implementation without replacing the reference algorithm.
+up <- get("cellchatrs_upstream_cached", envir = asNamespace("CellChat"))()
 
 E <- new.env(); load(file.path(CC, "data", "CellChatDB.human.rda"), envir = E)
 DB <- get(ls(E)[1], E)

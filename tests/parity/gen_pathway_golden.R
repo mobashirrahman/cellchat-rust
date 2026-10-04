@@ -1,6 +1,6 @@
 # Golden corpus for r-core's pathway.rs: `computeCommunProbPathway` from the pinned commit.
 #
-# The fixture is built to stress the three R-isms documented in `crates/r-core/src/pathway.rs`:
+# The fixture is built to stress the three R-isms documented in `src/rust/crates/r-core/src/pathway.rs`:
 #   * both `sum`s accumulate in LONG_DOUBLE, so the totals differ from an f64 loop;
 #   * the two `apply` calls sum in *different* orders ((c, r) for `LR.sig`, L-R-then-(r, c)
 #     for the pathway totals);
