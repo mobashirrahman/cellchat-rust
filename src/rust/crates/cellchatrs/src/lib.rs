@@ -83,10 +83,12 @@ fn compute_snn(
     n_rows: usize,
     n_cols: usize,
     prune: f64,
-) -> extendr_api::Result<List> {
-    let graph = r_core::snn::compute_snn(&neighbours, n_rows, n_cols, prune)
-        .map_err(extendr_api::Error::Other)?;
-    Ok(list!(i = graph.i, p = graph.p, x = graph.x))
+) -> List {
+    let graph = unwrap_r(
+        r_core::snn::compute_snn(&neighbours, n_rows, n_cols, prune)
+            .map_err(extendr_api::Error::Other),
+    );
+    list!(i = graph.i, p = graph.p, x = graph.x)
 }
 
 extendr_module! {

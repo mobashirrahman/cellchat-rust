@@ -388,6 +388,14 @@ jobs:
         run: |
           set -euo pipefail
           R CMD build .
+          # The budget: this package lives ~45 KB under CRAN's 5,000,000-byte incoming
+          # ceiling, because it ships both the database exports and the pinned upstream
+          # tree. `R CMD check` reports the size as a NOTE, which a failing gate never
+          # trips on, so this fails here instead -- before the hours-long check -- and
+          # prints the ten largest contents to show what grew. See
+          # `scripts/check_tarball_size.sh` for the ceiling and the measured next
+          # candidates.
+          ./scripts/check_tarball_size.sh CellChat_*.tar.gz
           _R_CHECK_FORCE_SUGGESTS_=false R CMD check --as-cran --no-manual CellChat_*.tar.gz
           tail -5 CellChat.Rcheck/00check.log
       - uses: actions/upload-artifact@v4

@@ -71,17 +71,19 @@ fn unwrap_r<T>(r: extendr_api::Result<T>) -> T {
 /// * `dir`: a directory written by `tests/parity/export_db.R`, manifest-pinned by MD5.
 /// * `species`: `"human"` or `"mouse"`, used only in error messages.
 #[extendr]
-pub fn db_load(dir: &str, species: &str) -> extendr_api::Result<List> {
-    let db = Database::load(std::path::Path::new(dir))
-        .map_err(|e| extendr_api::Error::Other(format!("{species} CellChatDB at {dir:?}: {e}")))?;
-    Ok(list! {
+pub fn db_load(dir: &str, species: &str) -> List {
+    let db = unwrap_r(
+        Database::load(std::path::Path::new(dir))
+            .map_err(|e| extendr_api::Error::Other(format!("{species} CellChatDB at {dir:?}: {e}"))),
+    );
+    list! {
         species=db.species.clone(),
         n_interactions=db.interactions.len() as i32,
         n_complexes=db.complexes.len() as i32,
         n_cofactors=db.cofactors.len() as i32,
         n_symbols=db.symbols.len() as i32,
         n_lr1=db.nlr1 as i32,
-    })
+    }
 }
 
 /// `data.use.avg`: `aggregate(t(data.use), list(group), FUN)`, in R's genes x groups order.
@@ -97,25 +99,25 @@ pub fn average_expression(
     group_levels: Vec<String>,
     mean_type: &str,
     trim: f64,
-) -> extendr_api::Result<Vec<f64>> {
-    let (n_genes, n_cells) = dims(&dim)?;
-    let groups = group_index(&group, &group_levels)?;
-    let fun = mean_fun(mean_type, trim)?;
+) -> Vec<f64> {
+    let (n_genes, n_cells) = unwrap_r(dims(&dim));
+    let groups = unwrap_r(group_index(&group, &group_levels));
+    let fun = unwrap_r(mean_fun(mean_type, trim));
     if data.len() != n_genes * n_cells {
-        return Err(extendr_api::Error::Other(format!(
+        extendr_api::throw_r_error(format!(
             "data has {} values but dim implies {}",
             data.len(),
             n_genes * n_cells
-        )));
+        ));
     }
-    Ok(aggregate_1(
+    aggregate_1(
         &data,
         n_cells,
         &all_cols(n_genes),
         &groups,
         group_levels.len(),
         fun,
-    ))
+    )
 }
 
 /// `computeCommunProb` for RNA data. Returns `(Prob, Pval)` and the array dimensions.
@@ -378,41 +380,41 @@ fn subunit_table(
 /// in `cofactor*` order; an unresolvable cofactor yields an empty vector, which upstream
 /// treats as "no modulation" rather than an error.
 #[extendr]
-pub fn resolve_cofactor_rows(name: &str, genes: Vec<String>, db_dir: &str) -> extendr_api::Result<Vec<i64>> {
+pub fn resolve_cofactor_rows(name: &str, genes: Vec<String>, db_dir: &str) -> Vec<i64> {
     if name.is_empty() {
-        return Ok(Vec::new());
+        return Vec::new();
     }
-    let db = Database::load(std::path::Path::new(db_dir))
-        .map_err(|e| extendr_api::Error::Other(format!("CellChatDB at {db_dir:?}: {e}")))?;
+    let db = unwrap_r(
+        Database::load(std::path::Path::new(db_dir))
+            .map_err(|e| extendr_api::Error::Other(format!("CellChatDB at {db_dir:?}: {e}"))),
+    );
     let index: std::collections::HashMap<&str, usize> =
         genes.iter().enumerate().map(|(i, g)| (g.as_str(), i)).collect();
     let Some(cells) = db.cofactor_cells(name) else {
-        return Ok(Vec::new());
+        return Vec::new();
     };
-    Ok(cells
+    cells
         .iter()
         .filter(|s| !s.is_empty())
         .filter_map(|s| index.get(s.as_str()).map(|&i| i as i64))
-        .collect())
+        .collect()
 }
 
 /// `match.arg(type)` over `type.mean`, returning the canonical spelling R would store in
 /// `options$parameter$type.mean`.
 #[extendr]
-pub fn match_mean_type(type_: &str, trim: f64) -> extendr_api::Result<String> {
-    Ok(
-        match mean_fun(type_, trim)? {
-            // `GroupMean::Mean` is not reachable from `match.arg`: upstream's
-            // `switch(aggregate.fun, mean = ...)` has no `mean` choice, and
-            // `computeCommunProb`'s `type` argument does not offer it either.
-            GroupMean::TriMean => "triMean",
-            GroupMean::TrimmedMean { .. } => "truncatedMean",
-            GroupMean::ThresholdedMean { .. } => "thresholdedMean",
-            GroupMean::Median => "median",
-            GroupMean::Mean => "triMean",
-        }
-        .to_string(),
-    )
+pub fn match_mean_type(type_: &str, trim: f64) -> String {
+    match unwrap_r(mean_fun(type_, trim)) {
+        // `GroupMean::Mean` is not reachable from `match.arg`: upstream's
+        // `switch(aggregate.fun, mean = ...)` has no `mean` choice, and
+        // `computeCommunProb`'s `type` argument does not offer it either.
+        GroupMean::TriMean => "triMean",
+        GroupMean::TrimmedMean { .. } => "truncatedMean",
+        GroupMean::ThresholdedMean { .. } => "thresholdedMean",
+        GroupMean::Median => "median",
+        GroupMean::Mean => "triMean",
+    }
+    .to_string()
 }
 
 fn mean_fun(type_: &str, trim: f64) -> extendr_api::Result<GroupMean> {
@@ -463,46 +465,46 @@ pub fn compute_ave_expr(
     features: Vec<String>,
     type_: &str,
     trim: f64,
-) -> extendr_api::Result<List> {
+) -> List {
     if genes.is_empty() {
-        return Err(extendr_api::Error::Other(
-            "computeAveExpr: no genes in the expression matrix".into(),
-        ));
+        extendr_api::throw_r_error("computeAveExpr: no genes in the expression matrix");
     }
     if data.len() % genes.len() != 0 {
-        return Err(extendr_api::Error::Other(format!(
+        extendr_api::throw_r_error(format!(
             "computeAveExpr: data has {} values, not a multiple of {} genes",
             data.len(),
             genes.len()
-        )));
+        ));
     }
-    let groups = group_index(&group, &group_levels)?;
+    let groups = unwrap_r(group_index(&group, &group_levels));
     if groups.len() != data.len() / genes.len() {
-        return Err(extendr_api::Error::Other(format!(
+        extendr_api::throw_r_error(format!(
             "computeAveExpr: group has {} entries but the matrix has {} cells",
             groups.len(),
             data.len() / genes.len()
-        )));
+        ));
     }
     let feats: Option<&[String]> = if features.is_empty() { None } else { Some(&features) };
     let (values, names) = r_core::de::select_features(&data, &genes, feats);
-    let avg = r_core::de::compute_ave_expr(
-        &data,
-        &genes,
-        &groups,
-        group_levels.len(),
-        feats,
-        type_,
-        trim,
-    )
-    .map_err(|e| extendr_api::Error::Other(e.to_string()))?;
+    let avg = unwrap_r(
+        r_core::de::compute_ave_expr(
+            &data,
+            &genes,
+            &groups,
+            group_levels.len(),
+            feats,
+            type_,
+            trim,
+        )
+        .map_err(|e| extendr_api::Error::Other(e.to_string())),
+    );
     debug_assert_eq!(values.len(), avg.len());
-    Ok(list! {
+    list! {
         values=r!(avg),
         dim=r!(vec![names.len() as i32, group_levels.len() as i32]),
         features=r!(names),
         groups=r!(group_levels),
-    })
+    }
 }
 
 /// `subsetData`'s gene list: `intersect(gene.use, rownames(data))`, in R's `intersect`
@@ -512,9 +514,9 @@ pub fn subset_data_gene_use(
     gene_use_input: Vec<String>,
     data_rownames: Vec<String>,
     features: Vec<String>,
-) -> extendr_api::Result<Vec<String>> {
+) -> Vec<String> {
     let feats: Option<&[String]> = if features.is_empty() { None } else { Some(&features) };
-    Ok(r_core::de::subset_data_gene_use(&gene_use_input, &data_rownames, feats))
+    r_core::de::subset_data_gene_use(&gene_use_input, &data_rownames, feats)
 }
 
 /// `subsetDB`'s row selection on the `annotation` key, and its default `search`.
@@ -527,13 +529,12 @@ pub fn subset_db_by_annotation(
     search: Vec<String>,
     key_is_annotation: bool,
     non_protein: bool,
-) -> extendr_api::Result<List> {
+) -> List {
     if !key_is_annotation {
-        return Err(extendr_api::Error::Other(
+        extendr_api::throw_r_error(
             "Each element of the `key` should be one of the column names of the \
-             interaction_input from CellChatDB"
-                .into(),
-        ));
+             interaction_input from CellChatDB",
+        );
     }
     // An empty `search` selects **nothing**, which is what upstream does for an explicit
     // `search = c()`. The `NULL -> default` substitution is R's `is.null(search)` test and
@@ -557,11 +558,11 @@ pub fn subset_db_by_annotation(
     // was this shim itself: `cellchatrs_upstream_env()` did not source `database.R`, so
     // `get("subsetDB", envir = env)` fell through to the cellchatrs namespace and
     // "upstream" and "Rust" were the same 2238 rows.
-    Ok(list! {
+    list! {
         keep=r!(keep),
         search=r!(search),
         non_protein=r!(effective_np),
-    })
+    }
 }
 
 // --------------------------------------------------------------------------------- net.rs
@@ -575,12 +576,12 @@ pub fn aggregate_net(
     group_levels: Vec<String>,
     interaction_names: Vec<String>,
     thresh: f64,
-) -> extendr_api::Result<List> {
+) -> List {
     let net = r_core::net::Net::new(prob, pval, group_levels.clone(), interaction_names);
     let (count, weight) = r_core::net::aggregate_net_default(&net, thresh);
     let k = group_levels.len() as i32;
     let (r, c, _) = net.dimnames();
-    Ok(list! {
+    list! {
         count=count,
         weight=weight,
         dim=r!(vec![k, k]),
@@ -588,7 +589,7 @@ pub fn aggregate_net(
         // `dimnames(count)` the wrong names, which `identical()` catches but a value
         // comparison does not.
         dimnames=r!(list! { r, c }),
-    })
+    }
 }
 
 /// `subsetCommunication` for `slot.name = "net"`, `mode = "single"`.
@@ -621,7 +622,7 @@ pub fn subset_communication(
     thresh: f64,
     sources_use: Vec<String>,
     targets_use: Vec<String>,
-) -> extendr_api::Result<List> {
+) -> List {
     let net = r_core::net::Net::new(prob, pval, group_levels.clone(), interaction_names);
     let n_lr = lr_interaction_name.len();
     // Every optional column must be n_lr long whether or not the table has it, so index
@@ -635,10 +636,10 @@ pub fn subset_communication(
         ("lr_evidence", &lr_evidence),
     ] {
         if v.len() != n_lr {
-            return Err(extendr_api::Error::Other(format!(
+            extendr_api::throw_r_error(format!(
                 "{name} has {} entries but lr_interaction_name has {n_lr}",
                 v.len()
-            )));
+            ));
         }
     }
     let cols: Vec<String> = lr_columns_present.clone();
@@ -685,7 +686,7 @@ pub fn subset_communication(
             }
         };
     }
-    Ok(list! {
+    list! {
         colnames=r!(t.columns.clone()),
         nrow=r!(n as i32),
         source_levels=r!(levels.clone()),
@@ -702,7 +703,7 @@ pub fn subset_communication(
         pathway_name=col!("pathway_name"),
         annotation=col!("annotation"),
         evidence=col!("evidence"),
-    })
+    }
 }
 
 /// R's `NA_real_` bit pattern. `NA` and `NaN` are both NaN payloads, and the difference
@@ -794,7 +795,7 @@ pub fn subset_communication_deg(
     sources_use: Vec<String>,
     targets_use: Vec<String>,
     slot_name: String,
-) -> extendr_api::Result<List> {
+) -> List {
     use extendr_api::List;
 
     let mut table = if colnames.is_empty() {
@@ -817,7 +818,7 @@ pub fn subset_communication_deg(
         }
         r_core::net::subset_communication(&net, &lr, thresh, None, None, false, false)
     } else {
-        build_table(&colnames, &cell_text, n_rows)?
+        unwrap_r(build_table(&colnames, &cell_text, n_rows))
     };
 
     // Upstream resolves numeric `sources.use` / `targets.use` against `cells.level` before
@@ -850,7 +851,7 @@ pub fn subset_communication_deg(
         Ok(t) => t,
         Err(e) => {
             let msg = e.to_string();
-            return Ok(kernel_error(msg));
+            return kernel_error(msg);
         }
     };
     // A dynamically named `list`, because the column set is data-dependent. `list!` cannot
@@ -887,7 +888,7 @@ pub fn subset_communication_deg(
     }
     pairs.push(("__nrow".to_string(), r!(n as i32)));
     pairs.push(("__levels".to_string(), r!(table.group_levels.clone())));
-    Ok(List::from_pairs(pairs))
+    List::from_pairs(pairs)
 }
 
 /// `NaN` -- **not** `NA_real_` -- is the marker for "argument not supplied".
@@ -985,15 +986,15 @@ pub fn aggregate_net_filtered(
     table_prob: Vec<f64>,
     cells_level: Vec<String>,
     remove_isolate: bool,
-) -> extendr_api::Result<List> {
+) -> List {
     let n = table_source.len();
     if table_target.len() != n || table_prob.len() != n {
-        return Err(extendr_api::Error::Other(format!(
+        extendr_api::throw_r_error(format!(
             "table columns disagree: source {}, target {}, prob {}",
             n,
             table_target.len(),
             table_prob.len()
-        )));
+        ));
     }
     let t = r_core::net::NetTable {
         columns: vec!["source".into(), "target".into(), "prob".into()],
@@ -1012,13 +1013,13 @@ pub fn aggregate_net_filtered(
     let (count, weight, src_levels, tgt_levels) =
         r_core::net::aggregate_net_filtered(&t, &cells_level, remove_isolate);
     let (r, c) = (src_levels.len() as i32, tgt_levels.len() as i32);
-    Ok(list! {
+    list! {
         count=count,
         weight=weight,
         dim=r!(vec![r, c]),
         // Unnamed, matching `aggregate_net`: R expects `list(rownames, colnames)`.
         dimnames=r!(list! { src_levels, tgt_levels }),
-    })
+    }
 }
 
 /// `geneInfo$Symbol` as a membership set, with `NA` entries dropped.
@@ -1088,7 +1089,7 @@ pub fn filter_communication(
     rare_keep: bool,
     mean_type: &str,
     trim: f64,
-) -> extendr_api::Result<List> {
+) -> List {
     let n_cells = group_index.len();
     // `as.numeric(net$prob)` bit-for-bit, *including* `NA_real_`.
     //
@@ -1105,15 +1106,15 @@ pub fn filter_communication(
     // `NA` where the code below folds with `f64::max`, which *ignores* NaN payloads), so a loud
     // error beats a silent divergence. The asymmetry is the contract: `prob` NA is specified,
     // `data` NA is refused.
-    let prob: Vec<f64> = prob.as_real_slice().map(<[f64]>::to_vec).ok_or_else(|| {
+    let prob: Vec<f64> = unwrap_r(prob.as_real_slice().map(<[f64]>::to_vec).ok_or_else(|| {
         extendr_api::Error::Other("prob must be a numeric vector".into())
-    })?;
+    }));
     let n_genes = gene_names.len();
     if n_genes == 0 || data.len() != n_genes * n_cells {
-        return Err(extendr_api::Error::Other(format!(
+        extendr_api::throw_r_error(format!(
             "data has {} values, expected {n_genes} genes x {n_cells} cells",
             data.len()
-        )));
+        ));
     }
     fn to_usize(v: &[i32], what: &str) -> extendr_api::Result<Vec<usize>> {
         v.iter()
@@ -1123,16 +1124,16 @@ pub fn filter_communication(
             })
             .collect()
     }
-    let group_index = to_usize(&group_index, "group_index")?;
-    let sample_index = to_usize(&sample_index, "sample_index")?;
+    let group_index = unwrap_r(to_usize(&group_index, "group_index"));
+    let sample_index = unwrap_r(to_usize(&sample_index, "sample_index"));
 
     // `data <- data/max(data)` happens *before* anything else, so the caller hands over the
     // raw matrix and the scaling is done here, where its effect is visible.
     let max = data.iter().copied().fold(f64::NEG_INFINITY, f64::max);
     if !max.is_finite() || max == 0.0 {
-        return Err(extendr_api::Error::Other(
-            "data/max(data) is undefined for an all-zero or non-finite matrix".into(),
-        ));
+        extendr_api::throw_r_error(
+            "data/max(data) is undefined for an all-zero or non-finite matrix",
+        );
     }
     let scaled: Vec<f64> = data.iter().map(|v| v / max).collect();
 
@@ -1161,7 +1162,7 @@ pub fn filter_communication(
         complexes,
         complex_names.clone(),
         n_sub,
-        symbols_as_strings(&symbols)?,
+        unwrap_r(symbols_as_strings(&symbols)),
     );
 
     let mean = match mean_type {
@@ -1170,10 +1171,10 @@ pub fn filter_communication(
         "thresholdedMean" => r_core::filter::MeanKind::ThresholdedMean,
         "median" => r_core::filter::MeanKind::Median,
         other => {
-            return Err(extendr_api::Error::Other(format!(
+            extendr_api::throw_r_error(format!(
                 "`type.mean` must be one of triMean, truncatedMean, thresholdedMean, median; \
                  got {other:?}"
-            )))
+            ))
         }
     };
 
@@ -1194,11 +1195,11 @@ pub fn filter_communication(
         ligand: &ligand,
         receptor: &receptor,
     };
-    let res = r_core::filter::filter_communication(&inp, &db).map_err(|e| {
+    let res = unwrap_r(r_core::filter::filter_communication(&inp, &db).map_err(|e| {
         // `Error::Other` renders as a plain R error whose message is `e.toString()`, which is
         // upstream's own text, so the shim's `tryCatch` sees the same condition.
         extendr_api::Error::Other(e.to_string())
-    })?;
+    }));
     // One entry per sample, **including samples the filter did not score**. When
     // `min.samples < 2` the whole per-sample half is skipped and `sample_excluded` is empty;
     // padding here means the R side can index `len[i]` for every `i` without an
@@ -1213,7 +1214,7 @@ pub fn filter_communication(
         .flat_map(|v| v.iter().map(|&g| g as i32))
         .collect();
     sample_excluded.shrink_to_fit();
-    Ok(list! {
+    list! {
         prob=r!(res.prob),
         // `Option<i32>`: `None` is R's `NA_integer_`, which is what upstream's
         // `sum(net$prob > 0)` returns when the buffer holds any `NA` or `NaN`. The R side does
@@ -1230,7 +1231,7 @@ pub fn filter_communication(
         min_samples_ok=r!(res.min_samples_ok),
         n_samples=r!(n_samples as i32),
         nrow=r!(group_levels.len() as i32),
-    })
+    }
 }
 
 /// `rankNet`'s numeric core: the per-pathway information flow and its `-1/log` rescaling.
@@ -1262,7 +1263,7 @@ pub fn ranknet_information_flow(
     measure: String,
     sources_use: Vec<i32>,
     targets_use: Vec<i32>,
-) -> extendr_api::Result<List> {
+) -> List {
     use extendr_api::List;
     let n = names.len();
     let k = (prob.len() / n.max(1)).isqrt();
@@ -1270,9 +1271,9 @@ pub fn ranknet_information_flow(
         // R's own shape error, from `dim(prob) <- c(k, k, n)`. A length that is not `k*k*n`
         // is not a `rankNet` condition at all -- it cannot happen through the exported function,
         // because `prob` always comes from a slot -- so the port reports what R would.
-        return Ok(kernel_error(
+        return kernel_error(
             "length of 'dimnames' [3] not equal to array extent".to_string(),
-        ));
+        );
     }
     let src: Option<Vec<usize>> = (!sources_use.is_empty())
         .then(|| sources_use.iter().map(|&i| i.max(0) as usize).collect());
@@ -1280,16 +1281,16 @@ pub fn ranknet_information_flow(
         .then(|| targets_use.iter().map(|&i| i.max(0) as usize).collect());
     let m = r_core::ranknet::Measure::from_name(&measure);
     let Some(m) = m else {
-        return Ok(kernel_error(
+        return kernel_error(
             "'arg' should be one of \"weight\", \"count\"".to_string(),
-        ));
+        );
     };
     match r_core::ranknet::information_flow(
         &prob, &pval, k, n, &group_levels, thresh, m, src.as_deref(), tgt.as_deref(),
     ) {
         Ok(flow) => {
             let ord = r_core::ranknet::order_f64(&flow.original);
-            Ok(List::from_pairs(vec![
+            List::from_pairs(vec![
                 (
                     "pSum_original".to_string(),
                     flow.original.to_vec().into(),
@@ -1305,9 +1306,9 @@ pub fn ranknet_information_flow(
                     flow.flagged.iter().map(|&i| i as f64).collect::<Vec<f64>>().into(),
                 ),
                 ("order".to_string(), ord_to_r(&ord)),
-            ]))
+            ])
         }
-        Err(e) => Ok(kernel_error(e.to_string())),
+        Err(e) => kernel_error(e.to_string()),
     }
 }
 
@@ -1336,12 +1337,12 @@ pub fn spatial_trimmed_mean(x: Vec<f64>, trim: f64, na_rm: bool) -> f64 {
 /// would mean inventing the `Lower`/`Upper`/`Labels` attributes in the binding layer, which is
 /// where they do not belong.
 #[extendr]
-pub fn spatial_fdist(x: Vec<f64>, n: i32, d: i32) -> extendr_api::Result<Vec<f64>> {
+pub fn spatial_fdist(x: Vec<f64>, n: i32, d: i32) -> Vec<f64> {
     let (n, d) = (n as usize, d as usize);
     if n.checked_mul(d) != Some(x.len()) {
-        return Err("`coordinates` must have `nrow * ncol` entries".into());
+        extendr_api::throw_r_error("`coordinates` must have `nrow * ncol` entries");
     }
-    Ok(r_core::spatial::fdist(&x, n, d))
+    r_core::spatial::fdist(&x, n, d)
 }
 
 /// `computeRegionDistance`, with the exact k-d tree in place of `AnnoyParam`.
@@ -1374,18 +1375,18 @@ pub fn spatial_region_distance(
     contact_range: Option<f64>,
     contact_knn_k: Option<i32>,
     do_symmetric: bool,
-) -> extendr_api::Result<List> {
+) -> List {
     use extendr_api::List;
     let (n, d) = (n as usize, d as usize);
     if n.checked_mul(d) != Some(coords.len()) {
-        return Err("`coordinates` must have `nrow * ncol` entries".into());
+        extendr_api::throw_r_error("`coordinates` must have `nrow * ncol` entries");
     }
     if group_index.len() != n || sample_index.len() != n {
-        return Err("`meta` must have one row per coordinate row".into());
+        extendr_api::throw_r_error("`meta` must have one row per coordinate row");
     }
     let k = group_levels.len();
     if k == 0 {
-        return Err("`meta$group` must have at least one level".into());
+        extendr_api::throw_r_error("`meta$group` must have at least one level");
     }
     let inp = r_core::spatial::RegionInput {
         coords: &coords,
@@ -1407,13 +1408,13 @@ pub fn spatial_region_distance(
     match r_core::spatial::region_distance(&inp) {
         // The two error paths come back as `__error`, like every other kernel here: `extendr` 0.9
         // drops the text of an `Err(String)`, so a real `Err` would reach R as an empty message.
-        Err(e) => Ok(kernel_error(e.to_string())),
-        Ok(res) => Ok(List::from_pairs(vec![
+        Err(e) => kernel_error(e.to_string()),
+        Ok(res) => List::from_pairs(vec![
             ("d_spatial".to_string(), res.d_spatial.into()),
             ("adj_contact".to_string(), res.adj_contact.into()),
             ("adj_contact_knn".to_string(), res.adj_contact_knn.into()),
             ("group_levels".to_string(), res.group_levels.into()),
-        ])),
+        ]),
     }
 }
 
@@ -1444,13 +1445,13 @@ pub fn ranknet_comparison_flow(
     thresh: f64,
     sources_use: Vec<i32>,
     targets_use: Vec<i32>,
-) -> extendr_api::Result<List> {
+) -> List {
     use extendr_api::List;
     let m = r_core::ranknet::Measure::from_name(&measure);
     let Some(m) = m else {
-        return Ok(kernel_error(
+        return kernel_error(
             "'arg' should be one of \"weight\", \"count\"".to_string(),
-        ));
+        );
     };
     // The list-of-vectors inputs are flattened on the way in and re-split here, because
     // `extendr` has no `TryFrom<Robj>` for `Vec<Vec<_>>`. Sizes rather than a delimiter: a
@@ -1495,13 +1496,13 @@ pub fn ranknet_comparison_flow(
         split(pval, pval_sizes, "pval"),
         split_names(pair_names, pair_name_sizes),
     ) else {
-        return Ok(kernel_error(
+        return kernel_error(
             "`prob`, `pval` and `pair_names` must be given with matching size vectors".to_string(),
-        ));
+        );
     };
     let ncomp = prob.len();
     if ncomp == 0 || pval.len() != ncomp || pair_names.len() != ncomp {
-        return Ok(kernel_error("the compared networks must agree in number".to_string()));
+        return kernel_error("the compared networks must agree in number".to_string());
     }
     let k = k.max(0) as usize;
     let src: Option<Vec<usize>> =
@@ -1519,7 +1520,7 @@ pub fn ranknet_comparison_flow(
         targets_use: tgt.as_deref(),
     };
     match r_core::ranknet::comparison_flow(&inp) {
-        Err(e) => Ok(kernel_error(e.to_string())),
+        Err(e) => kernel_error(e.to_string()),
         Ok(res) => {
             // `List::from_pairs` rather than `set`: `extendr`'s `List` has no `set`, so a
             // dynamically-named element set has to be built as a pair list up front. `c{i}_...`
@@ -1548,7 +1549,7 @@ pub fn ranknet_comparison_flow(
             for (j, r) in res.ratio.iter().enumerate() {
                 pairs.push((format!("ratio{j}"), r.clone().into()));
             }
-            Ok(List::from_pairs(pairs))
+            List::from_pairs(pairs)
         }
     }
 }
@@ -1578,7 +1579,7 @@ pub fn ranknet_pairwise_orders(
     prob_sizes: Vec<i32>,
     pval: Vec<f64>,
     pval_sizes: Vec<i32>,
-) -> extendr_api::Result<List> {
+) -> List {
     use extendr_api::List;
     // `sizes` is R's `dim()`, not a list of slice lengths: a `k x k x n` array flattens to
     // `k * k` consecutive slices of `n` values each, and reading `dim()` as slice lengths sums to
@@ -1616,15 +1617,15 @@ pub fn ranknet_pairwise_orders(
         Some(out)
     };
     let (Some(prob), Some(pval)) = (split3(&prob, &prob_sizes), split3(&pval, &pval_sizes)) else {
-        return Ok(kernel_error(
+        return kernel_error(
             "prob and pval must be 3-dimensional arrays whose lengths match their dimensions"
                 .to_string(),
-        ));
+        );
     };
     if prob.len() != pval.len() {
-        return Ok(kernel_error(
+        return kernel_error(
             "prob and pval must agree in their first two dimensions".to_string(),
-        ));
+        );
     }
     let mut orders = Vec::with_capacity(prob.len());
     for (p, v) in prob.iter().zip(pval.iter()) {
@@ -1641,7 +1642,7 @@ pub fn ranknet_pairwise_orders(
         .enumerate()
         .map(|(i, v)| (i.to_string(), Robj::from(v)))
         .collect();
-    Ok(List::from_pairs(pairs))
+    List::from_pairs(pairs)
 }
 
 /// The deterministic half of `computeCentralityLocal`: unweighted degrees, strengths and
@@ -1664,28 +1665,28 @@ pub fn ranknet_pairwise_orders(
 pub fn centrality_deterministic(
     net: Vec<f64>,
     k: i32,
-) -> extendr_api::Result<List> {
+) -> List {
     let k = k as usize;
     if net.len() != k * k {
-        return Ok(kernel_error(format!(
+        return kernel_error(format!(
             "centrality: net has {} values, expected {k}x{k}",
             net.len()
-        )));
+        ));
     }
     let det = match r_core::centrality::degrees_strength(&net, k) {
         Ok(d) => d,
-        Err(e) => return Ok(kernel_error(e.to_string())),
+        Err(e) => return kernel_error(e.to_string()),
     };
     let (btw, tiny) = match r_core::centrality::betweenness(&net, k) {
         Ok(v) => v,
-        Err(e) => return Ok(kernel_error(e.to_string())),
+        Err(e) => return kernel_error(e.to_string()),
     };
-    Ok(list! {
+    list! {
         outdeg_unweighted=r!(det.outdeg_unweighted),
         indeg_unweighted=r!(det.indeg_unweighted),
         outdeg=r!(det.outdeg),
         indeg=r!(det.indeg),
         betweenness=r!(btw),
         tiny_weights=r!(tiny),
-    })
+    }
 }
