@@ -78,12 +78,7 @@ fn get_num_threads() -> usize {
 
 /// Marshal the pure Rust shared-nearest-neighbour graph into CSC slots.
 #[extendr]
-fn compute_snn(
-    neighbours: Vec<i32>,
-    n_rows: usize,
-    n_cols: usize,
-    prune: f64,
-) -> List {
+fn compute_snn(neighbours: Vec<i32>, n_rows: usize, n_cols: usize, prune: f64) -> List {
     let graph = unwrap_r(
         r_core::snn::compute_snn(&neighbours, n_rows, n_cols, prune)
             .map_err(extendr_api::Error::Other),
