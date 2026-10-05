@@ -74,9 +74,35 @@ agg	asym4_keep	df_order=g1|g2,g1|g3,g1|g4,g2|g2,g2|g3,g2|g4
 agg	asym4_keep	df_count=3,3,1,2,3,3
 agg	asym4_keep	df_prob=1.71,0.54599999999999993,0.096000000000000002,0.495,1.1459999999999999,1.5289999999999999
 case	signaling3	3	4
-agg	signaling3	ERROR	there is no package called ‘future.apply’
+agg	signaling3	dim=0x0
+agg	signaling3	count=
+agg	signaling3	weight=
+agg	signaling3	source_levels=
+agg	signaling3	target_levels=
+agg	signaling3	rn_source=
+agg	signaling3	rn_target=
+agg	signaling3	col_order=source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence
+agg	signaling3	classes=factor,factor,character,character,numeric,numeric,factor,character,character,character,character
+agg	signaling3	interaction_levels=LR1,LR2,LR3,LR4
+agg	signaling3	df_source_levels=g1,g2,g3
+agg	signaling3	df_order=g1|g1,g1|g2,g1|g3,g2|g1,g2|g2,g3|g2,g3|g3
+agg	signaling3	df_count=1,1,1,1,2,1,1
+agg	signaling3	df_prob=0.77300000000000002,0.57599999999999996,0.27400000000000002,0.80100000000000005,1.004,0.77500000000000002,0.80400000000000005
 case	signaling3_b	3	4
-agg	signaling3_b	ERROR	there is no package called ‘future.apply’
+agg	signaling3_b	dim=0x0
+agg	signaling3_b	count=
+agg	signaling3_b	weight=
+agg	signaling3_b	source_levels=
+agg	signaling3_b	target_levels=
+agg	signaling3_b	rn_source=
+agg	signaling3_b	rn_target=
+agg	signaling3_b	col_order=source,target,ligand,receptor,prob,pval,interaction_name,interaction_name_2,pathway_name,annotation,evidence
+agg	signaling3_b	classes=factor,factor,character,character,numeric,numeric,factor,character,character,character,character
+agg	signaling3_b	interaction_levels=LR1,LR2,LR3,LR4
+agg	signaling3_b	df_source_levels=g1,g2,g3
+agg	signaling3_b	df_order=g1|g1,g1|g2,g1|g3,g2|g1,g2|g2,g2|g3,g3|g1,g3|g2,g3|g3
+agg	signaling3_b	df_count=1,1,1,1,2,2,1,2,2
+agg	signaling3_b	df_prob=0.497,0.85599999999999998,0.75700000000000001,0.99099999999999999,1.0409999999999999,1.0569999999999999,0.73099999999999998,1.2849999999999999,0.39200000000000002
 case	pairlr3	3	6
 agg	pairlr3	dim=0x0
 agg	pairlr3	count=
