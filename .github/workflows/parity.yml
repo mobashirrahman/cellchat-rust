@@ -122,6 +122,7 @@ jobs:
           libcurl4-openssl-dev libssl-dev libxml2-dev
           libfontconfig1-dev libharfbuzz-dev libfribidi-dev libfreetype6-dev
           libpng-dev libtiff5-dev libjpeg-dev
+          libuv1-dev
       - name: R dependencies
         run: |
           set -euo pipefail
@@ -132,11 +133,23 @@ jobs:
           # `there is no package called 'BiocGenerics'` as an upstream error instead of a
           # result. Same failure shape as the missing `scales`.
           Rscript -e 'BiocManager::install("BiocGenerics", ask = FALSE, update = FALSE, lib = Sys.getenv("R_LIBS_USER"))'
-          # `collapse` and `dplyr` are what the goldens are generated against; `future` is sourced
-          # by upstream's own `modeling.R`. `presto` and `BiocNeighbors` are deliberately absent --
-          # both are optional in upstream, and the gates assert that the port *falls back* rather
-          # than silently taking a different algorithm.
-          Rscript -e 'remotes::install_cran(c("collapse", "dplyr", "future", "rlang", "jsonlite", "igraph", "reshape2", "scales"), lib = Sys.getenv("R_LIBS_USER"), upgrade = "never")'
+          # Exact versions, not latest. The goldens are bit-identical output, so a patch
+          # release that changes any numeric formatting breaks them: CI installing latest
+          # while the committed corpora were validated against these is how
+          # `netfiltered` lost all but 3 of its cases. These are the versions in the
+          # developer `.rlib` that the committed fixtures were generated and tested with
+          # (and the ones the generator headers name: collapse 2.1.8, igraph 2.3.4).
+          # `Matrix` ships with R itself; pinning holds it at the validated 1.6.5 even as
+          # R moves on. Re-validate (regenerate locally, run `cargo test`) before bumping.
+          Rscript -e 'remotes::install_version("collapse", version = "2.1.8", lib = Sys.getenv("R_LIBS_USER"), upgrade = "never")'
+          Rscript -e 'remotes::install_version("dplyr", version = "1.2.1", lib = Sys.getenv("R_LIBS_USER"), upgrade = "never")'
+          Rscript -e 'remotes::install_version("Matrix", version = "1.6.5", lib = Sys.getenv("R_LIBS_USER"), upgrade = "never")'
+          Rscript -e 'remotes::install_version("igraph", version = "2.3.4", lib = Sys.getenv("R_LIBS_USER"), upgrade = "never")'
+          Rscript -e 'remotes::install_version("reshape2", version = "1.4.5", lib = Sys.getenv("R_LIBS_USER"), upgrade = "never")'
+          Rscript -e 'remotes::install_version("scales", version = "1.4.0", lib = Sys.getenv("R_LIBS_USER"), upgrade = "never")'
+          Rscript -e 'remotes::install_version("future", version = "1.76.0", lib = Sys.getenv("R_LIBS_USER"), upgrade = "never")'
+          Rscript -e 'remotes::install_version("rlang", version = "1.3.0", lib = Sys.getenv("R_LIBS_USER"), upgrade = "never")'
+          Rscript -e 'remotes::install_version("jsonlite", version = "2.0.0", lib = Sys.getenv("R_LIBS_USER"), upgrade = "never")'
       - name: fetch the pinned upstream
         uses: actions/checkout@v4
         with:
@@ -234,6 +247,7 @@ jobs:
           libcurl4-openssl-dev libssl-dev libxml2-dev
           libfontconfig1-dev libharfbuzz-dev libfribidi-dev libfreetype6-dev
           libpng-dev libtiff5-dev libjpeg-dev
+          libuv1-dev
       - name: R dependencies
         run: |
           set -euo pipefail
@@ -351,6 +365,7 @@ jobs:
           libcurl4-openssl-dev libssl-dev libxml2-dev
           libfontconfig1-dev libharfbuzz-dev libfribidi-dev libfreetype6-dev
           libpng-dev libtiff5-dev libjpeg-dev
+          libuv1-dev
       - name: R dependencies
         run: |
           set -euo pipefail
@@ -457,6 +472,7 @@ jobs:
           libcurl4-openssl-dev libssl-dev libxml2-dev
           libfontconfig1-dev libharfbuzz-dev libfribidi-dev libfreetype6-dev
           libpng-dev libtiff5-dev libjpeg-dev
+          libuv1-dev
       - name: R dependencies
         run: |
           set -euo pipefail
