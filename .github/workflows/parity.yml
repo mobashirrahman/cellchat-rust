@@ -101,6 +101,12 @@ jobs:
         with:
           r-version: 4.3
           use-public-rspm: true
+      - name: system libraries for RSPM binaries
+        # The RSPM igraph binary links GLPK, which ubuntu-latest does not ship. Without
+        # it the package installs cleanly and then fails at dyn.load with
+        # `libglpk.so.40: cannot open shared object file` -- an install success that is
+        # really a failure, caught only when a generator first loads igraph.
+        run: sudo apt-get update && sudo apt-get install -y libglpk40
       - name: R dependencies
         run: |
           set -euo pipefail
@@ -183,18 +189,47 @@ jobs:
           r-version: ${{ matrix.r-version }}
           use-public-rspm: true
           http-user-agent: 'r-lib/actions/setup-r@v2 (github.com/r-lib/actions)'
+      - name: system libraries for RSPM binaries
+        # The RSPM igraph binary links GLPK, which ubuntu-latest does not ship. Without
+        # it the package installs cleanly and then fails at dyn.load with
+        # `libglpk.so.40: cannot open shared object file` -- an install success that is
+        # really a failure, caught only when a generator first loads igraph.
+        run: sudo apt-get update && sudo apt-get install -y libglpk40
       - name: R dependencies
         run: |
           set -euo pipefail
           mkdir -p "$R_LIBS_USER"
-          Rscript -e 'install.packages("remotes", repos = "https://cloud.r-project.org", lib = Sys.getenv("R_LIBS_USER"))'
-          Rscript -e 'remotes::install_cran(c("collapse", "dplyr", "future", "future.apply", "rlang", "jsonlite", "Matrix", "tibble", "ggplot2", "igraph", "pbapply", "testthat", "presto", "BiocManager"), lib = Sys.getenv("R_LIBS_USER"), upgrade = "never")'
-          # BiocNeighbors is what upstream's spatial KNN actually calls, so `check_spatial` and the
-          # divergence measurement need it. A CRAN-hosted package, so no BiocManager repository is
-          # required for it, but its dependencies are not.
-          if ! Rscript -e 'quit(status = !requireNamespace("BiocNeighbors", quietly = TRUE))'; then
-            Rscript -e 'BiocManager::install("BiocNeighbors", ask = FALSE, update = FALSE, lib = Sys.getenv("R_LIBS_USER"))'
-          fi
+          Rscript -e 'install.packages(c("remotes", "BiocManager"), repos = "https://cloud.r-project.org", lib = Sys.getenv("R_LIBS_USER"))'
+          # The Bioconductor packages in DESCRIPTION Imports, installed first so the Bioc
+          # repositories are configured before remotes resolves anything else.
+          Rscript -e 'BiocManager::install(c("BiocGenerics", "BiocNeighbors", "ComplexHeatmap"), ask = FALSE, update = FALSE, lib = Sys.getenv("R_LIBS_USER"))'
+          # Everything else straight from DESCRIPTION Imports and Depends, so this step
+          # cannot drift from what the package declares. A hardcoded list did drift: the
+          # rename to a full CellChat surface took Imports to 43 packages while this step
+          # still installed 14, and `R CMD INSTALL` failed on the missing remainder.
+          Rscript -e 'remotes::install_deps(".", dependencies = c("Depends", "Imports"), lib = Sys.getenv("R_LIBS_USER"), upgrade = "never")'
+          # Test-only packages, deliberately not in Imports.
+          Rscript -e 'remotes::install_cran(c("testthat", "presto"), lib = Sys.getenv("R_LIBS_USER"), upgrade = "never")'
+      - name: build and install the shim
+        run: |
+          set -euo pipefail
+          cargo build --release
+          sh ./configure
+          R CMD INSTALL --library="$R_LIBS_USER" .
+      - name: fetch the pinned upstream
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.UPSTREAM_REPO }}
+          ref: ${{ env.UPSTREAM_SHA }}
+          path: ${{ env.UPSTREAM_PATH }}
+      - name: verify the bundled upstream sources
+        run: ./scripts/check_upstream_bundle.sh
+      - name: regenerate the golden corpora
+        env:
+          CELLCHAT_SRC: ${{ github.workspace }}/${{ env.UPSTREAM_PATH }}
+        run: sh scripts/gen_fixtures.sh
+      - name: fetch the tutorial fixture
+        # `tutorial_repro.R` reproduces the published vignette end to end, and that vignette begins
       - uses: Swatinem/rust-cache@v2
         with:
           key: r-parity-${{ matrix.r-version }}
@@ -275,15 +310,22 @@ jobs:
         with:
           r-version: 4.4
           use-public-rspm: true
+      - name: system libraries for RSPM binaries
+        # The RSPM igraph binary links GLPK, which ubuntu-latest does not ship. Without
+        # it the package installs cleanly and then fails at dyn.load with
+        # `libglpk.so.40: cannot open shared object file` -- an install success that is
+        # really a failure, caught only when a generator first loads igraph.
+        run: sudo apt-get update && sudo apt-get install -y libglpk40
       - name: R dependencies
         run: |
           set -euo pipefail
           mkdir -p "$R_LIBS_USER"
-          Rscript -e 'install.packages("remotes", repos = "https://cloud.r-project.org", lib = Sys.getenv("R_LIBS_USER"))'
-          Rscript -e 'remotes::install_cran(c("collapse", "dplyr", "future", "future.apply", "rlang", "jsonlite", "Matrix", "tibble", "ggplot2", "igraph", "pbapply", "presto", "BiocManager"), lib = Sys.getenv("R_LIBS_USER"), upgrade = "never")'
-          if ! Rscript -e 'quit(status = !requireNamespace("BiocNeighbors", quietly = TRUE))'; then
-            Rscript -e 'BiocManager::install("BiocNeighbors", ask = FALSE, update = FALSE, lib = Sys.getenv("R_LIBS_USER"))'
-          fi
+          Rscript -e 'install.packages(c("remotes", "BiocManager"), repos = "https://cloud.r-project.org", lib = Sys.getenv("R_LIBS_USER"))'
+          Rscript -e 'BiocManager::install(c("BiocGenerics", "BiocNeighbors", "ComplexHeatmap"), ask = FALSE, update = FALSE, lib = Sys.getenv("R_LIBS_USER"))'
+          # Derived from DESCRIPTION Imports and Depends; see the r-parity job for why
+          # a hardcoded list is not used. Test-only `presto` follows (the do.fast path).
+          Rscript -e 'remotes::install_deps(".", dependencies = c("Depends", "Imports"), lib = Sys.getenv("R_LIBS_USER"), upgrade = "never")'
+          Rscript -e 'remotes::install_cran(c("presto"), lib = Sys.getenv("R_LIBS_USER"), upgrade = "never")'
       - uses: Swatinem/rust-cache@v2
         with:
           key: parity-report
@@ -364,12 +406,23 @@ jobs:
         with:
           r-version: 4.4
           use-public-rspm: true
+      - name: system libraries for RSPM binaries
+        # The RSPM igraph binary links GLPK, which ubuntu-latest does not ship. Without
+        # it the package installs cleanly and then fails at dyn.load with
+        # `libglpk.so.40: cannot open shared object file` -- an install success that is
+        # really a failure, caught only when a generator first loads igraph.
+        run: sudo apt-get update && sudo apt-get install -y libglpk40
       - name: R dependencies
         run: |
           set -euo pipefail
           mkdir -p "$R_LIBS_USER"
-          Rscript -e 'install.packages("remotes", repos = "https://cloud.r-project.org", lib = Sys.getenv("R_LIBS_USER"))'
-          Rscript -e 'remotes::install_cran(c("collapse", "dplyr", "future", "future.apply", "rlang", "jsonlite", "Matrix", "tibble", "ggplot2", "igraph", "pbapply", "knitr"), lib = Sys.getenv("R_LIBS_USER"), upgrade = "never")'
+          Rscript -e 'install.packages(c("remotes", "BiocManager"), repos = "https://cloud.r-project.org", lib = Sys.getenv("R_LIBS_USER"))'
+          Rscript -e 'BiocManager::install(c("BiocGenerics", "BiocNeighbors", "ComplexHeatmap"), ask = FALSE, update = FALSE, lib = Sys.getenv("R_LIBS_USER"))'
+          # Derived from DESCRIPTION Imports and Depends; see the r-parity job for why
+          # a hardcoded list is not used. `knitr` builds the vignette; Suggests are
+          # allowed to be missing (`_R_CHECK_FORCE_SUGGESTS_=false`), so nothing else.
+          Rscript -e 'remotes::install_deps(".", dependencies = c("Depends", "Imports"), lib = Sys.getenv("R_LIBS_USER"), upgrade = "never")'
+          Rscript -e 'remotes::install_cran(c("knitr"), lib = Sys.getenv("R_LIBS_USER"), upgrade = "never")'
       - uses: Swatinem/rust-cache@v2
         with:
           key: package
