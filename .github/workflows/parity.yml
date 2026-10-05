@@ -131,7 +131,7 @@ jobs:
           # by upstream's own `modeling.R`. `presto` and `BiocNeighbors` are deliberately absent --
           # both are optional in upstream, and the gates assert that the port *falls back* rather
           # than silently taking a different algorithm.
-          Rscript -e 'remotes::install_cran(c("collapse", "dplyr", "future", "rlang", "jsonlite", "igraph", "reshape2"), lib = Sys.getenv("R_LIBS_USER"), upgrade = "never")'
+          Rscript -e 'remotes::install_cran(c("collapse", "dplyr", "future", "rlang", "jsonlite", "igraph", "reshape2", "scales"), lib = Sys.getenv("R_LIBS_USER"), upgrade = "never")'
       - name: fetch the pinned upstream
         uses: actions/checkout@v4
         with:

@@ -1,27 +1,27 @@
-%\VignetteIndexEntry{cellchatrs: a drop-in CellChat accelerator}
+%\VignetteIndexEntry{CellChat: Rust-accelerated inference}
 %\VignetteEngine{knitr::knitr}
 %\VignetteEncoding{UTF-8}
 \documentclass{article}
 \usepackage{amsmath}
-\title{cellchatrs: a drop-in accelerator for CellChat inference}
+\title{CellChat: Rust-accelerated inference}
 \author{cellchat-rs authors}
 \begin{document}
 \maketitle
 
 \section{What this package is}
 
-\texttt{cellchatrs} re-implements CellChat's numeric inference kernel in Rust and exports
+\texttt{CellChat} re-implements CellChat's numeric inference kernel in Rust and exports
 the matching inference entry points with the same object structure. Code using the unqualified
-API can use the accelerator by loading \texttt{cellchatrs} in place of CellChat. Visualization
+API can use the accelerator by loading \texttt{CellChat} in place of the original CellChat. Visualization
 and the Shiny app stay upstream R code. What follows uses only
-\texttt{cellchatrs}; parity against pinned upstream CellChat
+\texttt{CellChat}; parity against pinned upstream CellChat
 (commit \texttt{75253cd}, v2.2.0.9001) is established by the repository's test suite
 (427 differential comparisons, a 200-configuration matrix, metamorphic and fuzz suites --
 see \texttt{tests/parity/}), not re-proved here.
 
 <<setup, include=FALSE>>=
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
-library(cellchatrs)
+library(CellChat)
 @
 
 \section{A complete run on synthetic data}
@@ -41,7 +41,7 @@ grp <- factor(rep(c("A", "B", "C"), each = 100))
 ## subunit -- which is the correct behaviour for names outside the database, and the wrong thing
 ## for a vignette to demonstrate. Single-gene ligands and receptors with empty cofactor fields keep
 ## the demo small while staying inside the real schema.
-dbix <- system.file("db", "human", "interactions.tsv", package = "cellchatrs")
+dbix <- system.file("db", "human", "interactions.tsv", package = "CellChat")
 dblines <- strsplit(readLines(dbix), "\t", fixed = TRUE)
 is_simple <- vapply(dblines, function(f) {
   ## Single genes only: complex names join subunits with underscores (`ACVR1_TGFBR1`), and the
@@ -105,7 +105,7 @@ what was measured rather than re-measuring something smaller and incomparable.
 \begin{center}
 \begin{tabular}{lrrrr}
 \hline
-dataset & upstream & cellchatrs & speedup & Amdahl limit \\
+dataset & upstream & CellChat & speedup & Amdahl limit \\
 \hline
 human skin (7,563 cells, kernel, nboot=100) & 101.4\,s & 2.41\,s & 42.1x & -- \\
 human skin (full pipeline) & 100.1\,s & 6.0\,s & 16.7x & 24.8x \\
