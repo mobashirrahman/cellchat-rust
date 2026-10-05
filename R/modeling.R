@@ -1456,7 +1456,17 @@ identifyOverExpressedGenes <- function(object, data.use = NULL, group.by = NULL,
       )
       ## Matrix::rowSums returns a named double vector. Let data.frame adopt its row names
       ## during construction to preserve both storage type and serialized attribute order.
-      counts <- stats::setNames(as.numeric(res$n_cells), res$features)
+      ##
+      ## Storage type is input-dependent, and `identical()` sees it: `base::rowSums` on a
+      ## dense logical matrix returns double, while `Matrix::rowSums` on an `lgCMatrix`
+      ## returns integer. The kernel counts in integers (`res$n_cells` is integer), so for
+      ## dense input coerce to double and for sparse input keep integer -- matching what
+      ## `rowSums(data.use > 0)` itself returns in each case. Getting this backwards fails
+      ## `identical()` while `all.equal()` stays silent, which is how the `oeg_node`
+      ## configuration (sparse `data.use`, 29 retained genes) caught it after the dense
+      ## `test-contract-inputs.R` case had already passed.
+      counts <- stats::setNames(res$n_cells, res$features)
+      if (!inherits(data.use, "sparseMatrix")) counts <- as.numeric(counts)
       markers.all <- data.frame(features = res$features, nCells = counts,
                                 stringsAsFactors = FALSE)
       ## Upstream's next statement is `dplyr::filter(markers.all, nCells >= min.cells)`, and
