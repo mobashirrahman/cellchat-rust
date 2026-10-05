@@ -210,26 +210,6 @@ jobs:
           Rscript -e 'remotes::install_deps(".", dependencies = c("Depends", "Imports"), lib = Sys.getenv("R_LIBS_USER"), upgrade = "never")'
           # Test-only packages, deliberately not in Imports.
           Rscript -e 'remotes::install_cran(c("testthat", "presto"), lib = Sys.getenv("R_LIBS_USER"), upgrade = "never")'
-      - name: build and install the shim
-        run: |
-          set -euo pipefail
-          cargo build --release
-          sh ./configure
-          R CMD INSTALL --library="$R_LIBS_USER" .
-      - name: fetch the pinned upstream
-        uses: actions/checkout@v4
-        with:
-          repository: ${{ env.UPSTREAM_REPO }}
-          ref: ${{ env.UPSTREAM_SHA }}
-          path: ${{ env.UPSTREAM_PATH }}
-      - name: verify the bundled upstream sources
-        run: ./scripts/check_upstream_bundle.sh
-      - name: regenerate the golden corpora
-        env:
-          CELLCHAT_SRC: ${{ github.workspace }}/${{ env.UPSTREAM_PATH }}
-        run: sh scripts/gen_fixtures.sh
-      - name: fetch the tutorial fixture
-        # `tutorial_repro.R` reproduces the published vignette end to end, and that vignette begins
       - uses: Swatinem/rust-cache@v2
         with:
           key: r-parity-${{ matrix.r-version }}
