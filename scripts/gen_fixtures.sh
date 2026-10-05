@@ -16,7 +16,7 @@ fi
 for g in tests/parity/gen_*.R; do
   # `gen_tutorial_netp_slice.R` is documented one-off fixture generation: it needs the
   # upstream CellChat package *installed* (not just checked out) and the 70 MB human-skin
-  # object, neither of which a clean checkout or the Rust CI job has. Its output
+  # object, neither of which a clean checkout or this job has. Its output
   # (`tests/fixtures/tutorial_netp_slice.tsv`) is committed, and both readers
   # (`gen_centrality_golden.R`, `check_centrality.R`) only ever read it behind
   # `file.exists()`, so there is nothing to regenerate and nothing that breaks by skipping.
@@ -24,7 +24,12 @@ for g in tests/parity/gen_*.R; do
     tests/parity/gen_tutorial_netp_slice.R) echo "== $g (one-off, skipped; output is committed)"; continue;;
   esac
   echo "== $g"
-  R_LIBS=.rlib R --vanilla -q -f "$g"
+  # `R_LIBS_USER`, not `R_LIBS`: the latter is not an R variable at all, so the old
+  # `R_LIBS=.rlib` prefix was silently ignored and every generator ran with the default
+  # library paths. In CI that meant none of the just-installed packages were visible and
+  # the first `library()` failed. Inherit CI's `R_LIBS_USER` when set, else the local
+  # `.rlib` a developer install uses.
+  R_LIBS_USER="${R_LIBS_USER:-.rlib}" R --vanilla -q -f "$g"
 done
 # The SQLite-free database exports the shim reads (`CELLCHATRS_DB`). They are *derived* from the
 # same pinned `CellChatDB.<species>.rda` as the goldens, and they were the one piece `gen_fixtures.sh`
@@ -33,7 +38,7 @@ done
 # Exported for every species the shim's tests and benchmarks can ask for.
 for sp in human mouse; do
   echo "== export_db $sp"
-  R_LIBS=.rlib Rscript tests/parity/export_db.R "$sp" "tests/fixtures/db_$sp"
+  R_LIBS_USER="${R_LIBS_USER:-.rlib}" Rscript tests/parity/export_db.R "$sp" "tests/fixtures/db_$sp"
 done
 
 # f80_ref.txt is not R-generated: the oracle is a C program compiled against the platform's
@@ -53,5 +58,5 @@ fi
 ## `include_str!`, and the CLI's are read by a process boundary.
 if [ -n "${CELLCHAT_SRC:-}" ]; then
   echo "== the CLI's input/golden pairs"
-  R --vanilla -q -f tests/parity/gen_cli_fixture.R
+  R_LIBS_USER="${R_LIBS_USER:-.rlib}" R --vanilla -q -f tests/parity/gen_cli_fixture.R
 fi
