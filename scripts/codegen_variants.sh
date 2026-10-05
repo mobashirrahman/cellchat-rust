@@ -40,7 +40,14 @@ run_variant() {
     rm -f "$file"
     # A separate target directory per variant: sharing one would let stale objects from a previous
     # configuration satisfy the link step, and the whole point is to compare distinct builds.
-    if ! CARGO_TARGET_DIR="target/codegen_$name" \
+    #
+    # Under `$OUT`, not `target/`: CI passes `$OUT` as an absolute path in `$RUNNER_TEMP`, and
+    # `actions/cache` (via Swatinem/rust-cache) restores the whole `target/` tree. A cached
+    # `target/codegen_native` binary was built with `-C target-cpu=native` for *one* runner's CPU;
+    # restored onto a runner with a different or older CPU set it dies with SIGILL before printing
+    # a single test result, which is what made the `native` variant fail on stable intermittently
+    # while nightly -- separate cache key -- passed. `$OUT` is outside the cached directory.
+    if ! CARGO_TARGET_DIR="$OUT/codegen_$name" \
         RUSTFLAGS="$flags" \
         cargo test --release -p r-core "${TESTS[@]}" -- --test-threads=1 --nocapture \
         2>&1 | tee "$file"; then

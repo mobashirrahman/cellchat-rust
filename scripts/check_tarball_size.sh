@@ -37,7 +37,7 @@ if [ "$size" -gt "$LIMIT" ]; then
   echo "check_tarball_size: OVER the CRAN incoming size ceiling by $((size - LIMIT)) bytes." >&2
   echo "check_tarball_size: largest contents:" >&2
   tar -tzvf "$TARBALL" 2>/dev/null \
-    | awk '{print $3, $6}' | sort -rn | head -10 | sed 's/^/  /' >&2
+    | awk '{print $3, $6}' | sort -rn | awk 'NR<=10 {print "  " $0}' >&2
   exit 1
 fi
 echo "check_tarball_size: under by $((LIMIT - size)) bytes"
