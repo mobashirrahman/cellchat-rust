@@ -40,15 +40,23 @@ lib <- normalizePath(lib, mustWork = FALSE)
 dir.create(lib, showWarnings = FALSE, recursive = TRUE)
 .libPaths(c(lib, .libPaths()))
 
+# `pak` resolves the full transitive closure live against current CRAN/Bioc, so a
+# precomputed flat list cannot go stale the way one did: `doBy` 4.7.2 grew a `Deriv`
+# dependency in September 2026, after the snapshot the previous list was generated
+# from, and every package downstream (`pbkrtest` -> `car` -> `rstatix` -> `ggpubr` ->
+# `CellChat`) failed with `dependency X is not available` while installs reported
+# success. `pak` fails loudly on unresolvable trees instead.
+if (!requireNamespace("pak", quietly = TRUE))
+  utils::install.packages("pak", lib = lib)
+
+
 cran <- get_flag("--cran")
 if (!is.null(cran) && nzchar(cran)) {
   pkgs <- strsplit(cran, ",")[[1]]
-  # No `repos =` argument: use `getOption("repos")`, which `r-lib/actions/setup-r`
-  # configures to RSPM for prebuilt Linux binaries. Hardcoding cloud CRAN forces
-  # source builds of everything (slow) and drops the binary dependency resolution
-  # that makes transitive hard dependencies arrive reliably.
-  utils::install.packages(pkgs, lib = lib,
-                          dependencies = c("Depends", "Imports", "LinkingTo"))
+  # `pak` instead of `install.packages`: it resolves transitive hard dependencies
+  # against live metadata, so a newly-grown edge (like `doBy -> Deriv`) arrives
+  # instead of failing three levels up as `dependency X is not available`.
+  pak::pkg_install(pkgs, lib = lib, ask = FALSE, upgrade = FALSE)
 }
 
 bioc <- get_flag("--bioc")
