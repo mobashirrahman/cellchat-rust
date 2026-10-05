@@ -625,9 +625,14 @@ jobs:
           # written there are inherited by every later step's processes, which is what
           # `check_dropin.R` reads. `CELLCHAT_REPLACEMENT_LIB` is this package's library;
           # the test defaults it to `<root>/.rlib`, which does not exist in CI.
+          #
+          # Exported too, because `GITHUB_ENV` takes effect from the *next* step onward --
+          # reading `CELLCHAT_ORACLE_LIB` in this step's own `Rscript` found it empty and
+          # died in `normalizePath(lib)`.
+          export ORACLE_LIB
           echo "CELLCHAT_ORACLE_LIB=$ORACLE_LIB" >> "$GITHUB_ENV"
           echo "CELLCHAT_REPLACEMENT_LIB=$R_LIB" >> "$GITHUB_ENV"
-          Rscript -e 'pak::pkg_install(Sys.getenv("CELLCHAT_SRC"), lib = Sys.getenv("CELLCHAT_ORACLE_LIB"))'
+          Rscript -e 'pak::pkg_install(Sys.getenv("CELLCHAT_SRC"), lib = Sys.getenv("ORACLE_LIB"))'
       - name: emit parity.json
         env:
           CELLCHAT_SRC: ${{ github.workspace }}/${{ env.UPSTREAM_PATH }}
