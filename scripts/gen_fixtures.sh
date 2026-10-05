@@ -14,6 +14,15 @@ if [ ! -d "$CC/R" ]; then
   exit 1
 fi
 for g in tests/parity/gen_*.R; do
+  # `gen_tutorial_netp_slice.R` is documented one-off fixture generation: it needs the
+  # upstream CellChat package *installed* (not just checked out) and the 70 MB human-skin
+  # object, neither of which a clean checkout or the Rust CI job has. Its output
+  # (`tests/fixtures/tutorial_netp_slice.tsv`) is committed, and both readers
+  # (`gen_centrality_golden.R`, `check_centrality.R`) only ever read it behind
+  # `file.exists()`, so there is nothing to regenerate and nothing that breaks by skipping.
+  case "$g" in
+    tests/parity/gen_tutorial_netp_slice.R) echo "== $g (one-off, skipped; output is committed)"; continue;;
+  esac
   echo "== $g"
   R_LIBS=.rlib R --vanilla -q -f "$g"
 done
