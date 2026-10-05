@@ -239,7 +239,7 @@ jobs:
   # ---------------------------------------------------------------------------
   # The R surface: the installed shim, on several R versions.
   r-parity:
-    name: R {{ matrix.r-version }}
+    name: R ${{ matrix.r-version }}
     needs: verify-upstream
     runs-on: ubuntu-latest
     strategy:
