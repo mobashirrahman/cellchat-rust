@@ -126,6 +126,10 @@ jobs:
       - name: R dependencies
         run: |
           set -euo pipefail
+          # `R_LIBS_USER` can arrive colon-separated (setup-r appends the system
+          # library), but `lib =` needs a single writable directory. Keep the first
+          # entry, which is the job-local library, everywhere below.
+          R_LIBS_USER="${R_LIBS_USER%%:*}"; export R_LIBS_USER
           mkdir -p "$R_LIBS_USER"
           Rscript -e 'install.packages(c("remotes", "BiocManager"), repos = "https://cloud.r-project.org", lib = Sys.getenv("R_LIBS_USER"))'
           # `BiocGenerics` is not called by any generator directly; upstream's own sourced
@@ -251,6 +255,10 @@ jobs:
       - name: R dependencies
         run: |
           set -euo pipefail
+          # `R_LIBS_USER` can arrive colon-separated (setup-r appends the system
+          # library), but `lib =` needs a single writable directory. Keep the first
+          # entry, which is the job-local library, everywhere below.
+          R_LIBS_USER="${R_LIBS_USER%%:*}"; export R_LIBS_USER
           mkdir -p "$R_LIBS_USER"
           Rscript -e 'install.packages(c("remotes", "BiocManager"), repos = "https://cloud.r-project.org", lib = Sys.getenv("R_LIBS_USER"))'
           # The Bioconductor packages in DESCRIPTION Imports, installed first so the Bioc
@@ -369,6 +377,10 @@ jobs:
       - name: R dependencies
         run: |
           set -euo pipefail
+          # `R_LIBS_USER` can arrive colon-separated (setup-r appends the system
+          # library), but `lib =` needs a single writable directory. Keep the first
+          # entry, which is the job-local library, everywhere below.
+          R_LIBS_USER="${R_LIBS_USER%%:*}"; export R_LIBS_USER
           mkdir -p "$R_LIBS_USER"
           Rscript -e 'install.packages(c("remotes", "BiocManager"), repos = "https://cloud.r-project.org", lib = Sys.getenv("R_LIBS_USER"))'
           Rscript -e 'BiocManager::install(c("BiocGenerics", "BiocNeighbors", "ComplexHeatmap", "Biobase"), ask = FALSE, update = FALSE, lib = Sys.getenv("R_LIBS_USER"))'
@@ -476,6 +488,10 @@ jobs:
       - name: R dependencies
         run: |
           set -euo pipefail
+          # `R_LIBS_USER` can arrive colon-separated (setup-r appends the system
+          # library), but `lib =` needs a single writable directory. Keep the first
+          # entry, which is the job-local library, everywhere below.
+          R_LIBS_USER="${R_LIBS_USER%%:*}"; export R_LIBS_USER
           mkdir -p "$R_LIBS_USER"
           Rscript -e 'install.packages(c("remotes", "BiocManager"), repos = "https://cloud.r-project.org", lib = Sys.getenv("R_LIBS_USER"))'
           Rscript -e 'BiocManager::install(c("BiocGenerics", "BiocNeighbors", "ComplexHeatmap", "Biobase"), ask = FALSE, update = FALSE, lib = Sys.getenv("R_LIBS_USER"))'
