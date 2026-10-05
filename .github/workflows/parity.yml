@@ -161,7 +161,11 @@ jobs:
           # `netfiltered`. A minimal list was a false economy that cost a CI cycle per
           # missing name; installing the full set costs minutes once.
           Rscript scripts/install_r_deps.R --lib "$R_LIB" --pin collapse=2.1.8,dplyr=1.2.1,Matrix=1.6.5,igraph=2.3.4,reshape2=1.4.5,scales=1.4.0,future=1.76.0,rlang=1.3.0,jsonlite=2.0.0
-          Rscript scripts/install_r_deps.R --lib "$R_LIB" --cran FNN,NMF,RColorBrewer,RSpectra,Rcpp,bslib,circlize,colorspace,cowplot,future.apply,ggalluvial,ggnetwork,ggplot2,ggpubr,ggrepel,irlba,magrittr,patchwork,pbapply,plotly,plyr,reticulate,shape,shiny,sna,stringr,svglite,tibble
+          # The rest of Imports, also pinned: mixing pinned-old with latest-new makes the
+          # solver report dependency conflicts (old dplyr vs new ggplot2, etc.), while
+          # installing everything at validated versions is the consistent snapshot local
+          # `.rlib` holds. Versions below are what that `.rlib` contains.
+          Rscript scripts/install_r_deps.R --lib "$R_LIB" --pin FNN=1.1.4.1,NMF=0.28,RColorBrewer=1.1.3,RSpectra=0.16.2,Rcpp=1.1.2,bslib=0.12.0,circlize=0.4.18,colorspace=2.1.3,cowplot=1.2.0,future.apply=1.20.2,ggalluvial=0.12.6,ggnetwork=0.5.14,ggplot2=4.0.3,ggpubr=1.0.0,ggrepel=0.9.8,irlba=2.3.7,magrittr=2.0.5,patchwork=1.3.2,pbapply=1.7.5,plotly=4.12.1,plyr=1.8.9,reticulate=1.47.0,shape=1.4.6.1,shiny=1.14.0,sna=2.8,stringr=1.6.0,svglite=2.2.2,tibble=3.3.1
       - name: fetch the pinned upstream
         uses: actions/checkout@v4
         with:
@@ -306,6 +310,9 @@ jobs:
           Rscript scripts/install_r_deps.R --lib "$R_LIB" --cran tibble,ggplot2,future.apply,pbapply,stringr,sna
           # Test-only packages, deliberately not in Imports.
           Rscript scripts/install_r_deps.R --lib "$R_LIB" --cran testthat,presto
+          # Bit-identity pins, last so nothing upgrades them afterwards. The R gates
+          # compare live R output against fixed Rust corpora; unpinned R packages drift.
+          Rscript scripts/install_r_deps.R --lib "$R_LIB" --pin collapse=2.1.8,dplyr=1.2.1,Matrix=1.6.5,igraph=2.3.4,reshape2=1.4.5,scales=1.4.0,future=1.76.0,rlang=1.3.0,jsonlite=2.0.0
       - uses: Swatinem/rust-cache@v2
         with:
           key: r-parity-${{ matrix.r-version }}
@@ -428,6 +435,9 @@ jobs:
           Rscript scripts/install_r_deps.R --lib "$R_LIB" --pin collapse=2.1.8,dplyr=1.2.1,Matrix=1.6.5,igraph=2.3.4,reshape2=1.4.5,scales=1.4.0,future=1.76.0,rlang=1.3.0,jsonlite=2.0.0
           Rscript scripts/install_r_deps.R --lib "$R_LIB" --cran tibble,ggplot2,future.apply,pbapply,stringr,sna
           Rscript scripts/install_r_deps.R --lib "$R_LIB" --cran presto
+          # Bit-identity pins, last so nothing upgrades them afterwards. The R gates
+          # compare live R output against fixed Rust corpora; unpinned R packages drift.
+          Rscript scripts/install_r_deps.R --lib "$R_LIB" --pin collapse=2.1.8,dplyr=1.2.1,Matrix=1.6.5,igraph=2.3.4,reshape2=1.4.5,scales=1.4.0,future=1.76.0,rlang=1.3.0,jsonlite=2.0.0
       - uses: Swatinem/rust-cache@v2
         with:
           key: parity-report
@@ -550,6 +560,9 @@ jobs:
           Rscript scripts/install_r_deps.R --lib "$R_LIB" --pin collapse=2.1.8,dplyr=1.2.1,Matrix=1.6.5,igraph=2.3.4,reshape2=1.4.5,scales=1.4.0,future=1.76.0,rlang=1.3.0,jsonlite=2.0.0
           Rscript scripts/install_r_deps.R --lib "$R_LIB" --cran tibble,ggplot2,future.apply,pbapply,stringr,sna
           Rscript scripts/install_r_deps.R --lib "$R_LIB" --cran knitr
+          # Bit-identity pins, last so nothing upgrades them afterwards. The R gates
+          # compare live R output against fixed Rust corpora; unpinned R packages drift.
+          Rscript scripts/install_r_deps.R --lib "$R_LIB" --pin collapse=2.1.8,dplyr=1.2.1,Matrix=1.6.5,igraph=2.3.4,reshape2=1.4.5,scales=1.4.0,future=1.76.0,rlang=1.3.0,jsonlite=2.0.0
           # A LaTeX engine for `R CMD build` to recompile the vignette with. TinyTeX
           # (~100 MB) rather than full TeX Live (~4 GB); installed once per run, and only
           # in this job, because it is the only one that builds vignettes (`R CMD
