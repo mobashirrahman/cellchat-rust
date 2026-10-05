@@ -33,14 +33,6 @@ addReduction <- function (object, dr = NULL, dr.name = NULL, seu.obj = NULL, dr.
   eval(call, envir = parent.frame())
 }
 
-#' The pinned upstream `aggregateNet`, with its original arguments.
-#' @export
-aggregateNet <- function (object, sources.use = NULL, targets.use = NULL, signaling = NULL, pairLR.use = NULL, remove.isolate = TRUE, thresh = 0.05, return.object = TRUE) {
-  call <- match.call()
-  call[[1L]] <- get("aggregateNet", envir = cellchatrs_upstream_cached())
-  eval(call, envir = parent.frame())
-}
-
 #' The pinned upstream `barPlot`, with its original arguments.
 #' @export
 barPlot <- function (object, features, group.by = NULL, split.by = NULL, color.use = NULL, method = c("truncatedMean", "triMean", "median"), trim = 0.1, assay = "RNA", x.lab.rot = FALSE, ncol = 1, ...) {
@@ -86,14 +78,6 @@ colorRamp3 <- function (breaks, colors, transparency = 0, space = "LAB") {
 compareInteractions <- function (object, measure = c("count", "weight"), color.use = NULL, group = NULL, group.levels = NULL, group.facet = NULL, group.facet.levels = NULL, n.row = 1, color.alpha = 1, legend.title = NULL, width = 0.6, title.name = NULL, digits = 3, xlabel = NULL, ylabel = NULL, remove.xtick = FALSE, show.legend = TRUE, x.lab.rot = FALSE, angle.x = 45, vjust.x = NULL, hjust.x = 1, size.text = 10) {
   call <- match.call()
   call[[1L]] <- get("compareInteractions", envir = cellchatrs_upstream_cached())
-  eval(call, envir = parent.frame())
-}
-
-#' The pinned upstream `computeAveExpr`, with its original arguments.
-#' @export
-computeAveExpr <- function (object, features = NULL, group.by = NULL, type = c("triMean", "truncatedMean", "median"), trim = NULL, slot.name = c("data.signaling", "data"), data.use = NULL) {
-  call <- match.call()
-  call[[1L]] <- get("computeAveExpr", envir = cellchatrs_upstream_cached())
   eval(call, envir = parent.frame())
 }
 
@@ -734,22 +718,6 @@ spatialFeaturePlot <- function (object, features = NULL, signaling = NULL, pairL
 subsetCellChat <- function (object, cells.use = NULL, idents.use = NULL, group.by = NULL, invert = FALSE, thresh = 0.05) {
   call <- match.call()
   call[[1L]] <- get("subsetCellChat", envir = cellchatrs_upstream_cached())
-  eval(call, envir = parent.frame())
-}
-
-#' The pinned upstream `subsetDB`, with its original arguments.
-#' @export
-subsetDB <- function (CellChatDB, search = c(), key = "annotation", non_protein = FALSE) {
-  call <- match.call()
-  call[[1L]] <- get("subsetDB", envir = cellchatrs_upstream_cached())
-  eval(call, envir = parent.frame())
-}
-
-#' The pinned upstream `subsetData`, with its original arguments.
-#' @export
-subsetData <- function (object, features = NULL) {
-  call <- match.call()
-  call[[1L]] <- get("subsetData", envir = cellchatrs_upstream_cached())
   eval(call, envir = parent.frame())
 }
 

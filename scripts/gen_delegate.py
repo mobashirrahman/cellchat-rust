@@ -13,10 +13,18 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 BUNDLE = ROOT / "inst/upstream/CellChat-75253cd0"
+# Functions R/modeling.R implements itself (Rust-backed or otherwise). The generator must
+# not emit wrappers for them: `R CMD INSTALL` sources R files in the order `Collate` gives
+# (alphabetical by default), so `modeling.R` loads after `delegate.R` and shadows any
+# wrapper of the same name -- leaving the generated file's entry dead and
+# `tests/parity/check_delegation.R` failing on a body that is not the one it generated.
+# `aggregateNet`, `computeAveExpr`, `subsetDB` and `subsetData` were ported after the
+# generator was written and were missing from this set, which is exactly that failure.
 PORTED = {
     "computeCommunProb", "computeCommunProbPathway", "identifyOverExpressedGenes",
     "filterCommunication", "subsetCommunication", "rankNet", "rankNetPairwise",
     "computeCellDistance", "computeRegionDistance", "netAnalysis_computeCentrality",
+    "aggregateNet", "computeAveExpr", "subsetDB", "subsetData",
 }
 
 
