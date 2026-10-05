@@ -67,3 +67,12 @@ if [ -n "${CELLCHAT_SRC:-}" ]; then
   echo "== the CLI's input/golden pairs"
   R_LIBS_USER="${R_LIBS_USER:-.rlib}" R --vanilla -q -f tests/parity/gen_cli_fixture.R
 fi
+
+# Summary for the log: every fixture with a byte size, so a truncated regeneration shows
+# up as a small file here rather than as a mysterious count mismatch in a Rust test three
+# steps later. `filter_golden.txt` should hold 19 `case` records; if it holds 2, the
+# generator completed yet wrote partial output, which means the R environment (not the
+# generator) diverged.
+echo "== fixture summary"
+wc -c tests/fixtures/*.txt tests/fixtures/*.tsv 2>/dev/null | tail -25
+echo "filter_golden cases: $(grep -c '^case\s' tests/fixtures/filter_golden.txt 2>/dev/null || echo 0) (expect 19)"

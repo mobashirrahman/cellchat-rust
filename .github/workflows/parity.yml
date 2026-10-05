@@ -94,6 +94,10 @@ jobs:
       - uses: dtolnay/rust-toolchain@master
         with:
           toolchain: ${{ matrix.toolchain }}
+          # The nightly toolchain ships without rustfmt unless asked, and the `fmt`
+          # step below then fails with `'cargo-fmt' is not installed` -- which reads
+          # like a formatting violation but is a missing component.
+          components: rustfmt, clippy
       - uses: Swatinem/rust-cache@v2
         with:
           key: parity-${{ matrix.toolchain }}
