@@ -43,22 +43,25 @@ dir.create(lib, showWarnings = FALSE, recursive = TRUE)
 cran <- get_flag("--cran")
 if (!is.null(cran) && nzchar(cran)) {
   pkgs <- strsplit(cran, ",")[[1]]
-  utils::install.packages(pkgs, repos = "https://cloud.r-project.org",
-                          lib = lib,
+  # No `repos =` argument: use `getOption("repos")`, which `r-lib/actions/setup-r`
+  # configures to RSPM for prebuilt Linux binaries. Hardcoding cloud CRAN forces
+  # source builds of everything (slow) and drops the binary dependency resolution
+  # that makes transitive hard dependencies arrive reliably.
+  utils::install.packages(pkgs, lib = lib,
                           dependencies = c("Depends", "Imports", "LinkingTo"))
 }
 
 bioc <- get_flag("--bioc")
 if (!is.null(bioc) && nzchar(bioc)) {
   if (!requireNamespace("BiocManager", quietly = TRUE))
-    utils::install.packages("BiocManager", repos = "https://cloud.r-project.org", lib = lib)
+    utils::install.packages("BiocManager", lib = lib)
   BiocManager::install(strsplit(bioc, ",")[[1]], ask = FALSE, update = FALSE, lib = lib)
 }
 
 pin <- get_flag("--pin")
 if (!is.null(pin) && nzchar(pin)) {
   if (!requireNamespace("remotes", quietly = TRUE))
-    utils::install.packages("remotes", repos = "https://cloud.r-project.org", lib = lib)
+    utils::install.packages("remotes", lib = lib)
   for (spec in strsplit(pin, ",")[[1]]) {
     kv <- strsplit(spec, "=")[[1]]
     remotes::install_version(kv[1], version = kv[2], lib = lib, upgrade = "never")
