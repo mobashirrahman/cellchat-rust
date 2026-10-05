@@ -48,6 +48,8 @@ dir.create(lib, showWarnings = FALSE, recursive = TRUE)
 # success. `pak` fails loudly on unresolvable trees instead.
 if (!requireNamespace("pak", quietly = TRUE))
   utils::install.packages("pak", lib = lib)
+if (!requireNamespace("pak", quietly = TRUE))
+  utils::install.packages("pak", lib = lib)
 
 
 cran <- get_flag("--cran")
