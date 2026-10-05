@@ -185,6 +185,22 @@ jobs:
         run: sh scripts/check_inst_db.sh
       - name: unit, property and fuzz tests
         run: cargo test --workspace --release
+      - name: upload regenerated fixtures on failure
+        # The goldens are bit-identical output; when a test fails on regenerated (not
+        # committed) fixtures, the log shows counts but not values. These two files are
+        # ~30 KB combined and let a developer diff CI's output against the committed
+        # corpora directly, instead of theorizing about which R version drifted. Runs
+        # only when the tests fail; the large binaries (rng_stress, f80, stats_vectors)
+        # are deliberately not uploaded.
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fixtures-${{ matrix.toolchain }}
+          path: |
+            tests/fixtures/netfiltered_golden.txt
+            tests/fixtures/netfiltered_inputs.tsv
+            tests/fixtures/filter_golden.txt
+          if-no-files-found: error
       - name: no reassociation or FMA contraction in the hot path
         # Not a convention, and not checkable by a unit test: the claim is about a rustc flag, and
         # the only way to see it is to build more than once and compare. The F80 port and the
