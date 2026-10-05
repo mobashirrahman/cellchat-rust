@@ -302,7 +302,8 @@ jobs:
           # `install.packages` with recursive Depends/Imports so transitive hard
           # dependencies arrive too.
           Rscript scripts/install_r_deps.R --lib "$R_LIB" --bioc BiocGenerics,BiocNeighbors,ComplexHeatmap,Biobase
-          Rscript scripts/install_r_deps.R --lib "$R_LIB" --cran Matrix,collapse,dplyr,rlang,tibble,ggplot2,future,future.apply,igraph,pbapply,stringr,scales,sna
+          Rscript scripts/install_r_deps.R --lib "$R_LIB" --pin collapse=2.1.8,dplyr=1.2.1,Matrix=1.6.5,igraph=2.3.4,reshape2=1.4.5,scales=1.4.0,future=1.76.0,rlang=1.3.0,jsonlite=2.0.0
+          Rscript scripts/install_r_deps.R --lib "$R_LIB" --cran tibble,ggplot2,future.apply,pbapply,stringr,sna
           # Test-only packages, deliberately not in Imports.
           Rscript scripts/install_r_deps.R --lib "$R_LIB" --cran testthat,presto
       - uses: Swatinem/rust-cache@v2
@@ -313,7 +314,7 @@ jobs:
           set -euo pipefail
           cargo build --release
           sh ./configure
-          R CMD INSTALL --library="$R_LIBS_USER" .
+          R CMD INSTALL --no-vignettes --library="$R_LIBS_USER" .
       - name: fetch the pinned upstream
         uses: actions/checkout@v4
         with:
@@ -424,7 +425,8 @@ jobs:
           export R_LIBS_USER="$R_LIB"
           echo "R_LIBS_USER=$R_LIBS_USER" >> "$GITHUB_ENV"
           Rscript scripts/install_r_deps.R --lib "$R_LIB" --bioc BiocGenerics,BiocNeighbors,ComplexHeatmap,Biobase
-          Rscript scripts/install_r_deps.R --lib "$R_LIB" --cran Matrix,collapse,dplyr,rlang,tibble,ggplot2,future,future.apply,igraph,pbapply,stringr,scales,sna
+          Rscript scripts/install_r_deps.R --lib "$R_LIB" --pin collapse=2.1.8,dplyr=1.2.1,Matrix=1.6.5,igraph=2.3.4,reshape2=1.4.5,scales=1.4.0,future=1.76.0,rlang=1.3.0,jsonlite=2.0.0
+          Rscript scripts/install_r_deps.R --lib "$R_LIB" --cran tibble,ggplot2,future.apply,pbapply,stringr,sna
           Rscript scripts/install_r_deps.R --lib "$R_LIB" --cran presto
       - uses: Swatinem/rust-cache@v2
         with:
@@ -434,7 +436,7 @@ jobs:
           set -euo pipefail
           cargo build --release
           sh ./configure
-          R CMD INSTALL --library="$R_LIBS_USER" .
+          R CMD INSTALL --no-vignettes --library="$R_LIBS_USER" .
       - name: regenerate the golden corpora
         env:
           CELLCHAT_SRC: ${{ github.workspace }}/${{ env.UPSTREAM_PATH }}
@@ -545,8 +547,15 @@ jobs:
           export R_LIBS_USER="$R_LIB"
           echo "R_LIBS_USER=$R_LIBS_USER" >> "$GITHUB_ENV"
           Rscript scripts/install_r_deps.R --lib "$R_LIB" --bioc BiocGenerics,BiocNeighbors,ComplexHeatmap,Biobase
-          Rscript scripts/install_r_deps.R --lib "$R_LIB" --cran Matrix,collapse,dplyr,rlang,tibble,ggplot2,future,future.apply,igraph,pbapply,stringr,scales,sna
+          Rscript scripts/install_r_deps.R --lib "$R_LIB" --pin collapse=2.1.8,dplyr=1.2.1,Matrix=1.6.5,igraph=2.3.4,reshape2=1.4.5,scales=1.4.0,future=1.76.0,rlang=1.3.0,jsonlite=2.0.0
+          Rscript scripts/install_r_deps.R --lib "$R_LIB" --cran tibble,ggplot2,future.apply,pbapply,stringr,sna
           Rscript scripts/install_r_deps.R --lib "$R_LIB" --cran knitr
+          # A LaTeX engine for `R CMD build` to recompile the vignette with. TinyTeX
+          # (~100 MB) rather than full TeX Live (~4 GB); installed once per run, and only
+          # in this job, because it is the only one that builds vignettes (`R CMD
+          # INSTALL` above uses `--no-vignettes`, as do the other R jobs).
+          Rscript scripts/install_r_deps.R --lib "$R_LIB" --cran tinytex
+          Rscript -e 'tinytex::install_tinytex()'
       - uses: Swatinem/rust-cache@v2
         with:
           key: package
@@ -555,7 +564,7 @@ jobs:
           set -euo pipefail
           cargo build --release
           sh ./configure
-          R CMD INSTALL --library="$R_LIBS_USER" .
+          R CMD INSTALL --no-vignettes --library="$R_LIBS_USER" .
       - name: install the source distribution outside the checkout
         run: ./scripts/check_source_install.sh
       - name: R CMD build and check
