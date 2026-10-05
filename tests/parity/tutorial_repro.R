@@ -73,6 +73,15 @@ q <- function(x) {
 ## The unmodified bundled R functions have private imports and use the installed S4 class.
 UP <- get("cellchatrs_upstream_cached", envir = asNamespace("CellChat"))()
 
+## The tutorial's database, loaded from the pinned bundle exactly as `check_identical.R` does --
+## `CC/data/CellChatDB.human.rda` is the file upstream's `data()` would expose as
+## `CellChatDB.human`. This assignment was simply missing, so the gate died at
+## `obj_up@DB <- DB` with `object 'DB' not found` the first time it was reached: every earlier
+## CI run failed upstream of it (install, fixtures, then the delegation gate), so nothing had
+## ever executed this line until now.
+E <- new.env(); load(file.path(CC, "data", "CellChatDB.human.rda"), envir = E)
+DB <- get(ls(E)[1], E)
+
 ## ---------------------------------------------------------------- input, as the vignette builds it
 raw <- new.env(); load(SKIN, envir = raw); skin <- raw[[ls(raw)[1]]]
 counts <- skin$data

@@ -568,12 +568,14 @@ jobs:
       # as are the other R jobs).
       - uses: r-lib/actions/setup-tinytex@v2
       - name: LaTeX packages for the vignette
-        # TinyTeX ships a minimal scheme. `alltt`, `framed` and `upquote` are in the
-        # rendered `.tex` (knitr's output) and `grfext` arrives through
-        # `graphicx`/`epstopdf`; none are in the default bundle, and each missing one
-        # fails the build with `LaTeX Error: File 'X.sty' not found`. Install the whole
-        # set in one step rather than discovering them one CI cycle at a time.
-        run: tlmgr install alltt framed upquote grfext
+        # TinyTeX ships a minimal scheme. `framed` and `upquote` are in the rendered
+        # `.tex` (knitr's output) and `grfext` arrives through `graphicx`/`epstopdf`;
+        # none are in the default bundle, and each missing one fails the build with
+        # `LaTeX Error: File 'X.sty' not found`. (`alltt` is in the rendered file too,
+        # but it is part of LaTeX base, and `tlmgr install alltt` fails the whole
+        # command with "package alltt not present in repository".) Install the set in
+        # one step rather than discovering them one CI cycle at a time.
+        run: tlmgr install framed upquote grfext
       - uses: Swatinem/rust-cache@v2
         with:
           key: package

@@ -916,6 +916,16 @@ subsetCommunication <- function(object = NULL, net = NULL, slot.name = "net",
     df$interaction_name <- factor(df$interaction_name, levels = res$interaction_levels)
   }
   rownames(df) <- seq_len(nrow(df))
+  ## Upstream ends with `BiocGenerics::as.data.frame(net, stringsAsFactors = FALSE)`, whose
+  ## attribute pairlist is ordered `names, class, row.names`. Each `df$col <- ...` above is a
+  ## `$<-.data.frame`, which rebuilds the frame and leaves it `names, row.names, class`.
+  ## `identical()` treats attributes as a set so both orders compare equal in principle, but the
+  ## gate at the end of `tutorial_repro.R` observed `identical(a, b)` FALSE on frames whose every
+  ## attribute and column matched by name -- and `serialize()` disagrees outright, since it writes
+  ## the pairlist in stored order. Matching upstream's order makes both comparisons agree, and
+  ## costs one reorder.
+  at <- attributes(df)
+  attributes(df) <- at[c("names", "class", "row.names")]
   df
 }
 
@@ -1466,7 +1476,9 @@ identifyOverExpressedGenes <- function(object, data.use = NULL, group.by = NULL,
       ## configuration (sparse `data.use`, 29 retained genes) caught it after the dense
       ## `test-contract-inputs.R` case had already passed.
       counts <- stats::setNames(res$n_cells, res$features)
-      if (!inherits(data.use, "sparseMatrix")) counts <- as.numeric(counts)
+      if (!inherits(data.use, "sparseMatrix")) {
+        counts <- stats::setNames(as.numeric(counts), res$features)
+      }
       markers.all <- data.frame(features = res$features, nCells = counts,
                                 stringsAsFactors = FALSE)
       ## Upstream's next statement is `dplyr::filter(markers.all, nCells >= min.cells)`, and
