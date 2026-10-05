@@ -239,28 +239,160 @@ jobs:
   # ---------------------------------------------------------------------------
   # The R surface: the installed shim, on several R versions.
   r-parity:
-    name: R ${{ matrix.r-version }}
+    name: R {{ matrix.r-version }}
     needs: verify-upstream
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        # 4.3 is the oldest release the package declares support for; `devel` catches a change in
-        # collapse's type-7 quantile or in the S4 machinery before a CRAN submission finds it.
-        #
-        # `devel` is a canary, not a gate. On R 4.3 and 4.4 every comparison passes; on devel the
-        # same code fails 38 of 427 because R itself changed how `data.frame()` names and how
-        # `identical()` compares `features.info` -- `all.equal()` still reports TRUE on every one.
-        # That is precisely the early warning this entry exists to produce, but a permanently red
-        # required job is noise, so devel is allowed to fail (`continue-on-error` below) while its
-        # result stays visible. When it turns red, the question is "did R change?", not
-        # "did the port regress?".
-        include:
-          - r-version: '4.3'
-          - r-version: '4.4'
-          - r-version: devel
-            experimental: true
-    continue-on-error: ${{ matrix.experimental == true }}
+        # 4.3 is the oldest release the package declares support for and 4.4 the current
+        # release; both are gates. `devel` runs as a separate, non-blocking job below.
+        r-version: ['4.3', '4.4']
+    steps:
+      # Every other job checks out the repository first; this one did not, so every
+      # path after it (`cargo build`, `./configure`, `R CMD INSTALL`) ran in an empty
+      # workspace and `rust-cache` failed with `could not find Cargo.toml`. The runs
+      # failed at "build and install the shim" from the very first one, which is how
+      # long this has been broken.
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: ${{ matrix.r-version }}
+          use-public-rspm: true
+          http-user-agent: 'r-lib/actions/setup-r@v2 (github.com/r-lib/actions)'
+      - name: system libraries for R packages
+        # Two different needs, one step. The RSPM igraph binary links GLPK, which
+        # ubuntu-latest does not ship, so without `libglpk40` it installs cleanly and
+        # then fails at dyn.load. And anything that still builds from source (here the
+        # `png` package, needed by the plotting stack) needs its headers: without
+        # `libpng-dev` the compile dies on `png.h: No such file or directory`. The rest
+        # is the standard header set for compiled CRAN packages (curl, ssl, xml2, and
+        # the freetype/harfbuzz/fribidi/png/tiff/jpeg stack the graphics packages
+        # build against), so a new compiled dependency fails loudly on its own merits
+        # rather than on a missing system library.
+        run: >
+          sudo apt-get update &&
+          sudo apt-get install -y
+          libglpk40 libglpk-dev
+          libcurl4-openssl-dev libssl-dev libxml2-dev
+          libfontconfig1-dev libharfbuzz-dev libfribidi-dev libfreetype6-dev
+          libpng-dev libtiff5-dev libjpeg-dev
+          libuv1-dev
+      - name: R dependencies
+        run: |
+          set -euo pipefail
+          # Packages go in here via `scripts/install_r_deps.R`, which takes the
+          # directory as `--lib` instead of reading an environment variable: something
+          # in R startup appends the system library to `R_LIBS_USER` regardless of what
+          # the shell exported, so every `lib = Sys.getenv(...)` arrived colon-separated
+          # and unwritable. An explicit command-line path has no such failure mode, and
+          # `R_LIB` is published for later steps (`gen_fixtures.sh` searches it) and lives
+          # outside the repository under `$RUNNER_TEMP`: inside `$GITHUB_WORKSPACE` it was
+          # packaged by `R CMD build`, which turned the tarball into 102 MB of installed
+          # packages -- caught by `scripts/check_tarball_size.sh`, which printed the top ten.
+          R_LIB="$RUNNER_TEMP/rlib-pkgs"
+          mkdir -p "$R_LIB"
+          echo "R_LIB=$R_LIB" >> "$GITHUB_ENV"
+          # R only searches `R_LIBS_USER`, `R_LIBS_SITE` and the system defaults, so
+          # point it at the directory just populated. A colon-separated ambient value
+          # is fine here -- this is for *searching*, where every entry is tried, unlike
+          # `lib =` which needs exactly one writable target and gets the explicit
+          # `$R_LIB` above instead. Published so fixture generation, `R CMD INSTALL`
+          # and the test steps all resolve the same directory.
+          export R_LIBS_USER="$R_LIB"
+          echo "R_LIBS_USER=$R_LIBS_USER" >> "$GITHUB_ENV"
+          # The Bioconductor packages in DESCRIPTION Imports (`Biobase` is not in Imports;
+          # CRAN's `NMF` depends on it and nothing else will fetch it), then the 36 CRAN
+          # Imports generated from DESCRIPTION, then test-only packages. Base
+          # `install.packages` with recursive Depends/Imports so transitive hard
+          # dependencies arrive too.
+          Rscript scripts/install_r_deps.R --lib "$R_LIB" --bioc BiocGenerics,BiocNeighbors,ComplexHeatmap,Biobase
+          Rscript scripts/install_r_deps.R --lib "$R_LIB" --cran tibble,ggplot2,future.apply,pbapply,stringr,sna
+          # Test-only packages, deliberately not in Imports.
+          Rscript scripts/install_r_deps.R --lib "$R_LIB" --cran testthat,presto
+          # Bit-identity pins, last so nothing upgrades them afterwards. The R gates
+          # compare live R output against fixed Rust corpora; unpinned R packages drift.
+          Rscript scripts/install_r_deps.R --lib "$R_LIB" --pin collapse=2.1.8,dplyr=1.2.1,Matrix=1.6.5,igraph=2.3.4,reshape2=1.4.5,scales=1.4.0,future=1.76.0,rlang=1.3.0,jsonlite=2.0.0
+      - uses: Swatinem/rust-cache@v2
+        with:
+          key: r-parity-${{ matrix.r-version }}
+      - name: build and install the shim
+        run: |
+          set -euo pipefail
+          cargo build --release
+          sh ./configure
+          R CMD INSTALL --no-vignettes --library="$R_LIBS_USER" .
+      - name: fetch the pinned upstream
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.UPSTREAM_REPO }}
+          ref: ${{ env.UPSTREAM_SHA }}
+          path: ${{ env.UPSTREAM_PATH }}
+      - name: verify the bundled upstream sources
+        run: ./scripts/check_upstream_bundle.sh
+      - name: regenerate the golden corpora
+        env:
+          CELLCHAT_SRC: ${{ github.workspace }}/${{ env.UPSTREAM_PATH }}
+        run: sh scripts/gen_fixtures.sh
+      - name: fetch the tutorial fixture
+        # `tutorial_repro.R` reproduces the published vignette end to end, and that vignette begins
+        # from the authors' human-skin object. It is not vendored here (13 MB) and does not live in
+        # the upstream repo, so without this step the gate fails on a missing file instead of on a
+        # parity break -- which is a worse way to learn the truth. Pinned to the exact file id
+        # rather than the article page, because the article's file listing can change underneath us;
+        # the size assertion is the tripwire if it ever does.
+        run: ./scripts/fetch_ci_fixtures.sh tutorial
+      - name: build the standalone CLI
+        # `check_cli.R` deliberately does not build the binary itself: the gate has to exercise the
+        # artifact a user would install, not one compiled by the test it is testing.
+        run: cargo build --release -p cellchatrs-cli
+      - name: the gates
+        env:
+          CELLCHAT_SRC: ${{ github.workspace }}/${{ env.UPSTREAM_PATH }}
+          CELLCHATRS_ROOT: ${{ github.workspace }}
+          CELLCHATRS_DB: ${{ github.workspace }}/tests/fixtures/db_human
+        run: |
+          set -euo pipefail
+          Rscript tests/parity/check_rust_path.R
+          R --vanilla -q -f tests/parity/check_identical.R
+          Rscript tests/parity/metamorphic.R
+          Rscript tests/parity/check_matrix.R
+          R --vanilla -q -f tests/parity/check_merge.R
+          R --vanilla -q -f tests/parity/stat_equiv.R
+          R --vanilla -q -f tests/parity/check_cli.R
+          R --vanilla -q -f tests/parity/check_oeg_fast.R
+          R --vanilla -q -f tests/parity/check_centrality.R
+          R --vanilla -q -f tests/parity/check_delegation.R
+          R --vanilla -q -f tests/parity/tutorial_repro.R
+      - name: upload the matrix report
+        uses: actions/upload-artifact@v4
+        with:
+          name: matrix-report-R${{ matrix.r-version }}
+          path: tests/fixtures/matrix_report.json
+          if-no-files-found: error
+
+  # ---------------------------------------------------------------------------
+  # The machine-checkable parity report, and the only job whose output is a claim.
+  # R devel is a canary, not a gate: it catches changes in collapse's type-7 quantile or the
+  # S4 machinery before a CRAN submission finds them, and it is allowed to fail so a
+  # permanently red canary cannot block the pipeline. It is a separate job rather than a
+  # matrix entry because a failed matrix leg makes `needs` skip `parity-report`, even with
+  # `continue-on-error` -- which cancelled the report on the first run that used it.
+  #
+  # When this job turns red, the question is "did R change?", not "did the port regress?".
+  # The current failure is 38 of 427 comparisons, all in `identifyOverExpressedGenes`, where
+  # `all.equal()` reports TRUE on every one: R changed how `data.frame()` names and how
+  # `identical()` compares `features.info`. Remove the allowance once that is understood.
+  r-parity-devel:
+    name: R devel (canary, non-blocking)
+    needs: verify-upstream
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    strategy:
+      matrix:
+        r-version: ['devel']
     steps:
       # Every other job checks out the repository first; this one did not, so every
       # path after it (`cargo build`, `./configure`, `R CMD INSTALL`) ran in an empty
