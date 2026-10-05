@@ -126,7 +126,12 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p "$R_LIBS_USER"
-          Rscript -e 'install.packages("remotes", repos = "https://cloud.r-project.org", lib = Sys.getenv("R_LIBS_USER"))'
+          Rscript -e 'install.packages(c("remotes", "BiocManager"), repos = "https://cloud.r-project.org", lib = Sys.getenv("R_LIBS_USER"))'
+          # `BiocGenerics` is not called by any generator directly; upstream's own sourced
+          # files need it, and without it every `subsetCommunication` case records
+          # `there is no package called 'BiocGenerics'` as an upstream error instead of a
+          # result. Same failure shape as the missing `scales`.
+          Rscript -e 'BiocManager::install("BiocGenerics", ask = FALSE, update = FALSE, lib = Sys.getenv("R_LIBS_USER"))'
           # `collapse` and `dplyr` are what the goldens are generated against; `future` is sourced
           # by upstream's own `modeling.R`. `presto` and `BiocNeighbors` are deliberately absent --
           # both are optional in upstream, and the gates assert that the port *falls back* rather
@@ -199,6 +204,14 @@ jobs:
         # collapse's type-7 quantile or in the S4 machinery before a CRAN submission finds it.
         r-version: ['4.3', '4.4', 'devel']
     steps:
+      # Every other job checks out the repository first; this one did not, so every
+      # path after it (`cargo build`, `./configure`, `R CMD INSTALL`) ran in an empty
+      # workspace and `rust-cache` failed with `could not find Cargo.toml`. The runs
+      # failed at "build and install the shim" from the very first one, which is how
+      # long this has been broken.
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: r-lib/actions/setup-r@v2
         with:
           r-version: ${{ matrix.r-version }}
