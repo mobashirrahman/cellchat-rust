@@ -16,7 +16,13 @@
 #
 # Requires: collapse 2.1.8 (the version this project validated against).
 
-.libPaths(".rlib")
+# Prepend, never replace: `.libPaths(".rlib")` discards every other entry, and in CI
+# the packages live in `r-lib/actions/setup-r`'s temp library, not in the local
+# `.rlib` (which does not even exist there). Replacing left `library(collapse)`
+# failing with `there is no package called 'collapse'` while the very same directory
+# listing showed it installed. The local `.rlib` goes first so a developer checkout
+# still prefers its own packages; everything else stays searchable behind it.
+.libPaths(c(".rlib", .libPaths()))
 suppressMessages(library(collapse))
 stopifnot(identical(RNGkind()[1], "Mersenne-Twister"))
 
