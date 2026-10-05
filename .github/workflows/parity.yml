@@ -608,6 +608,26 @@ jobs:
         # rather than the article page, because the article's file listing can change underneath us;
         # the size assertion is the tripwire if it ever does.
         run: ./scripts/fetch_ci_fixtures.sh parity
+      - name: install the pinned original package as the drop-in oracle
+        # `package.independent_dropin` compares two *independently installed* packages in
+        # clean processes, so it needs the original CellChat installed from the pinned
+        # checkout -- `CELLCHAT_ORACLE_LIB` -- beside this package, and it has no fallback
+        # when that is absent (`stop("CELLCHAT_ORACLE_LIB must contain ...")`, exit 1, which
+        # makes `parity_report.py` report the quantity as untested and exit nonzero).
+        # `pak` resolves the upstream DESCRIPTION's own dependency set, which is larger than
+        # this package's trimmed Imports. Only this job needs it: the r-parity gates do not
+        # run `check_dropin.R`.
+        run: |
+          set -euo pipefail
+          ORACLE_LIB="$RUNNER_TEMP/oracle-lib"
+          mkdir -p "$ORACLE_LIB"
+          # Published through `GITHUB_ENV` rather than the step `env:` context: variables
+          # written there are inherited by every later step's processes, which is what
+          # `check_dropin.R` reads. `CELLCHAT_REPLACEMENT_LIB` is this package's library;
+          # the test defaults it to `<root>/.rlib`, which does not exist in CI.
+          echo "CELLCHAT_ORACLE_LIB=$ORACLE_LIB" >> "$GITHUB_ENV"
+          echo "CELLCHAT_REPLACEMENT_LIB=$R_LIB" >> "$GITHUB_ENV"
+          Rscript -e 'pak::pkg_install(Sys.getenv("CELLCHAT_SRC"), lib = Sys.getenv("CELLCHAT_ORACLE_LIB"))'
       - name: emit parity.json
         env:
           CELLCHAT_SRC: ${{ github.workspace }}/${{ env.UPSTREAM_PATH }}

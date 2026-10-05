@@ -8,12 +8,36 @@ raw <- function(x) serialize(x,NULL,version=3L)
 write_raw <- function(name,x) writeBin(raw(x),file.path(out,paste0(name,".bin")))
 quiet <- function(f) {v<-NULL;invisible(capture.output(v<-suppressMessages(f())));v}
 canonical <- function(x) {if(methods::is(x,"CellChat"))x@options$run.time<-NULL;x}
+## The five datasets, from whichever route the installed package offers.
+##
+## The original CellChat ships them as LazyData, so `data()` resolves and the bare name is
+## on the attached package environment. This package deliberately does not: `data/` is
+## excluded from the source tarball (`.Rbuildignore`) and `LazyData` was dropped, because
+## shipping both the datasets and the pinned upstream tree is what pushed the tarball over
+## CRAN's 5 MB ceiling. The identical `.rda` files still ship inside the bundle, so load
+## them from `system.file()` there. Same bytes, same comparison; only the route differs,
+## which is the documented trade.
+load_dataset <- function(nm) {
+  e <- new.env()
+  got <- tryCatch({
+    utils::data(list = nm, package = "CellChat", envir = e)
+    exists(nm, envir = e, inherits = FALSE)
+  }, error = function(e) FALSE, warning = function(w) FALSE)
+  if (got) return(e[[nm]])
+  src <- system.file("upstream/CellChat-75253cd0/data", package = "CellChat")
+  f <- file.path(src, paste0(nm, ".rda"))
+  if (!nzchar(src) || !file.exists(f)) {
+    stop("dataset ", nm, " is neither in data() nor in the bundled upstream tree")
+  }
+  load(f, envir = e)
+  e[[nm]]
+}
 exports <- sort(getNamespaceExports("CellChat"))
 exports <- exports[vapply(exports,function(nm)is.function(getExportedValue("CellChat",nm)),logical(1))]
 write_raw("api",setNames(lapply(exports,function(nm) if(is.function(getExportedValue("CellChat",nm)))
   formals(getExportedValue("CellChat",nm)) else NULL),exports))
 for(nm in c("CellChatDB.human","CellChatDB.mouse","CellChatDB.zebrafish","PPI.human","PPI.mouse")){
- e<-new.env();utils::data(list=nm,package="CellChat",envir=e);write_raw(nm,e[[nm]])
+ write_raw(nm, load_dataset(nm))
 }
 set.seed(101)
 x<-matrix(runif(72,.1,1),6,dimnames=list(c("G1","G2","G3","INHBA","INHBB","TGFBR1"),paste0("c",1:12)))
@@ -23,7 +47,7 @@ stopifnot(methods::validObject(obj),identical(attr(class(obj),"package"),"CellCh
 write_raw("constructor",obj)
 saveRDS(obj,file.path(out,"original-object.rds"),version=3L)
 if(length(args)>1){ imported<-readRDS(args[[2]]);stopifnot(methods::validObject(imported));write_raw("imported-object",imported) }
-db<-CellChatDB.human
+db<-load_dataset("CellChatDB.human")
 db$complex["Activin AB","subunit_1"]<-"G3"
 obj@data.signaling<-x
 obj@DB<-db
