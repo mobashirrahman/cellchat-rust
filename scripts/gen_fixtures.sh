@@ -13,6 +13,18 @@ if [ ! -d "$CC/R" ]; then
   echo "pinned upstream not found at $CC; set CELLCHAT_SRC" >&2
   exit 1
 fi
+# `R_LIBS_USER`, not `R_LIBS`: the latter is not an R variable at all, so the old
+# `R_LIBS=.rlib` prefix was silently ignored and every generator ran with the default
+# library paths. Inherit CI's `R_LIBS_USER` when set, else the local `.rlib` a
+# developer install uses -- and search *both*, because `r-lib/actions/setup-r`
+# overrides `R_LIBS_USER` to its own temp library, so the install location and the
+# ambient value can disagree about which `.rlib` holds the packages. R searches a
+# colon-separated `R_LIBS_USER` left to right, then the system libraries. Set once:
+# re-appending inside the loop would grow the path on every generator.
+R_LIBS_USER="${R_LIBS_USER:-}:$(pwd)/.rlib"
+R_LIBS_USER="${R_LIBS_USER#:}"
+export R_LIBS_USER
+echo "gen_fixtures: R_LIBS_USER=$R_LIBS_USER"
 for g in tests/parity/gen_*.R; do
   # `gen_tutorial_netp_slice.R` is documented one-off fixture generation: it needs the
   # upstream CellChat package *installed* (not just checked out) and the 70 MB human-skin
@@ -24,12 +36,7 @@ for g in tests/parity/gen_*.R; do
     tests/parity/gen_tutorial_netp_slice.R) echo "== $g (one-off, skipped; output is committed)"; continue;;
   esac
   echo "== $g"
-  # `R_LIBS_USER`, not `R_LIBS`: the latter is not an R variable at all, so the old
-  # `R_LIBS=.rlib` prefix was silently ignored and every generator ran with the default
-  # library paths. In CI that meant none of the just-installed packages were visible and
-  # the first `library()` failed. Inherit CI's `R_LIBS_USER` when set, else the local
-  # `.rlib` a developer install uses.
-  R_LIBS_USER="${R_LIBS_USER:-.rlib}" R --vanilla -q -f "$g"
+  R --vanilla -q -f "$g"
 done
 # The SQLite-free database exports the shim reads (`CELLCHATRS_DB`). They are *derived* from the
 # same pinned `CellChatDB.<species>.rda` as the goldens, and they were the one piece `gen_fixtures.sh`

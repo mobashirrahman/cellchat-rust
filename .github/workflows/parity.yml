@@ -225,11 +225,13 @@ jobs:
           # The Bioconductor packages in DESCRIPTION Imports, installed first so the Bioc
           # repositories are configured before remotes resolves anything else.
           Rscript -e 'BiocManager::install(c("BiocGenerics", "BiocNeighbors", "ComplexHeatmap"), ask = FALSE, update = FALSE, lib = Sys.getenv("R_LIBS_USER"))'
-          # Everything else straight from DESCRIPTION Imports and Depends, so this step
-          # cannot drift from what the package declares. A hardcoded list did drift: the
-          # rename to a full CellChat surface took Imports to 43 packages while this step
-          # still installed 14, and `R CMD INSTALL` failed on the missing remainder.
-          Rscript -e 'remotes::install_deps(".", dependencies = c("Depends", "Imports"), lib = Sys.getenv("R_LIBS_USER"), upgrade = "never")'
+          # DESCRIPTION Imports, minus base packages and the three Bioconductor ones
+          # installed above. Generated from DESCRIPTION, not hand-maintained: re-derive it
+          # if Imports changes. A stale list fails loudly and fast at `R CMD INSTALL`
+          # (missing dependency), which is the guard against drift -- unlike
+          # `remotes::install_deps`, whose runtime resolution failed in CI on
+          # `read.dcf(path): cannot open the connection` with no actionable context.
+          Rscript -e 'remotes::install_cran(c("FNN", "Matrix", "NMF", "RColorBrewer", "RSpectra", "Rcpp", "bslib", "circlize", "collapse", "colorspace", "cowplot", "dplyr", "future", "future.apply", "ggalluvial", "ggnetwork", "ggplot2", "ggpubr", "ggrepel", "igraph", "irlba", "magrittr", "patchwork", "pbapply", "plotly", "plyr", "reshape2", "reticulate", "rlang", "scales", "shape", "shiny", "sna", "stringr", "svglite", "tibble"), lib = Sys.getenv("R_LIBS_USER"), upgrade = "never")'
           # Test-only packages, deliberately not in Imports.
           Rscript -e 'remotes::install_cran(c("testthat", "presto"), lib = Sys.getenv("R_LIBS_USER"), upgrade = "never")'
       - uses: Swatinem/rust-cache@v2
@@ -335,9 +337,8 @@ jobs:
           mkdir -p "$R_LIBS_USER"
           Rscript -e 'install.packages(c("remotes", "BiocManager"), repos = "https://cloud.r-project.org", lib = Sys.getenv("R_LIBS_USER"))'
           Rscript -e 'BiocManager::install(c("BiocGenerics", "BiocNeighbors", "ComplexHeatmap"), ask = FALSE, update = FALSE, lib = Sys.getenv("R_LIBS_USER"))'
-          # Derived from DESCRIPTION Imports and Depends; see the r-parity job for why
-          # a hardcoded list is not used. Test-only `presto` follows (the do.fast path).
-          Rscript -e 'remotes::install_deps(".", dependencies = c("Depends", "Imports"), lib = Sys.getenv("R_LIBS_USER"), upgrade = "never")'
+          # DESCRIPTION Imports, as in the r-parity job: generated, not hand-maintained. Test-only `presto` follows (the do.fast path).
+          Rscript -e 'remotes::install_cran(c("FNN", "Matrix", "NMF", "RColorBrewer", "RSpectra", "Rcpp", "bslib", "circlize", "collapse", "colorspace", "cowplot", "dplyr", "future", "future.apply", "ggalluvial", "ggnetwork", "ggplot2", "ggpubr", "ggrepel", "igraph", "irlba", "magrittr", "patchwork", "pbapply", "plotly", "plyr", "reshape2", "reticulate", "rlang", "scales", "shape", "shiny", "sna", "stringr", "svglite", "tibble"), lib = Sys.getenv("R_LIBS_USER"), upgrade = "never")'
           Rscript -e 'remotes::install_cran(c("presto"), lib = Sys.getenv("R_LIBS_USER"), upgrade = "never")'
       - uses: Swatinem/rust-cache@v2
         with:
@@ -442,10 +443,9 @@ jobs:
           mkdir -p "$R_LIBS_USER"
           Rscript -e 'install.packages(c("remotes", "BiocManager"), repos = "https://cloud.r-project.org", lib = Sys.getenv("R_LIBS_USER"))'
           Rscript -e 'BiocManager::install(c("BiocGenerics", "BiocNeighbors", "ComplexHeatmap"), ask = FALSE, update = FALSE, lib = Sys.getenv("R_LIBS_USER"))'
-          # Derived from DESCRIPTION Imports and Depends; see the r-parity job for why
-          # a hardcoded list is not used. `knitr` builds the vignette; Suggests are
+          # DESCRIPTION Imports, as in the r-parity job: generated, not hand-maintained. `knitr` builds the vignette; Suggests are
           # allowed to be missing (`_R_CHECK_FORCE_SUGGESTS_=false`), so nothing else.
-          Rscript -e 'remotes::install_deps(".", dependencies = c("Depends", "Imports"), lib = Sys.getenv("R_LIBS_USER"), upgrade = "never")'
+          Rscript -e 'remotes::install_cran(c("FNN", "Matrix", "NMF", "RColorBrewer", "RSpectra", "Rcpp", "bslib", "circlize", "collapse", "colorspace", "cowplot", "dplyr", "future", "future.apply", "ggalluvial", "ggnetwork", "ggplot2", "ggpubr", "ggrepel", "igraph", "irlba", "magrittr", "patchwork", "pbapply", "plotly", "plyr", "reshape2", "reticulate", "rlang", "scales", "shape", "shiny", "sna", "stringr", "svglite", "tibble"), lib = Sys.getenv("R_LIBS_USER"), upgrade = "never")'
           Rscript -e 'remotes::install_cran(c("knitr"), lib = Sys.getenv("R_LIBS_USER"), upgrade = "never")'
       - uses: Swatinem/rust-cache@v2
         with:
