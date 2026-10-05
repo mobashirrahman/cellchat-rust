@@ -25,6 +25,16 @@ R_LIBS_USER="${R_LIBS_USER:-}:$(pwd)/.rlib"
 R_LIBS_USER="${R_LIBS_USER#:}"
 export R_LIBS_USER
 echo "gen_fixtures: R_LIBS_USER=$R_LIBS_USER"
+echo "gen_fixtures: R library diagnosis (each path, package count, collapse present?)"
+R_LIBS_USER="$R_LIBS_USER" R --vanilla -q -e '
+for (p in strsplit(Sys.getenv("R_LIBS_USER"), ":")[[1]]) {
+  if (!nzchar(p) || !dir.exists(p)) { cat("  MISSING DIR:", p, "\n"); next }
+  pkgs <- rownames(utils::installed.packages(lib.loc = p))
+  cat(" ", p, ":", length(pkgs), "packages; collapse:", "collapse" %in% pkgs,
+      "; igraph:", "igraph" %in% pkgs, "\n")
+}
+cat("  R:", R.version.string, "\n")
+' 2>&1 | grep -v "^>" | grep -v "^$" || true
 for g in tests/parity/gen_*.R; do
   # `gen_tutorial_netp_slice.R` is documented one-off fixture generation: it needs the
   # upstream CellChat package *installed* (not just checked out) and the 70 MB human-skin
