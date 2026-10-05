@@ -56,7 +56,14 @@ if (!is.null(cran) && nzchar(cran)) {
   # `pak` instead of `install.packages`: it resolves transitive hard dependencies
   # against live metadata, so a newly-grown edge (like `doBy -> Deriv`) arrives
   # instead of failing three levels up as `dependency X is not available`.
-  pak::pkg_install(pkgs, lib = lib, ask = FALSE, upgrade = FALSE)
+  # No `upgrade = FALSE`: pinning the solver to the runner's preinstalled versions
+  # makes it report `Conflicts with Matrix` (and everything downstream of it) rather
+  # than installing a compatible set into `--lib`. The library is job-local and
+  # ephemeral, so upgrading within it costs nothing and breaks nothing else.
+  # `Matrix` itself is not requested (it ships with R); if something needs a newer
+  # one than the runner's, `pak` installs that newer one here, shadowing system.
+  pkgs <- setdiff(pkgs, "Matrix")
+  pak::pkg_install(pkgs, lib = lib, ask = FALSE)
 }
 
 bioc <- get_flag("--bioc")
