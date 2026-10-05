@@ -162,8 +162,9 @@ ok("both are plain lists, safe for any JSON writer", is.list(rec) && is.list(ref
 
 cat("\nagainst this host\n")
 real <- cpu_busy_over(0.3)
+n_host <- length(grep("^cpu[0-9]", readLines("/proc/stat"), value = TRUE))
 ok("every CPU is accounted for on this machine", !any(is.na(real)))
-ok("all 16 CPUs are reported", length(real) == 16L)
+ok("all host CPUs are reported", length(real) == n_host)
 ok("every value is a fraction in [0,1]", all(real >= 0 & real <= 1, na.rm = TRUE))
 
 if (fails > 0L) {
