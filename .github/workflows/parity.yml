@@ -126,23 +126,20 @@ jobs:
       - name: R dependencies
         run: |
           set -euo pipefail
-          # Force `R_LIBS_USER` to a single known directory and persist it. It arrives
-          # colon-separated (setup-r appends the system library), and every `lib =`
-          # below needs a single writable path -- but just as important, R only searches
-          # `R_LIBS_USER`, `R_LIBS_SITE` and the system defaults, so installing to a
-          # custom-named variable leaves the packages invisible to the very next
-          # `Rscript` call. Overwriting the variable (rather than deriving from it) and
-          # publishing via `GITHUB_ENV` keeps installs and lookups in the same place
-          # for this step and every later one, including `gen_fixtures.sh`.
-          export R_LIBS_USER="$GITHUB_WORKSPACE/.rlib-pkgs"
-          mkdir -p "$R_LIBS_USER"
-          echo "R_LIBS_USER=$R_LIBS_USER" >> "$GITHUB_ENV"
-          Rscript -e 'install.packages(c("remotes", "BiocManager"), repos = "https://cloud.r-project.org", lib = Sys.getenv("R_LIBS_USER"))'
+          # Packages go in here via `scripts/install_r_deps.R`, which takes the
+          # directory as a command-line argument instead of reading an environment
+          # variable -- something in R startup appends the system library to
+          # `R_LIBS_USER` regardless of what the shell exported, so every `lib =`
+          # below used to arrive colon-separated and unwritable. An explicit path has
+          # no such failure mode.
+          R_LIB="$GITHUB_WORKSPACE/.rlib-pkgs"
+          mkdir -p "$R_LIB"
+          echo "R_LIB=$R_LIB" >> "$GITHUB_ENV"
           # `BiocGenerics` is not called by any generator directly; upstream's own sourced
           # files need it, and without it every `subsetCommunication` case records
           # `there is no package called 'BiocGenerics'` as an upstream error instead of a
           # result. Same failure shape as the missing `scales`.
-          Rscript -e 'BiocManager::install("BiocGenerics", ask = FALSE, update = FALSE, lib = Sys.getenv("R_LIBS_USER"))'
+          Rscript scripts/install_r_deps.R --lib "$R_LIB" --bioc BiocGenerics
           # Exact versions, not latest. The goldens are bit-identical output, so a patch
           # release that changes any numeric formatting breaks them: CI installing latest
           # while the committed corpora were validated against these is how
@@ -151,15 +148,7 @@ jobs:
           # (and the ones the generator headers name: collapse 2.1.8, igraph 2.3.4).
           # `Matrix` ships with R itself; pinning holds it at the validated 1.6.5 even as
           # R moves on. Re-validate (regenerate locally, run `cargo test`) before bumping.
-          Rscript -e 'remotes::install_version("collapse", version = "2.1.8", lib = Sys.getenv("R_LIBS_USER"), upgrade = "never")'
-          Rscript -e 'remotes::install_version("dplyr", version = "1.2.1", lib = Sys.getenv("R_LIBS_USER"), upgrade = "never")'
-          Rscript -e 'remotes::install_version("Matrix", version = "1.6.5", lib = Sys.getenv("R_LIBS_USER"), upgrade = "never")'
-          Rscript -e 'remotes::install_version("igraph", version = "2.3.4", lib = Sys.getenv("R_LIBS_USER"), upgrade = "never")'
-          Rscript -e 'remotes::install_version("reshape2", version = "1.4.5", lib = Sys.getenv("R_LIBS_USER"), upgrade = "never")'
-          Rscript -e 'remotes::install_version("scales", version = "1.4.0", lib = Sys.getenv("R_LIBS_USER"), upgrade = "never")'
-          Rscript -e 'remotes::install_version("future", version = "1.76.0", lib = Sys.getenv("R_LIBS_USER"), upgrade = "never")'
-          Rscript -e 'remotes::install_version("rlang", version = "1.3.0", lib = Sys.getenv("R_LIBS_USER"), upgrade = "never")'
-          Rscript -e 'remotes::install_version("jsonlite", version = "2.0.0", lib = Sys.getenv("R_LIBS_USER"), upgrade = "never")'
+          Rscript scripts/install_r_deps.R --lib "$R_LIB" --pin collapse=2.1.8,dplyr=1.2.1,Matrix=1.6.5,igraph=2.3.4,reshape2=1.4.5,scales=1.4.0,future=1.76.0,rlang=1.3.0,jsonlite=2.0.0
       - name: fetch the pinned upstream
         uses: actions/checkout@v4
         with:
@@ -261,33 +250,24 @@ jobs:
       - name: R dependencies
         run: |
           set -euo pipefail
-          # Force `R_LIBS_USER` to a single known directory and persist it. It arrives
-          # colon-separated (setup-r appends the system library), and every `lib =`
-          # below needs a single writable path -- but just as important, R only searches
-          # `R_LIBS_USER`, `R_LIBS_SITE` and the system defaults, so installing to a
-          # custom-named variable leaves the packages invisible to the very next
-          # `Rscript` call. Overwriting the variable (rather than deriving from it) and
-          # publishing via `GITHUB_ENV` keeps installs and lookups in the same place
-          # for this step and every later one, including `gen_fixtures.sh`.
-          export R_LIBS_USER="$GITHUB_WORKSPACE/.rlib-pkgs"
-          mkdir -p "$R_LIBS_USER"
-          echo "R_LIBS_USER=$R_LIBS_USER" >> "$GITHUB_ENV"
-          Rscript -e 'install.packages(c("remotes", "BiocManager"), repos = "https://cloud.r-project.org", lib = Sys.getenv("R_LIBS_USER"))'
-          # The Bioconductor packages in DESCRIPTION Imports, installed first so the Bioc
-          # repositories are configured before remotes resolves anything else. `Biobase`
-          # is not in Imports itself; it is there because CRAN's `NMF` depends on it, and
-          # remotes will not fetch a Bioconductor package to satisfy a CRAN one.
-          Rscript -e 'BiocManager::install(c("BiocGenerics", "BiocNeighbors", "ComplexHeatmap", "Biobase"), ask = FALSE, update = FALSE, lib = Sys.getenv("R_LIBS_USER"))'
-          # DESCRIPTION Imports, minus base packages and the three Bioconductor ones
-          # installed above. Generated from DESCRIPTION, not hand-maintained: re-derive it
-          # if Imports changes. A stale list fails loudly and fast at `R CMD INSTALL`
-          # (missing dependency), which is the guard against drift. Base
-          # `install.packages` with recursive Depends/Imports (not `remotes`, whose
-          # transitive resolution left `sass`, `rstatix` and `htmlwidgets` uninstalled
-          # while reporting success), so every transitive hard dependency arrives too.
-          Rscript -e 'install.packages(c("FNN", "Matrix", "NMF", "RColorBrewer", "RSpectra", "Rcpp", "bslib", "circlize", "collapse", "colorspace", "cowplot", "dplyr", "future", "future.apply", "ggalluvial", "ggnetwork", "ggplot2", "ggpubr", "ggrepel", "igraph", "irlba", "magrittr", "patchwork", "pbapply", "plotly", "plyr", "reshape2", "reticulate", "rlang", "scales", "shape", "shiny", "sna", "stringr", "svglite", "tibble"), repos = "https://cloud.r-project.org", lib = Sys.getenv("R_LIBS_USER"), dependencies = c("Depends", "Imports", "LinkingTo"))'
+          # Packages go in here via `scripts/install_r_deps.R`, which takes the
+          # directory as `--lib` instead of reading an environment variable: something
+          # in R startup appends the system library to `R_LIBS_USER` regardless of what
+          # the shell exported, so every `lib = Sys.getenv(...)` arrived colon-separated
+          # and unwritable. An explicit command-line path has no such failure mode, and
+          # `R_LIB` is published for later steps (`gen_fixtures.sh` searches it).
+          R_LIB="$GITHUB_WORKSPACE/.rlib-pkgs"
+          mkdir -p "$R_LIB"
+          echo "R_LIB=$R_LIB" >> "$GITHUB_ENV"
+          # The Bioconductor packages in DESCRIPTION Imports (`Biobase` is not in Imports;
+          # CRAN's `NMF` depends on it and nothing else will fetch it), then the 36 CRAN
+          # Imports generated from DESCRIPTION, then test-only packages. Base
+          # `install.packages` with recursive Depends/Imports so transitive hard
+          # dependencies arrive too.
+          Rscript scripts/install_r_deps.R --lib "$R_LIB" --bioc BiocGenerics,BiocNeighbors,ComplexHeatmap,Biobase
+          Rscript scripts/install_r_deps.R --lib "$R_LIB" --cran FNN,Matrix,NMF,RColorBrewer,RSpectra,Rcpp,bslib,circlize,collapse,colorspace,cowplot,dplyr,future,future.apply,ggalluvial,ggnetwork,ggplot2,ggpubr,ggrepel,igraph,irlba,magrittr,patchwork,pbapply,plotly,plyr,reshape2,reticulate,rlang,scales,shape,shiny,sna,stringr,svglite,tibble
           # Test-only packages, deliberately not in Imports.
-          Rscript -e 'remotes::install_cran(c("testthat", "presto"), lib = Sys.getenv("R_LIBS_USER"), upgrade = "never")'
+          Rscript scripts/install_r_deps.R --lib "$R_LIB" --cran testthat,presto
       - uses: Swatinem/rust-cache@v2
         with:
           key: r-parity-${{ matrix.r-version }}
@@ -389,22 +369,18 @@ jobs:
       - name: R dependencies
         run: |
           set -euo pipefail
-          # Force `R_LIBS_USER` to a single known directory and persist it. It arrives
-          # colon-separated (setup-r appends the system library), and every `lib =`
-          # below needs a single writable path -- but just as important, R only searches
-          # `R_LIBS_USER`, `R_LIBS_SITE` and the system defaults, so installing to a
-          # custom-named variable leaves the packages invisible to the very next
-          # `Rscript` call. Overwriting the variable (rather than deriving from it) and
-          # publishing via `GITHUB_ENV` keeps installs and lookups in the same place
-          # for this step and every later one, including `gen_fixtures.sh`.
-          export R_LIBS_USER="$GITHUB_WORKSPACE/.rlib-pkgs"
-          mkdir -p "$R_LIBS_USER"
-          echo "R_LIBS_USER=$R_LIBS_USER" >> "$GITHUB_ENV"
-          Rscript -e 'install.packages(c("remotes", "BiocManager"), repos = "https://cloud.r-project.org", lib = Sys.getenv("R_LIBS_USER"))'
-          Rscript -e 'BiocManager::install(c("BiocGenerics", "BiocNeighbors", "ComplexHeatmap", "Biobase"), ask = FALSE, update = FALSE, lib = Sys.getenv("R_LIBS_USER"))'
-          # DESCRIPTION Imports, as in the r-parity job: generated, not hand-maintained. Test-only `presto` follows (the do.fast path).
-          Rscript -e 'install.packages(c("FNN", "Matrix", "NMF", "RColorBrewer", "RSpectra", "Rcpp", "bslib", "circlize", "collapse", "colorspace", "cowplot", "dplyr", "future", "future.apply", "ggalluvial", "ggnetwork", "ggplot2", "ggpubr", "ggrepel", "igraph", "irlba", "magrittr", "patchwork", "pbapply", "plotly", "plyr", "reshape2", "reticulate", "rlang", "scales", "shape", "shiny", "sna", "stringr", "svglite", "tibble"), repos = "https://cloud.r-project.org", lib = Sys.getenv("R_LIBS_USER"), dependencies = c("Depends", "Imports", "LinkingTo"))'
-          Rscript -e 'remotes::install_cran(c("presto"), lib = Sys.getenv("R_LIBS_USER"), upgrade = "never")'
+          # Packages go in here via `scripts/install_r_deps.R`, which takes the
+          # directory as `--lib` instead of reading an environment variable: something
+          # in R startup appends the system library to `R_LIBS_USER` regardless of what
+          # the shell exported, so every `lib = Sys.getenv(...)` arrived colon-separated
+          # and unwritable. An explicit command-line path has no such failure mode, and
+          # `R_LIB` is published for later steps (`gen_fixtures.sh` searches it).
+          R_LIB="$GITHUB_WORKSPACE/.rlib-pkgs"
+          mkdir -p "$R_LIB"
+          echo "R_LIB=$R_LIB" >> "$GITHUB_ENV"
+          Rscript scripts/install_r_deps.R --lib "$R_LIB" --bioc BiocGenerics,BiocNeighbors,ComplexHeatmap,Biobase
+          Rscript scripts/install_r_deps.R --lib "$R_LIB" --cran FNN,Matrix,NMF,RColorBrewer,RSpectra,Rcpp,bslib,circlize,collapse,colorspace,cowplot,dplyr,future,future.apply,ggalluvial,ggnetwork,ggplot2,ggpubr,ggrepel,igraph,irlba,magrittr,patchwork,pbapply,plotly,plyr,reshape2,reticulate,rlang,scales,shape,shiny,sna,stringr,svglite,tibble
+          Rscript scripts/install_r_deps.R --lib "$R_LIB" --cran presto
       - uses: Swatinem/rust-cache@v2
         with:
           key: parity-report
@@ -506,23 +482,18 @@ jobs:
       - name: R dependencies
         run: |
           set -euo pipefail
-          # Force `R_LIBS_USER` to a single known directory and persist it. It arrives
-          # colon-separated (setup-r appends the system library), and every `lib =`
-          # below needs a single writable path -- but just as important, R only searches
-          # `R_LIBS_USER`, `R_LIBS_SITE` and the system defaults, so installing to a
-          # custom-named variable leaves the packages invisible to the very next
-          # `Rscript` call. Overwriting the variable (rather than deriving from it) and
-          # publishing via `GITHUB_ENV` keeps installs and lookups in the same place
-          # for this step and every later one, including `gen_fixtures.sh`.
-          export R_LIBS_USER="$GITHUB_WORKSPACE/.rlib-pkgs"
-          mkdir -p "$R_LIBS_USER"
-          echo "R_LIBS_USER=$R_LIBS_USER" >> "$GITHUB_ENV"
-          Rscript -e 'install.packages(c("remotes", "BiocManager"), repos = "https://cloud.r-project.org", lib = Sys.getenv("R_LIBS_USER"))'
-          Rscript -e 'BiocManager::install(c("BiocGenerics", "BiocNeighbors", "ComplexHeatmap", "Biobase"), ask = FALSE, update = FALSE, lib = Sys.getenv("R_LIBS_USER"))'
-          # DESCRIPTION Imports, as in the r-parity job: generated, not hand-maintained. `knitr` builds the vignette; Suggests are
-          # allowed to be missing (`_R_CHECK_FORCE_SUGGESTS_=false`), so nothing else.
-          Rscript -e 'install.packages(c("FNN", "Matrix", "NMF", "RColorBrewer", "RSpectra", "Rcpp", "bslib", "circlize", "collapse", "colorspace", "cowplot", "dplyr", "future", "future.apply", "ggalluvial", "ggnetwork", "ggplot2", "ggpubr", "ggrepel", "igraph", "irlba", "magrittr", "patchwork", "pbapply", "plotly", "plyr", "reshape2", "reticulate", "rlang", "scales", "shape", "shiny", "sna", "stringr", "svglite", "tibble"), repos = "https://cloud.r-project.org", lib = Sys.getenv("R_LIBS_USER"), dependencies = c("Depends", "Imports", "LinkingTo"))'
-          Rscript -e 'remotes::install_cran(c("knitr"), lib = Sys.getenv("R_LIBS_USER"), upgrade = "never")'
+          # Packages go in here via `scripts/install_r_deps.R`, which takes the
+          # directory as `--lib` instead of reading an environment variable: something
+          # in R startup appends the system library to `R_LIBS_USER` regardless of what
+          # the shell exported, so every `lib = Sys.getenv(...)` arrived colon-separated
+          # and unwritable. An explicit command-line path has no such failure mode, and
+          # `R_LIB` is published for later steps (`gen_fixtures.sh` searches it).
+          R_LIB="$GITHUB_WORKSPACE/.rlib-pkgs"
+          mkdir -p "$R_LIB"
+          echo "R_LIB=$R_LIB" >> "$GITHUB_ENV"
+          Rscript scripts/install_r_deps.R --lib "$R_LIB" --bioc BiocGenerics,BiocNeighbors,ComplexHeatmap,Biobase
+          Rscript scripts/install_r_deps.R --lib "$R_LIB" --cran FNN,Matrix,NMF,RColorBrewer,RSpectra,Rcpp,bslib,circlize,collapse,colorspace,cowplot,dplyr,future,future.apply,ggalluvial,ggnetwork,ggplot2,ggpubr,ggrepel,igraph,irlba,magrittr,patchwork,pbapply,plotly,plyr,reshape2,reticulate,rlang,scales,shape,shiny,sna,stringr,svglite,tibble
+          Rscript scripts/install_r_deps.R --lib "$R_LIB" --cran knitr
       - uses: Swatinem/rust-cache@v2
         with:
           key: package

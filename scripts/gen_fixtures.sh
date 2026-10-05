@@ -15,12 +15,12 @@ if [ ! -d "$CC/R" ]; then
 fi
 # `R_LIBS_USER`, not `R_LIBS`: the latter is not an R variable at all, so the old
 # `R_LIBS=.rlib` prefix was silently ignored and every generator ran with the default
-# library paths. Search the ambient value plus the local `.rlib`: CI forces
-# `R_LIBS_USER` to a single job-local directory and publishes it via `GITHUB_ENV`,
-# so both entries point at package libraries by the time this runs. R searches a
-# colon-separated `R_LIBS_USER` left to right, then the system libraries. Set once:
+# library paths. Search every location that can hold the packages: CI installs to an
+# explicit `$R_LIB` published via `GITHUB_ENV`, the ambient `R_LIBS_USER` covers the
+# runner default, and the local `.rlib` covers a developer checkout. R searches a
+# colon-separated list left to right, then the system libraries. Set once:
 # re-appending inside the loop would grow the path on every generator.
-R_LIBS_USER="${R_LIBS_USER:-}:$(pwd)/.rlib"
+R_LIBS_USER="${R_LIBS_USER:-}:${R_LIB:-}:$(pwd)/.rlib"
 # Drop empty entries so the intent is explicit (a leading or doubled colon is an empty
 # first entry, which R would otherwise resolve unpredictably).
 R_LIBS_USER="$(printf '%s' "$R_LIBS_USER" | tr ':' '\n' | grep -v '^$' | paste -sd: -)"
