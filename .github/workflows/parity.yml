@@ -135,6 +135,14 @@ jobs:
           R_LIB="$GITHUB_WORKSPACE/.rlib-pkgs"
           mkdir -p "$R_LIB"
           echo "R_LIB=$R_LIB" >> "$GITHUB_ENV"
+          # R only searches `R_LIBS_USER`, `R_LIBS_SITE` and the system defaults, so
+          # point it at the directory just populated. A colon-separated ambient value
+          # is fine here -- this is for *searching*, where every entry is tried, unlike
+          # `lib =` which needs exactly one writable target and gets the explicit
+          # `$R_LIB` above instead. Published so fixture generation, `R CMD INSTALL`
+          # and the test steps all resolve the same directory.
+          export R_LIBS_USER="$R_LIB"
+          echo "R_LIBS_USER=$R_LIBS_USER" >> "$GITHUB_ENV"
           # `BiocGenerics` is not called by any generator directly; upstream's own sourced
           # files need it, and without it every `subsetCommunication` case records
           # `there is no package called 'BiocGenerics'` as an upstream error instead of a
@@ -259,6 +267,14 @@ jobs:
           R_LIB="$GITHUB_WORKSPACE/.rlib-pkgs"
           mkdir -p "$R_LIB"
           echo "R_LIB=$R_LIB" >> "$GITHUB_ENV"
+          # R only searches `R_LIBS_USER`, `R_LIBS_SITE` and the system defaults, so
+          # point it at the directory just populated. A colon-separated ambient value
+          # is fine here -- this is for *searching*, where every entry is tried, unlike
+          # `lib =` which needs exactly one writable target and gets the explicit
+          # `$R_LIB` above instead. Published so fixture generation, `R CMD INSTALL`
+          # and the test steps all resolve the same directory.
+          export R_LIBS_USER="$R_LIB"
+          echo "R_LIBS_USER=$R_LIBS_USER" >> "$GITHUB_ENV"
           # The Bioconductor packages in DESCRIPTION Imports (`Biobase` is not in Imports;
           # CRAN's `NMF` depends on it and nothing else will fetch it), then the 36 CRAN
           # Imports generated from DESCRIPTION, then test-only packages. Base
@@ -378,6 +394,14 @@ jobs:
           R_LIB="$GITHUB_WORKSPACE/.rlib-pkgs"
           mkdir -p "$R_LIB"
           echo "R_LIB=$R_LIB" >> "$GITHUB_ENV"
+          # R only searches `R_LIBS_USER`, `R_LIBS_SITE` and the system defaults, so
+          # point it at the directory just populated. A colon-separated ambient value
+          # is fine here -- this is for *searching*, where every entry is tried, unlike
+          # `lib =` which needs exactly one writable target and gets the explicit
+          # `$R_LIB` above instead. Published so fixture generation, `R CMD INSTALL`
+          # and the test steps all resolve the same directory.
+          export R_LIBS_USER="$R_LIB"
+          echo "R_LIBS_USER=$R_LIBS_USER" >> "$GITHUB_ENV"
           Rscript scripts/install_r_deps.R --lib "$R_LIB" --bioc BiocGenerics,BiocNeighbors,ComplexHeatmap,Biobase
           Rscript scripts/install_r_deps.R --lib "$R_LIB" --cran FNN,Matrix,NMF,RColorBrewer,RSpectra,Rcpp,bslib,circlize,collapse,colorspace,cowplot,dplyr,future,future.apply,ggalluvial,ggnetwork,ggplot2,ggpubr,ggrepel,igraph,irlba,magrittr,patchwork,pbapply,plotly,plyr,reshape2,reticulate,rlang,scales,shape,shiny,sna,stringr,svglite,tibble
           Rscript scripts/install_r_deps.R --lib "$R_LIB" --cran presto
@@ -491,6 +515,14 @@ jobs:
           R_LIB="$GITHUB_WORKSPACE/.rlib-pkgs"
           mkdir -p "$R_LIB"
           echo "R_LIB=$R_LIB" >> "$GITHUB_ENV"
+          # R only searches `R_LIBS_USER`, `R_LIBS_SITE` and the system defaults, so
+          # point it at the directory just populated. A colon-separated ambient value
+          # is fine here -- this is for *searching*, where every entry is tried, unlike
+          # `lib =` which needs exactly one writable target and gets the explicit
+          # `$R_LIB` above instead. Published so fixture generation, `R CMD INSTALL`
+          # and the test steps all resolve the same directory.
+          export R_LIBS_USER="$R_LIB"
+          echo "R_LIBS_USER=$R_LIBS_USER" >> "$GITHUB_ENV"
           Rscript scripts/install_r_deps.R --lib "$R_LIB" --bioc BiocGenerics,BiocNeighbors,ComplexHeatmap,Biobase
           Rscript scripts/install_r_deps.R --lib "$R_LIB" --cran FNN,Matrix,NMF,RColorBrewer,RSpectra,Rcpp,bslib,circlize,collapse,colorspace,cowplot,dplyr,future,future.apply,ggalluvial,ggnetwork,ggplot2,ggpubr,ggrepel,igraph,irlba,magrittr,patchwork,pbapply,plotly,plyr,reshape2,reticulate,rlang,scales,shape,shiny,sna,stringr,svglite,tibble
           Rscript scripts/install_r_deps.R --lib "$R_LIB" --cran knitr
