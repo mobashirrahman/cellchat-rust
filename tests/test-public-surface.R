@@ -19,6 +19,12 @@ local({
     e <- new.env(parent=emptyenv())
     load(file.path(system.file("upstream/CellChat-75253cd0/data",package="CellChat"),paste0(nm,".rda")),envir=e)
     stopifnot(exists(nm,e,inherits=FALSE),identical(serialize(e[[nm]],NULL),serialize(reference[[nm]],NULL)))
+    ## Upstream's LazyData makes the bare name resolve after `library(CellChat)`. `.onLoad` binds
+    ## the same names to the bundled copy; assert the binding is exported, visible on the search
+    ## path, and the same bytes -- without `data()`, which a built install cannot satisfy.
+    stopifnot(nm %in% getNamespaceExports("CellChat"),
+              identical(serialize(getExportedValue("CellChat",nm),NULL),serialize(e[[nm]],NULL)),
+              identical(serialize(get(nm,envir=as.environment("package:CellChat"),inherits=FALSE),NULL),serialize(e[[nm]],NULL)))
   }
   stopifnot(identical(attr(class(methods::new("CellChat")),"package"),"CellChat"))
   x <- matrix(seq_len(48)/48,4,dimnames=list(c("A","B","C","D"),paste0("c",1:12)))
