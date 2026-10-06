@@ -13,9 +13,11 @@
     "untested": "no passing test establishes this yet"
   },
   "summary": {
-    "quantities": 160,
-    "at_rung": 160,
-    "untested": 0
+    "quantities": 148,
+    "alternative_checks": 12,
+    "at_rung": 147,
+    "untested": 1,
+    "divergent": 0
   },
   "entries": [
     {
@@ -24,7 +26,8 @@
       "test": "cargo test --release -p r-core --test rng_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "rng.sample_int",
@@ -32,7 +35,8 @@
       "test": "cargo test --release -p r-core --test rng_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "rng.stress",
@@ -40,7 +44,8 @@
       "test": "cargo test --release -p r-core --test rng_stress",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "longdouble.add",
@@ -48,7 +53,8 @@
       "test": "cargo test --release -p r-core --test f80_vs_x87",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "longdouble.mul",
@@ -56,7 +62,8 @@
       "test": "cargo test --release -p r-core --test f80_vs_x87",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "stats.fquantile_type7",
@@ -64,7 +71,8 @@
       "test": "cargo test --release -p r-core --test stats_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "stats.tri_mean",
@@ -72,7 +80,8 @@
       "test": "cargo test --release -p r-core --test stats_parity",
       "rung": "exact-nan",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "stats.geometric_mean",
@@ -80,7 +89,8 @@
       "test": "cargo test --release -p r-core --test stats_parity",
       "rung": "exact-nan",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "stats.r_prod",
@@ -88,7 +98,8 @@
       "test": "cargo test --release -p r-core --test stats_parity",
       "rung": "exact-nan",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "stats.thresholded_mean",
@@ -96,7 +107,8 @@
       "test": "cargo test --release -p r-core --test stats_parity",
       "rung": "exact-nan",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "db.extract_gene",
@@ -104,7 +116,8 @@
       "test": "cargo test --release -p r-core --test db_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "expr.computeExpr_LR",
@@ -112,7 +125,8 @@
       "test": "cargo test --release -p r-core --test expr_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "expr.computeExpr_coreceptor",
@@ -120,7 +134,8 @@
       "test": "cargo test --release -p r-core --test expr_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "expr.computeExpr_agonist",
@@ -128,7 +143,8 @@
       "test": "cargo test --release -p r-core --test expr_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "expr.computeExprGroup",
@@ -136,7 +152,8 @@
       "test": "cargo test --release -p r-core --test expr_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "expr.subscript_out_of_bounds",
@@ -144,7 +161,8 @@
       "test": "cargo test --release -p r-core --test expr_parity",
       "rung": "error-equal",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "aggregate.aggregate_1",
@@ -152,7 +170,8 @@
       "test": "cargo test --release -p r-core --lib aggregate",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "prob.data_use_avg",
@@ -160,7 +179,8 @@
       "test": "cargo test --release -p r-core --test prob_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "prob.prob",
@@ -168,7 +188,8 @@
       "test": "cargo test --release -p r-core --test prob_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "prob.pval",
@@ -176,7 +197,8 @@
       "test": "cargo test --release -p r-core --test prob_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "net.aggregate_net",
@@ -184,7 +206,8 @@
       "test": "cargo test --release -p r-core --test net_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "net.subset_communication",
@@ -192,7 +215,8 @@
       "test": "cargo test --release -p r-core --test net_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "net.subset_empty_error",
@@ -200,7 +224,8 @@
       "test": "cargo test --release -p r-core --test net_parity",
       "rung": "error-equal",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "de.compute_ave_expr",
@@ -208,7 +233,8 @@
       "test": "cargo test --release -p r-core --test de_parity",
       "rung": "exact-nan",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "de.intersect_order",
@@ -216,7 +242,8 @@
       "test": "cargo test --release -p r-core --test de_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "de.subset_data",
@@ -224,7 +251,8 @@
       "test": "cargo test --release -p r-core --test de_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "de.subset_db",
@@ -232,7 +260,8 @@
       "test": "cargo test --release -p r-core --test de_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "de.match_arg_message",
@@ -240,7 +269,8 @@
       "test": "cargo test --release -p r-core --test de_parity",
       "rung": "error-equal",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "de.subset_db_key_error",
@@ -248,7 +278,8 @@
       "test": "cargo test --release -p r-core --test de_parity",
       "rung": "error-equal",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "rshim.identical",
@@ -256,7 +287,8 @@
       "test": "R_LIBS=.rlib R --vanilla -f tests/parity/check_identical.R",
       "rung": "identical",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "rshim.match_arg",
@@ -264,7 +296,8 @@
       "test": "R_LIBS=.rlib R --vanilla -f tests/parity/check_identical.R",
       "rung": "error-equal",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "rshim.aggregate_net",
@@ -272,7 +305,8 @@
       "test": "R_LIBS=.rlib R --vanilla -f tests/parity/check_identical.R",
       "rung": "identical",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "rshim.subset_communication",
@@ -280,7 +314,8 @@
       "test": "R_LIBS=.rlib R --vanilla -f tests/parity/check_identical.R",
       "rung": "identical",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "rshim.compute_ave_expr",
@@ -288,7 +323,8 @@
       "test": "R_LIBS=.rlib R --vanilla -f tests/parity/check_identical.R",
       "rung": "identical",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "rshim.subset_db",
@@ -296,7 +332,8 @@
       "test": "R_LIBS=.rlib R --vanilla -f tests/parity/check_identical.R",
       "rung": "identical",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "wilcox.wilcox_test",
@@ -304,7 +341,8 @@
       "test": "cargo test --release -p r-core --test wilcox_parity",
       "rung": "exact-nan",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "wilcox.correct_argument",
@@ -312,7 +350,8 @@
       "test": "cargo test --release -p r-core --test wilcox_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "wilcox.rank",
@@ -320,7 +359,8 @@
       "test": "cargo test --release -p r-core --test wilcox_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "wilcox.p_adjust_bonferroni",
@@ -328,7 +368,8 @@
       "test": "cargo test --release -p r-core --test wilcox_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "wilcox.pnorm",
@@ -336,7 +377,8 @@
       "test": "cargo test --release -p r-core --lib mathfn",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "wilcox.mean_fxn",
@@ -344,7 +386,8 @@
       "test": "cargo test --release -p r-core --test wilcox_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "de.group_dataset_selection",
@@ -352,7 +395,8 @@
       "test": "R_LIBS=.rlib Rscript tests/parity/check_identical.R",
       "rung": "identical",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "de.group_dataset_tostring_collapse",
@@ -360,7 +404,8 @@
       "test": "R_LIBS=.rlib Rscript tests/parity/check_identical.R",
       "rung": "identical",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "de.group_dataset_bare_stop",
@@ -368,7 +413,8 @@
       "test": "R_LIBS=.rlib Rscript tests/parity/check_identical.R",
       "rung": "error-equal",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "de.single_candidate_group",
@@ -376,7 +422,8 @@
       "test": "cargo test --release -p r-core --lib",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "de.row_names_are_not_associative",
@@ -384,7 +431,8 @@
       "test": "R_LIBS=.rlib Rscript tests/parity/check_identical.R",
       "rung": "identical",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "de.identify_marker_table",
@@ -392,7 +440,8 @@
       "test": "cargo test --release -p r-core --test wilcox_parity",
       "rung": "exact-nan",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "de.marker_row_names",
@@ -400,7 +449,8 @@
       "test": "cargo test --release -p r-core --test wilcox_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "de.pct_scale",
@@ -408,7 +458,8 @@
       "test": "cargo test --release -p r-core --test wilcox_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "de.expressed_in_min_cells",
@@ -416,7 +467,8 @@
       "test": "cargo test --release -p r-core --test wilcox_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "rshim.identify_over_expressed_genes",
@@ -424,7 +476,8 @@
       "test": "R_LIBS=.rlib R --vanilla -f tests/parity/check_identical.R",
       "rung": "identical",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "rshim.oeg_falls_back",
@@ -432,7 +485,8 @@
       "test": "R_LIBS=.rlib R --vanilla -f tests/parity/check_identical.R",
       "rung": "error-equal",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "pathway.prob_pathways",
@@ -440,7 +494,8 @@
       "test": "cargo test --release -p r-core --test pathway_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "pathway.pathway_ranking",
@@ -448,7 +503,8 @@
       "test": "cargo test --release -p r-core --test pathway_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "pathway.lr_sig",
@@ -456,7 +512,8 @@
       "test": "cargo test --release -p r-core --test pathway_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "pathway.apply_sums",
@@ -464,7 +521,8 @@
       "test": "cargo test --release -p r-core --test pathway_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "pathway.aperm_layout",
@@ -472,7 +530,8 @@
       "test": "cargo test --release -p r-core --test pathway_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "pathway.single_pathway_error",
@@ -480,7 +539,8 @@
       "test": "cargo test --release -p r-core --test pathway_parity",
       "rung": "error-equal",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "rshim.compute_commun_prob_pathway",
@@ -488,7 +548,8 @@
       "test": "R_LIBS=.rlib R --vanilla -f tests/parity/check_identical.R",
       "rung": "identical",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "net.aggregate_net_unfiltered",
@@ -496,7 +557,8 @@
       "test": "cargo test --release -p r-core --test netfiltered_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "net.aggregate_net_filtered",
@@ -504,7 +566,8 @@
       "test": "cargo test --release -p r-core --test netfiltered_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "net.group_by_key_order",
@@ -512,7 +575,8 @@
       "test": "cargo test --release -p r-core --test netfiltered_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "net.remove_isolate_shape",
@@ -520,7 +584,8 @@
       "test": "cargo test --release -p r-core --test netfiltered_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "rshim.aggregate_net_filtered",
@@ -528,7 +593,8 @@
       "test": "R_LIBS=.rlib R --vanilla -f tests/parity/check_identical.R",
       "rung": "identical",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "filter.prob_after_filter",
@@ -536,7 +602,8 @@
       "test": "cargo test --release -p r-core --test filter_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "filter.per_sample_binarisation",
@@ -544,7 +611,8 @@
       "test": "cargo test --release -p r-core --test filter_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "filter.min_cells_threshold",
@@ -552,7 +620,8 @@
       "test": "cargo test --release -p r-core --test filter_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "filter.absent_group_is_zero",
@@ -560,7 +629,8 @@
       "test": "cargo test --release -p r-core --test filter_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "filter.cell_excludes",
@@ -568,7 +638,8 @@
       "test": "cargo test --release -p r-core --test filter_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "filter.type_mean_choices",
@@ -576,7 +647,8 @@
       "test": "cargo test --release -p r-core --test filter_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "filter.upstream_failures",
@@ -584,7 +656,8 @@
       "test": "cargo test --release -p r-core --test filter_parity",
       "rung": "error-equal",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "filter.nonfilter_keep",
@@ -592,7 +665,8 @@
       "test": "cargo test --release -p r-core --test filter_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "subset.threshold_order",
@@ -600,7 +674,8 @@
       "test": "cargo test --release -p r-core --test subset_parity",
       "rung": "error-equal",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "subset.na_blanking",
@@ -608,7 +683,8 @@
       "test": "cargo test --release -p r-core --test subset_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "subset.all_na_drop",
@@ -616,7 +692,8 @@
       "test": "cargo test --release -p r-core --test subset_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "subset.logfc_sign",
@@ -624,7 +701,8 @@
       "test": "cargo test --release -p r-core --test subset_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "subset.warn_vs_error",
@@ -632,7 +710,8 @@
       "test": "cargo test --release -p r-core --test subset_parity",
       "rung": "error-equal",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "subset.netp_group_order",
@@ -640,7 +719,8 @@
       "test": "cargo test --release -p r-core --test subset_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "subset.netp_na_to_string",
@@ -648,7 +728,8 @@
       "test": "cargo test --release -p r-core --test subset_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "subset.netp_aggregates",
@@ -656,7 +737,8 @@
       "test": "cargo test --release -p r-core --test subset_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "subset.datasets_needs_logfc",
@@ -664,7 +746,8 @@
       "test": "cargo test --release -p r-core --test subset_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "subset.unknown_slot",
@@ -672,7 +755,8 @@
       "test": "cargo test --release -p r-core --test subset_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "rshim.subset_communication_deg",
@@ -680,7 +764,8 @@
       "test": "R_LIBS=.rlib R --vanilla -f tests/parity/check_identical.R",
       "rung": "identical",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "ranknet.information_flow",
@@ -688,7 +773,8 @@
       "test": "cargo test --release -p r-core --test ranknet_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "ranknet.weight_transform",
@@ -696,7 +782,8 @@
       "test": "cargo test --release -p r-core --test ranknet_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "ranknet.degenerate_flagging",
@@ -704,7 +791,8 @@
       "test": "cargo test --release -p r-core --test ranknet_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "ranknet.reassignment_order",
@@ -712,7 +800,8 @@
       "test": "cargo test --release -p r-core --test ranknet_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "ranknet.all_degenerate_error",
@@ -720,7 +809,8 @@
       "test": "cargo test --release -p r-core --test ranknet_parity",
       "rung": "error-equal",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "ranknet.count_measure",
@@ -728,7 +818,8 @@
       "test": "cargo test --release -p r-core --test ranknet_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "ranknet.group_filters",
@@ -736,7 +827,8 @@
       "test": "cargo test --release -p r-core --test ranknet_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "ranknet.order_stable",
@@ -744,7 +836,8 @@
       "test": "cargo test --release -p r-core --test ranknet_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "ranknet.relative_digits1",
@@ -752,7 +845,8 @@
       "test": "cargo test --release -p r-core --test ranknet_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "ranknet.empty_network_error",
@@ -760,7 +854,8 @@
       "test": "cargo test --release -p r-core --test ranknet_parity",
       "rung": "error-equal",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "spatial.trimmed_mean",
@@ -768,7 +863,8 @@
       "test": "cargo test --release -p r-core --test spatial_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "spatial.fdist",
@@ -776,7 +872,8 @@
       "test": "cargo test --release -p r-core --test spatial_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "spatial.kdtree_exact",
@@ -784,7 +881,8 @@
       "test": "cargo test --release -p r-core --test spatial_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "alternative-algorithm"
     },
     {
       "quantity": "analysis.centrality_deterministic",
@@ -792,7 +890,8 @@
       "test": "cargo test --release -p r-core --test centrality_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "spatial.kdtree_tie_break",
@@ -800,7 +899,8 @@
       "test": "cargo test --release -p r-core --test spatial_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "alternative-algorithm"
     },
     {
       "quantity": "spatial.kdtree_subquadratic",
@@ -808,7 +908,8 @@
       "test": "cargo test --release -p r-core --test spatial_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "alternative-algorithm"
     },
     {
       "quantity": "spatial.region_arithmetic",
@@ -816,7 +917,8 @@
       "test": "cargo test --release -p r-core --test region_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "alternative-algorithm"
     },
     {
       "quantity": "spatial.region_ratio_recycling",
@@ -824,7 +926,8 @@
       "test": "cargo test --release -p r-core --test region_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "alternative-algorithm"
     },
     {
       "quantity": "spatial.region_null_ratio",
@@ -832,7 +935,8 @@
       "test": "cargo test --release -p r-core --test region_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "alternative-algorithm"
     },
     {
       "quantity": "spatial.region_absent_level",
@@ -840,7 +944,8 @@
       "test": "cargo test --release -p r-core --test region_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "alternative-algorithm"
     },
     {
       "quantity": "spatial.region_d_spatial_always_symmetric",
@@ -848,7 +953,8 @@
       "test": "cargo test --release -p r-core --test region_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "alternative-algorithm"
     },
     {
       "quantity": "spatial.region_contact_null_range",
@@ -856,7 +962,8 @@
       "test": "cargo test --release -p r-core --test region_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "alternative-algorithm"
     },
     {
       "quantity": "spatial.region_contact_knn_k_replaces",
@@ -864,7 +971,8 @@
       "test": "cargo test --release -p r-core --test region_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "alternative-algorithm"
     },
     {
       "quantity": "spatial.region_corpus_margin",
@@ -872,7 +980,8 @@
       "test": "cargo test --release -p r-core --test region_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "alternative-algorithm"
     },
     {
       "quantity": "rshim.computeCellDistance",
@@ -880,15 +989,17 @@
       "test": "R_LIBS=.rlib R --vanilla -f tests/parity/check_identical.R",
       "rung": "identical",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
-      "quantity": "rshim.computeRegionDistance",
+      "quantity": "rshim.computeRegionDistance_exact",
       "pin": "the R-side marshalling for all 12 corpus fixtures: levels(factor) order, the declared-but-absent level, match() on the factor, and the dimnames",
       "test": "R_LIBS=.rlib R --vanilla -f tests/parity/check_identical.R",
       "rung": "identical",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "alternative-algorithm"
     },
     {
       "quantity": "ranknet.comparison_flow",
@@ -896,7 +1007,8 @@
       "test": "cargo test --release -p r-core --test ranknet_comparison_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "ranknet.comparison_pooled_reassignment",
@@ -904,7 +1016,8 @@
       "test": "cargo test --release -p r-core --test ranknet_comparison_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "ranknet.comparison_flag_is_a_range",
@@ -912,7 +1025,8 @@
       "test": "cargo test --release -p r-core --test ranknet_comparison_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "rshim.ranknet_comparison",
@@ -920,7 +1034,8 @@
       "test": "R_LIBS=.rlib R --vanilla -f tests/parity/check_identical.R",
       "rung": "identical",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "prob.data_max_scaling",
@@ -928,7 +1043,8 @@
       "test": "cargo test --release -p r-core --test prob_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "prob.scale_invariance",
@@ -936,7 +1052,8 @@
       "test": "R_LIBS=.rlib Rscript tests/parity/check_matrix.R",
       "rung": "identical",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "longdouble.nan_and_inf",
@@ -944,7 +1061,8 @@
       "test": "cargo test --release -p r-core --test longdouble_special_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "prob.if_na_raises",
@@ -952,7 +1070,8 @@
       "test": "cargo test --release -p r-core --test prob_parity",
       "rung": "error-equal",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "stats.nnzero_is_na",
@@ -960,7 +1079,8 @@
       "test": "cargo test --release -p r-core --lib",
       "rung": "error-equal",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "prob.observed_means_raise",
@@ -968,7 +1088,8 @@
       "test": "cargo test --release -p r-core --lib",
       "rung": "error-equal",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "prob.error_precedence",
@@ -976,7 +1097,8 @@
       "test": "R_LIBS=.rlib Rscript tests/parity/check_matrix.R",
       "rung": "error-equal",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "ranknet.pairwise_order",
@@ -984,7 +1106,8 @@
       "test": "R_LIBS=.rlib Rscript tests/parity/check_identical.R",
       "rung": "identical",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "ranknet.order_later_key_na",
@@ -992,7 +1115,8 @@
       "test": "cargo test --release -p r-core --lib",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "ranknet.pairwise_lr_use_mismatch",
@@ -1000,7 +1124,8 @@
       "test": "R_LIBS=.rlib Rscript tests/parity/check_identical.R",
       "rung": "error-equal",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "ranknet.pairwise_nonsquare",
@@ -1008,7 +1133,8 @@
       "test": "R_LIBS=.rlib Rscript tests/parity/check_identical.R",
       "rung": "error-equal",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "rshim.rankNetPairwise",
@@ -1016,7 +1142,8 @@
       "test": "R_LIBS=.rlib Rscript tests/parity/check_identical.R",
       "rung": "identical",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "prob.bootstrap_parallel_identity",
@@ -1024,7 +1151,8 @@
       "test": "R_LIBS=.rlib NB=20 Rscript bench-runner/check_parity_real.R",
       "rung": "identical",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "prob.permutation_stream_order",
@@ -1032,7 +1160,8 @@
       "test": "cargo test --release -p r-core --test prob_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "meta.scaling",
@@ -1040,7 +1169,8 @@
       "test": "R_LIBS=.rlib Rscript tests/parity/metamorphic.R",
       "rung": "identical",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "meta.gene_permutation",
@@ -1048,7 +1178,8 @@
       "test": "R_LIBS=.rlib Rscript tests/parity/metamorphic.R",
       "rung": "identical",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "meta.cluster_relabelling",
@@ -1056,7 +1187,8 @@
       "test": "R_LIBS=.rlib Rscript tests/parity/metamorphic.R",
       "rung": "identical",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "meta.cell_duplication",
@@ -1064,7 +1196,8 @@
       "test": "R_LIBS=.rlib Rscript tests/parity/metamorphic.R",
       "rung": "identical",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "meta.cell_permutation",
@@ -1072,7 +1205,8 @@
       "test": "R_LIBS=.rlib Rscript tests/parity/metamorphic.R",
       "rung": "identical",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "meta.nboot_invariance",
@@ -1080,7 +1214,8 @@
       "test": "R_LIBS=.rlib Rscript tests/parity/metamorphic.R",
       "rung": "identical",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "meta.recorded_invariants",
@@ -1088,7 +1223,8 @@
       "test": "R_LIBS=.rlib Rscript tests/parity/metamorphic.R",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "fuzz.db_resolution",
@@ -1096,7 +1232,8 @@
       "test": "cargo test --release -p r-core --test db_fuzz",
       "rung": "error-equal",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "fuzz.extract_gene_split",
@@ -1104,7 +1241,8 @@
       "test": "cargo test --release -p r-core --test db_fuzz",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "props.r_order",
@@ -1112,7 +1250,8 @@
       "test": "cargo test --release -p r-core --test properties",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "props.longdouble_mul_specials",
@@ -1120,7 +1259,8 @@
       "test": "cargo test --release -p r-core --lib longdouble",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "props.signed_zero",
@@ -1128,7 +1268,8 @@
       "test": "cargo test --release -p r-core --lib longdouble",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "props.aggregate_level_order",
@@ -1136,7 +1277,8 @@
       "test": "cargo test --release -p r-core --test properties",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "props.rng_permutation",
@@ -1144,7 +1286,8 @@
       "test": "cargo test --release -p r-core --test properties",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "matrix.configuration_coverage",
@@ -1152,7 +1295,8 @@
       "test": "R_LIBS=.rlib Rscript tests/parity/check_matrix.R",
       "rung": "identical",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "matrix.scale_invariance",
@@ -1160,7 +1304,8 @@
       "test": "R_LIBS=.rlib Rscript tests/parity/check_matrix.R",
       "rung": "identical",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "rshim.ranknet_single",
@@ -1168,7 +1313,8 @@
       "test": "R_LIBS=.rlib R --vanilla -f tests/parity/check_identical.R",
       "rung": "identical",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "prob.spatial_branch",
@@ -1176,7 +1322,8 @@
       "test": "R_LIBS=.rlib R --vanilla -f tests/parity/check_identical.R",
       "rung": "identical",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "prob.raw_use_false",
@@ -1184,7 +1331,8 @@
       "test": "R_LIBS=.rlib R --vanilla -f tests/parity/check_identical.R",
       "rung": "identical",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "filter.raw_use_smooth",
@@ -1192,7 +1340,8 @@
       "test": "cargo test --release -p r-core --test filter_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "filter.raw_use_scaling",
@@ -1200,7 +1349,8 @@
       "test": "cargo test --release -p r-core --test filter_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "filter.mincells_is_count_only",
@@ -1208,7 +1358,8 @@
       "test": "cargo test --release -p r-core --test filter_parity",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "rshim.filter_communication",
@@ -1216,7 +1367,8 @@
       "test": "R_LIBS=.rlib R --vanilla -f tests/parity/check_identical.R",
       "rung": "identical",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "suite.rust",
@@ -1224,15 +1376,17 @@
       "test": "cargo test --release",
       "rung": "exact",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "gate.r_shim_identical",
-      "pin": "the acceptance gate: identical() on the S4 object from the installed shim",
+      "pin": "the acceptance gate: serialized-byte comparisons on deterministic scientific outputs",
       "test": "R_LIBS=.rlib R --vanilla -f tests/parity/check_identical.R",
       "rung": "identical",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "stats.independent_stream_equivalence",
@@ -1240,15 +1394,17 @@
       "test": "R_LIBS=.rlib R --vanilla -f tests/parity/stat_equiv.R",
       "rung": "identical",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
-      "quantity": "prob.spatial_divergence_measured",
-      "pin": "the exact k-d tree against BiocNeighbors AnnoyParam on the authors' mouse cortex visium data (1,073 spots, 8 cell types, 437 L-R pairs, nboot = 100), measured three ways: exact vs Annoy differs in 42 of 64 d.spatial entries (2.8% max relative) and 1,682 of 8,576 Prob entries (19.6%, 1.0% of peak), while Annoy vs Annoy on identical input differs in none -- so the approximation is a systematic bias, not run-to-run noise. The exact tree is also 274x faster. bench-runner/measure_spatial_divergence.R and bench-runner/results/spatial_divergence.json",
-      "test": "R_LIBS=.rlib R --vanilla -f bench-runner/measure_spatial_divergence.R",
-      "rung": "measured-divergent",
-      "exit_code": 0,
-      "detail": ""
+      "quantity": "package.independent_dropin",
+      "pin": "requires the pinned original installed as a second package; its dependency tree needs R >= 4.5, and the R-side rungs need R <= 4.4 for bit-identity",
+      "test": null,
+      "rung": "untested",
+      "exit_code": null,
+      "detail": "oracle not available in this environment",
+      "scope": "compatibility"
     },
     {
       "quantity": "utilities.identify_over_expressed_genes_fast",
@@ -1256,7 +1412,8 @@
       "test": "R_LIBS=.rlib R --vanilla -f tests/parity/check_oeg_fast.R",
       "rung": "identical",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "delegation.complete",
@@ -1264,7 +1421,8 @@
       "test": "R_LIBS=.rlib R --vanilla -f tests/parity/check_delegation.R",
       "rung": "identical",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "tutorial.reproduction",
@@ -1272,7 +1430,8 @@
       "test": "R_LIBS=.rlib R --vanilla -f tests/parity/tutorial_repro.R",
       "rung": "identical",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "analysis.netP_centrality",
@@ -1280,7 +1439,8 @@
       "test": "R_LIBS=.rlib R --vanilla -f tests/parity/check_centrality.R",
       "rung": "identical",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "cli.standalone",
@@ -1288,7 +1448,8 @@
       "test": "R_LIBS=.rlib R --vanilla -f tests/parity/check_cli.R",
       "rung": "identical",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     },
     {
       "quantity": "analysis.mergeCellChat",
@@ -1296,7 +1457,8 @@
       "test": "R_LIBS=.rlib R --vanilla -f tests/parity/check_merge.R",
       "rung": "identical",
       "exit_code": 0,
-      "detail": ""
+      "detail": "",
+      "scope": "compatibility"
     }
   ]
 }

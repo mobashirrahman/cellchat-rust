@@ -7,7 +7,7 @@ development host.
 
 | | |
 |---|---|
-| CPU | AMD Ryzen 7 3700X, 8c/16t, Zen3, AVX2 (no AVX-512), 32 MB L3 |
+| CPU | AMD Ryzen 7 3700X, 8c/16t, Zen 2, AVX2 (no AVX-512), 32 MB L3 |
 | RAM | 32 GB |
 | OS / toolchain | Ubuntu 24.04, gcc 13.3, R 4.3.3, rustc 1.98.1 |
 | pinning | `taskset -c 0-7` |

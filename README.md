@@ -1,83 +1,135 @@
 # cellchat-rust
 
+[![parity](https://github.com/mobashirrahman/cellchat-rust/actions/workflows/parity.yml/badge.svg?branch=main)](https://github.com/mobashirrahman/cellchat-rust/actions/workflows/parity.yml)
+[![License: GPL-3](https://img.shields.io/badge/License-GPL--3-blue.svg)](LICENSE)
+
 A Rust re-implementation of the inference kernel of
 [CellChat](https://github.com/jinworks/CellChat) (Jin et al., *Nature Communications* 2021;
-*Nature Protocols* 2024), exposed to R as a **drop-in, output-identical accelerator**.
-The R package it installs is named `cellchatrs`.
+*Nature Protocols* 2024), packaged as a **drop-in, output-identical replacement** for the R
+package. It installs as `CellChat`, runs without the original, and returns the same S4
+object, bit for bit, in a fraction of the time. The Rust crates and the standalone CLI keep
+the `cellchatrs` name.
 
-**Read [`PLAN.md`](PLAN.md) first** — it contains the source audit, the measured R
-baseline, the performance model, the parity contract, the phased work plan, the benchmark
-methodology, and the locked decisions in §14. This README is only the map.
+## How much faster
 
-## Locked decisions
+`CellChat::computeCommunProb()` dominates CellChat's runtime: 92–95 % of it is the bootstrap
+aggregation `aggregate(t(data), list(group), triMean)`, repeated `nboot` times. That is pure
+numerics with independent work per gene per bootstrap, so it parallelises and vectorises well.
 
-| | |
-|---|---|
-| Scope | numeric core + R shim; `visualization.R` / `app.R` stay in R |
-| Parity | **bit-identical** — `identical()` on the whole S4 object is the gate |
-| Missing complex subunit | replicate upstream's `subscript out of bounds` (and report it upstream) |
-| Spatial KNN | exact k-d tree, replacing approximate Annoy; divergence published |
-| Binding | `extendr` |
-| Upstream | `main` @ `75253cd0` (v2.2.0.9001) — see [`UPSTREAM.md`](UPSTREAM.md) |
-| Distribution | GitHub first, then CRAN after maintainer sign-off |
-| Benchmarks | this host (8c/16t, 32 GB), pinned with `taskset` |
-
-## Why
-
-`CellChat::computeCommunProb()` (`R/modeling.R:63-327`) dominates CellChat's runtime.
-Measured on this machine against upstream R, at CellChat's default `nboot = 100`
-(taskset-pinned, medians over repeats with bootstrap CIs; see `bench-runner/results/`):
+Measured against upstream R at CellChat's default `nboot = 100`, on the authors' own datasets:
 
 | fixture | cells | genes | L-R pairs | upstream | Rust | speedup |
 |---|---:|---:|---:|---:|---:|---:|
 | human skin (Figshare 24470719) | 7 563 | 1 094 | 1 583 | 101.4 s | 2.41 s | 42.1x |
 | mouse wound (Figshare 21896400) | 21 557 | 1 101 | 1 568 | 245.3 s | 9.41 s | 26.1x |
 
-Full-pipeline numbers (what a user observes, I/O through centrality): 16.7x skin, 9.7x
-wound. See `docs/BENCHMARKS.md` for the Amdahl decomposition and `paper/paper.md` for
-the evidence-limited summary.
+Those are kernel numbers. The full pipeline, which is what a user observes from I/O through
+centrality, runs **16.7x** (skin) and **9.7x** (wound) faster; the rest of the pipeline is R
+code that no kernel accelerates.
 
-92–95 % of that time is the bootstrap aggregation
-`aggregate(t(data), list(group), triMean)`, repeated `nboot` times — pure numerics with
-independent work per gene per bootstrap, i.e. ideally parallel and vectorisable.
+Host: AMD Ryzen 7 3700X (8 cores / 16 threads, AVX2), 32 GB, pinned to 8 cores with
+`taskset`; medians of five timed repeats after a discarded warm-up, with bootstrap CIs. See
+[`docs/BENCHMARKS.md`](docs/BENCHMARKS.md) for the protocol and the Amdahl decomposition, and
+`bench-runner/results/` for the raw measurements.
 
-## Status
+## Install
 
-| | |
-|---|---|
-| Phase 0 — baseline, fixtures, harness | **done** (numbers above) |
-| Phase 1 — `r-core` numerics + parity | **done** (160/160 parity quantities; see `parity.json`) |
-| Phase 2 — R shim | **done** (drop-in overrides + 56 delegated names; tutorial identical end to end) |
-| Phase 3 — standalone CLI | **done** (`src/rust/crates/cellchatrs-cli`, 14 configs identical to upstream) |
-| Phase 4 — benchmarks | **done** (kernel, Amdahl, spatial divergence, synthetic grid; see `docs/BENCHMARKS.md`) |
-| Phase 5 — publication | in progress (`vignettes/`, `_pkgdown.yml`, `paper/paper.md` drafted; not yet released) |
+Requirements: R ≥ 4.1, Rust and Cargo ≥ 1.84, Linux x86_64 (`configure` refuses other
+platforms for now). The build is offline: the Rust dependencies are vendored and SHA-256
+checked, and the pinned CellChat source and databases are bundled.
 
-The R↔Rust plumbing is **working and verified**: `R CMD INSTALL .` builds the Rust code
-via `configure`, and `R CMD check` is clean.
+```r
+remotes::install_github("mobashirrahman/cellchat-rust")
+```
 
-## Layout
+or, from a clone:
 
-| path | what |
-|---|---|
-| `src/rust/crates/r-core/` | the numerics; no R, no I/O, all pure functions (parity-testable) |
-| `src/rust/crates/cellchatrs/` | extendr `cdylib`; argument marshalling only |
-| `src/rust/crates/cellchatrs-cli/` | standalone binary: the same numerics without R |
-| `R/` | the `cellchatrs` R package: `.onLoad`, the `computeCommunProb` override, and 56 generated pass-throughs to upstream names |
-| `bench-runner/` | the R harness that produced every published measurement |
-| `tests/` | fixtures and golden corpora (`fixtures/`), differential and parity gates (`parity/`), LR-structure fuzzing (`fuzz/`) |
-| `docs/` | `SEMANTICS.md` (parity contract), `BENCHMARKS.md` (results and protocol) |
-| `paper/` | the evidence-limited manuscript draft |
-| `parity.json` | machine-checkable ledger: 160 quantities, the rung each one reached |
+```sh
+git clone https://github.com/mobashirrahman/cellchat-rust
+cd cellchat-rust
+R CMD INSTALL .
+```
+
+The build compiles the Rust kernel and takes about a minute.
+
+The package is named `CellChat`, so installing it into a library that already holds the
+original **replaces the original**. Install into a separate library (`R CMD INSTALL
+--library=<dir> .`, or `lib = "<dir>"` with `remotes`) if you want to keep both.
+
+Bit-identity with upstream is gated in CI on R 4.3 and 4.4.
+
+## Use
+
+Existing CellChat code runs unchanged. The only new knob is the thread count: the kernel
+defaults to at most 2 threads, so set `CELLCHATRS_THREADS` **before** loading the package to
+use more.
+
+```r
+Sys.setenv(CELLCHATRS_THREADS = "8")
+library(CellChat)
+cellchatrs_threads()                        # live rayon pool size
+
+load("data/humanSkin.rda")                  # from ./scripts/fetch_ci_fixtures.sh parity
+meta <- data_humanSkin$meta
+use  <- rownames(meta)[meta$condition == "LS"]
+
+cellchat <- createCellChat(data_humanSkin$data[, use], meta = meta[use, ], group.by = "labels")
+cellchat@DB <- subsetDB(CellChatDB.human, search = "Secreted Signaling", key = "annotation")
+cellchat <- subsetData(cellchat)
+cellchat <- identifyOverExpressedGenes(cellchat)
+cellchat <- identifyOverExpressedInteractions(cellchat)
+cellchat <- computeCommunProb(cellchat, type = "triMean")   # the accelerated kernel
+cellchat <- filterCommunication(cellchat, min.cells = 10)
+cellchat <- computeCommunProbPathway(cellchat)
+cellchat <- aggregateNet(cellchat)
+```
+
+`CellChatDB.human`, `CellChatDB.mouse`, `CellChatDB.zebrafish`, `PPI.human` and `PPI.mouse`
+are available by name as soon as the package is loaded, as upstream's are. An explicit
+`data(CellChatDB.human)` is unnecessary and, in a built install, warns that the data set was
+not found; the object is there regardless.
+
+The same numerics are available without R through the standalone binary:
+
+```sh
+cargo run --release -p cellchatrs-cli -- --help
+```
+
+## What "identical" means here
+
+The gate is `identical()` on the whole S4 object, not a tolerance. [`parity.json`](parity.json)
+is the machine-checkable ledger, generated by running every gate rather than written by hand.
+As of the latest CI run on `main`:
+
+- **147 of 148** compatibility quantities are at a passing rung (bit-exact values,
+  `identical()` objects, or byte-equal error messages).
+- The one untested quantity is `package.independent_dropin`, which compares this package
+  against the original installed beside it. That needs R ≥ 4.5 for the original's
+  dependencies, while the bit-identity rungs need R ≤ 4.4, so no single CI job runs both.
+- 12 further entries check the exact spatial path, which is an alternative algorithm rather
+  than a compatibility claim (see below).
+
+Deliberate limits:
+
+- **Visualization and the Shiny app are upstream's R code**, bundled with the package and
+  reached through generated pass-throughs (95 functions in all). Only the numerics are ported.
+- **Spatial neighbour search uses an exact k-d tree** where upstream uses approximate Annoy.
+  The two differ measurably on real data; the divergence is published in
+  `docs/BENCHMARKS.md` rather than hidden.
+- **Four centrality measures** (`hub`, `authority`, `eigen`, `page_rank`) still call igraph:
+  they are iterative solvers whose output is not stable run to run.
+- A complex with a missing subunit raises upstream's `subscript out of bounds`, on purpose.
+
+[`docs/SEMANTICS.md`](docs/SEMANTICS.md) is the full parity contract.
 
 ## Verify the claims yourself
 
 Nothing in this README has to be taken on trust: every number has a committed artifact and a
 command that regenerates it.
 
-**Prerequisites.** Building the R package currently requires Rust and Cargo 1.84 or newer on
-Linux x86_64. The exact pinned CellChat source and database are bundled with the package. To
-recreate the parity ledger, also check out upstream at its pinned commit and download the larger
-Figshare fixtures; the helper downloads fixed file IDs and verifies their hashes:
+**Prerequisites.** To recreate the parity ledger, check out upstream at its pinned commit and
+download the larger Figshare fixtures; the helper downloads fixed file IDs and verifies their
+hashes:
 
 ```sh
 git clone https://github.com/jinworks/CellChat ../CellChat
@@ -86,9 +138,9 @@ git -C ../CellChat checkout 75253cd0c9e68410e6e721a6d3a0419a1d7e358f
 export CELLCHAT_SRC=../CellChat
 ```
 
-**The parity ledger.** `parity.json` is generated, not written by hand:
-`scripts/parity_report.py` *runs* the Rust suite and every R gate as subprocesses and records the
-rung each quantity reached, so regenerating it re-derives the whole claim.
+**The parity ledger.** `scripts/parity_report.py` *runs* the Rust suite and every R gate as
+subprocesses and records the rung each quantity reached, so regenerating it re-derives the
+whole claim.
 
 ```sh
 python3 scripts/parity_report.py        # writes parity.json; exits nonzero on a regression
@@ -110,9 +162,27 @@ python3 bench-runner/test_analyse.py    # the benchmark analysis step, 15 checks
 in `docs/BENCHMARKS.md` — warm-up discarded, five timed repeats, median with a bootstrap CI, CPUs
 pinned, a memory-headroom gate, and a host-contention gate that refuses to measure a busy machine
 and records the per-core load when it proceeds. Re-running any of them writes its own evidence
-beside the numbers.
+beside the numbers. Always pin threads with `CELLCHATRS_THREADS` or `taskset` when benchmarking:
+`parallel::detectCores(logical = FALSE)` can report logical rather than physical cores (16 on
+the 8-core host above).
 
-## Build
+## Layout
+
+| path | what |
+|---|---|
+| `src/rust/crates/r-core/` | the numerics; no R, no I/O, all pure functions (parity-testable) |
+| `src/rust/crates/cellchatrs/` | extendr `cdylib`; argument marshalling only |
+| `src/rust/crates/cellchatrs-cli/` | standalone binary: the same numerics without R |
+| `src/rust/r-build/` | the separate Cargo workspace `configure` builds, with its lockfile and vendored dependencies |
+| `R/` | the `CellChat` R package: `.onLoad`, the Rust-backed inference functions, and 95 generated pass-throughs to the bundled upstream code |
+| `inst/upstream/` | the pinned upstream source and databases the package bundles |
+| `bench-runner/` | the R harness that produced every published measurement |
+| `tests/` | fixtures and golden corpora (`fixtures/`), differential and parity gates (`parity/`), LR-structure fuzzing (`fuzz/`) |
+| `docs/` | `SEMANTICS.md` (parity contract), `BENCHMARKS.md` (results and protocol) |
+| `paper/` | the evidence-limited manuscript draft |
+| `parity.json` | the parity ledger: every quantity and the rung it reached |
+
+## Build from source
 
 ```sh
 cargo build --release          # workspace
@@ -120,19 +190,40 @@ cargo test                     # numerics
 R CMD INSTALL .                # R package (runs cargo via ./configure)
 ```
 
-The R package build is offline: `src/rust/r-build/vendor.tar.xz` contains the pinned Rust source
-dependencies and is SHA-256 checked before compilation. Regenerate it after changing
-`src/rust/r-build/Cargo.lock` with `scripts/vendor_rust_deps.sh`.
+`src/rust/r-build/vendor.tar.xz` contains the pinned Rust source dependencies. Regenerate it
+after changing `src/rust/r-build/Cargo.lock` with `scripts/vendor_rust_deps.sh`.
 
-```r
-library(CellChat)
-cellchatrs_threads()                        # live rayon pool size
-Sys.setenv(CELLCHATRS_THREADS = "8")        # pin before load; benchmarks must pin
-```
+## Status
 
-`parallel::detectCores()` is **not** trustworthy here (it reports 16 for
-`logical = FALSE` on an 8c/16t host). Always pin with `CELLCHATRS_THREADS` or `taskset`
-when benchmarking.
+The port, the parity harness, the CLI and the benchmarks are complete, and CI is green on
+`main`. `v0.1.0` is tagged; the package has since been renamed to `CellChat` and made
+independent of the original (see [`NEWS.md`](NEWS.md)). `R CMD check --as-cran` reports no
+errors or warnings in CI. It has not been submitted to CRAN.
+
+## Design decisions
+
+| | |
+|---|---|
+| Scope | numeric core + R package; `visualization.R` / `app.R` stay in R |
+| Parity | **bit-identical** — `identical()` on the whole S4 object is the gate |
+| Missing complex subunit | replicate upstream's `subscript out of bounds` (and report it upstream) |
+| Spatial KNN | exact k-d tree, replacing approximate Annoy; divergence published |
+| Binding | `extendr` |
+| Upstream | `main` @ `75253cd0` (v2.2.0.9001) — see [`UPSTREAM.md`](UPSTREAM.md) |
+| Distribution | GitHub first, then CRAN after maintainer sign-off |
+
+[`PLAN.md`](PLAN.md) has the full record: the source audit, the measured R baseline, the
+performance model, the phased work plan and the reasoning behind each decision.
+
+## Citing
+
+This is a port; the method is CellChat's. If you use it, cite the original work:
+
+- Jin S. et al. Inference and analysis of cell-cell communication using CellChat.
+  *Nature Communications* 12, 1088 (2021). https://doi.org/10.1038/s41467-021-21246-9
+- Jin S., Plikus M. V., Nie Q. CellChat for systematic analysis of cell–cell communication
+  from single-cell transcriptomics. *Nature Protocols* 20, 180–219 (2025).
+  https://doi.org/10.1038/s41596-024-01045-4
 
 ## Licence
 

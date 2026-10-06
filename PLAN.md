@@ -59,7 +59,7 @@ comparisons, 109 public signatures).
 
 ### The distribution budget
 
-The source tarball is **4,954,585 bytes** against CRAN's 5,000,000-byte incoming ceiling
+The source tarball is **4,958,464 bytes** against CRAN's 5,000,000-byte incoming ceiling
 (the threshold is `_R_CHECK_CRAN_INCOMING_TARBALL_THRESHOLD_`, default `5e6`).
 `scripts/check_tarball_size.sh` fails the build if it crosses, printing the ten largest
 contents; `R CMD check` reports the size only as a NOTE, which no gate would trip on.
@@ -68,8 +68,9 @@ What is excluded from the tarball and why, all of it in `.Rbuildignore`:
 
 * `data/` — the five CellChatDB/PPI `.rda` files are byte-identical to the copies inside
   `inst/upstream/`, and shipping both is what put the tarball over the ceiling. The
-  bundle's copy ships, so the objects remain in the installed package; only the
-  `data(CellChatDB.human)` route is gone. `tests/test-public-surface.R` still asserts the
+  bundle's copy ships, so the objects remain in the installed package, and `.onLoad`
+  binds the five names to it lazily and exports them, so bare `CellChatDB.human` works as
+  it does under upstream's `LazyData`; only the `data(CellChatDB.human)` route is gone. `tests/test-public-surface.R` still asserts the
   datasets are byte-identical to upstream, loading them from the bundle.
 * `inst/upstream/` is **not** excluded. It was measured as the alternative saving
   (4,769,468 bytes without it) and rejected: all four test targets need the reference.
@@ -212,7 +213,7 @@ fits in this machine's 32 MB L3 — a deliberate design target, see §6.3).
 
 | Item | Value |
 |---|---|
-| CPU | AMD Ryzen 7 3700X, 8c/16t, Zen3, **AVX2 (no AVX-512)**, 32 MB L3 |
+| CPU | AMD Ryzen 7 3700X, 8c/16t, Zen 2, **AVX2 (no AVX-512)**, 32 MB L3 |
 | RAM | 32 GB (28 GB free) |
 | R | 4.3.3, `RNGkind = Mersenne-Twister`, `sample.kind = Rejection` |
 | Rust | 1.98.1, cargo 1.98.1, gcc 13.3 |
@@ -243,7 +244,7 @@ fits in this machine's 32 MB L3 — a deliberate design target, see §6.3).
 * `configure` script + `src/Makevars` (no rules) so that **`R CMD INSTALL .` is the only
   command a user needs** and `R CMD check` exercises the real Rust build.
 * **Benchmark gotcha:** `parallel::detectCores(logical = FALSE)` returns **16** on this
-  8c/16t Zen3 host. Thread counts must always be pinned explicitly
+  8c/16t Zen 2 host. Thread counts must always be pinned explicitly
   (`CELLCHATRS_THREADS`, or `taskset`), never inferred.
 * `rayon::ThreadPoolBuilder::build_global()` succeeds only once per process, so
   `set_num_threads()` after the first kernel call is a silent no-op. Fixed by

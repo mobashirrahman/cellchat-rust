@@ -96,7 +96,7 @@ unaffected because nothing about the object changes except how fast it was compu
 \section{Measured speedup}
 \label{sec:speedup}
 
-The numbers below are pre-measured on the pinned host (8c/16t AMD Zen3, 32\,GB),
+The numbers below are pre-measured on the pinned host (8c/16t AMD Zen 2, 32\,GB),
 taskset-pinned, medians over $\geq 5$ timed repeats with bootstrap 95\% CIs, and
 reproducible via \texttt{bench-runner/bench\_real.R} and
 \texttt{bench-runner/bench\_amdahl.R}. They are quoted here so the vignette states

@@ -115,7 +115,7 @@ benchmark's 134 resolvable pairs -- and records the dropped pair rather than sil
 skipping it.
 
 Medians over $\geq 5$ timed repeats (one warm-up discarded) with bootstrap 95% CIs,
-taskset-pinned to 8 cores of an AMD Zen3 (32 GB); peak RSS 3.3/8.9 GB. The host is shared and
+taskset-pinned to 8 cores of an AMD Zen 2 (32 GB); peak RSS 3.3/8.9 GB. The host is shared and
 was not quiet during these runs, so each result file records the per-core busy fractions sampled
 immediately before timing (`host_state.per_cpu_busy_pct`, 18--35 % on the human-skin run) and the
 run was taken with the contention explicitly overridden rather than silently. The consequence is
