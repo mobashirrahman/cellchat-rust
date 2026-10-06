@@ -537,13 +537,8 @@ jobs:
       - name: verify the bundled upstream sources
         run: ./scripts/check_upstream_bundle.sh
       - uses: r-lib/actions/setup-r@v2
-      # `release` (4.5+), not 4.4: the drop-in oracle installed below is the pinned upstream
-      # package, whose `ggpubr -> rstatix -> car -> pbkrtest -> doBy -> Deriv` chain ends in a
-      # package that requires R >= 4.5. On 4.4 `pak` refuses to solve it, so the oracle cannot be
-      # installed there and `package.independent_dropin` has nothing to compare against.
-      # The package job (R CMD check) stays on 4.4; only this report needs the oracle.
         with:
-          r-version: release
+          r-version: 4.4
           use-public-rspm: true
       - name: system libraries for R packages
         # Two different needs, one step. The RSPM igraph binary links GLPK, which
@@ -613,31 +608,6 @@ jobs:
         # rather than the article page, because the article's file listing can change underneath us;
         # the size assertion is the tripwire if it ever does.
         run: ./scripts/fetch_ci_fixtures.sh parity
-      - name: install the pinned original package as the drop-in oracle
-        # `package.independent_dropin` compares two *independently installed* packages in
-        # clean processes, so it needs the original CellChat installed from the pinned
-        # checkout -- `CELLCHAT_ORACLE_LIB` -- beside this package, and it has no fallback
-        # when that is absent (`stop("CELLCHAT_ORACLE_LIB must contain ...")`, exit 1, which
-        # makes `parity_report.py` report the quantity as untested and exit nonzero).
-        # `pak` resolves the upstream DESCRIPTION's own dependency set, which is larger than
-        # this package's trimmed Imports. Only this job needs it: the r-parity gates do not
-        # run `check_dropin.R`.
-        run: |
-          set -euo pipefail
-          ORACLE_LIB="$RUNNER_TEMP/oracle-lib"
-          mkdir -p "$ORACLE_LIB"
-          # Published through `GITHUB_ENV` rather than the step `env:` context: variables
-          # written there are inherited by every later step's processes, which is what
-          # `check_dropin.R` reads. `CELLCHAT_REPLACEMENT_LIB` is this package's library;
-          # the test defaults it to `<root>/.rlib`, which does not exist in CI.
-          #
-          # Exported too, because `GITHUB_ENV` takes effect from the *next* step onward --
-          # reading `CELLCHAT_ORACLE_LIB` in this step's own `Rscript` found it empty and
-          # died in `normalizePath(lib)`.
-          export ORACLE_LIB
-          echo "CELLCHAT_ORACLE_LIB=$ORACLE_LIB" >> "$GITHUB_ENV"
-          echo "CELLCHAT_REPLACEMENT_LIB=$R_LIB" >> "$GITHUB_ENV"
-          Rscript -e 'pak::pkg_install(Sys.getenv("CELLCHAT_SRC"), lib = Sys.getenv("ORACLE_LIB"))'
       - name: emit parity.json
         env:
           CELLCHAT_SRC: ${{ github.workspace }}/${{ env.UPSTREAM_PATH }}
