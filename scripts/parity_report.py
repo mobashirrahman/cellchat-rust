@@ -676,20 +676,6 @@ def build(run_it: bool) -> dict:
     # 25 byte comparisons and 109 public signatures matched.
     oracle = os.environ.get("CELLCHAT_ORACLE_LIB", "")
     for quantity, how, command, rung_when_green in QUANTITIES:
-        if quantity == "package.independent_dropin" and not oracle:
-            entries.append(
-                {
-                    "quantity": quantity,
-                    "pin": "requires the pinned original installed as a second package; its "
-                           "dependency tree needs R >= 4.5, and the R-side rungs need R <= 4.4 "
-                           "for bit-identity",
-                    "test": None,
-                    "rung": "untested",
-                    "exit_code": None,
-                    "detail": "oracle not available in this environment",
-                }
-            )
-            continue
         key = command
         if run_it and key not in commands:
             commands[key] = rust_suite() if command == "cargo test --release" else run(command)
@@ -719,6 +705,24 @@ def build(run_it: bool) -> dict:
             }
         )
         for quantity, pin, script, rung in R_GATES:
+            # `package.independent_dropin` lives here, not in QUANTITIES, and it is the one gate
+            # that needs a second, independently installed package. Record it untested with no
+            # test command when no oracle is provided -- see the comment on `build()` above for
+            # why no single job can both install the oracle and keep the R-side rungs identical.
+            if quantity == "package.independent_dropin" and not oracle:
+                entries.append(
+                    {
+                        "quantity": quantity,
+                        "pin": "requires the pinned original installed as a second package; its "
+                               "dependency tree needs R >= 4.5, and the R-side rungs need R <= 4.4 "
+                               "for bit-identity",
+                        "test": None,
+                        "rung": "untested",
+                        "exit_code": None,
+                        "detail": "oracle not available in this environment",
+                    }
+                )
+                continue
             gate = r_gate(script)
             entries.append(
                 {

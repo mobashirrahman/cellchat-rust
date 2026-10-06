@@ -729,7 +729,19 @@ jobs:
         # but it is part of LaTeX base, and `tlmgr install alltt` fails the whole
         # command with "package alltt not present in repository".) Install the set in
         # one step rather than discovering them one CI cycle at a time.
-        run: tlmgr install framed upquote grfext
+        run: |
+          set -euo pipefail
+          # `tlmgr` refuses to install anything when it is older than the repository
+          # ("tlmgr itself needs to be updated ... Terminating", exit 255), which is a
+          # function of when TinyTeX was installed versus what tlnet currently serves --
+          # it passed on two runs and failed on the third with no change to this step.
+          # Update the updater first, and retry the install once for the mirror's sake.
+          tlmgr update --self || true
+          for attempt in 1 2 3; do
+            if tlmgr install framed upquote grfext; then break; fi
+            if [ "$attempt" = 3 ]; then echo "tlmgr install failed after 3 attempts" >&2; exit 1; fi
+            sleep 15
+          done
       - uses: Swatinem/rust-cache@v2
         with:
           key: package
