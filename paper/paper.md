@@ -1,7 +1,16 @@
-# cellchatrs: a bit-identical, drop-in accelerator for CellChat inference
+# cellchat-rs: a bit-identical, drop-in implementation of CellChat inference
 
 *Draft — claims are limited to the evidence cited inline. Every number below names the
 artifact that produced it; a claim without a pointer is a claim withdrawn.*
+
+*Status: the implementation, the parity harness and CI are complete and green. The R
+package installs as `CellChat` and runs independently of the original; the Rust crates and
+the CLI keep the `cellchatrs` name. `parity.json` reports 147 of 148 quantities at a
+passing rung — the exception is the two-installed-packages gate, which needs R ≥ 4.5 for
+the original's dependency tree while the R-side rungs need R ≤ 4.4 — plus 12
+alternative-algorithm checks. The numbers below are from the pinned upstream commit
+`75253cd0c9e68410e6e721a6d3a0419a1d7e358f` and are reproduced by the CI jobs named in
+`PLAN.md`.*
 
 ## Abstract
 
@@ -31,7 +40,7 @@ and computationally heavy: the reference implementation needs ~90 s (7.5k cells)
 large datasets. That recommendation is a runtime workaround, and runtime workarounds
 deserve to be remeasured when the runtime changes.
 
-`cellchatrs` keeps the R API and replaces the numerics: a pure-Rust crate implements the
+`cellchat-rs` keeps the R API and replaces the numerics: a pure-Rust crate implements the
 kernel, an R package exports the matching inference entry points, and everything else --
 plotting, the Shiny app, database curation -- stays upstream R code by explicit scope
 decision. The contribution is therefore not a new method but a verified claim: *the same
@@ -70,7 +79,7 @@ aggregation that emitted one row per input row instead of per group.
 
 ### Speedup, stated honestly
 
-| workload | upstream (s) | cellchatrs (s) | speedup | Amdahl limit |
+| workload | upstream (s) | cellchat-rs (s) | speedup | Amdahl limit |
 |---|---|---|---|---|
 | human skin, kernel, nboot=100 | 101.4 [100.8, 105.8] | 2.41 [2.37, 2.47] | 42.1x [40.8, 44.6] | -- |
 | human skin, full pipeline | 100.1 | 6.0 | 16.7x | 24.8x |
@@ -164,9 +173,11 @@ and the paper does not call them interchangeable.
 ## Methods
 
 *Port architecture.* Pure-Rust numerics (`src/rust/crates/r-core`, no R dependency, all logic in
-pure functions) + extendr marshalling layer (`src/rust/crates/cellchatrs`) + R shim overriding
-upstream generics + standalone CLI (`src/rust/crates/cellchatrs-cli`) reading self-describing
-hex-float input. R 4.3, Rust stable/nightly per CI.
+pure functions) + extendr marshalling layer (`src/rust/crates/cellchatrs`) + an R package that
+installs as `CellChat` and runs independently of the original (no override, no separate install
+of upstream) + standalone CLI (`src/rust/crates/cellchatrs-cli`) reading self-describing
+hex-float input. R 4.3 and 4.4 on every push, Rust stable and nightly, `R CMD check --as-cran`
+with no errors or warnings.
 
 *Borough of verification.* `PLAN.md` §14 records fourteen locked scope decisions;
 `docs/SEMANTICS.md` records every measured R quirk the port reproduces (MT19937 +

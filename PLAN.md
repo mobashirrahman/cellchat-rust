@@ -1,9 +1,89 @@
 # cellchat-rs — Plan for a rigorous Rust port of CellChat's inference kernel
 
-**Status:** plan v1 (research complete, toolchain validated)
-**Target:** CellChat v2.2.0.9001 (`jinworks/CellChat`, commit on `main`)
-**Scope:** numeric core of the R package, exposed through a drop-in R shim, with a
+**Status:** executed. This document is the plan as it was written and worked through; the
+per-phase sections below record the state at the time each was finished, and their counts
+(190 tests, 272 tests, 359/359, 124/129, `0.73 MB`) are historical. The section
+immediately below is the current state, and where the two disagree, it wins.
+**Target:** CellChat v2.2.0.9001 (`jinworks/CellChat`, commit
+`75253cd0c9e68410e6e721a6d3a0419a1d7e358f`)
+**Scope:** numeric core of the R package, exposed through a drop-in R package, with a
 bit-level parity harness and a reproducible benchmark suite.
+
+---
+
+## Current state
+
+### What the repository is
+
+The R package is named **`CellChat`** and installs independently — it does not need the
+original package, and does not modify its namespace. A caller loads this package in place
+of the original. The plan below describes the earlier shape of the work, in which the
+package was called `cellchatrs` and overrode a separately installed CellChat; the rename
+is recorded in the repository history (`cea8b18`).
+
+The Rust crates keep their names and live under `src/rust/crates/`: `r-core` (numerics,
+zero R dependency), `cellchatrs` (the extendr cdylib R loads), `cellchatrs-cli` (the
+standalone binary). `src/rust/r-build/` is a separate Cargo workspace root with its own
+lockfile and a sha256-pinned `vendor.tar.xz`; `configure` builds it `--frozen` with
+`CARGO_NET_OFFLINE=true`, so an install needs no network.
+
+### Verification, as CI runs it
+
+`.github/workflows/parity.yml`, green on `main`:
+
+| job | establishes |
+|---|---|
+| `pinned upstream` | the checkout is the literal commit the repository claims |
+| `rust stable` / `rust nightly` | 331 Rust tests; fmt; clippy `-D warnings`; the regenerated golden corpora; the codegen-variant check (default / `+fma` / `target-cpu=native` byte-identical) |
+| `R 4.3` / `R 4.4` | the installed shim against the pinned upstream: `check_identical` 427/427, the 200-configuration matrix, metamorphic, CLI, centrality, delegation, the full tutorial reproduction |
+| `R CMD check` | `--as-cran`, 0 errors and 0 warnings |
+| `parity.json` | the machine-checkable ledger, published as an artifact and in the job summary |
+
+`parity.json` currently reports **147 of 148 quantities at a passing rung**, plus 12
+alternative-algorithm checks (160 entries). The one untested quantity is
+`package.independent_dropin`, which compares two independently installed packages and so
+needs the original installed beside this one; its dependency tree requires R ≥ 4.5 while
+the R-side rungs require R ≤ 4.4 for bit-identity, so no single job can do both. The gate
+itself runs and was verified by hand against an oracle built from the pinned SHA (25 byte
+comparisons, 109 public signatures).
+
+`R CMD check --as-cran` reports four NOTEs, all understood and none of them defects:
+
+1. *CRAN incoming feasibility* — `New submission`. Clears on acceptance.
+2. *package dependencies* — Suggests not installed in the check environment. CRAN has them.
+3. *installed package size* — 7.6 MB, of which `upstream` is 4.2 MB. That tree is what all
+   four `tests/test-*.R` diff against; dropping it would make `R CMD check` run no tests.
+4. *foreign function calls* — `.Call(gen$address, ...)` in `.onLoad` defeats the check's
+   static analysis because `gen` is a local. R sees the correct registered routine; the
+   note is about check being unable to evaluate it.
+
+### The distribution budget
+
+The source tarball is **4,954,585 bytes** against CRAN's 5,000,000-byte incoming ceiling
+(the threshold is `_R_CHECK_CRAN_INCOMING_TARBALL_THRESHOLD_`, default `5e6`).
+`scripts/check_tarball_size.sh` fails the build if it crosses, printing the ten largest
+contents; `R CMD check` reports the size only as a NOTE, which no gate would trip on.
+
+What is excluded from the tarball and why, all of it in `.Rbuildignore`:
+
+* `data/` — the five CellChatDB/PPI `.rda` files are byte-identical to the copies inside
+  `inst/upstream/`, and shipping both is what put the tarball over the ceiling. The
+  bundle's copy ships, so the objects remain in the installed package; only the
+  `data(CellChatDB.human)` route is gone. `tests/test-public-surface.R` still asserts the
+  datasets are byte-identical to upstream, loading them from the bundle.
+* `inst/upstream/` is **not** excluded. It was measured as the alternative saving
+  (4,769,468 bytes without it) and rejected: all four test targets need the reference.
+* `tests/fixtures/` — cargo-test inputs read by relative path; `R CMD check` reads none of
+  them, and `scripts/gen_fixtures.sh` regenerates them.
+
+### Known gaps
+
+* `package.independent_dropin` does not run in CI, as above.
+* The four NOTEs above.
+* R devel was dropped as a canary: it failed 38 of 427 comparisons on every run, all in
+  `identifyOverExpressedGenes` and all with `all.equal()` TRUE, because R-devel changed
+  how `data.frame()` names and how `identical()` compares `features.info`. Re-adding it
+  is worth doing once that is diagnosed.
 
 ---
 
