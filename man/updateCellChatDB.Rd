@@ -44,7 +44,9 @@ db.new <- updateCellChatDB(db = db.user, gene_info = NULL, species_target = "hum
 # Alternatively, users can integrate the customized L-R pairs into the built-in CellChatDB
 db.new <- updateCellChatDB(db = db.user, merged = TRUE, species_target = "human")
 # Add new columns (e.g., AntibodyName) into gene_info
-db.new.human <- updateCellChatDB(db = CellChatDB.human$interaction, gene_info = CellChatDB.human$geneInfo, other_info=list(complex = CellChatDB.human$complex, cofactor = CellChatDB.human$cofactor),gene_info_columnNew = gene_info_columnNew)
+db.new.human <- updateCellChatDB(db = CellChatDB.human$interaction,
+    gene_info = CellChatDB.human$geneInfo, other_info=list(complex = CellChatDB.human$complex,
+        cofactor = CellChatDB.human$cofactor),gene_info_columnNew = gene_info_columnNew)
 
 # Users can now use this new database in CellChat analysis
 cellchat@DB <- db.new

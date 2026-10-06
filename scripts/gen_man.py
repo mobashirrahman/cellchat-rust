@@ -23,6 +23,7 @@ Run:  python3 scripts/gen_man.py
 """
 import os
 import re
+import textwrap
 import subprocess
 import sys
 from pathlib import Path
@@ -161,6 +162,115 @@ def escape(s: str) -> str:
     return s.replace("\\", "\\\\").replace("%", "\\%").replace("{", "\\{").replace("}", "\\}")
 
 
+def wrap_usage(usage: str, width: int = 78) -> list[str]:
+    """Break a `\\usage{}` line at argument boundaries so no line exceeds `width`.
+
+    `R CMD check` notes any Rd line wider than 90 characters, and a function with a dozen
+    named arguments produces a usage line several times that -- `computeRegionDistance`
+    with its eleven defaults was 240. Breaks are only ever made after a top-level comma
+    that is *outside* quotes: a quoted default like `type = "triMean"` contains a space,
+    and breaking there would split the string across lines, which is a syntax error in
+    Rd rather than a long line. Falls back to the whole line when there is no such comma.
+    """
+    if len(usage) <= width:
+        return [usage]
+    points, depth, quoted = [], 0, False
+    for i, ch in enumerate(usage):
+        if ch == '"':
+            quoted = not quoted
+        elif not quoted and ch in "([":
+            depth += 1
+        elif not quoted and ch in ")]":
+            depth -= 1
+        elif not quoted and ch == "," and depth == 1:
+            points.append(i + 1)
+    lines, start, indent = [], 0, "    "
+    for point in points:
+        if len(indent) + (point - start) > width and point > start:
+            lines.append(indent + usage[start:point].strip())
+            start = point
+    tail = usage[start:].strip()
+    if tail:
+        lines.append(indent + tail)
+    return lines or [usage]
+
+
+def break_line(line: str, width: int) -> list[str]:
+    """Split an over-long `\\examples{}` line at safe points until every line fits.
+
+    Two safe points, in order of preference: a trailing `#` comment goes on its own line
+    (comments are free to move); otherwise the last comma outside quotes before the width.
+    A line with neither is returned unchanged -- guessing at a break inside a call or a
+    string would corrupt the example, and a long line is a NOTE while broken code is an
+    error.
+
+    Loops rather than splitting once: these are upstream's example lines and several are
+    continuation lines that begin with deep indentation, so the first break leaves a
+    remainder that is still over the limit. Each pass shortens the line by at least the
+    distance to a comma, so the loop terminates.
+    """
+    out: list[str] = []
+    while len(line) > width:
+        indent = line[: len(line) - len(line.lstrip())]
+        quoted, comment, last_comma = False, None, None
+        for i, ch in enumerate(line):
+            if ch == '"':
+                quoted = not quoted
+            elif quoted:
+                continue
+            elif ch == "#" and i < width:
+                comment = i
+                break
+            elif ch == "," and i < width:
+                last_comma = i + 1
+        if comment is not None:
+            code = line[:comment].rstrip()
+            if code:
+                out.append(code)
+            wrapped = textwrap.wrap(
+                line[comment:].lstrip(),
+                width=max(20, width - len(indent)),
+                break_long_words=False,
+                break_on_hyphens=False,
+            )
+            for i, part in enumerate(wrapped):
+                # Every wrapped line after the first needs its own `#`: `textwrap` splits
+                # the text, not the comment marker, so an unprefixed continuation would
+                # become executable code in the example -- silently, and only in the docs.
+                out.append(indent + ("" if i == 0 else "# ") + part)
+            return out or [line]
+        if last_comma is not None:
+            out.append(line[:last_comma].rstrip())
+            line = indent + "    " + line[last_comma:].strip()
+            continue
+        out.append(line)
+        return out
+    out.append(line)
+    return out
+
+
+def tidy_examples(text: str, width: int = 100) -> str:
+    """Apply [`break_line`] to every over-long line inside a copied `\\examples{}` block.
+
+    `R CMD check` notes Rd lines wider than 100 characters. The generated pages are
+    written to width by [`wrap_usage`]; the pages copied verbatim from the pinned upstream
+    tree are upstream's, and two of their example lines are 120 and 130 characters. Only
+    the `\\examples{}` region is touched, and only lines that have a safe break point.
+    """
+    out: list[str] = []
+    in_examples = False
+    for line in text.split("\n"):
+        if line.startswith("\\examples{"):
+            in_examples = True
+        elif in_examples and line.startswith("}"):
+            in_examples = False
+        if in_examples and len(line) > width:
+            out.extend(break_line(line, width))
+        else:
+            out.append(line)
+    return "\n".join(out)
+
+
 def prune(names: list[str]) -> None:
     r"""Delete every stale *function* man/*.Rd, leaving class, data and method pages alone.
 
@@ -216,7 +326,7 @@ def main() -> int:
     for name in names:
         upstream_doc = ROOT / "inst/upstream/CellChat-75253cd0/man" / f"{name}.Rd"
         if upstream_doc.exists():
-            (MAN / upstream_doc.name).write_text(upstream_doc.read_text())
+            (MAN / upstream_doc.name).write_text(tidy_examples(upstream_doc.read_text()))
             continue
         prose = blocks.get(name)
         if prose is None:
@@ -238,17 +348,20 @@ def main() -> int:
             escape(body),
             "}",
             "\\usage{",
-            escape(usage),
+            *wrap_usage(escape(usage)),
             "}",
-            "\\arguments{",
-            *[
-                f"\\item{{{a}}}{{{arg_doc(a)}}}"
-                for a in (argnames or ["..."])
-            ],
-            "}",
-            "\\keyword{internal}",
-            "",
         ]
+        # A `\\arguments{}` section only when the function takes arguments. The old fallback
+        # to `["..."]` documented a `...` that no usage line had, which `R CMD check`
+        # reports twice: "Documented arguments not in \\usage" and, for functions with
+        # neither arguments nor a real alias, the \\usage-sections NOTE.
+        if argnames:
+            rd += [
+                "\\arguments{",
+                *[f"\\item{{{a}}}{{{arg_doc(a)}}}" for a in argnames],
+                "}",
+            ]
+        rd += ["\\keyword{internal}", ""]
         (MAN / f"{name}.Rd").write_text("\n".join(rd))
     prune(names)
     print(f"wrote {len(names) - len(missing)} of {len(names)} Rd files")

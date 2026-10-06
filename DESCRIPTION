@@ -1,14 +1,13 @@
 Package: CellChat
 Type: Package
 Title: CellChat with an Independent Rust Inference Kernel
-Version: 2.2.0.9001
+Version: 2.2.0
 Authors@R: c(
     person("Md Mobashir", "Rahman", role = c("aut", "cre"),
            email = "mdra00001@stud.uni-saarland.de"),
     person("Suoqin", "Jin", role = c("ctb", "cph"),
            comment = "CellChat source bundle at commit 75253cd0c9e68410e6e721a6d3a0419a1d7e358f")
     )
-Author: Md Mobashir Rahman [aut, cre], Suoqin Jin [ctb, cph]
 Maintainer: Md Mobashir Rahman <mdra00001@stud.uni-saarland.de>
 URL: https://github.com/mobashirrahman/cellchat-rust
 BugReports: https://github.com/mobashirrahman/cellchat-rust/issues
@@ -20,10 +19,10 @@ Description: An independently installable implementation of the CellChat interfa
 License: GPL-3 + file LICENSE
 Encoding: UTF-8
 Depends: R (>= 4.1)
-Imports: methods, utils, stats, parallel, Matrix, collapse, dplyr, rlang, tibble,
+Imports: methods, utils, stats, parallel, Matrix, collapse, dplyr, tibble,
     ggplot2, future, future.apply, igraph, pbapply, stringr, scales, sna,
     BiocGenerics
-Suggests: knitr, rmarkdown, roxygen2, Seurat (>= 4.0.0), SingleCellExperiment,
+Suggests: knitr, rmarkdown, roxygen2, rlang, Seurat (>= 4.0.0), SingleCellExperiment,
     SummarizedExperiment, purrr, uwot, gg.gap, wordcloud, bsicons, presto,
     tidyverse, tidyr, BiocNeighbors, ComplexHeatmap, FNN, NMF, RColorBrewer,
     RSpectra, Rcpp, bslib, circlize, colorspace, cowplot, ggalluvial, ggnetwork,

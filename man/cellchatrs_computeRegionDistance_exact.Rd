@@ -5,7 +5,9 @@
 Exact spatial distances, an explicit alternative to CellChat compatibility.
 }
 \usage{
-cellchatrs_computeRegionDistance_exact(coordinates, meta, interaction.range = NULL, ratio = NULL, tol = NULL, k.min = 10, contact.dependent = TRUE, contact.range = NULL, contact.knn.k = NULL, do.symmetric = TRUE)
+    cellchatrs_computeRegionDistance_exact(coordinates, meta, interaction.range = NULL,
+    ratio = NULL, tol = NULL, k.min = 10, contact.dependent = TRUE, contact.range = NULL,
+    contact.knn.k = NULL, do.symmetric = TRUE)
 }
 \arguments{
 \item{coordinates}{Argument `coordinates` of the corresponding \pkg{CellChat} function; see its documentation and \code{docs/SEMANTICS.md} in this package.}

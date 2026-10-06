@@ -102,31 +102,44 @@ The dot color and size represent the calculated communication probability and p-
 }
 \examples{
 \dontrun{
-# show all the significant interactions (L-R pairs) from some cell groups (defined by 'sources.use') to other cell groups (defined by 'targets.use')
+# show all the significant interactions (L-R pairs) from some cell groups (defined by 'sources.use')
+# to other cell groups (defined by 'targets.use')
 netVisual_bubble(cellchat, sources.use = 4, targets.use = c(5:11), remove.isolate = FALSE)
 
 # show all the significant interactions (L-R pairs) associated with certain signaling pathways
 netVisual_bubble(cellchat, sources.use = 4, targets.use = c(5:11), signaling = c("CCL","CXCL"))
 
-# show all the significant interactions (L-R pairs) based on user's input (defined by `pairLR.use`; the order of L-R is also based on user's input)
+# show all the significant interactions (L-R pairs) based on user's input (defined by `pairLR.use`;
+# the order of L-R is also based on user's input)
 pairLR.use <- extractEnrichedLR(cellchat, signaling = c("CCL","CXCL","FGF"))
-netVisual_bubble(cellchat, sources.use = c(3,4), targets.use = c(5:8), pairLR.use = pairLR.use, remove.isolate = TRUE)
+netVisual_bubble(cellchat, sources.use = c(3,4), targets.use = c(5:8), pairLR.use = pairLR.use,
+    remove.isolate = TRUE)
 
 # set the order of interacting cell pairs on x-axis
-# (1) Default: first sort cell pairs based on the appearance of sources in levels(object@idents), and then based on the appearance of targets in levels(object@idents)
+# (1) Default: first sort cell pairs based on the appearance of sources in levels(object@idents),
+# and then based on the appearance of targets in levels(object@idents)
 # (2) sort cell pairs based on the targets.use defined by users
-netVisual_bubble(cellchat, targets.use = c("LC","Inflam. DC","cDC2","CD40LG+ TC"), pairLR.use = pairLR.use, remove.isolate = TRUE, sort.by.target = T)
+netVisual_bubble(cellchat, targets.use = c("LC","Inflam. DC","cDC2","CD40LG+ TC"),
+    pairLR.use = pairLR.use, remove.isolate = TRUE, sort.by.target = T)
 # (3) sort cell pairs based on the sources.use defined by users
-netVisual_bubble(cellchat, sources.use = c("FBN1+ FIB","APOE+ FIB","Inflam. FIB"), pairLR.use = pairLR.use, remove.isolate = TRUE, sort.by.source = T)
+netVisual_bubble(cellchat, sources.use = c("FBN1+ FIB","APOE+ FIB","Inflam. FIB"),
+    pairLR.use = pairLR.use, remove.isolate = TRUE, sort.by.source = T)
 # (4) sort cell pairs based on the sources.use and then targets.use defined by users
-netVisual_bubble(cellchat, sources.use = c("FBN1+ FIB","APOE+ FIB","Inflam. FIB"), targets.use = c("LC","Inflam. DC","cDC2","CD40LG+ TC"), pairLR.use = pairLR.use, remove.isolate = TRUE, sort.by.source = T, sort.by.target = T)
+netVisual_bubble(cellchat, sources.use = c("FBN1+ FIB","APOE+ FIB","Inflam. FIB"),
+    targets.use = c("LC","Inflam. DC","cDC2","CD40LG+ TC"), pairLR.use = pairLR.use,
+        remove.isolate = TRUE, sort.by.source = T, sort.by.target = T)
 # (5) sort cell pairs based on the targets.use and then sources.use defined by users
-netVisual_bubble(cellchat, sources.use = c("FBN1+ FIB","APOE+ FIB","Inflam. FIB"), targets.use = c("LC","Inflam. DC","cDC2","CD40LG+ TC"), pairLR.use = pairLR.use, remove.isolate = TRUE, sort.by.source = T, sort.by.target = T, sort.by.source.priority = FALSE)
+netVisual_bubble(cellchat, sources.use = c("FBN1+ FIB","APOE+ FIB","Inflam. FIB"),
+    targets.use = c("LC","Inflam. DC","cDC2","CD40LG+ TC"), pairLR.use = pairLR.use,
+        remove.isolate = TRUE, sort.by.source = T, sort.by.target = T,
+            sort.by.source.priority = FALSE)
 
 # show all the increased interactions in the second dataset compared to the first dataset
-netVisual_bubble(cellchat, sources.use = 4, targets.use = c(5:8), remove.isolate = TRUE, max.dataset = 2)
+netVisual_bubble(cellchat, sources.use = 4, targets.use = c(5:8), remove.isolate = TRUE,
+    max.dataset = 2)
 
 # show all the decreased interactions in the second dataset compared to the first dataset
-netVisual_bubble(cellchat, sources.use = 4, targets.use = c(5:8), remove.isolate = TRUE, max.dataset = 1)
+netVisual_bubble(cellchat, sources.use = 4, targets.use = c(5:8), remove.isolate = TRUE,
+    max.dataset = 1)
 }
 }

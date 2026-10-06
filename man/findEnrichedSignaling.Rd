@@ -32,6 +32,7 @@ Find the enriched signaling according to the genes (e.g.DEGs) and cell groups of
 \examples{
 \dontrun{
 # find all the significant outgoing signaling according to the features and cell groups of interest
-df <- findEnrichedSignaling(object, features = c("CCL19", "CXCL12"), idents = c("Inflam. FIB", "COL11A1+ FIB"), pattern ="outgoing")
+df <- findEnrichedSignaling(object, features = c("CCL19", "CXCL12"), idents = c("Inflam. FIB",
+    "COL11A1+ FIB"), pattern ="outgoing")
 }
 }

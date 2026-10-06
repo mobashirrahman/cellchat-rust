@@ -62,7 +62,9 @@ cellChat <- createCellChat(object = sce.obj, group.by = "sce.clusters")
 # input is a AnnData object
 sce <- zellkonverter::readH5AD(file = "adata.h5ad")
 assayNames(sce) # retrieve all the available assays within sce object
-counts <- assay(sce, "X") # add a new assay entry "logcounts" if not available and make sure this is the original count data matrix
+counts <- assay(sce, "X")
+# add a new assay entry "logcounts" if not available and make sure this is the original count data
+# matrix
 library.size <- Matrix::colSums(counts)
 logcounts(sce) <- log1p(Matrix::t(Matrix::t(counts)/library.size) * 10000)
 meta <- as.data.frame(SingleCellExperiment::colData(sce))
@@ -72,7 +74,8 @@ cellChat <- createCellChat(object = sce, group.by = "sce.clusters")
 Create a CellChat object from spatial transcriptomics data
 # Input is a data matrix
 cellChat <- createCellChat(object = data.input, meta = meta, group.by = "labels",
-                           datatype = "spatial", coordinates = coordinates, spatial.factors = spatial.factors)
+                           datatype = "spatial", coordinates = coordinates,
+                               spatial.factors = spatial.factors)
 
 # input is a Seurat object
 cellChat <- createCellChat(object = seurat.obj, group.by = "ident", assay = "SCT",

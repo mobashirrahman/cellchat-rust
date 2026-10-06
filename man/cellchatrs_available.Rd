@@ -7,7 +7,4 @@ Is the Rust kernel loaded and callable?
 \usage{
 cellchatrs_available()
 }
-\arguments{
-\item{...}{Arguments passed through unchanged. See the corresponding function in the \pkg{CellChat} package.}
-}
 \keyword{internal}
